@@ -1045,17 +1045,21 @@
     window.closeSidebar = function() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebarOverlay").classList.remove("open"); };
     window.toggleSidebar = function() { var sb = document.getElementById("sidebar"); if (sb.classList.contains("open")) window.closeSidebar(); else window.openSidebar(); };
 
-    window.switchTab = function(viewId) {
-      // Correctly hide ALL views first
+    window.switchTab = function(viewId, btnElement) {
       var views = ["viewShop", "viewOrderConfig", "viewPlacedOrder", "viewEditorManage", "viewProfile", "viewLawPolicy", "viewRegisterStep1", "viewRegisterStep2"];
       views.forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.style.display = "none";
       });
 
-      // Show requested view
       var targetEl = document.getElementById(viewId);
       if (targetEl) targetEl.style.display = "block";
+
+      var navBtns = document.querySelectorAll('.nav-link-btn');
+      navBtns.forEach(function(b) { b.classList.remove('active'); });
+      if (btnElement) {
+        btnElement.classList.add('active');
+      }
 
       var subtitleMap = {
         "viewShop": "Shop",
@@ -1077,8 +1081,8 @@
     };
 
     window.startApplyForEarn = function() {
-      if (!currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab("viewProfile"); return; }
-      window.switchTab("viewRegisterStep1");
+      if (!currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab('viewProfile'); return; }
+      window.switchTab('viewRegisterStep1');
     };
 
     window.submitStep1Request = function() {
@@ -1087,7 +1091,7 @@
       if (!link) { showToast("Error", "Provide portfolio link.", "error"); return; }
       tempRegistrationData.role = role;
       tempRegistrationData.portfolioLink = link;
-      window.switchTab("viewRegisterStep2");
+      window.switchTab('viewRegisterStep2');
     };
 
     window.completeEditorRegistration = function() {
@@ -1112,7 +1116,7 @@
       };
       db.collection("shops").add(newShop).then(function() {
         showToast("Success", "Shop launched live!", "success");
-        window.switchTab("viewShop");
+        window.switchTab('viewShop');
       });
     };
 
@@ -1125,7 +1129,7 @@
       document.getElementById("configEditorTitle").textContent = "Hire " + editor.name;
       document.getElementById("videoDurationInput").value = 20;
       window.selectMode("medium");
-      window.switchTab("viewOrderConfig");
+      window.switchTab('viewOrderConfig');
     };
 
     window.selectMode = function(modeName) {
@@ -1151,7 +1155,7 @@
     };
 
     window.submitConfiguredOrder = function() {
-      if (!currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab("viewProfile"); return; }
+      if (!currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab('viewProfile'); return; }
       var editor = EDITORS_DATA[currentConfig.editorKey];
       var footageUrl = document.getElementById("orderFootageUrl").value.trim();
       var instructions = document.getElementById("orderInstructions").value.trim();
@@ -1190,7 +1194,7 @@
           instructions: instructions || "None"
         });
         showToast("Sent", "Request sent successfully!", "success");
-        window.switchTab("viewPlacedOrder");
+        window.switchTab('viewPlacedOrder');
       });
     };
   </script>
@@ -1243,7 +1247,7 @@
       <span class="sidebar-label">Navigation Hub</span>
       <button class="sidebar-close-btn" onclick="window.closeSidebar()" type="button">&times;</button>
     </div>
-    <div class="sidebar-mini-profile" onclick="window.switchTab('viewProfile')">
+    <div class="sidebar-mini-profile" onclick="window.switchTab('viewProfile', null)">
       <div class="sidebar-avatar-box" id="sidebarAvatarContainer"></div>
       <div>
         <div class="sidebar-mini-name" id="sidebarProfileName">Guest Creator</div>
@@ -1251,11 +1255,11 @@
       </div>
     </div>
     <ul class="nav-list">
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewProfile')">Profile</button></li>
-      <li><button class="nav-link-btn active" onclick="window.switchTab('viewShop')">Shop</button></li>
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewPlacedOrder')">Placed Orders</button></li>
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewEditorManage')">Incoming Requests</button></li>
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewLawPolicy')">Law & Policy</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewProfile', this)">Profile</button></li>
+      <li><button class="nav-link-btn active" onclick="window.switchTab('viewShop', this)">Shop</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewPlacedOrder', this)">Placed Orders</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewEditorManage', this)">Incoming Requests</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewLawPolicy', this)">Law & Policy</button></li>
     </ul>
   </aside>
 
@@ -1301,7 +1305,7 @@
 
     <section id="viewRegisterStep1" style="display: none;">
       <div class="section-header">
-        <button class="btn-back" onclick="window.switchTab('viewProfile')">&larr; Back</button>
+        <button class="btn-back" onclick="window.switchTab('viewProfile', null)">&larr; Back</button>
         <h1 style="margin-top: 0.8rem;">Apply for Shop</h1>
       </div>
       <div class="info-card">
@@ -1333,7 +1337,7 @@
 
     <section id="viewOrderConfig" style="display: none;">
       <div class="section-header">
-        <button class="btn-back" onclick="window.switchTab('viewShop')">&larr; Back to Shop</button>
+        <button class="btn-back" onclick="window.switchTab('viewShop', null)">&larr; Back to Shop</button>
         <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Editor Terminal</h1>
       </div>
       <div class="config-layout">
@@ -1368,7 +1372,7 @@
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header"><h1>Placed Orders</h1><p>Live tracking of your requests.</p></div>
       <div class="info-card">
-        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop')">Shop Editors</button></div>
+        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop', null)">Shop Editors</button></div>
         <div id="activeOrdersList" style="display: none; flex-direction: column; gap: 14px;"></div>
       </div>
     </section>
