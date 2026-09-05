@@ -14,8 +14,17 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+  <!-- Instant Theme Loader (Prevents flash on reload) -->
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('rex_theme') || 'default';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
   <style>
-    :root {
+    /* 1. Default (Original Indigo) Theme */
+    :root, [data-theme="default"] {
       --bg-base: #f8fafc;
       --bg-card: rgba(255, 255, 255, 0.96);
       --border-subtle: #e2e8f0;
@@ -26,6 +35,7 @@
       --text-main: #0f172a;
       --text-muted: #64748b;
       --text-subtle: #94a3b8;
+      --brand-grad: linear-gradient(135deg, #0f172a 30%, #4338ca 100%);
       --success: #059669;
       --success-light: #ecfdf5;
       --warning: #d97706;
@@ -36,12 +46,105 @@
       --shadow-card: 0 12px 30px -6px rgba(15, 23, 42, 0.08);
     }
 
+    /* 2. Midnight Dark Theme */
+    [data-theme="dark"] {
+      --bg-base: #0b0f19;
+      --bg-card: #131b2e;
+      --border-subtle: #1e293b;
+      --border-strong: #334155;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-light: rgba(99, 102, 241, 0.15);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --brand-grad: linear-gradient(135deg, #ffffff 30%, #818cf8 100%);
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.15);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.15);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 3. Royal Gold Luxury Theme */
+    [data-theme="golden"] {
+      --bg-base: #0d0c09;
+      --bg-card: #171510;
+      --border-subtle: #29241b;
+      --border-strong: #453c29;
+      --primary: #eab308;
+      --primary-hover: #ca8a04;
+      --primary-light: rgba(234, 179, 8, 0.15);
+      --text-main: #fef9c3;
+      --text-muted: #d4cfb4;
+      --text-subtle: #877f68;
+      --brand-grad: linear-gradient(135deg, #ffffff 20%, #facc15 100%);
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.15);
+      --warning: #eab308;
+      --warning-light: rgba(234, 179, 8, 0.15);
+      --danger: #f87171;
+      --danger-light: rgba(248, 113, 113, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 4. Crimson Red Creator Theme */
+    [data-theme="red"] {
+      --bg-base: #0f0707;
+      --bg-card: #1a0c0c;
+      --border-subtle: #2b1414;
+      --border-strong: #4a1f1f;
+      --primary: #ef4444;
+      --primary-hover: #dc2626;
+      --primary-light: rgba(239, 68, 68, 0.15);
+      --text-main: #fee2e2;
+      --text-muted: #fca5a5;
+      --text-subtle: #8a4848;
+      --brand-grad: linear-gradient(135deg, #ffffff 20%, #ef4444 100%);
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.15);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.15);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 5. Editor Neon Cyberpunk Theme */
+    [data-theme="neon"] {
+      --bg-base: #070714;
+      --bg-card: #0f0f26;
+      --border-subtle: #1f1f4d;
+      --border-strong: #373780;
+      --primary: #06b6d4;
+      --primary-hover: #0891b2;
+      --primary-light: rgba(6, 182, 212, 0.16);
+      --text-main: #f0fdf4;
+      --text-muted: #99f6e4;
+      --text-subtle: #6b7280;
+      --brand-grad: linear-gradient(135deg, #ec4899 10%, #06b6d4 90%);
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.15);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.15);
+      --danger: #f43f5e;
+      --danger-light: rgba(244, 63, 94, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
+      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.7);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
     }
 
     body {
@@ -58,11 +161,12 @@
       z-index: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 90% 85%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
-        linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+        radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(14, 165, 233, 0.06) 0%, transparent 40%),
+        linear-gradient(var(--border-subtle) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      opacity: 0.7;
     }
 
     /* Top Navigation Bar */
@@ -74,7 +178,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.85rem 1.3rem;
-      background: rgba(255, 255, 255, 0.92);
+      background: var(--bg-card);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-sm);
@@ -87,7 +191,7 @@
     }
 
     .three-dot-btn {
-      background: #f1f5f9;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       color: var(--text-main);
       border-radius: 12px;
@@ -114,7 +218,7 @@
       font-size: 1.65rem;
       font-weight: 900;
       letter-spacing: -0.035em;
-      background: linear-gradient(135deg, #0f172a 30%, #4338ca 100%);
+      background: var(--brand-grad);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1.05;
@@ -147,7 +251,7 @@
     }
 
     .btn-header-login {
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-strong);
       padding: 7px 12px;
       border-radius: 8px;
@@ -164,7 +268,7 @@
     .sidebar-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.35);
+      background: rgba(15, 23, 42, 0.45);
       backdrop-filter: blur(4px);
       z-index: 9998;
       display: none;
@@ -182,14 +286,14 @@
       width: 290px;
       max-width: 85vw;
       height: 100vh;
-      background: #ffffff;
+      background: var(--bg-card);
       border-right: 1px solid var(--border-subtle);
       z-index: 9999;
       transition: left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       padding: 1.25rem 1rem;
-      box-shadow: 15px 0 35px rgba(15, 23, 42, 0.08);
+      box-shadow: 15px 0 35px rgba(0, 0, 0, 0.2);
       overflow-y: auto;
     }
 
@@ -214,7 +318,7 @@
     }
 
     .sidebar-close-btn {
-      background: #f1f5f9;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
       cursor: pointer;
@@ -232,7 +336,7 @@
       align-items: center;
       gap: 12px;
       padding: 10px 12px;
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       margin-bottom: 1.25rem;
@@ -243,7 +347,7 @@
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      background: linear-gradient(135deg, var(--primary), #06b6d4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -360,21 +464,21 @@
     }
 
     .format-badge-short {
-      background: #fef3c7;
-      border: 1px solid #fde68a;
-      color: #b45309;
+      background: var(--warning-light);
+      border: 1px solid var(--warning);
+      color: var(--warning);
     }
 
     .format-badge-long {
-      background: #e0f2fe;
-      border: 1px solid #bae6fd;
-      color: #0369a1;
+      background: var(--primary-light);
+      border: 1px solid var(--primary);
+      color: var(--primary);
     }
 
     .format-badge-custom {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #065f46;
+      background: var(--success-light);
+      border: 1px solid var(--success);
+      color: var(--success);
     }
 
     .editor-header {
@@ -387,7 +491,7 @@
       width: 58px;
       height: 58px;
       border-radius: 16px;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      background: linear-gradient(135deg, var(--primary), #06b6d4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -409,7 +513,7 @@
     }
 
     .pill {
-      background: #f1f5f9;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       font-size: 0.74rem;
       font-weight: 700;
@@ -461,7 +565,7 @@
 
     .btn-delete-shop {
       background: var(--danger-light);
-      border: 1px solid #fecaca;
+      border: 1px solid var(--danger);
       color: var(--danger);
       font-weight: 800;
       font-size: 0.8rem;
@@ -475,11 +579,12 @@
     }
 
     .btn-delete-shop:hover {
-      background: #fee2e2;
+      background: var(--danger);
+      color: #ffffff;
     }
 
     .btn-back {
-      background: #f1f5f9;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
       font-weight: 800;
@@ -504,7 +609,7 @@
     }
 
     .preview-card {
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 20px;
       padding: 1.5rem;
@@ -533,7 +638,7 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       transition: all 0.3s ease;
     }
 
@@ -587,7 +692,7 @@
     }
 
     .mode-btn {
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       padding: 12px 8px;
@@ -621,7 +726,7 @@
     .input-duration-wrap {
       display: flex;
       align-items: center;
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
       overflow: hidden;
@@ -652,7 +757,7 @@
     }
 
     .calculation-summary-box {
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
       padding: 1.25rem;
@@ -689,7 +794,7 @@
     }
 
     .running-order-item {
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
       padding: 1.25rem;
@@ -711,8 +816,8 @@
     }
 
     .status-running {
-      background: #fef3c7;
-      color: #b45309;
+      background: var(--warning-light);
+      color: var(--warning);
     }
 
     .empty-state-box {
@@ -743,7 +848,7 @@
       align-items: center;
       gap: 20px;
       padding: 1.75rem;
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 18px;
       margin-bottom: 1.75rem;
@@ -753,7 +858,7 @@
       width: 80px;
       height: 80px;
       border-radius: 18px;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      background: linear-gradient(135deg, var(--primary), #06b6d4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -765,7 +870,7 @@
       padding: 12px 14px;
       border-radius: 10px;
       border: 1px solid var(--border-strong);
-      background: #f8fafc;
+      background: var(--bg-base);
       margin: 6px 0 14px 0;
       font-size: 0.95rem;
       color: var(--text-main);
@@ -774,14 +879,14 @@
 
     .form-input-field:focus {
       border-color: var(--primary);
-      background: #ffffff;
+      box-shadow: 0 0 0 1px var(--primary);
     }
 
     .btn-google-auth {
       width: 100%;
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-strong);
-      color: #0f172a;
+      color: var(--text-main);
       padding: 13px;
       border-radius: 12px;
       font-size: 0.95rem;
@@ -793,17 +898,17 @@
       cursor: pointer;
       box-shadow: var(--shadow-sm);
       transition: background 0.15s ease;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     .btn-google-auth:hover {
-      background: #f8fafc;
+      background: var(--bg-base);
     }
 
     .btn-logout {
       width: 100%;
       background: var(--danger-light);
-      border: 1px solid #fecaca;
+      border: 1px solid var(--danger);
       color: var(--danger);
       padding: 13px;
       border-radius: 12px;
@@ -835,7 +940,7 @@
     }
 
     .earn-banner-card {
-      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%);
       color: #ffffff;
       border-radius: 18px;
       padding: 1.6rem;
@@ -860,7 +965,7 @@
 
     .btn-apply-earn {
       background: #ffffff;
-      color: var(--primary);
+      color: #0f172a;
       font-weight: 800;
       font-size: 0.92rem;
       border: none;
@@ -872,8 +977,8 @@
 
     .warning-box {
       background: var(--warning-light);
-      border: 1px solid #fde68a;
-      color: #92400e;
+      border: 1px solid var(--warning);
+      color: var(--warning);
       padding: 12px 14px;
       border-radius: 10px;
       font-size: 0.85rem;
@@ -905,7 +1010,7 @@
     }
 
     .mode-config-card {
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
       padding: 12px;
@@ -918,6 +1023,7 @@
       margin-bottom: 8px;
     }
 
+    /* My Created Shops Section */
     .my-shops-container {
       margin-top: 2rem;
       padding-top: 1.5rem;
@@ -941,7 +1047,7 @@
     }
 
     .my-shop-item {
-      background: #f8fafc;
+      background: var(--bg-base);
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
       padding: 1rem 1.25rem;
@@ -952,8 +1058,61 @@
     }
 
     /* ========================================================
-       PREMIUM POPUPS: Toast Notifications & Confirmation Modal
+       5-THEME STUDIO APPEARANCE SELECTOR
        ======================================================== */
+    .theme-selector-section {
+      margin: 1.8rem 0;
+      padding: 1.35rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .theme-card-btn {
+      background: var(--bg-base);
+      border: 2px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      position: relative;
+    }
+
+    .theme-card-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .theme-card-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .theme-color-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .theme-label-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: block;
+      line-height: 1.2;
+    }
+
+    /* Toast Notifications */
     #toast-container {
       position: fixed;
       top: 20px;
@@ -969,14 +1128,15 @@
       pointer-events: auto;
       min-width: 300px;
       max-width: 420px;
-      background: rgba(255, 255, 255, 0.98);
+      background: var(--bg-card);
       backdrop-filter: blur(16px);
+      border: 1px solid var(--border-strong);
       border-radius: 14px;
       padding: 14px 16px;
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.08);
+      box-shadow: var(--shadow-card);
       transform: translateX(120%);
       transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
       opacity: 0;
@@ -997,43 +1157,20 @@
       flex-shrink: 0;
     }
 
-    .toast-success .toast-icon-wrap { background: #ecfdf5; color: #059669; }
-    .toast-error .toast-icon-wrap { background: #fef2f2; color: #dc2626; }
-    .toast-info .toast-icon-wrap { background: #eef2ff; color: #4f46e5; }
+    .toast-success .toast-icon-wrap { background: var(--success-light); color: var(--success); }
+    .toast-error .toast-icon-wrap { background: var(--danger-light); color: var(--danger); }
+    .toast-info .toast-icon-wrap { background: var(--primary-light); color: var(--primary); }
 
-    .toast-content {
-      flex: 1;
-    }
+    .toast-content { flex: 1; }
+    .toast-title { font-size: 0.9rem; font-weight: 800; color: var(--text-main); margin-bottom: 2px; }
+    .toast-desc { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); line-height: 1.4; }
+    .toast-close-btn { background: transparent; border: none; color: var(--text-subtle); cursor: pointer; font-size: 1.1rem; padding: 0 4px; line-height: 1; }
 
-    .toast-title {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 2px;
-    }
-
-    .toast-desc {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #64748b;
-      line-height: 1.4;
-    }
-
-    .toast-close-btn {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      cursor: pointer;
-      font-size: 1.1rem;
-      padding: 0 4px;
-      line-height: 1;
-    }
-
-    /* Modal Backdrop & Container */
+    /* Modal Backdrop & Dialog */
     .rex-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(8px);
       z-index: 100001;
       display: flex;
@@ -1045,86 +1182,29 @@
       transition: opacity 0.2s ease;
     }
 
-    .rex-modal-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .rex-modal-overlay.open { opacity: 1; pointer-events: auto; }
 
     .rex-modal-card {
-      background: #ffffff;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
       width: 100%;
       max-width: 440px;
       border-radius: 20px;
       padding: 1.8rem;
-      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      box-shadow: var(--shadow-card);
       transform: scale(0.95) translateY(10px);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .rex-modal-overlay.open .rex-modal-card {
-      transform: scale(1) translateY(0);
-    }
+    .rex-modal-overlay.open .rex-modal-card { transform: scale(1) translateY(0); }
 
-    .rex-modal-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 0.8rem;
-    }
-
-    .rex-modal-icon-danger {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: #fee2e2;
-      color: #dc2626;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .rex-modal-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    .rex-modal-text {
-      color: #64748b;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      margin-bottom: 1.6rem;
-    }
-
-    .rex-modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .rex-btn-cancel {
-      background: #f1f5f9;
-      border: 1px solid var(--border-strong);
-      color: #475569;
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .rex-btn-confirm-delete {
-      background: #dc2626;
-      border: none;
-      color: #ffffff;
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
-    }
+    .rex-modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem; }
+    .rex-modal-icon-danger { width: 42px; height: 42px; border-radius: 12px; background: var(--danger-light); color: var(--danger); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .rex-modal-title { font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
+    .rex-modal-text { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.6rem; }
+    .rex-modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+    .rex-btn-cancel { background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--text-main); padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .rex-btn-confirm-delete { background: var(--danger); border: none; color: #ffffff; padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); }
   </style>
 
   <script>
@@ -1166,10 +1246,38 @@
     }
 
     /* ========================================================
+       THEME CONTROLLER (5 Multiple Themes + Persistence)
+       ======================================================== */
+    window.setTheme = function(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('rex_theme', themeName);
+
+      // Update UI buttons active state
+      var themeBtns = document.querySelectorAll('.theme-card-btn');
+      themeBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-theme-target') === themeName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      var namesMap = {
+        'default': 'Original Indigo',
+        'dark': 'Midnight Dark',
+        'golden': 'Royal Gold',
+        'red': 'Crimson Red',
+        'neon': 'Editor Neon'
+      };
+
+      showToast("Theme Applied", "Switched to " + (namesMap[themeName] || themeName) + " theme.", "info");
+    };
+
+    /* ========================================================
        PREMIUM POPUP CONTROLLER: Toasts & Modal Dialogs
        ======================================================== */
     window.showToast = function(title, message, type) {
-      type = type || 'info'; // 'success', 'error', 'info'
+      type = type || 'info';
       var container = document.getElementById("toast-container");
       if (!container) return;
 
@@ -1194,7 +1302,6 @@
         '<button class="toast-close-btn" onclick="this.parentElement.remove()">&times;</button>';
 
       container.appendChild(toast);
-
       setTimeout(function() { toast.classList.add("show"); }, 20);
 
       setTimeout(function() {
@@ -1310,15 +1417,15 @@
       document.getElementById("inputUserId").value = "";
 
       document.getElementById("profileLargeAvatarContainer").innerHTML = 
-        '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+        '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
       document.getElementById("sidebarAvatarContainer").innerHTML = 
-        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
 
       document.getElementById("googleSignInBtn").style.display = "flex";
       document.getElementById("headerLoginBtn").style.display = "flex";
       document.getElementById("logoutBtn").style.display = "none";
 
-      document.getElementById("myShopsList").innerHTML = "<p style='color:#94a3b8; font-size:0.9rem;'>Sign in to see shops created by you.</p>";
+      document.getElementById("myShopsList").innerHTML = "<p style='color:var(--text-subtle); font-size:0.9rem;'>Sign in to see shops created by you.</p>";
       document.getElementById("myShopsCountBadge").textContent = "0 Created";
     }
 
@@ -1357,7 +1464,6 @@
         return;
       }
 
-      // Check if UserID is already taken in Firestore
       db.collection("users").where("userId", "==", rawHandle).get()
         .then(function(querySnapshot) {
           var isTaken = false;
@@ -1399,7 +1505,7 @@
         countBadge.textContent = snapshot.size + " Created";
 
         if (snapshot.empty) {
-          listContainer.innerHTML = "<p style='color:#94a3b8; font-size:0.9rem;'>You have not created any shops yet. Click 'Apply for Earn' above to start.</p>";
+          listContainer.innerHTML = "<p style='color:var(--text-subtle); font-size:0.9rem;'>You have not created any shops yet. Click 'Apply for Earn' above to start.</p>";
           return;
         }
 
@@ -1411,8 +1517,8 @@
           var itemHtml = 
             '<div class="my-shop-item">' +
               '<div>' +
-                '<strong style="font-size:1rem; color:#0f172a; display:block;">' + escapeHtml(shop.name) + '</strong>' +
-                '<span style="font-size:0.8rem; color:#64748b;">Specialty: ' + escapeHtml(shop.category) + ' &bull; Starts at ₹' + shop.rates.low + '</span>' +
+                '<strong style="font-size:1rem; color:var(--text-main); display:block;">' + escapeHtml(shop.name) + '</strong>' +
+                '<span style="font-size:0.8rem; color:var(--text-muted);">Specialty: ' + escapeHtml(shop.category) + ' &bull; Starts at ₹' + shop.rates.low + '</span>' +
               '</div>' +
               '<button class="btn-delete-shop" onclick="window.deleteShop(\'' + shopId + '\', \'' + escapeHtml(shop.name) + '\')" type="button">' +
                 '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' +
@@ -1427,7 +1533,7 @@
       });
     }
 
-    /* Delete Shop Function with Premium Confirmation Modal */
+    /* Delete Shop Function with Confirmation Modal */
     window.deleteShop = function(shopId, shopName) {
       if (!currentUser) {
         showToast("Authentication Required", "Please sign in to manage shops.", "error");
@@ -1501,7 +1607,7 @@
               '<div class="card-footer">' +
                 '<div>' +
                   '<span class="price-label">Starts at</span>' +
-                  '<span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:#64748b;">' + escapeHtml(data.unitShort) + '</small></span>' +
+                  '<span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(data.unitShort) + '</small></span>' +
                 '</div>' +
                 '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + id + '\')" type="button">Hire Editor &rarr;</button>' +
               '</div>' +
@@ -1536,13 +1642,13 @@
           var orderHtml = 
             '<div class="running-order-item">' +
               '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-                '<strong style="color:#0f172a; font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
+                '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
                 '<span class="order-badge-pill status-running">● ' + escapeHtml(data.status) + '</span>' +
               '</div>' +
-              '<small style="color:#64748b;">Client: <strong>' + escapeHtml(data.clientName) + ' (@' + escapeHtml(data.clientHandle || "user") + ')</strong> &bull; Editor: <strong>' + escapeHtml(data.editorName) + '</strong></small>' +
+              '<small style="color:var(--text-muted);">Client: <strong>' + escapeHtml(data.clientName) + ' (@' + escapeHtml(data.clientHandle || "user") + ')</strong> &bull; Editor: <strong>' + escapeHtml(data.editorName) + '</strong></small>' +
               '<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:4px;">' +
-                '<span style="font-size:0.9rem; color:#475569;">Duration / Volume: ' + data.duration + 's</span>' +
-                '<strong style="font-size:1.15rem; color:#4f46e5;">Escrow Locked: ₹' + data.price + '</strong>' +
+                '<span style="font-size:0.9rem; color:var(--text-muted);">Duration / Volume: ' + data.duration + 's</span>' +
+                '<strong style="font-size:1.15rem; color:var(--primary);">Escrow Locked: ₹' + data.price + '</strong>' +
               '</div>' +
             '</div>';
           list.insertAdjacentHTML("beforeend", orderHtml);
@@ -1897,6 +2003,19 @@
           showToast("Order Failed", error.message, "error");
         });
     };
+
+    // Highlight current active theme button on initial load
+    window.addEventListener('DOMContentLoaded', function() {
+      var activeTheme = localStorage.getItem('rex_theme') || 'default';
+      var themeBtns = document.querySelectorAll('.theme-card-btn');
+      themeBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-theme-target') === activeTheme) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    });
   </script>
 </head>
 <body>
@@ -1963,7 +2082,7 @@
 
     <div class="sidebar-mini-profile" onclick="window.switchTab('viewProfile')">
       <div class="sidebar-avatar-box" id="sidebarAvatarContainer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
@@ -2015,7 +2134,7 @@
     <section id="viewProfile" style="display: none;">
       <div class="section-header">
         <h1>Profile Settings</h1>
-        <p>Manage your unique creator handle, personal shop, and account data.</p>
+        <p>Manage your unique creator handle, theme preferences, and shop listings.</p>
       </div>
 
       <div class="earn-banner-card">
@@ -2034,12 +2153,39 @@
 
         <div class="profile-card-large">
           <div class="profile-avatar-large" id="profileLargeAvatarContainer">
-            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           </div>
           <div>
-            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800; color: #0f172a;">Guest Creator</h2>
+            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800; color: var(--text-main);">Guest Creator</h2>
             <p id="profileUserIdDisplay" style="color: var(--primary); font-weight: 800; font-size: 1.05rem; margin-top: 2px;">@guest</p>
             <p id="profileUserEmail" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 2px;">Sign in to activate account</p>
+          </div>
+        </div>
+
+        <!-- 5 Multi-Theme Selector -->
+        <div class="theme-selector-section">
+          <label class="config-label">Studio Theme (Appearance)</label>
+          <div class="theme-grid">
+            <button type="button" class="theme-card-btn active" data-theme-target="default" onclick="window.setTheme('default')">
+              <span class="theme-color-dot" style="background:#4f46e5; border:1px solid #c7d2fe;"></span>
+              <span class="theme-label-title">Original Indigo</span>
+            </button>
+            <button type="button" class="theme-card-btn" data-theme-target="dark" onclick="window.setTheme('dark')">
+              <span class="theme-color-dot" style="background:#0b0f19; border:1px solid #6366f1;"></span>
+              <span class="theme-label-title">Midnight Dark</span>
+            </button>
+            <button type="button" class="theme-card-btn" data-theme-target="golden" onclick="window.setTheme('golden')">
+              <span class="theme-color-dot" style="background:#eab308; box-shadow:0 0 6px #eab308;"></span>
+              <span class="theme-label-title">Royal Gold</span>
+            </button>
+            <button type="button" class="theme-card-btn" data-theme-target="red" onclick="window.setTheme('red')">
+              <span class="theme-color-dot" style="background:#ef4444; box-shadow:0 0 6px #ef4444;"></span>
+              <span class="theme-label-title">Crimson Red</span>
+            </button>
+            <button type="button" class="theme-card-btn" data-theme-target="neon" onclick="window.setTheme('neon')">
+              <span class="theme-color-dot" style="background:linear-gradient(135deg, #06b6d4, #ec4899);"></span>
+              <span class="theme-label-title">Editor Neon</span>
+            </button>
           </div>
         </div>
 
@@ -2050,7 +2196,7 @@
             <input type="text" id="inputUserId" class="form-input-field" style="padding-left: 32px;" placeholder="e.g. msgamer (letters, numbers, underscores)">
           </div>
           <small style="color: var(--text-muted); display: block; margin-top: -8px; margin-bottom: 12px;">
-            Unique username identifier. Duplicate usernames will trigger an alert.
+            Unique creator handle. If already taken, an alert will be shown.
           </small>
         </div>
 
@@ -2069,7 +2215,7 @@
             <span class="my-shop-badge" id="myShopsCountBadge">0 Created</span>
           </div>
           <div id="myShopsList">
-            <p style="color:#94a3b8; font-size:0.9rem;">Sign in to see shops created by you.</p>
+            <p style="color:var(--text-subtle); font-size:0.9rem;">Sign in to see shops created by you.</p>
           </div>
         </div>
 
@@ -2110,7 +2256,7 @@
 
         <div class="config-group">
           <label class="config-label">3. Admin Verification Contact</label>
-          <input type="text" class="form-input-field" value="Rex Admin (admin.rexedithub@gmail.com)" readonly style="background:#f1f5f9; color:#475569; font-weight:700;">
+          <input type="text" class="form-input-field" value="Rex Admin (admin.rexedithub@gmail.com)" readonly style="background:var(--bg-base); color:var(--text-muted); font-weight:700;">
         </div>
 
         <button class="btn-action-primary" onclick="window.submitStep1Request()" type="button" style="width:100%; justify-content:center;">
@@ -2127,7 +2273,7 @@
       </div>
 
       <div class="info-card">
-        <span class="step-indicator" style="background:#ecfdf5; color:#065f46;">Step 2 of 2: Setup Shop</span>
+        <span class="step-indicator" style="background:var(--success-light); color:var(--success);">Step 2 of 2: Setup Shop</span>
 
         <div class="config-group">
           <label class="config-label" for="regShopName">1. Name of your Shop</label>
@@ -2145,21 +2291,21 @@
             <div class="mode-config-card">
               <h5>Mode 1 (Entry)</h5>
               <input type="text" id="modeName1" class="form-input-field" value="Basic Cut" placeholder="Mode Name">
-              <label style="font-size:0.75rem; color:#64748b; font-weight:700;">Rate <span id="modeUnitLabel1"></span></label>
+              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Rate <span id="modeUnitLabel1"></span></label>
               <input type="number" id="modeRate1" class="form-input-field" value="20" min="5">
             </div>
 
             <div class="mode-config-card">
               <h5>Mode 2 (Popular)</h5>
               <input type="text" id="modeName2" class="form-input-field" value="Dynamic Standard" placeholder="Mode Name">
-              <label style="font-size:0.75rem; color:#64748b; font-weight:700;">Rate <span id="modeUnitLabel2"></span></label>
+              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Rate <span id="modeUnitLabel2"></span></label>
               <input type="number" id="modeRate2" class="form-input-field" value="30" min="5">
             </div>
 
             <div class="mode-config-card">
               <h5>Mode 3 (Premium)</h5>
               <input type="text" id="modeName3" class="form-input-field" value="High Retention FX" placeholder="Mode Name">
-              <label style="font-size:0.75rem; color:#64748b; font-weight:700;">Rate <span id="modeUnitLabel3"></span></label>
+              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Rate <span id="modeUnitLabel3"></span></label>
               <input type="number" id="modeRate3" class="form-input-field" value="40" min="5">
             </div>
           </div>
