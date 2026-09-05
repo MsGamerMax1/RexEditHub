@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Rex Edit Hub</title>
 
+  <!-- Browser Tab Icon (Favicon) -->
+  <link rel="icon" type="image/png" href="logo.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -44,6 +47,7 @@
       --danger-light: #fef2f2;
       --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04);
       --shadow-card: 0 12px 30px -6px rgba(15, 23, 42, 0.08);
+      --logo-shadow: 0 2px 10px rgba(79, 70, 229, 0.35);
     }
 
     /* 2. Midnight Dark Theme */
@@ -67,6 +71,7 @@
       --danger-light: rgba(239, 68, 68, 0.15);
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.5);
+      --logo-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
     }
 
     /* 3. Royal Gold Luxury Theme */
@@ -90,6 +95,7 @@
       --danger-light: rgba(248, 113, 113, 0.15);
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
+      --logo-shadow: 0 0 14px rgba(234, 179, 8, 0.45);
     }
 
     /* 4. Crimson Red Creator Theme */
@@ -113,6 +119,7 @@
       --danger-light: rgba(239, 68, 68, 0.15);
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
+      --logo-shadow: 0 0 14px rgba(239, 68, 68, 0.45);
     }
 
     /* 5. Editor Neon Cyberpunk Theme */
@@ -136,6 +143,7 @@
       --danger-light: rgba(244, 63, 94, 0.15);
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.7);
+      --logo-shadow: 0 0 16px rgba(6, 182, 212, 0.6);
     }
 
     * {
@@ -209,13 +217,35 @@
       border-color: var(--primary);
     }
 
+    /* Brand Logo & Header Layout */
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .header-logo-img {
+      height: 40px;
+      width: auto;
+      max-width: 65px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(var(--logo-shadow));
+      transition: transform 0.2s ease;
+    }
+
+    .header-logo-img:hover {
+      transform: scale(1.05);
+    }
+
     .brand-stack {
       display: flex;
       flex-direction: column;
     }
 
     .brand-title {
-      font-size: 1.65rem;
+      font-size: 1.55rem;
       font-weight: 900;
       letter-spacing: -0.035em;
       background: var(--brand-grad);
@@ -264,7 +294,7 @@
       color: var(--text-main);
     }
 
-    /* Sidebar Drawer & Backdrop Overlay */
+    /* Sidebar Drawer */
     .sidebar-overlay {
       position: fixed;
       inset: 0;
@@ -594,7 +624,7 @@
       cursor: pointer;
     }
 
-    /* Order Terminal Layout */
+    /* Order Terminal */
     .config-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -1023,7 +1053,6 @@
       margin-bottom: 8px;
     }
 
-    /* My Created Shops Section */
     .my-shops-container {
       margin-top: 2rem;
       padding-top: 1.5rem;
@@ -1057,9 +1086,7 @@
       margin-bottom: 10px;
     }
 
-    /* ========================================================
-       5-THEME STUDIO APPEARANCE SELECTOR
-       ======================================================== */
+    /* 5-Theme Studio Selector */
     .theme-selector-section {
       margin: 1.8rem 0;
       padding: 1.35rem 0;
@@ -1112,7 +1139,7 @@
       line-height: 1.2;
     }
 
-    /* Toast Notifications */
+    /* Modern Toast Notifications */
     #toast-container {
       position: fixed;
       top: 20px;
@@ -1166,7 +1193,7 @@
     .toast-desc { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); line-height: 1.4; }
     .toast-close-btn { background: transparent; border: none; color: var(--text-subtle); cursor: pointer; font-size: 1.1rem; padding: 0 4px; line-height: 1; }
 
-    /* Modal Backdrop & Dialog */
+    /* Modal Dialog */
     .rex-modal-overlay {
       position: fixed;
       inset: 0;
@@ -1245,14 +1272,11 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    /* ========================================================
-       THEME CONTROLLER (5 Multiple Themes + Persistence)
-       ======================================================== */
+    /* 2. Theme Controller */
     window.setTheme = function(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('rex_theme', themeName);
 
-      // Update UI buttons active state
       var themeBtns = document.querySelectorAll('.theme-card-btn');
       themeBtns.forEach(function(btn) {
         if (btn.getAttribute('data-theme-target') === themeName) {
@@ -1273,9 +1297,7 @@
       showToast("Theme Applied", "Switched to " + (namesMap[themeName] || themeName) + " theme.", "info");
     };
 
-    /* ========================================================
-       PREMIUM POPUP CONTROLLER: Toasts & Modal Dialogs
-       ======================================================== */
+    /* 3. Modern Toasts & Modal Dialogs */
     window.showToast = function(title, message, type) {
       type = type || 'info';
       var container = document.getElementById("toast-container");
@@ -1328,7 +1350,7 @@
       }
     };
 
-    /* 2. Google Auth & User Profile Sync */
+    /* 4. Google Auth & User Profile Sync */
     window.loginWithGoogle = function() {
       auth.signInWithPopup(provider)
         .then(function(result) {
@@ -1438,7 +1460,7 @@
       }
     });
 
-    /* 3. Unique UserID Check & Profile Save */
+    /* 5. UserID Validation & Profile Save */
     window.saveProfileInfo = function() {
       if (!currentUser) {
         showToast("Access Denied", "Please sign in with Google first to save your profile.", "error");
@@ -1496,7 +1518,7 @@
         });
     };
 
-    /* 4. Realtime Listener: User's Created Shops & Delete Shop Option */
+    /* 6. Realtime Listener: User's Created Shops */
     function listenToUserCreatedShops(uid) {
       db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
         var listContainer = document.getElementById("myShopsList");
@@ -1533,7 +1555,6 @@
       });
     }
 
-    /* Delete Shop Function with Confirmation Modal */
     window.deleteShop = function(shopId, shopName) {
       if (!currentUser) {
         showToast("Authentication Required", "Please sign in to manage shops.", "error");
@@ -1555,7 +1576,7 @@
         });
     };
 
-    /* 5. Realtime Firestore Listener: ALL SHOPS */
+    /* 7. Realtime Firestore Listener: ALL SHOPS */
     db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var grid = document.getElementById("shopEditorGrid");
       var emptyBox = document.getElementById("shopEmptyBox");
@@ -1621,7 +1642,7 @@
       console.error("Shops listener error:", error);
     });
 
-    /* 6. Realtime Firestore Listener: ORDERS */
+    /* 8. Realtime Firestore Listener: ORDERS */
     db.collection("orders").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var list = document.getElementById("activeOrdersList");
       var emptyBox = document.getElementById("placedEmptyBox");
@@ -1658,7 +1679,7 @@
       console.error("Firestore Orders Error:", error);
     });
 
-    /* 7. Navigation Control */
+    /* 9. Navigation Control */
     window.openSidebar = function() {
       var sb = document.getElementById("sidebar");
       var ov = document.getElementById("sidebarOverlay");
@@ -1726,7 +1747,7 @@
       window.scrollTo(0, 0);
     };
 
-    /* 8. Registration Flow */
+    /* 10. Registration Flow */
     window.startApplyForEarn = function() {
       if (!currentUser) {
         showToast("Sign In Required", "Please sign in with Google before opening an editor shop.", "info");
@@ -1867,7 +1888,7 @@
         });
     };
 
-    /* 9. Hire Terminal & Dynamic Pricing */
+    /* 11. Hire Terminal & Dynamic Pricing */
     window.openHireTerminal = function(editorKey) {
       var editor = EDITORS_DATA[editorKey];
       if (!editor) {
@@ -1968,7 +1989,7 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    /* 10. Place Order in Firestore */
+    /* 12. Place Order in Firestore */
     window.submitConfiguredOrder = function() {
       var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) {
@@ -2004,7 +2025,6 @@
         });
     };
 
-    // Highlight current active theme button on initial load
     window.addEventListener('DOMContentLoaded', function() {
       var activeTheme = localStorage.getItem('rex_theme') || 'default';
       var themeBtns = document.querySelectorAll('.theme-card-btn');
@@ -2022,10 +2042,10 @@
 
   <div class="studio-bg"></div>
 
-  <!-- Container for Modern Toast Alerts -->
+  <!-- Toast Alerts Container -->
   <div id="toast-container"></div>
 
-  <!-- Modern Confirmation Dialog Modal -->
+  <!-- Modern Confirmation Modal -->
   <div class="rex-modal-overlay" id="customConfirmModal">
     <div class="rex-modal-card">
       <div class="rex-modal-header">
@@ -2056,9 +2076,13 @@
         </svg>
       </button>
 
-      <div class="brand-stack">
-        <span class="brand-title">REX EDIT HUB</span>
-        <span class="brand-section-subtitle" id="headerActiveSubtitle">SHOP</span>
+      <!-- Clean Logo & Brand Heading (Preserves Exact Proportions) -->
+      <div class="brand-wrap">
+        <img src="logo.png" alt="Rex Edit Hub Logo" class="header-logo-img">
+        <div class="brand-stack">
+          <span class="brand-title">REX EDIT HUB</span>
+          <span class="brand-section-subtitle" id="headerActiveSubtitle">SHOP</span>
+        </div>
       </div>
     </div>
 
