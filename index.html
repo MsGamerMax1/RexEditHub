@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rex Edit Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Official Firebase Libraries -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <style>
+    :root {
+      --bg-base: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.96);
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      --success: #059669;
+      --success-light: #ecfdf5;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04);
+      --shadow-card: 0 12px 30px -6px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .studio-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+        linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.3rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+    }
+
+    .three-dot-btn {
+      background: #f1f5f9;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
+    }
+
+    .three-dot-btn:active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    .brand-stack {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      background: linear-gradient(135deg, #0f172a 30%, #4338ca 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.05;
+    }
+
+    .brand-section-subtitle {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .brand-section-subtitle::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .header-user-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-header-login {
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-main);
+    }
+
+    /* Fixed Class-Based Sidebar & Overlay */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(4px);
+      z-index: 9998;
+      display: none;
+      touch-action: manipulation;
+    }
+
+    .sidebar-overlay.open {
+      display: block !important;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -330px;
+      width: 290px;
+      max-width: 85vw;
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid var(--border-subtle);
+      z-index: 9999;
+      transition: left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem 1rem;
+      box-shadow: 15px 0 35px rgba(15, 23, 42, 0.08);
+      overflow-y: auto;
+    }
+
+    .sidebar.open {
+      left: 0 !important;
+    }
+
+    .sidebar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .sidebar-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+    }
+
+    .sidebar-close-btn {
+      background: #f1f5f9;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-mini-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+      cursor: pointer;
+    }
+
+    .sidebar-avatar-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .sidebar-mini-name {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .sidebar-mini-tag {
+      font-size: 0.74rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 15px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .nav-link-btn svg {
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+    }
+
+    .nav-link-btn.active {
+      background: var(--primary-light);
+      border-color: rgba(79, 70, 229, 0.2);
+      color: var(--primary);
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      width: 100%;
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 2.2rem 1.25rem 4rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .editor-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 1.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+      box-shadow: var(--shadow-card);
+    }
+
+    .demo-tag {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 8px;
+    }
+
+    .format-badge-short {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #b45309;
+    }
+
+    .format-badge-long {
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      color: #0369a1;
+    }
+
+    .format-badge-custom {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .editor-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .editor-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .avatar-relex {
+      background: linear-gradient(135deg, #059669, #10b981);
+    }
+
+    .avatar-creator {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+    }
+
+    .editor-status {
+      font-size: 0.8rem;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      background: #f1f5f9;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+      color: var(--text-muted);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.15rem;
+    }
+
+    .price-label {
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      font-weight: 700;
+      display: block;
+    }
+
+    .price-value {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .btn-hire-redirect, .btn-return-shop, .btn-save-profile, .btn-confirm-order, .btn-action-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-hire-redirect:active, .btn-confirm-order:active, .btn-action-primary:active {
+      background: var(--primary-hover);
+    }
+
+    .btn-back {
+      background: #f1f5f9;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .config-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .config-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .preview-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .preview-ratio-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .screen-box {
+      background: #090e1a;
+      border: 2px solid var(--border-strong);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .screen-box.ratio-9-16 {
+      width: 170px;
+      height: 302px;
+    }
+
+    .screen-box.ratio-16-9 {
+      width: 250px;
+      height: 140px;
+    }
+
+    .screen-box.ratio-thumb {
+      width: 240px;
+      height: 135px;
+    }
+
+    .screen-box.ratio-doc {
+      width: 200px;
+      height: 240px;
+    }
+
+    .screen-time-display {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #38bdf8;
+      letter-spacing: 0.05em;
+      z-index: 2;
+    }
+
+    .screen-watermark-hint {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: absolute;
+      bottom: 12px;
+    }
+
+    .screen-caption {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-subtle);
+      margin-top: 1rem;
+    }
+
+    .config-group {
+      margin-bottom: 1.6rem;
+    }
+
+    .config-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+
+    .mode-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mode-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .mode-btn .mode-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .mode-btn .mode-price {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 3px 0;
+    }
+
+    .mode-btn.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .input-duration-wrap {
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: hidden;
+      padding-right: 14px;
+    }
+
+    .input-duration-wrap input {
+      flex: 1;
+      padding: 12px 14px;
+      border: none;
+      background: transparent;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .input-duration-wrap .input-unit {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .time-limit-indicator {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--warning);
+    }
+
+    .calculation-summary-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 10px 0;
+    }
+
+    .summary-total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .total-calculated-price {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .running-order-item {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .order-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      width: fit-content;
+    }
+
+    .status-running {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .empty-state-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+    }
+
+    .empty-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.45rem;
+    }
+
+    .empty-desc {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      max-width: 400px;
+      line-height: 1.55;
+      margin-bottom: 1.6rem;
+    }
+
+    .profile-card-large {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 1.75rem;
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      margin-bottom: 1.75rem;
+    }
+
+    .profile-avatar-large {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .form-input-field {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background: #f8fafc;
+      margin: 6px 0 14px 0;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .form-input-field:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    /* Google Button Styling */
+    .btn-google-auth {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      color: #0f172a;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s ease;
+      margin-bottom: 1rem;
+    }
+
+    .btn-google-auth:hover {
+      background: #f8fafc;
+    }
+
+    .btn-logout {
+      width: 100%;
+      background: var(--danger-light);
+      border: 1px solid #fecaca;
+      color: var(--danger);
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .policy-item {
+      border-left: 3px solid var(--primary);
+      padding-left: 16px;
+      margin-bottom: 1.6rem;
+    }
+
+    .policy-item h4 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .policy-item p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+
+    .alert-saved {
+      display: none;
+      background: var(--success-light);
+      color: #065f46;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .earn-banner-card {
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 1.6rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
+    }
+
+    .earn-banner-text h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .earn-banner-text p {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-apply-earn {
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.92rem;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .warning-box {
+      background: var(--warning-light);
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0 16px 0;
+    }
+
+    .step-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 0.8rem;
+    }
+
+    .mode-config-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .mode-config-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .mode-config-card h5 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <script>
+    /* 1. Firebase Initialization with your exact keys */
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
+      authDomain: "rex-edit-hub.firebaseapp.com",
+      projectId: "rex-edit-hub",
+      storageBucket: "rex-edit-hub.firebasestorage.app",
+      messagingSenderId: "977297939327",
+      appId: "1:977297939327:web:7385c7c9aaf81f9a9f184a",
+      measurementId: "G-CTW92DRSD0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    var currentUser = null;
+
+    /* 2. Google Sign-In and Auth State Sync */
+    window.loginWithGoogle = function() {
+      auth.signInWithPopup(provider)
+        .then(function(result) {
+          currentUser = result.user;
+          alert("Welcome, " + currentUser.displayName + "!");
+          updateUserInterface(currentUser);
+        })
+        .catch(function(error) {
+          console.error("Auth Error:", error);
+          if (location.protocol === "file:") {
+            alert("Google Sign-In Notice:\nGoogle OAuth requires a web domain or localhost (not file://). Please test this on GitHub Pages or VS Code Live Server!");
+          } else {
+            alert("Login Failed: " + error.message);
+          }
+        });
+    };
+
+    window.triggerLogout = function() {
+      auth.signOut().then(function() {
+        currentUser = null;
+        alert("Logged out successfully!");
+        resetUserInterface();
+      });
+    };
+
+    function updateUserInterface(user) {
+      if (!user) return;
+      document.getElementById("profileCardName").textContent = user.displayName;
+      document.getElementById("sidebarProfileName").textContent = user.displayName;
+      document.getElementById("profileUserEmail").textContent = user.email;
+      document.getElementById("inputUsername").value = user.displayName;
+
+      if (user.photoURL) {
+        var avatarImg = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:18px;object-fit:cover;">';
+        var miniAvatarImg = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:10px;object-fit:cover;">';
+        document.getElementById("profileLargeAvatarContainer").innerHTML = avatarImg;
+        document.getElementById("sidebarAvatarContainer").innerHTML = miniAvatarImg;
+      }
+
+      document.getElementById("googleSignInBtn").style.display = "none";
+      document.getElementById("headerLoginBtn").style.display = "none";
+      document.getElementById("logoutBtn").style.display = "block";
+    }
+
+    function resetUserInterface() {
+      document.getElementById("profileCardName").textContent = "Rex Editor";
+      document.getElementById("sidebarProfileName").textContent = "Rex Editor";
+      document.getElementById("profileUserEmail").textContent = "@verified_creator";
+      document.getElementById("inputUsername").value = "Rex Editor";
+
+      document.getElementById("profileLargeAvatarContainer").innerHTML = 
+        '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+      document.getElementById("sidebarAvatarContainer").innerHTML = 
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+
+      document.getElementById("googleSignInBtn").style.display = "flex";
+      document.getElementById("headerLoginBtn").style.display = "flex";
+      document.getElementById("logoutBtn").style.display = "none";
+    }
+
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        currentUser = user;
+        updateUserInterface(user);
+      } else {
+        resetUserInterface();
+      }
+    });
+
+    /* 3. Core Hub Data & State */
+    var EDITORS_DATA = {
+      coolrex: {
+        name: "coolrex",
+        type: "short",
+        category: "Short Editor",
+        ratioText: "9:16 Vertical Cut",
+        screenClass: "ratio-9-16",
+        dimText: "1080 × 1920 • Max 3 Minutes (180s)",
+        maxSeconds: 180,
+        unitShort: "/ 10s",
+        rates: { low: 20, medium: 30, high: 40 }
+      },
+      Relex: {
+        name: "Relex",
+        type: "long",
+        category: "Video Editor",
+        ratioText: "16:9 Widescreen Cut",
+        screenClass: "ratio-16-9",
+        dimText: "1920 × 1080 • YouTube Long-Form",
+        maxSeconds: 1800,
+        unitShort: "/ 1m",
+        rates: { low: 35, medium: 50, high: 75 }
+      }
+    };
+
+    var currentConfig = {
+      editorKey: "coolrex",
+      mode: "medium",
+      duration: 20,
+      calculatedPrice: 60
+    };
+
+    var tempRegistrationData = {
+      role: "Short Editor",
+      portfolioLink: ""
+    };
+
+    /* 4. Robust Class-Based Navigation */
+    window.openSidebar = function() {
+      var sb = document.getElementById("sidebar");
+      var ov = document.getElementById("sidebarOverlay");
+      if (sb) sb.classList.add("open");
+      if (ov) ov.classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
+
+    window.closeSidebar = function() {
+      var sb = document.getElementById("sidebar");
+      var ov = document.getElementById("sidebarOverlay");
+      if (sb) sb.classList.remove("open");
+      if (ov) ov.classList.remove("open");
+      document.body.style.overflow = "";
+    };
+
+    window.toggleSidebar = function() {
+      var sb = document.getElementById("sidebar");
+      if (sb && sb.classList.contains("open")) {
+        window.closeSidebar();
+      } else {
+        window.openSidebar();
+      }
+    };
+
+    window.switchTab = function(viewId) {
+      var viewsMap = {
+        "viewShop": "Shop",
+        "viewOrderConfig": "Order Setup",
+        "viewPlacedOrder": "Placed Order",
+        "viewOrderDelivered": "Order Delivered",
+        "viewProfile": "Profile",
+        "viewLawPolicy": "Law & Policy",
+        "viewRegisterStep1": "Apply for Earn",
+        "viewRegisterStep2": "Shop Confirmation"
+      };
+
+      var subtitleEl = document.getElementById("headerActiveSubtitle");
+      if (subtitleEl && viewsMap[viewId]) {
+        subtitleEl.textContent = viewsMap[viewId].toUpperCase();
+      }
+
+      var navBtns = document.getElementsByClassName("nav-link-btn");
+      for (var i = 0; i < navBtns.length; i++) {
+        navBtns[i].classList.remove("active");
+        if (navBtns[i].getAttribute("data-view") === viewId) {
+          navBtns[i].classList.add("active");
+        }
+      }
+
+      var allViewIds = [
+        "viewShop", "viewOrderConfig", "viewPlacedOrder", 
+        "viewOrderDelivered", "viewProfile", "viewLawPolicy",
+        "viewRegisterStep1", "viewRegisterStep2"
+      ];
+
+      for (var j = 0; j < allViewIds.length; j++) {
+        var sec = document.getElementById(allViewIds[j]);
+        if (sec) {
+          sec.style.display = (allViewIds[j] === viewId) ? "block" : "none";
+        }
+      }
+
+      window.closeSidebar();
+      window.scrollTo(0, 0);
+    };
+
+    /* 5. 2-Step Registration Flow */
+    window.startApplyForEarn = function() {
+      window.switchTab("viewRegisterStep1");
+    };
+
+    window.submitStep1Request = function() {
+      var role = document.getElementById("regWorkType").value;
+      var link = document.getElementById("regPortfolioLink").value.trim();
+
+      if (!link) {
+        alert("Please paste your work portfolio or drive link before submitting.");
+        return;
+      }
+
+      tempRegistrationData.role = role;
+      tempRegistrationData.portfolioLink = link;
+
+      alert("Request sent to Admin (admin.rexedithub@gmail.com)!\n\nStatus: Approved!\nOpening Step 2: Configure your shop name and rate modes.");
+      window.prepareStep2Form(role);
+    };
+
+    window.prepareStep2Form = function(role) {
+      document.getElementById("step2ChosenRole").textContent = role;
+      var unitText = "";
+      var base = 20;
+
+      if (role === "Short Editor") {
+        unitText = "₹ per 10 seconds (Max 3 mins)";
+        base = 20;
+      } else if (role === "Video Editor") {
+        unitText = "₹ per 1 minute";
+        base = 60;
+      } else if (role === "Minecraft Mini Movie Editor") {
+        unitText = "₹ per 3 minutes";
+        base = 150;
+      } else if (role === "Thumbnail Designer") {
+        unitText = "₹ per thumbnail";
+        base = 100;
+      } else {
+        unitText = "₹ per research report";
+        base = 200;
+      }
+
+      document.getElementById("step2ChargeUnitLabel").textContent = "Pricing Rates (" + unitText + ")";
+      document.getElementById("modeUnitLabel1").textContent = "(" + unitText + ")";
+      document.getElementById("modeUnitLabel2").textContent = "(" + unitText + ")";
+      document.getElementById("modeUnitLabel3").textContent = "(" + unitText + ")";
+
+      document.getElementById("modeRate1").value = base;
+      document.getElementById("modeRate2").value = Math.round(base * 1.5);
+      document.getElementById("modeRate3").value = Math.round(base * 2.0);
+
+      window.switchTab("viewRegisterStep2");
+    };
+
+    window.completeEditorRegistration = function() {
+      var shopName = document.getElementById("regShopName").value.trim();
+      if (!shopName) {
+        alert("Please enter a name for your shop!");
+        return;
+      }
+
+      var mode1Name = document.getElementById("modeName1").value.trim() || "Mode 1";
+      var mode1Rate = parseInt(document.getElementById("modeRate1").value, 10) || 20;
+      var mode2Name = document.getElementById("modeName2").value.trim() || "Mode 2";
+      var mode2Rate = parseInt(document.getElementById("modeRate2").value, 10) || 30;
+      var mode3Name = document.getElementById("modeName3").value.trim() || "Mode 3";
+      var mode3Rate = parseInt(document.getElementById("modeRate3").value, 10) || 40;
+
+      var key = "editor_" + Date.now();
+      var role = tempRegistrationData.role;
+
+      var screenClass = "ratio-9-16";
+      var ratioText = "9:16 Vertical Cut";
+      var dimText = "1080 × 1920 • Mobile Format";
+      var maxSec = 180;
+      var unitShort = "/ 10s";
+
+      if (role === "Short Editor") {
+        screenClass = "ratio-9-16";
+        ratioText = "9:16 Vertical Cut";
+        dimText = "1080 × 1920 • Max 3 Mins (180s)";
+        maxSec = 180;
+        unitShort = "/ 10s";
+      } else if (role === "Video Editor") {
+        screenClass = "ratio-16-9";
+        ratioText = "16:9 Long-Form Cut";
+        dimText = "1920 × 1080 • YouTube Format";
+        maxSec = 1800;
+        unitShort = "/ 1m";
+      } else if (role === "Minecraft Mini Movie Editor") {
+        screenClass = "ratio-16-9";
+        ratioText = "16:9 Movie Cinema";
+        dimText = "Cinematic 1080p • 3-Min blocks";
+        maxSec = 1200;
+        unitShort = "/ 3m";
+      } else if (role === "Thumbnail Designer") {
+        screenClass = "ratio-thumb";
+        ratioText = "16:9 Thumbnail Graphic";
+        dimText = "High-CTR 1280 × 720 Image";
+        maxSec = 1;
+        unitShort = "/ thumb";
+      } else {
+        screenClass = "ratio-doc";
+        ratioText = "Script & Topic Dossier";
+        dimText = "Fact-Checked Outline Document";
+        maxSec = 1;
+        unitShort = "/ report";
+      }
+
+      EDITORS_DATA[key] = {
+        name: shopName,
+        type: (role === "Short Editor") ? "short" : "custom",
+        category: role,
+        ratioText: ratioText,
+        screenClass: screenClass,
+        dimText: dimText,
+        maxSeconds: maxSec,
+        unitShort: unitShort,
+        rates: { low: mode1Rate, medium: mode2Rate, high: mode3Rate },
+        modeNames: { low: mode1Name, medium: mode2Name, high: mode3Name }
+      };
+
+      var grid = document.getElementById("shopEditorGrid");
+      var newCardHtml = 
+        '<article class="editor-card">' +
+          '<span class="demo-tag format-badge-custom">' + role + '</span>' +
+          '<div class="editor-header">' +
+            '<div class="editor-avatar avatar-creator">' + shopName.substring(0, 2).toUpperCase() + '</div>' +
+            '<div class="editor-title">' +
+              '<h3>' + shopName + ' <span style="color:#0284c7;">✓</span></h3>' +
+              '<span class="editor-status">Ready for Orders</span>' +
+            '</div>' +
+          '</div>' +
+          '<p class="editor-bio">Verified platform editor specializing in ' + role + '. Full escrow safety.</p>' +
+          '<div class="skill-pills">' +
+            '<span class="pill">' + mode1Name + '</span>' +
+            '<span class="pill">' + mode2Name + '</span>' +
+            '<span class="pill">' + mode3Name + '</span>' +
+          '</div>' +
+          '<div class="card-footer">' +
+            '<div>' +
+              '<span class="price-label">Starts at</span>' +
+              '<span class="price-value">₹' + mode1Rate + ' <small style="font-size:0.75rem; color:#64748b;">' + unitShort + '</small></span>' +
+            '</div>' +
+            '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + key + '\')" type="button">Hire Editor &rarr;</button>' +
+          '</div>' +
+        '</article>';
+
+      grid.insertAdjacentHTML("afterbegin", newCardHtml);
+      alert("Shop " + shopName + " registered and listed successfully!");
+      window.switchTab("viewShop");
+    };
+
+    /* 6. Hire Terminal & Calculation */
+    window.openHireTerminal = function(editorKey) {
+      var editor = EDITORS_DATA[editorKey] || EDITORS_DATA.coolrex;
+      currentConfig.editorKey = editorKey;
+      currentConfig.mode = "medium";
+      currentConfig.duration = (editor.type === "short") ? 20 : 60;
+
+      document.getElementById("configEditorTitle").textContent = "Hire " + editor.name + " (" + editor.category + ")";
+
+      var screenBox = document.getElementById("aspectScreenBox");
+      screenBox.className = "screen-box " + editor.screenClass;
+      document.getElementById("previewRatioBadge").textContent = editor.ratioText;
+      document.getElementById("aspectDimensionText").textContent = editor.dimText;
+
+      var durationInput = document.getElementById("videoDurationInput");
+      durationInput.max = editor.maxSeconds;
+      durationInput.value = currentConfig.duration;
+      document.getElementById("durationLimitText").textContent = "Max: " + editor.maxSeconds + "s";
+
+      var mNames = editor.modeNames || { low: "Low", medium: "Medium", high: "High" };
+      document.getElementById("modeTitleLow").textContent = mNames.low;
+      document.getElementById("modeTitleMed").textContent = mNames.medium;
+      document.getElementById("modeTitleHigh").textContent = mNames.high;
+
+      var uShort = editor.unitShort || "/ 10s";
+      document.getElementById("modePriceLow").textContent = "₹" + editor.rates.low + " " + uShort;
+      document.getElementById("modePriceMedium").textContent = "₹" + editor.rates.medium + " " + uShort;
+      document.getElementById("modePriceHigh").textContent = "₹" + editor.rates.high + " " + uShort;
+
+      window.selectMode("medium");
+      window.switchTab("viewOrderConfig");
+    };
+
+    window.selectMode = function(modeName) {
+      currentConfig.mode = modeName;
+      var modes = ["low", "medium", "high"];
+      modes.forEach(function(m) {
+        var btn = document.getElementById("modeBtn" + m.charAt(0).toUpperCase() + m.slice(1));
+        if (btn) {
+          if (m === modeName) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        }
+      });
+      window.calculateOrderPrice();
+    };
+
+    window.calculateOrderPrice = function() {
+      var editor = EDITORS_DATA[currentConfig.editorKey] || EDITORS_DATA.coolrex;
+      var durationInput = document.getElementById("videoDurationInput");
+      var seconds = parseInt(durationInput.value, 10);
+
+      if (isNaN(seconds) || seconds < 1) seconds = 1;
+
+      if (seconds > editor.maxSeconds) {
+        seconds = editor.maxSeconds;
+        durationInput.value = seconds;
+        alert("Maximum limit for this format is " + editor.maxSeconds + " seconds.");
+      }
+
+      currentConfig.duration = seconds;
+
+      var m = Math.floor(seconds / 60);
+      var s = seconds % 60;
+      document.getElementById("screenTimeDisplay").textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+
+      var rate = editor.rates[currentConfig.mode];
+      var totalPrice = 0;
+      var summaryUnitsText = "";
+
+      if (editor.category === "Short Editor") {
+        var units = (seconds / 10);
+        totalPrice = Math.round(units * rate);
+        summaryUnitsText = units.toFixed(1) + " units (per 10s)";
+      } else if (editor.category === "Video Editor") {
+        var mins = (seconds / 60);
+        totalPrice = Math.round(mins * rate);
+        summaryUnitsText = mins.toFixed(1) + " minutes";
+      } else if (editor.category === "Minecraft Mini Movie Editor") {
+        var blocks = (seconds / 180);
+        totalPrice = Math.round(blocks * rate);
+        summaryUnitsText = blocks.toFixed(1) + " blocks (per 3m)";
+      } else {
+        totalPrice = rate;
+        summaryUnitsText = "1 item unit";
+      }
+
+      currentConfig.calculatedPrice = totalPrice;
+      document.getElementById("summaryBlocks").textContent = summaryUnitsText;
+      document.getElementById("summaryRate").textContent = "₹" + rate + " " + (editor.unitShort || "");
+      document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
+    };
+
+    window.submitConfiguredOrder = function() {
+      var editor = EDITORS_DATA[currentConfig.editorKey];
+      var orderId = "RX-" + Math.floor(1000 + Math.random() * 9000);
+      var clientName = currentUser ? currentUser.displayName : "Guest Client";
+
+      var orderHtml = 
+        '<div class="running-order-item">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<strong style="color:#0f172a; font-size:1.05rem;">Order #' + orderId + ' (' + editor.category + ')</strong>' +
+            '<span class="order-badge-pill status-running">● In Progress</span>' +
+          '</div>' +
+          '<small style="color:#64748b;">Client: <strong>' + clientName + '</strong> &bull; Editor: <strong>' + editor.name + '</strong></small>' +
+          '<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:4px;">' +
+            '<span style="font-size:0.9rem; color:#475569;">Duration: ' + currentConfig.duration + 's</span>' +
+            '<strong style="font-size:1.15rem; color:#4f46e5;">Escrow Locked: ₹' + currentConfig.calculatedPrice + '</strong>' +
+          '</div>' +
+        '</div>';
+
+      var emptyBox = document.getElementById("placedEmptyBox");
+      var list = document.getElementById("activeOrdersList");
+
+      if (emptyBox) emptyBox.style.display = "none";
+      if (list) {
+        list.style.display = "flex";
+        list.insertAdjacentHTML("afterbegin", orderHtml);
+      }
+
+      alert("Order placed! ₹" + currentConfig.calculatedPrice + " locked in escrow protection.");
+      window.switchTab("viewPlacedOrder");
+    };
+
+    window.saveProfileInfo = function() {
+      var name = document.getElementById("inputUsername").value.trim();
+      if (!name) return;
+      document.getElementById("profileCardName").textContent = name;
+      document.getElementById("sidebarProfileName").textContent = name;
+      var alertBox = document.getElementById("profileSaveNotice");
+      alertBox.style.display = "block";
+      setTimeout(function() { alertBox.style.display = "none"; }, 2000);
+    };
+  </script>
+</head>
+<body>
+
+  <div class="studio-bg"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="top-header">
+    <div class="nav-left">
+      <button class="three-dot-btn" onclick="window.toggleSidebar()" aria-label="Toggle Navigation" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="pointer-events: none;">
+          <circle cx="12" cy="5" r="2.3"/>
+          <circle cx="12" cy="12" r="2.3"/>
+          <circle cx="12" cy="19" r="2.3"/>
+        </svg>
+      </button>
+
+      <div class="brand-stack">
+        <span class="brand-title">REX EDIT HUB</span>
+        <span class="brand-section-subtitle" id="headerActiveSubtitle">SHOP</span>
+      </div>
+    </div>
+
+    <div class="header-user-status">
+      <button class="btn-header-login" id="headerLoginBtn" onclick="window.loginWithGoogle()" type="button">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16" height="16" alt="G">
+        Sign in
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="window.closeSidebar()"></div>
+
+  <!-- Sidebar Drawer -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <span class="sidebar-label">Navigation Hub</span>
+      <button class="sidebar-close-btn" onclick="window.closeSidebar()" type="button">&times;</button>
+    </div>
+
+    <div class="sidebar-mini-profile" onclick="window.switchTab('viewProfile')">
+      <div class="sidebar-avatar-box" id="sidebarAvatarContainer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div class="sidebar-mini-info">
+        <div class="sidebar-mini-name" id="sidebarProfileName">Rex Editor</div>
+        <div class="sidebar-mini-tag">View Profile &rarr;</div>
+      </div>
+    </div>
+
+    <ul class="nav-list">
+      <li>
+        <button class="nav-link-btn" data-view="viewProfile" onclick="window.switchTab('viewProfile')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Profile
+        </button>
+      </li>
+      <li>
+        <button class="nav-link-btn active" data-view="viewShop" onclick="window.switchTab('viewShop')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          Shop
+        </button>
+      </li>
+      <li>
+        <button class="nav-link-btn" data-view="viewPlacedOrder" onclick="window.switchTab('viewPlacedOrder')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          Placed Order
+        </button>
+      </li>
+      <li>
+        <button class="nav-link-btn" data-view="viewOrderDelivered" onclick="window.switchTab('viewOrderDelivered')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          Order Delivered
+        </button>
+      </li>
+      <li>
+        <button class="nav-link-btn" data-view="viewLawPolicy" onclick="window.switchTab('viewLawPolicy')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Law and Policy
+        </button>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- 1. Profile View (Google Login & Account Sync) -->
+    <section id="viewProfile" style="display: none;">
+      <div class="section-header">
+        <h1>Profile Settings</h1>
+        <p>Manage your creator identity, Google authentication, and creator shop.</p>
+      </div>
+
+      <div class="earn-banner-card">
+        <div class="earn-banner-text">
+          <h3>Become a Verified Editor</h3>
+          <p>Open your own video editing shop, set your rates, and receive orders with escrow protection.</p>
+        </div>
+        <button class="btn-apply-earn" onclick="window.startApplyForEarn()" type="button">Apply for Earn &rarr;</button>
+      </div>
+
+      <div class="info-card">
+        <div id="profileSaveNotice" class="alert-saved">✓ Profile updated successfully!</div>
+
+        <!-- Google Sign-In Primary Trigger -->
+        <button type="button" class="btn-google-auth" id="googleSignInBtn" onclick="window.loginWithGoogle()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="G">
+          Continue with Google
+        </button>
+
+        <div class="profile-card-large">
+          <div class="profile-avatar-large" id="profileLargeAvatarContainer">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <div>
+            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800; color: #0f172a;">Rex Editor</h2>
+            <p id="profileUserEmail" style="color: var(--primary); font-weight: 700; margin-bottom: 6px;">@verified_creator</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="config-label" for="inputUsername">Display Name</label>
+          <input type="text" id="inputUsername" class="form-input-field" value="Rex Editor" placeholder="Enter custom display name">
+        </div>
+        <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile</button>
+
+        <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()" type="button">Sign Out of Rex Hub</button>
+      </div>
+    </section>
+
+    <!-- 2. Registration Step 1: Submit Application -->
+    <section id="viewRegisterStep1" style="display: none;">
+      <div class="section-header">
+        <button class="btn-back" onclick="window.switchTab('viewProfile')" type="button">&larr; Back to Profile</button>
+        <h1 style="margin-top: 0.8rem;">Send Request for Apply</h1>
+        <p>Submit your profession and verified work portfolio for Admin approval.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="step-indicator">Step 1 of 2: Submission</span>
+
+        <div class="config-group">
+          <label class="config-label" for="regWorkType">1. What you want to sell</label>
+          <select id="regWorkType" class="form-input-field">
+            <option value="Short Editor">Short Editor (9:16 vertical)</option>
+            <option value="Minecraft Mini Movie Editor">Minecraft Mini Movie Editor</option>
+            <option value="Video Editor">Video Editor (16:9 Long-Form)</option>
+            <option value="Thumbnail Designer">Thumbnail Designer</option>
+            <option value="Researcher">Researcher</option>
+          </select>
+        </div>
+
+        <div class="config-group">
+          <label class="config-label" for="regPortfolioLink">2. Send the link of your work</label>
+          <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/... or portfolio link">
+          
+          <div class="warning-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span><strong>Warning:</strong> Don't send fake work! All links undergo strict originality inspection. Plagiarized accounts are permanently blacklisted.</span>
+          </div>
+        </div>
+
+        <div class="config-group">
+          <label class="config-label">3. Send request for Apply to Admin</label>
+          <input type="text" class="form-input-field" value="Rex Admin (admin.rexedithub@gmail.com)" readonly style="background:#f1f5f9; color:#475569; font-weight:700;">
+        </div>
+
+        <button class="btn-action-primary" onclick="window.submitStep1Request()" type="button" style="width:100%; justify-content:center;">
+          Submit Application to Admin &rarr;
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. Registration Step 2: Shop Setup -->
+    <section id="viewRegisterStep2" style="display: none;">
+      <div class="section-header">
+        <h1>Shop Setup & Rate Confirmation</h1>
+        <p>Application approved! Configure your shop brand name and custom 3-mode rate tiers.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="step-indicator" style="background:#ecfdf5; color:#065f46;">Step 2 of 2: Approved</span>
+
+        <div class="config-group">
+          <label class="config-label" for="regShopName">1. Name of your Shop</label>
+          <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Rex Studio, PixelLab Hub">
+          <small style="color:var(--text-muted);">Approved Specialty: <strong id="step2ChosenRole" style="color:var(--primary);">Short Editor</strong></small>
+        </div>
+
+        <div class="config-group">
+          <label class="config-label" id="step2ChargeUnitLabel">2. Pricing Structure</label>
+          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom: 8px;">
+            Configure rates for up to 3 custom modes. Clients choose these tiers when ordering from you.
+          </p>
+
+          <div class="mode-config-grid">
+            <div class="mode-config-card">
+              <h5>Mode 1 (Entry)</h5>
+              <input type="text" id="modeName1" class="form-input-field" value="Basic Cut" placeholder="Mode Name">
+              <label style="font-size:0.75rem; color:#64748b; font-weight:700;">Rate <span id="modeUnitLabel1"></span></label>
+              <input type="number" id="modeRate1" class="form-input-field" value="20" min="5">
+            </div>
+
+            <div class="mode-config-card">
+              <h5>Mode 2 (Popular)</h5>
+              <input type="text" id="modeName2" class="form-input-field" value="Dynamic Standard" placeholder="Mode Name">
+              <label style="font-size:0.75rem; color:#64748b; font-weight:700;">Rate <span id="modeUnitLabel2"></span></label>
+              <input type="number" id="modeRate2" class="form-input-field" value="30" min="5">
+            </div>
+
+            <div class="mode-config-card">
+              <h5>Mode 3 (Premium)</h5>
+              <input type="text" id="modeName3" class="form-input-field" value="High Retention FX" placeholder="Mode Name">
+              <label style="font-size:0.75rem; color:#64748b; font-weight:700;">Rate <span id="modeUnitLabel3"></span></label>
+              <input type="number" id="modeRate3" class="form-input-field" value="40" min="5">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-action-primary" onclick="window.completeEditorRegistration()" type="button" style="width:100%; justify-content:center; margin-top:12px;">
+          Complete Registration & Launch Shop &rarr;
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. Shop View -->
+    <section id="viewShop" style="display: block;">
+      <div class="section-header">
+        <h1>Editor Shop</h1>
+        <p>Book verified video editors with 100% escrow protection. Choose your project format below.</p>
+      </div>
+
+      <div class="editor-grid" id="shopEditorGrid">
+        <article class="editor-card">
+          <span class="demo-tag format-badge-short">9:16 Shorts Pro</span>
+          <div class="editor-header">
+            <div class="editor-avatar">CR</div>
+            <div class="editor-title">
+              <h3>coolrex <span style="color:#0284c7;">✓</span></h3>
+              <span class="editor-status">Ready for Orders</span>
+            </div>
+          </div>
+          <p class="editor-bio">Specialist in 9:16 Shorts & Reels. Beat velocity sync, captions, and retention editing (Max 3 Mins).</p>
+          <div class="skill-pills">
+            <span class="pill">Shorts (9:16)</span>
+            <span class="pill">Velocity</span>
+            <span class="pill">Subtitles</span>
+          </div>
+          <div class="card-footer">
+            <div>
+              <span class="price-label">Starts at</span>
+              <span class="price-value">₹20 <small style="font-size:0.75rem; color:#64748b;">/ 10s</small></span>
+            </div>
+            <button class="btn-hire-redirect" onclick="window.openHireTerminal('coolrex')" type="button">Hire Editor &rarr;</button>
+          </div>
+        </article>
+
+        <article class="editor-card">
+          <span class="demo-tag format-badge-long">16:9 Long-Form</span>
+          <div class="editor-header">
+            <div class="editor-avatar avatar-relex">RX</div>
+            <div class="editor-title">
+              <h3>Relex <span style="color:#0284c7;">✓</span></h3>
+              <span class="editor-status">Ready for Orders</span>
+            </div>
+          </div>
+          <p class="editor-bio">Specialist in 16:9 widescreen YouTube & commercial videos. Narrative pacing and color grading.</p>
+          <div class="skill-pills">
+            <span class="pill">YouTube (16:9)</span>
+            <span class="pill">Cinematic</span>
+            <span class="pill">Sound FX</span>
+          </div>
+          <div class="card-footer">
+            <div>
+              <span class="price-label">Starts at</span>
+              <span class="price-value">₹35 <small style="font-size:0.75rem; color:#64748b;">/ 1m</small></span>
+            </div>
+            <button class="btn-hire-redirect" onclick="window.openHireTerminal('Relex')" type="button">Hire Editor &rarr;</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. Order Terminal -->
+    <section id="viewOrderConfig" style="display: none;">
+      <div class="section-header">
+        <button class="btn-back" onclick="window.switchTab('viewShop')" type="button">&larr; Back to Shop</button>
+        <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Editor Terminal</h1>
+        <p>Configure project length, edit mode quality, and verify your calculated escrow payment.</p>
+      </div>
+
+      <div class="config-layout">
+        <div class="aspect-preview-column">
+          <div class="preview-card">
+            <span class="preview-ratio-label" id="previewRatioBadge">9:16 Vertical Cut</span>
+            <div class="screen-box" id="aspectScreenBox">
+              <div class="screen-time-display" id="screenTimeDisplay">00:20</div>
+              <div class="screen-watermark-hint">Watermarked Preview Draft</div>
+            </div>
+            <span class="screen-caption" id="aspectDimensionText">1080 × 1920 • Max 3 Minutes (180s)</span>
+          </div>
+        </div>
+
+        <div class="calculator-column">
+          <div class="info-card">
+            <div class="config-group">
+              <label class="config-label">Select Editing Quality Mode</label>
+              <div class="mode-selector-grid">
+                <button type="button" class="mode-btn" id="modeBtnLow" onclick="window.selectMode('low')">
+                  <span class="mode-name" id="modeTitleLow">Low</span>
+                  <span class="mode-price" id="modePriceLow">₹20 / 10s</span>
+                </button>
+                <button type="button" class="mode-btn active" id="modeBtnMedium" onclick="window.selectMode('medium')">
+                  <span class="mode-name" id="modeTitleMed">Medium</span>
+                  <span class="mode-price" id="modePriceMedium">₹30 / 10s</span>
+                </button>
+                <button type="button" class="mode-btn" id="modeBtnHigh" onclick="window.selectMode('high')">
+                  <span class="mode-name" id="modeTitleHigh">High</span>
+                  <span class="mode-price" id="modePriceHigh">₹40 / 10s</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="config-group">
+              <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <label class="config-label" for="videoDurationInput">Video Duration (Units / Seconds)</label>
+                <span class="time-limit-indicator" id="durationLimitText">Max: 180s</span>
+              </div>
+              <div class="input-duration-wrap">
+                <input type="number" id="videoDurationInput" value="20" min="1" max="1800" oninput="window.calculateOrderPrice()">
+                <span class="input-unit">Units</span>
+              </div>
+            </div>
+
+            <div class="calculation-summary-box">
+              <div class="summary-line">
+                <span>Calculated Volume:</span>
+                <strong id="summaryBlocks">2.0 units</strong>
+              </div>
+              <div class="summary-line">
+                <span>Tier Rate:</span>
+                <strong id="summaryRate">₹30 / 10s</strong>
+              </div>
+              <div class="summary-divider"></div>
+              <div class="summary-total-line">
+                <span>Total Escrow Amount:</span>
+                <span class="total-calculated-price" id="summaryTotal">₹60</span>
+              </div>
+            </div>
+
+            <button class="btn-confirm-order" onclick="window.submitConfiguredOrder()" type="button">
+              Lock Escrow & Place Order &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Placed Order View -->
+    <section id="viewPlacedOrder" style="display: none;">
+      <div class="section-header">
+        <h1>Placed Order</h1>
+        <p>Live progress tracking and active escrow projects currently being edited.</p>
+      </div>
+      <div class="info-card">
+        <div class="empty-state-box" id="placedEmptyBox">
+          <h2 class="empty-title">No Order Placed</h2>
+          <p class="empty-desc">You currently have no active editing orders in progress. Hire a verified editor to get started.</p>
+          <button class="btn-return-shop" onclick="window.switchTab('viewShop')" type="button">Shop Editors</button>
+        </div>
+
+        <div id="activeOrdersList" style="display: none; flex-direction: column; gap: 14px;"></div>
+      </div>
+    </section>
+
+    <!-- 7. Order Delivered View -->
+    <section id="viewOrderDelivered" style="display: none;">
+      <div class="section-header">
+        <h1>Order Delivered</h1>
+        <p>Download and access finalized clean video files from approved escrow orders.</p>
+      </div>
+      <div class="info-card">
+        <div class="empty-state-box">
+          <h2 class="empty-title">No Orders Delivered Yet</h2>
+          <p class="empty-desc">Once your editor completes a project and you approve the preview, your clean files will appear here.</p>
+          <button class="btn-return-shop" onclick="window.switchTab('viewShop')" type="button">Shop Editors</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Law & Policy View -->
+    <section id="viewLawPolicy" style="display: none;">
+      <div class="section-header">
+        <h1>Law and Policy</h1>
+        <p>Binding protection rules ensuring transparent transactions for both clients and editors.</p>
+      </div>
+      <div class="info-card">
+        <div class="policy-item">
+          <h4>1. Escrow Guarantee</h4>
+          <p>Client payments remain locked in platform escrow before editing starts. Payouts are made only after preview approval.</p>
+        </div>
+        <div class="policy-item">
+          <h4>2. Anti-Theft Watermarking</h4>
+          <p>Draft video cuts must contain a center watermark. Clean unwatermarked files are provided once escrow release is confirmed.</p>
+        </div>
+        <div class="policy-item">
+          <h4>3. Delay Penalties & Refund</h4>
+          <p>If an editor fails to deliver within the agreed timeframe without mutual agreement, the client receives a 100% refund.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
