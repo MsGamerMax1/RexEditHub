@@ -269,6 +269,7 @@
       var reason = document.getElementById("rejectReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejection.", "error"); return; }
       if (!activeRejectOrderId) return;
+
       db.collection("orders").doc(activeRejectOrderId).update({
         status: "Rejected: " + reason
       }).then(function() {
@@ -277,28 +278,60 @@
       }).catch(function(err) { showToast("Error", err.message, "error"); });
     };
 
-    // 1. Editor Confirms -> Locked & Sent to Super Admin
-    window.editorConfirmOrder = function(docId, orderId, clientName, clientEmail, price) {
+    // 1. Editor Confirms -> Locks & Dispatches Email with working button to Super Admin
+    window.editorConfirmOrder = function(docId, orderId, clientName, clientEmail, price, editorName, footageLink, instructions, modeName, duration, category) {
       db.collection("orders").doc(docId).update({
         status: "Pending Admin Approval (Locked)"
       }).then(function() {
-        showToast("Confirmed", "Order confirmed! Waiting for Super Admin QR approval.", "success");
-        var mailtoAdmin = "mailto:" + SUPER_ADMIN_EMAIL + 
-          "?subject=URGENT:%20Approve%20Order%20" + orderId + 
-          "&body=Hello%20Admin,%0D%0A%0D%0AThe%20editor%20has%20confirmed%20Order%20" + orderId + "%20(Client:%20" + encodeURIComponent(clientName) + ",%20₹" + price + ").%0D%0A%0D%0APlease%20approve%20the%20order%20on%20the%20Rex%20Edit%20Hub%20dashboard.";
-        window.location.href = mailtoAdmin;
+        showToast("Order Confirmed", "Locked & forwarded to Super Admin.", "success");
+
+        var adminSendQrUrl = "mailto:" + encodeURIComponent(clientEmail) + 
+          "?subject=" + encodeURIComponent("Official Payment QR for Order " + orderId) + 
+          "&body=" + encodeURIComponent(
+            "Hello " + clientName + ",\n\n" +
+            "Your order " + orderId + " has been approved! Please scan our official UPI QR code below to lock your payment in escrow:\n\n" +
+            "[PASTE YOUR UPI QR IMAGE LINK OR UPI ID HERE]\n\n" +
+            "⚠️ WARNING: Do not upload fake or AI-generated payment receipts. Manual verification will be conducted.\n\n" +
+            "Reply to this email with your payment screenshot to begin video editing work.\n\n" +
+            "To cancel, reply 'CANCEL'."
+          );
+
+        var adminRejectUrl = "mailto:" + encodeURIComponent(clientEmail) + 
+          "?subject=" + encodeURIComponent("Order Declined - " + orderId) + 
+          "&body=" + encodeURIComponent("Hello " + clientName + ",\n\nYour order " + orderId + " was declined by admin.");
+
+        emailjs.send("service_ii7zzqx", "template_ob1ef5u", {
+          to_email: SUPER_ADMIN_EMAIL,
+          recipient_name: "Super Admin",
+          mail_title: "EDITOR CONFIRMED ORDER #" + orderId,
+          mail_message: "The assigned editor (" + editorName + ") has reviewed and locked the project details. Click 'Send QR to Client' below to dispatch official escrow instructions.",
+          order_id: orderId,
+          client_name: clientName,
+          client_email: clientEmail,
+          editor_name: editorName,
+          category: category,
+          mode_name: modeName,
+          duration: duration,
+          price: price,
+          footage_link: footageLink,
+          instructions: instructions || "None",
+          primary_action_text: "Send QR to Client",
+          primary_action_url: adminSendQrUrl,
+          secondary_action_text: "Decline Request",
+          secondary_action_url: adminRejectUrl
+        });
       }).catch(function(err) { showToast("Error", err.message, "error"); });
     };
 
-    // 2. Admin Dispatches Locked Official QR
+    // 2. Admin Quick Dispatch from Dashboard
     window.adminApproveOrder = function(docId, orderId, clientEmail, clientName, price) {
       db.collection("orders").doc(docId).update({
         status: "In Progress (QR Sent - Escrow Awaiting)"
       }).then(function() {
-        showToast("Admin Approved", "Order approved. QR dispatched to client.", "success");
+        showToast("Admin Dispatched", "Escrow initiated. Opening mail client.", "success");
         var mailtoClient = "mailto:" + clientEmail + 
-          "?subject=Secure%20Payment%20QR%20for%20Order%20" + orderId + 
-          "&body=Hello%20" + encodeURIComponent(clientName) + ",%0D%0A%0D%0AYour%20order%20" + orderId + "%20for%20₹" + price + "%20has%20been%20officially%20approved!%20Please%20scan%20our%20official%20UPI%20QR%20code%20to%20lock%20escrow.%0D%0A%0D%0A⚠️%20WARNING:%20Do%20not%20share%20fake%20payment%20images%20generated%20by%20AI%20or%20third-party%20tools.%20Manual%20verification%20is%20strictly%20enforced.%0D%0A%0D%0APlease%20reply%20to%20this%20email%20with%20your%20original%20payment%20screenshot%20to%20start%20work.%0D%0A%0D%0AReply%20'DONE%20PAYMENT'%20to:%20" + SUPER_ADMIN_EMAIL;
+          "?subject=Official%20Payment%20QR%20for%20Order%20" + orderId + 
+          "&body=Hello%20" + encodeURIComponent(clientName) + ",%0D%0A%0D%0AYour%20order%20" + orderId + "%20for%20₹" + price + "%20has%20been%20officially%20approved!%20Please%20scan%20our%20official%20UPI%20QR%20code%20to%20lock%20escrow:%0D%0A%0D%0A[PASTE%20UPI%20ID%20OR%20QR%20LINK%20HERE]%0D%0A%0D%0A⚠️%20WARNING:%20Do%20not%20share%20fake%20payment%20images%20generated%20by%20AI%20or%20third-party%20tools.%20Manual%20verification%20is%20strictly%20enforced.%0D%0A%0D%0APlease%20reply%20to%20this%20email%20with%20your%20payment%20screenshot%20to%20start%20work.%0D%0A%0D%0AIf%20you%20wish%20to%20cancel,%20reply%20'CANCEL'%20to%20" + SUPER_ADMIN_EMAIL;
         window.location.href = mailtoClient;
       }).catch(function(err) { showToast("Error", err.message, "error"); });
     };
@@ -468,10 +501,10 @@
           if (isSuperAdmin || isShopOwner) {
             count++;
             var actions = '';
-            if (data.status === "Wait for editor response") {
-              actions = '<div class="editor-action-row"><button class="btn-action-accept" onclick="window.editorConfirmOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientName) + '\', \'' + escapeHtml(data.clientEmail) + '\', ' + data.price + ')">Confirm Order (Send to Admin)</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
+            if (data.status === "Wait for editor response" && isShopOwner) {
+              actions = '<div class="editor-action-row"><button class="btn-action-accept" onclick="window.editorConfirmOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientName) + '\', \'' + escapeHtml(data.clientEmail) + '\', ' + data.price + ', \'' + escapeHtml(data.editorName) + '\', \'' + escapeHtml(data.footageLink) + '\', \'' + escapeHtml(data.instructions) + '\', \'' + escapeHtml(data.modeName) + '\', ' + data.duration + ', \'' + escapeHtml(data.category) + '\')">Confirm Order (Send to Admin)</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
             } else if (data.status === "Pending Admin Approval (Locked)" && isSuperAdmin) {
-              actions = '<div class="editor-action-row"><button class="btn-action-admin-approve" onclick="window.adminApproveOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', ' + data.price + ')">Admin Approve & Send QR &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
+              actions = '<div class="editor-action-row"><button class="btn-action-admin-approve" onclick="window.adminApproveOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', ' + data.price + ')">Admin Dispatch QR to Client &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
             } else {
               actions = '<span style="font-size:0.8rem; font-weight:700; color:var(--primary); margin-top:6px;">Status: ' + escapeHtml(data.status) + '</span>';
             }
@@ -489,7 +522,6 @@
     window.closeSidebar = function() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebarOverlay").classList.remove("open"); };
     window.toggleSidebar = function() { var sb = document.getElementById("sidebar"); if (sb.classList.contains("open")) window.closeSidebar(); else window.openSidebar(); };
 
-    // BULLETPROOF TAB SWITCHING (No Overlapping)
     window.switchTab = function(viewId, clickedBtn) {
       var allViews = ["viewShop", "viewOrderConfig", "viewPlacedOrder", "viewEditorManage", "viewProfile", "viewLawPolicy", "viewRegisterStep1", "viewRegisterStep2"];
       for (var i = 0; i < allViews.length; i++) {
@@ -584,6 +616,7 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
+    // Client Submits -> Dispatches directly to Editor's Email
     window.submitConfiguredOrder = function() {
       if (!currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab('viewProfile'); return; }
       var editor = EDITORS_DATA[currentConfig.editorKey];
@@ -594,19 +627,41 @@
       var orderIdCode = "RX-" + Math.floor(1000 + Math.random() * 9000);
       var orderData = {
         orderId: orderIdCode, editorId: currentConfig.editorKey, editorName: editor.name,
-        editorUid: editor.ownerUid, category: editor.category, modeName: editor.modeNames[currentConfig.mode],
-        duration: currentConfig.duration, price: currentConfig.calculatedPrice, footageLink: footageUrl,
-        instructions: instructions, clientName: currentUser.displayName, clientEmail: currentUser.email,
+        editorUid: editor.ownerUid, editorEmail: editor.ownerEmail || "", category: editor.category,
+        modeName: editor.modeNames[currentConfig.mode], duration: currentConfig.duration, price: currentConfig.calculatedPrice,
+        footageLink: footageUrl, instructions: instructions, clientName: currentUser.displayName, clientEmail: currentUser.email,
         clientUid: currentUser.uid, status: "Wait for editor response", createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       db.collection("orders").add(orderData).then(function() {
+        var editorAcceptUrl = "https://msgamermax1.github.io/RexEditHub/";
+        var editorRejectUrl = "mailto:" + encodeURIComponent(currentUser.email) + 
+          "?subject=" + encodeURIComponent("Order Declined - " + orderIdCode) + 
+          "&body=" + encodeURIComponent("Hello " + currentUser.displayName + ",\n\nUnfortunately I cannot take your order " + orderIdCode + " at this time.");
+
         emailjs.send("service_ii7zzqx", "template_ob1ef5u", {
-          order_id: orderIdCode, editor_name: editor.name, client_name: currentUser.displayName,
-          client_email: currentUser.email, category: editor.category, mode_name: editor.modeNames[currentConfig.mode],
-          duration: currentConfig.duration, price: currentConfig.calculatedPrice, footage_link: footageUrl, instructions: instructions || "None"
+          to_email: editor.ownerEmail || SUPER_ADMIN_EMAIL,
+          recipient_name: editor.name,
+          mail_title: "NEW ORDER REQUEST RECEIVED",
+          mail_message: "A new client has requested an editing project. Review the details below and select your action.",
+          order_id: orderIdCode,
+          client_name: currentUser.displayName,
+          client_email: currentUser.email,
+          editor_name: editor.name,
+          category: editor.category,
+          mode_name: editor.modeNames[currentConfig.mode],
+          duration: currentConfig.duration,
+          price: currentConfig.calculatedPrice,
+          footage_link: footageUrl,
+          instructions: instructions || "None",
+          primary_action_text: "Accept Order",
+          primary_action_url: editorAcceptUrl,
+          secondary_action_text: "Decline Order",
+          secondary_action_url: editorRejectUrl
         });
-        showToast("Sent", "Request sent successfully!", "success"); window.switchTab('viewPlacedOrder');
+
+        showToast("Sent", "Order sent to " + editor.name + " for review!", "success");
+        window.switchTab('viewPlacedOrder');
       });
     };
   </script>
@@ -625,7 +680,7 @@
         <h3 class="rex-modal-title">Reject Order Request</h3>
       </div>
       <p class="rex-modal-text">Provide a clear reason for rejection.</p>
-      <textarea id="rejectReasonInput" class="form-textarea-field" placeholder="Reason for rejecting this request..."></textarea>
+      <textarea id="rejectReasonInput" class="form-textarea-field" placeholder="Reason for rejection..."></textarea>
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeRejectModal()" type="button">Cancel</button>
         <button class="rex-btn-confirm-delete" onclick="window.submitOrderRejection()" type="button">Confirm Rejection</button>
@@ -676,7 +731,6 @@
 
   <main class="main-container">
 
-    <!-- Profile View -->
     <section id="viewProfile" style="display: none;">
       <div class="section-header"><h1>Profile Settings</h1></div>
       <div class="earn-banner-card">
@@ -715,7 +769,6 @@
       </div>
     </section>
 
-    <!-- Register Step 1 -->
     <section id="viewRegisterStep1" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewProfile', null)">&larr; Back</button>
@@ -733,7 +786,6 @@
       </div>
     </section>
 
-    <!-- Register Step 2 -->
     <section id="viewRegisterStep2" style="display: none;">
       <div class="section-header"><h1>Finalize Shop Setup</h1></div>
       <div class="info-card">
@@ -743,14 +795,12 @@
       </div>
     </section>
 
-    <!-- Shop View -->
     <section id="viewShop" style="display: block;">
       <div class="section-header"><h1>Editor Shop</h1><p>Choose an editor and request a project.</p></div>
       <div class="info-card" id="shopEmptyBox" style="display: none;"><div class="empty-state-box"><h2 class="empty-title">No Editors Available</h2></div></div>
       <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
-    <!-- Order Setup View -->
     <section id="viewOrderConfig" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewShop', null)">&larr; Back to Shop</button>
@@ -785,7 +835,6 @@
       </div>
     </section>
 
-    <!-- Placed Orders View -->
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header"><h1>Placed Orders</h1><p>Live tracking of your requests.</p></div>
       <div class="info-card">
@@ -794,9 +843,8 @@
       </div>
     </section>
 
-    <!-- Incoming Requests (Editor / Admin) -->
     <section id="viewEditorManage" style="display: none;">
-      <div class="section-header"><h1>Incoming Requests</h1><p>Review, lock, and manage incoming orders.</p></div>
+      <div class="section-header"><h1>Incoming Requests</h1><p>Confirm orders to forward to Super Admin.</p></div>
       <div class="info-card">
         <div id="incomingOrdersList" style="display: flex; flex-direction: column; gap: 14px;">
           <p style="color:var(--text-muted);">Sign in to view requests.</p>
@@ -804,14 +852,12 @@
       </div>
     </section>
 
-    <!-- Law & Policy View -->
     <section id="viewLawPolicy" style="display: none;">
       <div class="section-header"><h1>Law & Policy</h1></div>
       <div class="info-card">
-        <div class="policy-item"><h4>Escrow Protection</h4><p>Payments are secured and verified upon milestone delivery.</p></div>
+        <div class="policy-item"><h4>Escrow Protection</h4><p>Payments are secured and verified upon delivery.</p></div>
       </div>
     </section>
-
   </main>
 </body>
 </html>
