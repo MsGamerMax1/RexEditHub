@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Official Google Firebase Libraries (Auth + Firestore Cloud Database) -->
+  <!-- Official Google Firebase Libraries -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -457,6 +457,24 @@
 
     .btn-hire-redirect:active, .btn-confirm-order:active, .btn-action-primary:active {
       background: var(--primary-hover);
+    }
+
+    .btn-delete-shop {
+      background: var(--danger-light);
+      border: 1px solid #fecaca;
+      color: var(--danger);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-delete-shop:hover {
+      background: #fee2e2;
     }
 
     .btn-back {
@@ -908,10 +926,44 @@
       color: var(--text-main);
       margin-bottom: 8px;
     }
+
+    /* My Created Shops Section in Profile */
+    .my-shops-container {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .my-shops-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.1rem;
+    }
+
+    .my-shop-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .my-shop-item {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
   </style>
 
   <script>
-    /* 1. Firebase Initialization with your verified keys */
+    /* 1. Firebase Initialization */
     const firebaseConfig = {
       apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
       authDomain: "rex-edit-hub.firebaseapp.com",
@@ -928,8 +980,7 @@
     const provider = new firebase.auth.GoogleAuthProvider();
 
     var currentUser = null;
-
-    /* Real dynamic shops memory (No fake coolrex/Relex) */
+    var currentUserIdHandle = "";
     var EDITORS_DATA = {};
 
     var currentConfig = {
@@ -944,19 +995,17 @@
       portfolioLink: ""
     };
 
-    /* Utility: Prevent HTML injection */
     function escapeHtml(str) {
       if (!str) return "";
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    /* 2. Google Authentication & State Listener */
+    /* 2. Google Auth & User Profile Sync */
     window.loginWithGoogle = function() {
       auth.signInWithPopup(provider)
         .then(function(result) {
           currentUser = result.user;
-          alert("Welcome, " + currentUser.displayName + "!");
-          updateUserInterface(currentUser);
+          syncUserProfile(currentUser);
         })
         .catch(function(error) {
           console.error("Auth Error:", error);
@@ -971,17 +1020,55 @@
     window.triggerLogout = function() {
       auth.signOut().then(function() {
         currentUser = null;
+        currentUserIdHandle = "";
         alert("Logged out successfully!");
         resetUserInterface();
       });
     };
 
-    function updateUserInterface(user) {
+    /* Load/Create persistent user profile in Firestore */
+    function syncUserProfile(user) {
       if (!user) return;
-      document.getElementById("profileCardName").textContent = user.displayName;
-      document.getElementById("sidebarProfileName").textContent = user.displayName;
+      var userRef = db.collection("users").doc(user.uid);
+
+      userRef.get().then(function(doc) {
+        if (doc.exists) {
+          var userData = doc.data();
+          currentUserIdHandle = userData.userId || user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
+          updateUserInterface(user, userData.displayName || user.displayName, currentUserIdHandle);
+        } else {
+          // Generate default unique handle from email prefix
+          var baseHandle = user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
+          currentUserIdHandle = baseHandle;
+          
+          userRef.set({
+            userId: baseHandle,
+            displayName: user.displayName || baseHandle,
+            email: user.email,
+            photoURL: user.photoURL || "",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(function() {
+            updateUserInterface(user, user.displayName, baseHandle);
+          });
+        }
+      }).catch(function(err) {
+        console.error("User fetch error:", err);
+        updateUserInterface(user, user.displayName, user.email.split("@")[0]);
+      });
+
+      // Listen for shops created by this user
+      listenToUserCreatedShops(user.uid);
+    }
+
+    function updateUserInterface(user, displayName, handle) {
+      if (!user) return;
+      document.getElementById("profileCardName").textContent = displayName || user.displayName;
+      document.getElementById("sidebarProfileName").textContent = displayName || user.displayName;
+      document.getElementById("profileUserIdDisplay").textContent = "@" + handle;
       document.getElementById("profileUserEmail").textContent = user.email;
-      document.getElementById("inputUsername").value = user.displayName;
+      
+      document.getElementById("inputDisplayName").value = displayName || user.displayName;
+      document.getElementById("inputUserId").value = handle;
 
       if (user.photoURL) {
         var avatarImg = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:18px;object-fit:cover;">';
@@ -996,10 +1083,12 @@
     }
 
     function resetUserInterface() {
-      document.getElementById("profileCardName").textContent = "Rex Editor";
-      document.getElementById("sidebarProfileName").textContent = "Rex Editor";
-      document.getElementById("profileUserEmail").textContent = "@verified_creator";
-      document.getElementById("inputUsername").value = "Rex Editor";
+      document.getElementById("profileCardName").textContent = "Guest Creator";
+      document.getElementById("sidebarProfileName").textContent = "Guest Creator";
+      document.getElementById("profileUserIdDisplay").textContent = "@guest";
+      document.getElementById("profileUserEmail").textContent = "Sign in to activate profile";
+      document.getElementById("inputDisplayName").value = "";
+      document.getElementById("inputUserId").value = "";
 
       document.getElementById("profileLargeAvatarContainer").innerHTML = 
         '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
@@ -1009,18 +1098,141 @@
       document.getElementById("googleSignInBtn").style.display = "flex";
       document.getElementById("headerLoginBtn").style.display = "flex";
       document.getElementById("logoutBtn").style.display = "none";
+
+      document.getElementById("myShopsList").innerHTML = "<p style='color:#94a3b8; font-size:0.9rem;'>Sign in to see shops created by you.</p>";
+      document.getElementById("myShopsCountBadge").textContent = "0 Created";
     }
 
     auth.onAuthStateChanged(function(user) {
       if (user) {
         currentUser = user;
-        updateUserInterface(user);
+        syncUserProfile(user);
       } else {
         resetUserInterface();
       }
     });
 
-    /* 3. Realtime Firestore Listener: SHOPS (Zero Fake Data) */
+    /* 3. Unique UserId Check & Profile Save */
+    window.saveProfileInfo = function() {
+      if (!currentUser) {
+        alert("Please sign in with Google first to save your profile!");
+        return;
+      }
+
+      var newDisplayName = document.getElementById("inputDisplayName").value.trim();
+      var rawHandle = document.getElementById("inputUserId").value.trim().toLowerCase().replace(/^@/, '');
+
+      if (!newDisplayName) {
+        alert("Please enter a Display Name!");
+        return;
+      }
+
+      if (!rawHandle || rawHandle.length < 3) {
+        alert("UserId must be at least 3 characters long!");
+        return;
+      }
+
+      // Enforce valid characters (alphanumeric + underscore only)
+      var validHandleRegex = /^[a-z0-9_]+$/;
+      if (!validHandleRegex.test(rawHandle)) {
+        alert("UserId can only contain lowercase letters, numbers, and underscores (e.g. msgamer_01)!");
+        return;
+      }
+
+      // Check if UserId is already taken by another account in Firestore
+      db.collection("users").where("userId", "==", rawHandle).get()
+        .then(function(querySnapshot) {
+          var isTaken = false;
+          querySnapshot.forEach(function(doc) {
+            if (doc.id !== currentUser.uid) {
+              isTaken = true;
+            }
+          });
+
+          if (isTaken) {
+            alert("Error: @" + rawHandle + " is already taken by another creator! Please choose another UserId.");
+            return;
+          }
+
+          // If unique, permanently save into Firestore
+          return db.collection("users").doc(currentUser.uid).set({
+            userId: rawHandle,
+            displayName: newDisplayName,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL || "",
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).then(function() {
+            currentUserIdHandle = rawHandle;
+            updateUserInterface(currentUser, newDisplayName, rawHandle);
+
+            var alertBox = document.getElementById("profileSaveNotice");
+            alertBox.style.display = "block";
+            setTimeout(function() { alertBox.style.display = "none"; }, 2500);
+          });
+        })
+        .catch(function(error) {
+          console.error("Profile Save Error:", error);
+          alert("Error saving profile: " + error.message);
+        });
+    };
+
+    /* 4. Realtime Listener: User's Created Shops & Delete Shop Option */
+    function listenToUserCreatedShops(uid) {
+      db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
+        var listContainer = document.getElementById("myShopsList");
+        var countBadge = document.getElementById("myShopsCountBadge");
+
+        countBadge.textContent = snapshot.size + " Created";
+
+        if (snapshot.empty) {
+          listContainer.innerHTML = "<p style='color:#94a3b8; font-size:0.9rem;'>You have not created any shops yet. Click 'Apply for Earn' above to start.</p>";
+          return;
+        }
+
+        listContainer.innerHTML = "";
+        snapshot.forEach(function(doc) {
+          var shop = doc.data();
+          var shopId = doc.id;
+
+          var itemHtml = 
+            '<div class="my-shop-item">' +
+              '<div>' +
+                '<strong style="font-size:1rem; color:#0f172a; display:block;">' + escapeHtml(shop.name) + '</strong>' +
+                '<span style="font-size:0.8rem; color:#64748b;">Specialty: ' + escapeHtml(shop.category) + ' &bull; Starts at ₹' + shop.rates.low + '</span>' +
+              '</div>' +
+              '<button class="btn-delete-shop" onclick="window.deleteShop(\'' + shopId + '\', \'' + escapeHtml(shop.name) + '\')" type="button">' +
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' +
+                'Delete' +
+              '</button>' +
+            '</div>';
+
+          listContainer.insertAdjacentHTML("beforeend", itemHtml);
+        });
+      }, function(err) {
+        console.error("My shops listener error:", err);
+      });
+    }
+
+    /* Delete Shop Function */
+    window.deleteShop = function(shopId, shopName) {
+      if (!currentUser) {
+        alert("Please sign in first.");
+        return;
+      }
+
+      if (confirm("Are you sure you want to delete the shop \"" + shopName + "\"? It will be permanently removed from the Shop page.")) {
+        db.collection("shops").doc(shopId).delete()
+          .then(function() {
+            alert("Shop \"" + shopName + "\" deleted successfully!");
+          })
+          .catch(function(error) {
+            console.error("Delete shop error:", error);
+            alert("Error deleting shop: " + error.message);
+          });
+      }
+    };
+
+    /* 5. Realtime Firestore Listener: ALL SHOPS */
     db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var grid = document.getElementById("shopEditorGrid");
       var emptyBox = document.getElementById("shopEmptyBox");
@@ -1048,6 +1260,12 @@
 
           var initials = (data.name || "ED").substring(0, 2).toUpperCase();
 
+          // Show delete button on the card if the current user created this shop
+          var isOwner = currentUser && (data.ownerUid === currentUser.uid);
+          var ownerAction = isOwner 
+            ? '<button class="btn-delete-shop" onclick="window.deleteShop(\'' + id + '\', \'' + escapeHtml(data.name) + '\')" type="button" style="margin-top:6px;">Delete My Shop</button>' 
+            : '';
+
           var cardHtml = 
             '<article class="editor-card">' +
               '<span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span>' +
@@ -1058,7 +1276,7 @@
                   '<span class="editor-status">Ready for Orders</span>' +
                 '</div>' +
               '</div>' +
-              '<p class="editor-bio">Verified platform editor specializing in ' + escapeHtml(data.category) + '. Full escrow safety.</p>' +
+              '<p class="editor-bio">Verified platform editor. By <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p>' +
               '<div class="skill-pills">' +
                 '<span class="pill">' + escapeHtml(data.modeNames.low) + '</span>' +
                 '<span class="pill">' + escapeHtml(data.modeNames.medium) + '</span>' +
@@ -1071,6 +1289,7 @@
                 '</div>' +
                 '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + id + '\')" type="button">Hire Editor &rarr;</button>' +
               '</div>' +
+              ownerAction +
             '</article>';
 
           grid.insertAdjacentHTML("beforeend", cardHtml);
@@ -1080,7 +1299,7 @@
       console.error("Shops listener error:", error);
     });
 
-    /* 4. Realtime Firestore Listener: ORDERS (Persistent) */
+    /* 6. Realtime Firestore Listener: ORDERS */
     db.collection("orders").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var list = document.getElementById("activeOrdersList");
       var emptyBox = document.getElementById("placedEmptyBox");
@@ -1104,7 +1323,7 @@
                 '<strong style="color:#0f172a; font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
                 '<span class="order-badge-pill status-running">● ' + escapeHtml(data.status) + '</span>' +
               '</div>' +
-              '<small style="color:#64748b;">Client: <strong>' + escapeHtml(data.clientName) + '</strong> &bull; Editor: <strong>' + escapeHtml(data.editorName) + '</strong></small>' +
+              '<small style="color:#64748b;">Client: <strong>' + escapeHtml(data.clientName) + ' (@' + escapeHtml(data.clientHandle || "user") + ')</strong> &bull; Editor: <strong>' + escapeHtml(data.editorName) + '</strong></small>' +
               '<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:4px;">' +
                 '<span style="font-size:0.9rem; color:#475569;">Duration / Volume: ' + data.duration + 's</span>' +
                 '<strong style="font-size:1.15rem; color:#4f46e5;">Escrow Locked: ₹' + data.price + '</strong>' +
@@ -1117,7 +1336,7 @@
       console.error("Firestore Orders Error:", error);
     });
 
-    /* 5. Navigation Control */
+    /* 7. Navigation Control */
     window.openSidebar = function() {
       var sb = document.getElementById("sidebar");
       var ov = document.getElementById("sidebarOverlay");
@@ -1185,8 +1404,13 @@
       window.scrollTo(0, 0);
     };
 
-    /* 6. Real Shop Registration Flow (Saved to Google Firestore) */
+    /* 8. Registration Flow */
     window.startApplyForEarn = function() {
+      if (!currentUser) {
+        alert("Please sign in with Google first before opening a shop!");
+        window.switchTab("viewProfile");
+        return;
+      }
       window.switchTab("viewRegisterStep1");
     };
 
@@ -1304,11 +1528,12 @@
         unitShort: unitShort,
         rates: { low: mode1Rate, medium: mode2Rate, high: mode3Rate },
         modeNames: { low: mode1Name, medium: mode2Name, high: mode3Name },
-        ownerEmail: currentUser ? currentUser.email : "unauthenticated@rex hub",
+        ownerUid: currentUser ? currentUser.uid : "anonymous",
+        ownerEmail: currentUser ? currentUser.email : "guest@rex hub",
+        ownerHandle: currentUserIdHandle || "creator",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      /* Save to Google Firestore database */
       db.collection("shops").add(newShop)
         .then(function() {
           alert("Shop \"" + shopName + "\" registered permanently in Cloud Firestore!");
@@ -1320,11 +1545,11 @@
         });
     };
 
-    /* 7. Order Terminal & Dynamic Calculation */
+    /* 9. Hire Terminal & Dynamic Pricing */
     window.openHireTerminal = function(editorKey) {
       var editor = EDITORS_DATA[editorKey];
       if (!editor) {
-        alert("Editor data not found.");
+        alert("Editor shop details not found.");
         return;
       }
 
@@ -1421,7 +1646,7 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    /* 8. Save Order to Cloud Firestore */
+    /* 10. Place Order in Firestore */
     window.submitConfiguredOrder = function() {
       var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) {
@@ -1440,6 +1665,8 @@
         price: currentConfig.calculatedPrice,
         clientName: clientName,
         clientEmail: clientEmail,
+        clientUid: currentUser ? currentUser.uid : "guest",
+        clientHandle: currentUserIdHandle || "guest",
         status: "In Progress",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
@@ -1453,16 +1680,6 @@
           console.error("Order Save Error:", error);
           alert("Error saving order: " + error.message);
         });
-    };
-
-    window.saveProfileInfo = function() {
-      var name = document.getElementById("inputUsername").value.trim();
-      if (!name) return;
-      document.getElementById("profileCardName").textContent = name;
-      document.getElementById("sidebarProfileName").textContent = name;
-      var alertBox = document.getElementById("profileSaveNotice");
-      alertBox.style.display = "block";
-      setTimeout(function() { alertBox.style.display = "none"; }, 2000);
     };
   </script>
 </head>
@@ -1513,7 +1730,7 @@
         </svg>
       </div>
       <div class="sidebar-mini-info">
-        <div class="sidebar-mini-name" id="sidebarProfileName">Rex Editor</div>
+        <div class="sidebar-mini-name" id="sidebarProfileName">Guest Creator</div>
         <div class="sidebar-mini-tag">View Profile &rarr;</div>
       </div>
     </div>
@@ -1555,23 +1772,23 @@
   <!-- Main Container -->
   <main class="main-container">
 
-    <!-- 1. Profile View -->
+    <!-- 1. Profile View (Persistent Firestore User Sync & Delete Shop Option) -->
     <section id="viewProfile" style="display: none;">
       <div class="section-header">
         <h1>Profile Settings</h1>
-        <p>Manage your creator identity, Google authentication, and creator shop.</p>
+        <p>Manage your unique creator handle, personal shop, and account data.</p>
       </div>
 
       <div class="earn-banner-card">
         <div class="earn-banner-text">
           <h3>Become a Verified Editor</h3>
-          <p>Open your own video editing shop, set your rates, and receive orders with escrow protection.</p>
+          <p>Open your video editing shop, set custom rates, and get client orders with escrow protection.</p>
         </div>
         <button class="btn-apply-earn" onclick="window.startApplyForEarn()" type="button">Apply for Earn &rarr;</button>
       </div>
 
       <div class="info-card">
-        <div id="profileSaveNotice" class="alert-saved">✓ Profile updated successfully!</div>
+        <div id="profileSaveNotice" class="alert-saved">✓ Profile & UserId saved permanently in Firestore!</div>
 
         <button type="button" class="btn-google-auth" id="googleSignInBtn" onclick="window.loginWithGoogle()">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="G">
@@ -1583,18 +1800,42 @@
             <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           </div>
           <div>
-            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800; color: #0f172a;">Rex Editor</h2>
-            <p id="profileUserEmail" style="color: var(--primary); font-weight: 700; margin-bottom: 6px;">@verified_creator</p>
+            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800; color: #0f172a;">Guest Creator</h2>
+            <p id="profileUserIdDisplay" style="color: var(--primary); font-weight: 800; font-size: 1.05rem; margin-top: 2px;">@guest</p>
+            <p id="profileUserEmail" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 2px;">Sign in to activate account</p>
           </div>
         </div>
 
         <div class="form-row">
-          <label class="config-label" for="inputUsername">Display Name</label>
-          <input type="text" id="inputUsername" class="form-input-field" value="Rex Editor" placeholder="Enter custom display name">
+          <label class="config-label" for="inputUserId">Unique UserId / Handle (Instagram / YouTube Style)</label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <span style="position: absolute; left: 14px; top: 18px; font-weight: 800; color: var(--text-muted);">@</span>
+            <input type="text" id="inputUserId" class="form-input-field" style="padding-left: 32px;" placeholder="e.g. msgamer (letters, numbers, underscores)">
+          </div>
+          <small style="color: var(--text-muted); display: block; margin-top: -8px; margin-bottom: 12px;">
+            This handle is unique. If another user has taken it, you'll receive an alert.
+          </small>
         </div>
-        <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile</button>
 
+        <div class="form-row">
+          <label class="config-label" for="inputDisplayName">Display Name</label>
+          <input type="text" id="inputDisplayName" class="form-input-field" placeholder="Enter your display name">
+        </div>
+
+        <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile & Handle</button>
         <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()" type="button">Sign Out of Rex Hub</button>
+
+        <!-- My Created Shops Section -->
+        <div class="my-shops-container">
+          <div class="my-shops-header">
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Shops Created by You</h3>
+            <span class="my-shop-badge" id="myShopsCountBadge">0 Created</span>
+          </div>
+          <div id="myShopsList">
+            <p style="color:#94a3b8; font-size:0.9rem;">Sign in to see shops created by you.</p>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1626,12 +1867,12 @@
           
           <div class="warning-box">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            <span><strong>Notice:</strong> High quality portfolio links are directly verified and listed permanently.</span>
+            <span><strong>Notice:</strong> Verified portfolio links are listed live in Cloud Firestore.</span>
           </div>
         </div>
 
         <div class="config-group">
-          <label class="config-label">3. Admin Contact</label>
+          <label class="config-label">3. Admin Verification Contact</label>
           <input type="text" class="form-input-field" value="Rex Admin (admin.rexedithub@gmail.com)" readonly style="background:#f1f5f9; color:#475569; font-weight:700;">
         </div>
 
@@ -1693,14 +1934,13 @@
       </div>
     </section>
 
-    <!-- 4. Shop View (Pure Real Dynamic Grid) -->
+    <!-- 4. Shop View -->
     <section id="viewShop" style="display: block;">
       <div class="section-header">
         <h1>Editor Shop</h1>
         <p>Book verified video editors with 100% escrow protection. Choose your project format below.</p>
       </div>
 
-      <!-- Real Empty State if no shops registered in Firestore -->
       <div class="info-card" id="shopEmptyBox" style="display: none;">
         <div class="empty-state-box">
           <h2 class="empty-title">No Editors Available Yet</h2>
@@ -1709,7 +1949,6 @@
         </div>
       </div>
 
-      <!-- Live Dynamic Grid -->
       <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
@@ -1788,7 +2027,7 @@
       </div>
     </section>
 
-    <!-- 6. Placed Order View (Live Cloud Firestore) -->
+    <!-- 6. Placed Order View -->
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header">
         <h1>Placed Order</h1>
