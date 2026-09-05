@@ -85,7 +85,7 @@
                     linear-gradient(90deg, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
     }
 
-    /* 3. Royal Gold Theme (White & Rich Gold) */
+    /* 3. Royal Gold Theme */
     [data-theme="golden"] {
       --bg-base: #fffdf9;
       --bg-card: #ffffff;
@@ -112,7 +112,7 @@
                     linear-gradient(90deg, rgba(254, 240, 138, 0.3) 1px, transparent 1px);
     }
 
-    /* 4. Crimson Red Theme (Intense Red + Structured Design Background) */
+    /* 4. Crimson Red Theme */
     [data-theme="red"] {
       --bg-base: #140303;
       --bg-card: #200707;
@@ -396,12 +396,6 @@
       cursor: pointer;
     }
 
-    .nav-link-btn svg {
-      width: 22px;
-      height: 22px;
-      pointer-events: none;
-    }
-
     .nav-link-btn.active {
       background: var(--primary-light);
       border-color: rgba(79, 70, 229, 0.2);
@@ -472,7 +466,6 @@
 
     .format-badge-short { background: var(--warning-light); border: 1px solid var(--warning); color: var(--warning); }
     .format-badge-long { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); }
-    .format-badge-custom { background: var(--success-light); border: 1px solid var(--success); color: var(--success); }
 
     .editor-header {
       display: flex;
@@ -612,7 +605,6 @@
     }
 
     .mode-btn .mode-name { font-size: 0.95rem; font-weight: 800; color: var(--text-main); }
-    .mode-btn .mode-price { font-size: 0.8rem; font-weight: 800; color: var(--primary); margin: 3px 0; }
     .mode-btn.active { background: var(--primary-light); border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
 
     .input-duration-wrap {
@@ -1055,11 +1047,27 @@
     window.toggleSidebar = function() { var sb = document.getElementById("sidebar"); if (sb.classList.contains("open")) window.closeSidebar(); else window.openSidebar(); };
 
     window.switchTab = function(viewId) {
-      var views = ["viewShop", "viewOrderConfig", "viewPlacedOrder", "viewOrderDelivered", "viewProfile", "viewLawPolicy", "viewRegisterStep1", "viewRegisterStep2", "viewEditorManage"];
+      var views = ["viewShop", "viewOrderConfig", "viewPlacedOrder", "viewEditorManage", "viewProfile", "viewLawPolicy", "viewRegisterStep1", "viewRegisterStep2"];
       views.forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.style.display = (id === viewId) ? "block" : "none";
       });
+
+      var subtitleMap = {
+        "viewShop": "Shop",
+        "viewOrderConfig": "Order Setup",
+        "viewPlacedOrder": "Placed Orders",
+        "viewEditorManage": "Incoming Requests",
+        "viewProfile": "Profile",
+        "viewLawPolicy": "Law & Policy",
+        "viewRegisterStep1": "Apply for Earn",
+        "viewRegisterStep2": "Shop Setup"
+      };
+      var subEl = document.getElementById("headerActiveSubtitle");
+      if (subEl && subtitleMap[viewId]) {
+        subEl.textContent = subtitleMap[viewId].toUpperCase();
+      }
+
       window.closeSidebar();
       window.scrollTo(0, 0);
     };
@@ -1241,9 +1249,9 @@
     <ul class="nav-list">
       <li><button class="nav-link-btn" onclick="window.switchTab('viewProfile')">Profile</button></li>
       <li><button class="nav-link-btn active" onclick="window.switchTab('viewShop')">Shop</button></li>
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewPlacedOrder')">Placed Order</button></li>
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewEditorManage')">Incoming Requests (Editor)</button></li>
-      <li><button class="nav-link-btn" onclick="window.switchTab('viewLawPolicy')">Law and Policy</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewPlacedOrder')">Placed Orders</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewEditorManage')">Incoming Requests</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewLawPolicy')">Law & Policy</button></li>
     </ul>
   </aside>
 
@@ -1372,7 +1380,7 @@
     </section>
 
     <section id="viewLawPolicy" style="display: none;">
-      <div class="section-header"><h1>Law and Policy</h1></div>
+      <div class="section-header"><h1>Law & Policy</h1></div>
       <div class="info-card">
         <div class="policy-item"><h4>Escrow Protection</h4><p>Payments are secured and verified upon milestone delivery.</p></div>
       </div>
