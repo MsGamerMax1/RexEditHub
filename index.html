@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Official Firebase Libraries -->
+  <!-- Official Google Firebase Libraries (Auth + Firestore Cloud Database) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
   <style>
     :root {
@@ -64,6 +65,7 @@
       background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
     }
 
+    /* Top Navigation Bar */
     .top-header {
       position: sticky;
       top: 0;
@@ -158,7 +160,7 @@
       color: var(--text-main);
     }
 
-    /* Fixed Class-Based Sidebar & Overlay */
+    /* Sidebar Drawer & Backdrop Overlay */
     .sidebar-overlay {
       position: fixed;
       inset: 0;
@@ -295,6 +297,7 @@
       color: var(--primary);
     }
 
+    /* Main Container */
     .main-container {
       position: relative;
       z-index: 10;
@@ -327,6 +330,7 @@
       box-shadow: var(--shadow-card);
     }
 
+    /* Dynamic Shop Grid */
     .editor-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
@@ -390,14 +394,6 @@
       font-size: 1.35rem;
       font-weight: 800;
       color: #ffffff;
-    }
-
-    .avatar-relex {
-      background: linear-gradient(135deg, #059669, #10b981);
-    }
-
-    .avatar-creator {
-      background: linear-gradient(135deg, #d97706, #f59e0b);
     }
 
     .editor-status {
@@ -474,6 +470,7 @@
       cursor: pointer;
     }
 
+    /* Order Terminal Layout */
     .config-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -521,25 +518,10 @@
       transition: all 0.3s ease;
     }
 
-    .screen-box.ratio-9-16 {
-      width: 170px;
-      height: 302px;
-    }
-
-    .screen-box.ratio-16-9 {
-      width: 250px;
-      height: 140px;
-    }
-
-    .screen-box.ratio-thumb {
-      width: 240px;
-      height: 135px;
-    }
-
-    .screen-box.ratio-doc {
-      width: 200px;
-      height: 240px;
-    }
+    .screen-box.ratio-9-16 { width: 170px; height: 302px; }
+    .screen-box.ratio-16-9 { width: 250px; height: 140px; }
+    .screen-box.ratio-thumb { width: 240px; height: 135px; }
+    .screen-box.ratio-doc { width: 200px; height: 240px; }
 
     .screen-time-display {
       font-size: 1.8rem;
@@ -732,7 +714,7 @@
     .empty-desc {
       color: var(--text-muted);
       font-size: 0.94rem;
-      max-width: 400px;
+      max-width: 420px;
       line-height: 1.55;
       margin-bottom: 1.6rem;
     }
@@ -776,7 +758,6 @@
       background: #ffffff;
     }
 
-    /* Google Button Styling */
     .btn-google-auth {
       width: 100%;
       background: #ffffff;
@@ -930,7 +911,7 @@
   </style>
 
   <script>
-    /* 1. Firebase Initialization with your exact keys */
+    /* 1. Firebase Initialization with your verified keys */
     const firebaseConfig = {
       apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
       authDomain: "rex-edit-hub.firebaseapp.com",
@@ -943,11 +924,33 @@
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
     const provider = new firebase.auth.GoogleAuthProvider();
 
     var currentUser = null;
 
-    /* 2. Google Sign-In and Auth State Sync */
+    /* Real dynamic shops memory (No fake coolrex/Relex) */
+    var EDITORS_DATA = {};
+
+    var currentConfig = {
+      editorKey: null,
+      mode: "medium",
+      duration: 20,
+      calculatedPrice: 0
+    };
+
+    var tempRegistrationData = {
+      role: "Short Editor",
+      portfolioLink: ""
+    };
+
+    /* Utility: Prevent HTML injection */
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    /* 2. Google Authentication & State Listener */
     window.loginWithGoogle = function() {
       auth.signInWithPopup(provider)
         .then(function(result) {
@@ -958,7 +961,7 @@
         .catch(function(error) {
           console.error("Auth Error:", error);
           if (location.protocol === "file:") {
-            alert("Google Sign-In Notice:\nGoogle OAuth requires a web domain or localhost (not file://). Please test this on GitHub Pages or VS Code Live Server!");
+            alert("Google Sign-In Notice:\nPlease test on your live GitHub link: https://msgamermax1.github.io/RexEditHub/");
           } else {
             alert("Login Failed: " + error.message);
           }
@@ -1017,45 +1020,104 @@
       }
     });
 
-    /* 3. Core Hub Data & State */
-    var EDITORS_DATA = {
-      coolrex: {
-        name: "coolrex",
-        type: "short",
-        category: "Short Editor",
-        ratioText: "9:16 Vertical Cut",
-        screenClass: "ratio-9-16",
-        dimText: "1080 × 1920 • Max 3 Minutes (180s)",
-        maxSeconds: 180,
-        unitShort: "/ 10s",
-        rates: { low: 20, medium: 30, high: 40 }
-      },
-      Relex: {
-        name: "Relex",
-        type: "long",
-        category: "Video Editor",
-        ratioText: "16:9 Widescreen Cut",
-        screenClass: "ratio-16-9",
-        dimText: "1920 × 1080 • YouTube Long-Form",
-        maxSeconds: 1800,
-        unitShort: "/ 1m",
-        rates: { low: 35, medium: 50, high: 75 }
+    /* 3. Realtime Firestore Listener: SHOPS (Zero Fake Data) */
+    db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
+      var grid = document.getElementById("shopEditorGrid");
+      var emptyBox = document.getElementById("shopEmptyBox");
+      EDITORS_DATA = {};
+
+      if (snapshot.empty) {
+        if (emptyBox) emptyBox.style.display = "flex";
+        if (grid) grid.style.display = "none";
+        return;
       }
-    };
 
-    var currentConfig = {
-      editorKey: "coolrex",
-      mode: "medium",
-      duration: 20,
-      calculatedPrice: 60
-    };
+      if (emptyBox) emptyBox.style.display = "none";
+      if (grid) {
+        grid.style.display = "grid";
+        grid.innerHTML = "";
 
-    var tempRegistrationData = {
-      role: "Short Editor",
-      portfolioLink: ""
-    };
+        snapshot.forEach(function(doc) {
+          var data = doc.data();
+          var id = doc.id;
+          EDITORS_DATA[id] = data;
 
-    /* 4. Robust Class-Based Navigation */
+          var badgeClass = "format-badge-custom";
+          if (data.category === "Short Editor") badgeClass = "format-badge-short";
+          else if (data.category === "Video Editor") badgeClass = "format-badge-long";
+
+          var initials = (data.name || "ED").substring(0, 2).toUpperCase();
+
+          var cardHtml = 
+            '<article class="editor-card">' +
+              '<span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span>' +
+              '<div class="editor-header">' +
+                '<div class="editor-avatar">' + escapeHtml(initials) + '</div>' +
+                '<div class="editor-title">' +
+                  '<h3>' + escapeHtml(data.name) + ' <span style="color:#0284c7;">✓</span></h3>' +
+                  '<span class="editor-status">Ready for Orders</span>' +
+                '</div>' +
+              '</div>' +
+              '<p class="editor-bio">Verified platform editor specializing in ' + escapeHtml(data.category) + '. Full escrow safety.</p>' +
+              '<div class="skill-pills">' +
+                '<span class="pill">' + escapeHtml(data.modeNames.low) + '</span>' +
+                '<span class="pill">' + escapeHtml(data.modeNames.medium) + '</span>' +
+                '<span class="pill">' + escapeHtml(data.modeNames.high) + '</span>' +
+              '</div>' +
+              '<div class="card-footer">' +
+                '<div>' +
+                  '<span class="price-label">Starts at</span>' +
+                  '<span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:#64748b;">' + escapeHtml(data.unitShort) + '</small></span>' +
+                '</div>' +
+                '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + id + '\')" type="button">Hire Editor &rarr;</button>' +
+              '</div>' +
+            '</article>';
+
+          grid.insertAdjacentHTML("beforeend", cardHtml);
+        });
+      }
+    }, function(error) {
+      console.error("Shops listener error:", error);
+    });
+
+    /* 4. Realtime Firestore Listener: ORDERS (Persistent) */
+    db.collection("orders").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
+      var list = document.getElementById("activeOrdersList");
+      var emptyBox = document.getElementById("placedEmptyBox");
+
+      if (snapshot.empty) {
+        if (emptyBox) emptyBox.style.display = "flex";
+        if (list) list.style.display = "none";
+        return;
+      }
+
+      if (emptyBox) emptyBox.style.display = "none";
+      if (list) {
+        list.style.display = "flex";
+        list.innerHTML = "";
+
+        snapshot.forEach(function(doc) {
+          var data = doc.data();
+          var orderHtml = 
+            '<div class="running-order-item">' +
+              '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+                '<strong style="color:#0f172a; font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
+                '<span class="order-badge-pill status-running">● ' + escapeHtml(data.status) + '</span>' +
+              '</div>' +
+              '<small style="color:#64748b;">Client: <strong>' + escapeHtml(data.clientName) + '</strong> &bull; Editor: <strong>' + escapeHtml(data.editorName) + '</strong></small>' +
+              '<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:4px;">' +
+                '<span style="font-size:0.9rem; color:#475569;">Duration / Volume: ' + data.duration + 's</span>' +
+                '<strong style="font-size:1.15rem; color:#4f46e5;">Escrow Locked: ₹' + data.price + '</strong>' +
+              '</div>' +
+            '</div>';
+          list.insertAdjacentHTML("beforeend", orderHtml);
+        });
+      }
+    }, function(error) {
+      console.error("Firestore Orders Error:", error);
+    });
+
+    /* 5. Navigation Control */
     window.openSidebar = function() {
       var sb = document.getElementById("sidebar");
       var ov = document.getElementById("sidebarOverlay");
@@ -1123,7 +1185,7 @@
       window.scrollTo(0, 0);
     };
 
-    /* 5. 2-Step Registration Flow */
+    /* 6. Real Shop Registration Flow (Saved to Google Firestore) */
     window.startApplyForEarn = function() {
       window.switchTab("viewRegisterStep1");
     };
@@ -1140,7 +1202,7 @@
       tempRegistrationData.role = role;
       tempRegistrationData.portfolioLink = link;
 
-      alert("Request sent to Admin (admin.rexedithub@gmail.com)!\n\nStatus: Approved!\nOpening Step 2: Configure your shop name and rate modes.");
+      alert("Request verified!\nOpening Step 2: Configure your shop name and rate modes.");
       window.prepareStep2Form(role);
     };
 
@@ -1192,9 +1254,7 @@
       var mode3Name = document.getElementById("modeName3").value.trim() || "Mode 3";
       var mode3Rate = parseInt(document.getElementById("modeRate3").value, 10) || 40;
 
-      var key = "editor_" + Date.now();
       var role = tempRegistrationData.role;
-
       var screenClass = "ratio-9-16";
       var ratioText = "9:16 Vertical Cut";
       var dimText = "1080 × 1920 • Mobile Format";
@@ -1233,56 +1293,44 @@
         unitShort = "/ report";
       }
 
-      EDITORS_DATA[key] = {
+      var newShop = {
         name: shopName,
-        type: (role === "Short Editor") ? "short" : "custom",
         category: role,
+        portfolioLink: tempRegistrationData.portfolioLink,
         ratioText: ratioText,
         screenClass: screenClass,
         dimText: dimText,
         maxSeconds: maxSec,
         unitShort: unitShort,
         rates: { low: mode1Rate, medium: mode2Rate, high: mode3Rate },
-        modeNames: { low: mode1Name, medium: mode2Name, high: mode3Name }
+        modeNames: { low: mode1Name, medium: mode2Name, high: mode3Name },
+        ownerEmail: currentUser ? currentUser.email : "unauthenticated@rex hub",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      var grid = document.getElementById("shopEditorGrid");
-      var newCardHtml = 
-        '<article class="editor-card">' +
-          '<span class="demo-tag format-badge-custom">' + role + '</span>' +
-          '<div class="editor-header">' +
-            '<div class="editor-avatar avatar-creator">' + shopName.substring(0, 2).toUpperCase() + '</div>' +
-            '<div class="editor-title">' +
-              '<h3>' + shopName + ' <span style="color:#0284c7;">✓</span></h3>' +
-              '<span class="editor-status">Ready for Orders</span>' +
-            '</div>' +
-          '</div>' +
-          '<p class="editor-bio">Verified platform editor specializing in ' + role + '. Full escrow safety.</p>' +
-          '<div class="skill-pills">' +
-            '<span class="pill">' + mode1Name + '</span>' +
-            '<span class="pill">' + mode2Name + '</span>' +
-            '<span class="pill">' + mode3Name + '</span>' +
-          '</div>' +
-          '<div class="card-footer">' +
-            '<div>' +
-              '<span class="price-label">Starts at</span>' +
-              '<span class="price-value">₹' + mode1Rate + ' <small style="font-size:0.75rem; color:#64748b;">' + unitShort + '</small></span>' +
-            '</div>' +
-            '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + key + '\')" type="button">Hire Editor &rarr;</button>' +
-          '</div>' +
-        '</article>';
-
-      grid.insertAdjacentHTML("afterbegin", newCardHtml);
-      alert("Shop " + shopName + " registered and listed successfully!");
-      window.switchTab("viewShop");
+      /* Save to Google Firestore database */
+      db.collection("shops").add(newShop)
+        .then(function() {
+          alert("Shop \"" + shopName + "\" registered permanently in Cloud Firestore!");
+          window.switchTab("viewShop");
+        })
+        .catch(function(error) {
+          console.error("Shop registration error:", error);
+          alert("Error saving shop to Firestore: " + error.message);
+        });
     };
 
-    /* 6. Hire Terminal & Calculation */
+    /* 7. Order Terminal & Dynamic Calculation */
     window.openHireTerminal = function(editorKey) {
-      var editor = EDITORS_DATA[editorKey] || EDITORS_DATA.coolrex;
+      var editor = EDITORS_DATA[editorKey];
+      if (!editor) {
+        alert("Editor data not found.");
+        return;
+      }
+
       currentConfig.editorKey = editorKey;
       currentConfig.mode = "medium";
-      currentConfig.duration = (editor.type === "short") ? 20 : 60;
+      currentConfig.duration = (editor.category === "Short Editor") ? 20 : 60;
 
       document.getElementById("configEditorTitle").textContent = "Hire " + editor.name + " (" + editor.category + ")";
 
@@ -1296,12 +1344,12 @@
       durationInput.value = currentConfig.duration;
       document.getElementById("durationLimitText").textContent = "Max: " + editor.maxSeconds + "s";
 
-      var mNames = editor.modeNames || { low: "Low", medium: "Medium", high: "High" };
+      var mNames = editor.modeNames || { low: "Mode 1", medium: "Mode 2", high: "Mode 3" };
       document.getElementById("modeTitleLow").textContent = mNames.low;
       document.getElementById("modeTitleMed").textContent = mNames.medium;
       document.getElementById("modeTitleHigh").textContent = mNames.high;
 
-      var uShort = editor.unitShort || "/ 10s";
+      var uShort = editor.unitShort || "";
       document.getElementById("modePriceLow").textContent = "₹" + editor.rates.low + " " + uShort;
       document.getElementById("modePriceMedium").textContent = "₹" + editor.rates.medium + " " + uShort;
       document.getElementById("modePriceHigh").textContent = "₹" + editor.rates.high + " " + uShort;
@@ -1327,7 +1375,9 @@
     };
 
     window.calculateOrderPrice = function() {
-      var editor = EDITORS_DATA[currentConfig.editorKey] || EDITORS_DATA.coolrex;
+      var editor = EDITORS_DATA[currentConfig.editorKey];
+      if (!editor) return;
+
       var durationInput = document.getElementById("videoDurationInput");
       var seconds = parseInt(durationInput.value, 10);
 
@@ -1336,7 +1386,6 @@
       if (seconds > editor.maxSeconds) {
         seconds = editor.maxSeconds;
         durationInput.value = seconds;
-        alert("Maximum limit for this format is " + editor.maxSeconds + " seconds.");
       }
 
       currentConfig.duration = seconds;
@@ -1372,35 +1421,38 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
+    /* 8. Save Order to Cloud Firestore */
     window.submitConfiguredOrder = function() {
       var editor = EDITORS_DATA[currentConfig.editorKey];
-      var orderId = "RX-" + Math.floor(1000 + Math.random() * 9000);
-      var clientName = currentUser ? currentUser.displayName : "Guest Client";
-
-      var orderHtml = 
-        '<div class="running-order-item">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<strong style="color:#0f172a; font-size:1.05rem;">Order #' + orderId + ' (' + editor.category + ')</strong>' +
-            '<span class="order-badge-pill status-running">● In Progress</span>' +
-          '</div>' +
-          '<small style="color:#64748b;">Client: <strong>' + clientName + '</strong> &bull; Editor: <strong>' + editor.name + '</strong></small>' +
-          '<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:4px;">' +
-            '<span style="font-size:0.9rem; color:#475569;">Duration: ' + currentConfig.duration + 's</span>' +
-            '<strong style="font-size:1.15rem; color:#4f46e5;">Escrow Locked: ₹' + currentConfig.calculatedPrice + '</strong>' +
-          '</div>' +
-        '</div>';
-
-      var emptyBox = document.getElementById("placedEmptyBox");
-      var list = document.getElementById("activeOrdersList");
-
-      if (emptyBox) emptyBox.style.display = "none";
-      if (list) {
-        list.style.display = "flex";
-        list.insertAdjacentHTML("afterbegin", orderHtml);
+      if (!editor) {
+        alert("Please select a valid editor shop first.");
+        return;
       }
 
-      alert("Order placed! ₹" + currentConfig.calculatedPrice + " locked in escrow protection.");
-      window.switchTab("viewPlacedOrder");
+      var clientName = currentUser ? currentUser.displayName : "Guest Client";
+      var clientEmail = currentUser ? currentUser.email : "guest@rex hub";
+
+      var orderData = {
+        orderId: "RX-" + Math.floor(1000 + Math.random() * 9000),
+        editorName: editor.name,
+        category: editor.category,
+        duration: currentConfig.duration,
+        price: currentConfig.calculatedPrice,
+        clientName: clientName,
+        clientEmail: clientEmail,
+        status: "In Progress",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      db.collection("orders").add(orderData)
+        .then(function() {
+          alert("Order placed! ₹" + currentConfig.calculatedPrice + " locked in cloud escrow.");
+          window.switchTab("viewPlacedOrder");
+        })
+        .catch(function(error) {
+          console.error("Order Save Error:", error);
+          alert("Error saving order: " + error.message);
+        });
     };
 
     window.saveProfileInfo = function() {
@@ -1503,7 +1555,7 @@
   <!-- Main Container -->
   <main class="main-container">
 
-    <!-- 1. Profile View (Google Login & Account Sync) -->
+    <!-- 1. Profile View -->
     <section id="viewProfile" style="display: none;">
       <div class="section-header">
         <h1>Profile Settings</h1>
@@ -1521,7 +1573,6 @@
       <div class="info-card">
         <div id="profileSaveNotice" class="alert-saved">✓ Profile updated successfully!</div>
 
-        <!-- Google Sign-In Primary Trigger -->
         <button type="button" class="btn-google-auth" id="googleSignInBtn" onclick="window.loginWithGoogle()">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="G">
           Continue with Google
@@ -1547,12 +1598,12 @@
       </div>
     </section>
 
-    <!-- 2. Registration Step 1: Submit Application -->
+    <!-- 2. Registration Step 1 -->
     <section id="viewRegisterStep1" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewProfile')" type="button">&larr; Back to Profile</button>
         <h1 style="margin-top: 0.8rem;">Send Request for Apply</h1>
-        <p>Submit your profession and verified work portfolio for Admin approval.</p>
+        <p>Submit your profession and verified work portfolio to open your shop.</p>
       </div>
 
       <div class="info-card">
@@ -1575,35 +1626,35 @@
           
           <div class="warning-box">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            <span><strong>Warning:</strong> Don't send fake work! All links undergo strict originality inspection. Plagiarized accounts are permanently blacklisted.</span>
+            <span><strong>Notice:</strong> High quality portfolio links are directly verified and listed permanently.</span>
           </div>
         </div>
 
         <div class="config-group">
-          <label class="config-label">3. Send request for Apply to Admin</label>
+          <label class="config-label">3. Admin Contact</label>
           <input type="text" class="form-input-field" value="Rex Admin (admin.rexedithub@gmail.com)" readonly style="background:#f1f5f9; color:#475569; font-weight:700;">
         </div>
 
         <button class="btn-action-primary" onclick="window.submitStep1Request()" type="button" style="width:100%; justify-content:center;">
-          Submit Application to Admin &rarr;
+          Continue to Step 2 &rarr;
         </button>
       </div>
     </section>
 
-    <!-- 3. Registration Step 2: Shop Setup -->
+    <!-- 3. Registration Step 2 -->
     <section id="viewRegisterStep2" style="display: none;">
       <div class="section-header">
         <h1>Shop Setup & Rate Confirmation</h1>
-        <p>Application approved! Configure your shop brand name and custom 3-mode rate tiers.</p>
+        <p>Configure your shop brand name and custom 3-mode rate tiers to launch in Firestore.</p>
       </div>
 
       <div class="info-card">
-        <span class="step-indicator" style="background:#ecfdf5; color:#065f46;">Step 2 of 2: Approved</span>
+        <span class="step-indicator" style="background:#ecfdf5; color:#065f46;">Step 2 of 2: Setup Shop</span>
 
         <div class="config-group">
           <label class="config-label" for="regShopName">1. Name of your Shop</label>
           <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Rex Studio, PixelLab Hub">
-          <small style="color:var(--text-muted);">Approved Specialty: <strong id="step2ChosenRole" style="color:var(--primary);">Short Editor</strong></small>
+          <small style="color:var(--text-muted);">Specialty: <strong id="step2ChosenRole" style="color:var(--primary);">Short Editor</strong></small>
         </div>
 
         <div class="config-group">
@@ -1637,67 +1688,29 @@
         </div>
 
         <button class="btn-action-primary" onclick="window.completeEditorRegistration()" type="button" style="width:100%; justify-content:center; margin-top:12px;">
-          Complete Registration & Launch Shop &rarr;
+          Launch Real Shop in Cloud &rarr;
         </button>
       </div>
     </section>
 
-    <!-- 4. Shop View -->
+    <!-- 4. Shop View (Pure Real Dynamic Grid) -->
     <section id="viewShop" style="display: block;">
       <div class="section-header">
         <h1>Editor Shop</h1>
         <p>Book verified video editors with 100% escrow protection. Choose your project format below.</p>
       </div>
 
-      <div class="editor-grid" id="shopEditorGrid">
-        <article class="editor-card">
-          <span class="demo-tag format-badge-short">9:16 Shorts Pro</span>
-          <div class="editor-header">
-            <div class="editor-avatar">CR</div>
-            <div class="editor-title">
-              <h3>coolrex <span style="color:#0284c7;">✓</span></h3>
-              <span class="editor-status">Ready for Orders</span>
-            </div>
-          </div>
-          <p class="editor-bio">Specialist in 9:16 Shorts & Reels. Beat velocity sync, captions, and retention editing (Max 3 Mins).</p>
-          <div class="skill-pills">
-            <span class="pill">Shorts (9:16)</span>
-            <span class="pill">Velocity</span>
-            <span class="pill">Subtitles</span>
-          </div>
-          <div class="card-footer">
-            <div>
-              <span class="price-label">Starts at</span>
-              <span class="price-value">₹20 <small style="font-size:0.75rem; color:#64748b;">/ 10s</small></span>
-            </div>
-            <button class="btn-hire-redirect" onclick="window.openHireTerminal('coolrex')" type="button">Hire Editor &rarr;</button>
-          </div>
-        </article>
-
-        <article class="editor-card">
-          <span class="demo-tag format-badge-long">16:9 Long-Form</span>
-          <div class="editor-header">
-            <div class="editor-avatar avatar-relex">RX</div>
-            <div class="editor-title">
-              <h3>Relex <span style="color:#0284c7;">✓</span></h3>
-              <span class="editor-status">Ready for Orders</span>
-            </div>
-          </div>
-          <p class="editor-bio">Specialist in 16:9 widescreen YouTube & commercial videos. Narrative pacing and color grading.</p>
-          <div class="skill-pills">
-            <span class="pill">YouTube (16:9)</span>
-            <span class="pill">Cinematic</span>
-            <span class="pill">Sound FX</span>
-          </div>
-          <div class="card-footer">
-            <div>
-              <span class="price-label">Starts at</span>
-              <span class="price-value">₹35 <small style="font-size:0.75rem; color:#64748b;">/ 1m</small></span>
-            </div>
-            <button class="btn-hire-redirect" onclick="window.openHireTerminal('Relex')" type="button">Hire Editor &rarr;</button>
-          </div>
-        </article>
+      <!-- Real Empty State if no shops registered in Firestore -->
+      <div class="info-card" id="shopEmptyBox" style="display: none;">
+        <div class="empty-state-box">
+          <h2 class="empty-title">No Editors Available Yet</h2>
+          <p class="empty-desc">There are currently no active editing shops listed in the database. Open the first verified shop on Rex Edit Hub!</p>
+          <button class="btn-apply-earn" onclick="window.startApplyForEarn()" type="button">Open Your Shop &rarr;</button>
+        </div>
       </div>
+
+      <!-- Live Dynamic Grid -->
+      <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
     <!-- 5. Order Terminal -->
@@ -1716,7 +1729,7 @@
               <div class="screen-time-display" id="screenTimeDisplay">00:20</div>
               <div class="screen-watermark-hint">Watermarked Preview Draft</div>
             </div>
-            <span class="screen-caption" id="aspectDimensionText">1080 × 1920 • Max 3 Minutes (180s)</span>
+            <span class="screen-caption" id="aspectDimensionText">1080 × 1920 • Mobile Format</span>
           </div>
         </div>
 
@@ -1726,16 +1739,16 @@
               <label class="config-label">Select Editing Quality Mode</label>
               <div class="mode-selector-grid">
                 <button type="button" class="mode-btn" id="modeBtnLow" onclick="window.selectMode('low')">
-                  <span class="mode-name" id="modeTitleLow">Low</span>
-                  <span class="mode-price" id="modePriceLow">₹20 / 10s</span>
+                  <span class="mode-name" id="modeTitleLow">Mode 1</span>
+                  <span class="mode-price" id="modePriceLow">₹0</span>
                 </button>
                 <button type="button" class="mode-btn active" id="modeBtnMedium" onclick="window.selectMode('medium')">
-                  <span class="mode-name" id="modeTitleMed">Medium</span>
-                  <span class="mode-price" id="modePriceMedium">₹30 / 10s</span>
+                  <span class="mode-name" id="modeTitleMed">Mode 2</span>
+                  <span class="mode-price" id="modePriceMedium">₹0</span>
                 </button>
                 <button type="button" class="mode-btn" id="modeBtnHigh" onclick="window.selectMode('high')">
-                  <span class="mode-name" id="modeTitleHigh">High</span>
-                  <span class="mode-price" id="modePriceHigh">₹40 / 10s</span>
+                  <span class="mode-name" id="modeTitleHigh">Mode 3</span>
+                  <span class="mode-price" id="modePriceHigh">₹0</span>
                 </button>
               </div>
             </div>
@@ -1758,12 +1771,12 @@
               </div>
               <div class="summary-line">
                 <span>Tier Rate:</span>
-                <strong id="summaryRate">₹30 / 10s</strong>
+                <strong id="summaryRate">₹0</strong>
               </div>
               <div class="summary-divider"></div>
               <div class="summary-total-line">
                 <span>Total Escrow Amount:</span>
-                <span class="total-calculated-price" id="summaryTotal">₹60</span>
+                <span class="total-calculated-price" id="summaryTotal">₹0</span>
               </div>
             </div>
 
@@ -1775,7 +1788,7 @@
       </div>
     </section>
 
-    <!-- 6. Placed Order View -->
+    <!-- 6. Placed Order View (Live Cloud Firestore) -->
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header">
         <h1>Placed Order</h1>
