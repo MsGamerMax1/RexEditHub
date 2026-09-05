@@ -471,6 +471,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      transition: background 0.15s ease;
     }
 
     .btn-delete-shop:hover {
@@ -833,16 +834,6 @@
       line-height: 1.6;
     }
 
-    .alert-saved {
-      display: none;
-      background: var(--success-light);
-      color: #065f46;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
     .earn-banner-card {
       background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
       color: #ffffff;
@@ -927,7 +918,6 @@
       margin-bottom: 8px;
     }
 
-    /* My Created Shops Section in Profile */
     .my-shops-container {
       margin-top: 2rem;
       padding-top: 1.5rem;
@@ -959,6 +949,181 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
+    }
+
+    /* ========================================================
+       PREMIUM POPUPS: Toast Notifications & Confirmation Modal
+       ======================================================== */
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .rex-toast {
+      pointer-events: auto;
+      min-width: 300px;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(16px);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.08);
+      transform: translateX(120%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      opacity: 0;
+    }
+
+    .rex-toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toast-success .toast-icon-wrap { background: #ecfdf5; color: #059669; }
+    .toast-error .toast-icon-wrap { background: #fef2f2; color: #dc2626; }
+    .toast-info .toast-icon-wrap { background: #eef2ff; color: #4f46e5; }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .toast-desc {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .toast-close-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    /* Modal Backdrop & Container */
+    .rex-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 100001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .rex-modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .rex-modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .rex-modal-overlay.open .rex-modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .rex-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.8rem;
+    }
+
+    .rex-modal-icon-danger {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #fee2e2;
+      color: #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rex-modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .rex-modal-text {
+      color: #64748b;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin-bottom: 1.6rem;
+    }
+
+    .rex-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .rex-btn-cancel {
+      background: #f1f5f9;
+      border: 1px solid var(--border-strong);
+      color: #475569;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .rex-btn-confirm-delete {
+      background: #dc2626;
+      border: none;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
     }
   </style>
 
@@ -1000,19 +1165,76 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    /* ========================================================
+       PREMIUM POPUP CONTROLLER: Toasts & Modal Dialogs
+       ======================================================== */
+    window.showToast = function(title, message, type) {
+      type = type || 'info'; // 'success', 'error', 'info'
+      var container = document.getElementById("toast-container");
+      if (!container) return;
+
+      var toast = document.createElement("div");
+      toast.className = "rex-toast toast-" + type;
+
+      var iconSvg = '';
+      if (type === 'success') {
+        iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>';
+      } else if (type === 'error') {
+        iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+      } else {
+        iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+      }
+
+      toast.innerHTML = 
+        '<div class="toast-icon-wrap">' + iconSvg + '</div>' +
+        '<div class="toast-content">' +
+          '<div class="toast-title">' + escapeHtml(title) + '</div>' +
+          '<div class="toast-desc">' + escapeHtml(message) + '</div>' +
+        '</div>' +
+        '<button class="toast-close-btn" onclick="this.parentElement.remove()">&times;</button>';
+
+      container.appendChild(toast);
+
+      setTimeout(function() { toast.classList.add("show"); }, 20);
+
+      setTimeout(function() {
+        toast.classList.remove("show");
+        setTimeout(function() { if (toast.parentNode) toast.remove(); }, 300);
+      }, 4200);
+    };
+
+    var confirmPromiseResolve = null;
+    window.showConfirmDialog = function(title, message) {
+      return new Promise(function(resolve) {
+        confirmPromiseResolve = resolve;
+        document.getElementById("modalConfirmTitle").textContent = title;
+        document.getElementById("modalConfirmMessage").textContent = message;
+        document.getElementById("customConfirmModal").classList.add("open");
+      });
+    };
+
+    window.closeConfirmModal = function(decision) {
+      document.getElementById("customConfirmModal").classList.remove("open");
+      if (confirmPromiseResolve) {
+        confirmPromiseResolve(decision);
+        confirmPromiseResolve = null;
+      }
+    };
+
     /* 2. Google Auth & User Profile Sync */
     window.loginWithGoogle = function() {
       auth.signInWithPopup(provider)
         .then(function(result) {
           currentUser = result.user;
+          showToast("Signed In", "Welcome back, " + currentUser.displayName + "!", "success");
           syncUserProfile(currentUser);
         })
         .catch(function(error) {
           console.error("Auth Error:", error);
           if (location.protocol === "file:") {
-            alert("Google Sign-In Notice:\nPlease test on your live GitHub link: https://msgamermax1.github.io/RexEditHub/");
+            showToast("Protocol Notice", "Please test via GitHub Pages: https://msgamermax1.github.io/RexEditHub/", "info");
           } else {
-            alert("Login Failed: " + error.message);
+            showToast("Login Failed", error.message, "error");
           }
         });
     };
@@ -1021,12 +1243,11 @@
       auth.signOut().then(function() {
         currentUser = null;
         currentUserIdHandle = "";
-        alert("Logged out successfully!");
+        showToast("Logged Out", "Signed out of Rex Hub successfully.", "info");
         resetUserInterface();
       });
     };
 
-    /* Load/Create persistent user profile in Firestore */
     function syncUserProfile(user) {
       if (!user) return;
       var userRef = db.collection("users").doc(user.uid);
@@ -1037,7 +1258,6 @@
           currentUserIdHandle = userData.userId || user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
           updateUserInterface(user, userData.displayName || user.displayName, currentUserIdHandle);
         } else {
-          // Generate default unique handle from email prefix
           var baseHandle = user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
           currentUserIdHandle = baseHandle;
           
@@ -1056,7 +1276,6 @@
         updateUserInterface(user, user.displayName, user.email.split("@")[0]);
       });
 
-      // Listen for shops created by this user
       listenToUserCreatedShops(user.uid);
     }
 
@@ -1112,10 +1331,10 @@
       }
     });
 
-    /* 3. Unique UserId Check & Profile Save */
+    /* 3. Unique UserID Check & Profile Save */
     window.saveProfileInfo = function() {
       if (!currentUser) {
-        alert("Please sign in with Google first to save your profile!");
+        showToast("Access Denied", "Please sign in with Google first to save your profile.", "error");
         return;
       }
 
@@ -1123,23 +1342,22 @@
       var rawHandle = document.getElementById("inputUserId").value.trim().toLowerCase().replace(/^@/, '');
 
       if (!newDisplayName) {
-        alert("Please enter a Display Name!");
+        showToast("Missing Name", "Please enter a display name for your profile.", "error");
         return;
       }
 
       if (!rawHandle || rawHandle.length < 3) {
-        alert("UserId must be at least 3 characters long!");
+        showToast("Invalid UserID", "UserID must be at least 3 characters long.", "error");
         return;
       }
 
-      // Enforce valid characters (alphanumeric + underscore only)
       var validHandleRegex = /^[a-z0-9_]+$/;
       if (!validHandleRegex.test(rawHandle)) {
-        alert("UserId can only contain lowercase letters, numbers, and underscores (e.g. msgamer_01)!");
+        showToast("Invalid Characters", "UserID can only contain letters, numbers, and underscores.", "error");
         return;
       }
 
-      // Check if UserId is already taken by another account in Firestore
+      // Check if UserID is already taken in Firestore
       db.collection("users").where("userId", "==", rawHandle).get()
         .then(function(querySnapshot) {
           var isTaken = false;
@@ -1150,11 +1368,10 @@
           });
 
           if (isTaken) {
-            alert("Error: @" + rawHandle + " is already taken by another creator! Please choose another UserId.");
+            showToast("UserID Taken", "@" + rawHandle + " is already taken by another creator!", "error");
             return;
           }
 
-          // If unique, permanently save into Firestore
           return db.collection("users").doc(currentUser.uid).set({
             userId: rawHandle,
             displayName: newDisplayName,
@@ -1164,15 +1381,12 @@
           }, { merge: true }).then(function() {
             currentUserIdHandle = rawHandle;
             updateUserInterface(currentUser, newDisplayName, rawHandle);
-
-            var alertBox = document.getElementById("profileSaveNotice");
-            alertBox.style.display = "block";
-            setTimeout(function() { alertBox.style.display = "none"; }, 2500);
+            showToast("Profile Saved", "Your UserID @" + rawHandle + " and details are permanently saved.", "success");
           });
         })
         .catch(function(error) {
           console.error("Profile Save Error:", error);
-          alert("Error saving profile: " + error.message);
+          showToast("Save Error", error.message, "error");
         });
     };
 
@@ -1213,23 +1427,26 @@
       });
     }
 
-    /* Delete Shop Function */
+    /* Delete Shop Function with Premium Confirmation Modal */
     window.deleteShop = function(shopId, shopName) {
       if (!currentUser) {
-        alert("Please sign in first.");
+        showToast("Authentication Required", "Please sign in to manage shops.", "error");
         return;
       }
 
-      if (confirm("Are you sure you want to delete the shop \"" + shopName + "\"? It will be permanently removed from the Shop page.")) {
-        db.collection("shops").doc(shopId).delete()
-          .then(function() {
-            alert("Shop \"" + shopName + "\" deleted successfully!");
-          })
-          .catch(function(error) {
-            console.error("Delete shop error:", error);
-            alert("Error deleting shop: " + error.message);
-          });
-      }
+      showConfirmDialog("Delete Shop", "Are you sure you want to permanently delete \"" + shopName + "\"? This action cannot be undone.")
+        .then(function(confirmed) {
+          if (confirmed) {
+            db.collection("shops").doc(shopId).delete()
+              .then(function() {
+                showToast("Shop Deleted", "\"" + shopName + "\" was permanently removed.", "success");
+              })
+              .catch(function(error) {
+                console.error("Delete shop error:", error);
+                showToast("Deletion Error", error.message, "error");
+              });
+          }
+        });
     };
 
     /* 5. Realtime Firestore Listener: ALL SHOPS */
@@ -1260,7 +1477,6 @@
 
           var initials = (data.name || "ED").substring(0, 2).toUpperCase();
 
-          // Show delete button on the card if the current user created this shop
           var isOwner = currentUser && (data.ownerUid === currentUser.uid);
           var ownerAction = isOwner 
             ? '<button class="btn-delete-shop" onclick="window.deleteShop(\'' + id + '\', \'' + escapeHtml(data.name) + '\')" type="button" style="margin-top:6px;">Delete My Shop</button>' 
@@ -1276,7 +1492,7 @@
                   '<span class="editor-status">Ready for Orders</span>' +
                 '</div>' +
               '</div>' +
-              '<p class="editor-bio">Verified platform editor. By <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p>' +
+              '<p class="editor-bio">Verified editor &bull; by <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p>' +
               '<div class="skill-pills">' +
                 '<span class="pill">' + escapeHtml(data.modeNames.low) + '</span>' +
                 '<span class="pill">' + escapeHtml(data.modeNames.medium) + '</span>' +
@@ -1407,7 +1623,7 @@
     /* 8. Registration Flow */
     window.startApplyForEarn = function() {
       if (!currentUser) {
-        alert("Please sign in with Google first before opening a shop!");
+        showToast("Sign In Required", "Please sign in with Google before opening an editor shop.", "info");
         window.switchTab("viewProfile");
         return;
       }
@@ -1419,14 +1635,14 @@
       var link = document.getElementById("regPortfolioLink").value.trim();
 
       if (!link) {
-        alert("Please paste your work portfolio or drive link before submitting.");
+        showToast("Link Missing", "Please paste your work portfolio or drive link.", "error");
         return;
       }
 
       tempRegistrationData.role = role;
       tempRegistrationData.portfolioLink = link;
 
-      alert("Request verified!\nOpening Step 2: Configure your shop name and rate modes.");
+      showToast("Application Verified", "Opening Step 2: Configure your shop rates.", "success");
       window.prepareStep2Form(role);
     };
 
@@ -1467,7 +1683,7 @@
     window.completeEditorRegistration = function() {
       var shopName = document.getElementById("regShopName").value.trim();
       if (!shopName) {
-        alert("Please enter a name for your shop!");
+        showToast("Name Required", "Please enter a name for your shop!", "error");
         return;
       }
 
@@ -1536,12 +1752,12 @@
 
       db.collection("shops").add(newShop)
         .then(function() {
-          alert("Shop \"" + shopName + "\" registered permanently in Cloud Firestore!");
+          showToast("Shop Launched", "\"" + shopName + "\" is now live on the marketplace!", "success");
           window.switchTab("viewShop");
         })
         .catch(function(error) {
           console.error("Shop registration error:", error);
-          alert("Error saving shop to Firestore: " + error.message);
+          showToast("Registration Error", error.message, "error");
         });
     };
 
@@ -1549,7 +1765,7 @@
     window.openHireTerminal = function(editorKey) {
       var editor = EDITORS_DATA[editorKey];
       if (!editor) {
-        alert("Editor shop details not found.");
+        showToast("Error", "Editor shop details not found.", "error");
         return;
       }
 
@@ -1650,7 +1866,7 @@
     window.submitConfiguredOrder = function() {
       var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) {
-        alert("Please select a valid editor shop first.");
+        showToast("Error", "Please select a valid editor shop first.", "error");
         return;
       }
 
@@ -1673,12 +1889,12 @@
 
       db.collection("orders").add(orderData)
         .then(function() {
-          alert("Order placed! ₹" + currentConfig.calculatedPrice + " locked in cloud escrow.");
+          showToast("Order Placed", "₹" + currentConfig.calculatedPrice + " successfully locked in escrow.", "success");
           window.switchTab("viewPlacedOrder");
         })
         .catch(function(error) {
           console.error("Order Save Error:", error);
-          alert("Error saving order: " + error.message);
+          showToast("Order Failed", error.message, "error");
         });
     };
   </script>
@@ -1686,6 +1902,29 @@
 <body>
 
   <div class="studio-bg"></div>
+
+  <!-- Container for Modern Toast Alerts -->
+  <div id="toast-container"></div>
+
+  <!-- Modern Confirmation Dialog Modal -->
+  <div class="rex-modal-overlay" id="customConfirmModal">
+    <div class="rex-modal-card">
+      <div class="rex-modal-header">
+        <div class="rex-modal-icon-danger">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </div>
+        <h3 class="rex-modal-title" id="modalConfirmTitle">Confirm Action</h3>
+      </div>
+      <p class="rex-modal-text" id="modalConfirmMessage">Are you sure you want to proceed?</p>
+      <div class="rex-modal-actions">
+        <button class="rex-btn-cancel" onclick="window.closeConfirmModal(false)" type="button">Cancel</button>
+        <button class="rex-btn-confirm-delete" onclick="window.closeConfirmModal(true)" type="button">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Top Navigation Header -->
   <header class="top-header">
@@ -1772,7 +2011,7 @@
   <!-- Main Container -->
   <main class="main-container">
 
-    <!-- 1. Profile View (Persistent Firestore User Sync & Delete Shop Option) -->
+    <!-- 1. Profile View -->
     <section id="viewProfile" style="display: none;">
       <div class="section-header">
         <h1>Profile Settings</h1>
@@ -1788,8 +2027,6 @@
       </div>
 
       <div class="info-card">
-        <div id="profileSaveNotice" class="alert-saved">✓ Profile & UserId saved permanently in Firestore!</div>
-
         <button type="button" class="btn-google-auth" id="googleSignInBtn" onclick="window.loginWithGoogle()">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="G">
           Continue with Google
@@ -1807,13 +2044,13 @@
         </div>
 
         <div class="form-row">
-          <label class="config-label" for="inputUserId">Unique UserId / Handle (Instagram / YouTube Style)</label>
+          <label class="config-label" for="inputUserId">UserID</label>
           <div style="position: relative; display: flex; align-items: center;">
             <span style="position: absolute; left: 14px; top: 18px; font-weight: 800; color: var(--text-muted);">@</span>
             <input type="text" id="inputUserId" class="form-input-field" style="padding-left: 32px;" placeholder="e.g. msgamer (letters, numbers, underscores)">
           </div>
           <small style="color: var(--text-muted); display: block; margin-top: -8px; margin-bottom: 12px;">
-            This handle is unique. If another user has taken it, you'll receive an alert.
+            Unique username identifier. Duplicate usernames will trigger an alert.
           </small>
         </div>
 
@@ -1822,7 +2059,7 @@
           <input type="text" id="inputDisplayName" class="form-input-field" placeholder="Enter your display name">
         </div>
 
-        <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile & Handle</button>
+        <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile & UserID</button>
         <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()" type="button">Sign Out of Rex Hub</button>
 
         <!-- My Created Shops Section -->
