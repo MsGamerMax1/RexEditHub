@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> <link rel="icon" type="image/png" href="logo.png?v=2">
-<link rel="shortcut icon" type="image/png" href="logo.png?v=2">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Rex Edit Hub</title>
 
   <!-- Browser Tab Icon (Favicon) -->
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" type="image/png" href="logo.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="logo.png?v=2">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-  <!-- Instant Theme Loader (Prevents flash on reload) -->
+  <!-- Instant Theme Loader -->
   <script>
     (function() {
       var savedTheme = localStorage.getItem('rex_theme') || 'default';
@@ -218,7 +218,6 @@
       border-color: var(--primary);
     }
 
-    /* Brand Logo & Header Layout */
     .brand-wrap {
       display: flex;
       align-items: center;
@@ -625,7 +624,7 @@
       cursor: pointer;
     }
 
-    /* Order Terminal */
+    /* Order Terminal Layout */
     .config-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -703,7 +702,7 @@
     }
 
     .config-group {
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.4rem;
     }
 
     .config-label {
@@ -713,7 +712,7 @@
       color: var(--text-main);
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
     .mode-selector-grid {
@@ -824,6 +823,7 @@
       color: var(--primary);
     }
 
+    /* Placed Order UI */
     .running-order-item {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -831,7 +831,7 @@
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       box-shadow: var(--shadow-sm);
     }
 
@@ -849,6 +849,25 @@
     .status-running {
       background: var(--warning-light);
       color: var(--warning);
+    }
+
+    .order-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 8px;
+      width: fit-content;
+    }
+
+    .order-link-btn:hover {
+      background: var(--primary-light);
     }
 
     .empty-state-box {
@@ -909,6 +928,25 @@
     }
 
     .form-input-field:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .form-textarea-field {
+      width: 100%;
+      min-height: 75px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-base);
+      margin: 6px 0 14px 0;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-textarea-field:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 1px var(--primary);
     }
@@ -1087,7 +1125,6 @@
       margin-bottom: 10px;
     }
 
-    /* 5-Theme Studio Selector */
     .theme-selector-section {
       margin: 1.8rem 0;
       padding: 1.35rem 0;
@@ -1140,7 +1177,7 @@
       line-height: 1.2;
     }
 
-    /* Modern Toast Notifications */
+    /* Toast Notifications */
     #toast-container {
       position: fixed;
       top: 20px;
@@ -1255,6 +1292,7 @@
     var currentUser = null;
     var currentUserIdHandle = "";
     var EDITORS_DATA = {};
+    var ordersUnsubscribe = null;
 
     var currentConfig = {
       editorKey: null,
@@ -1298,7 +1336,7 @@
       showToast("Theme Applied", "Switched to " + (namesMap[themeName] || themeName) + " theme.", "info");
     };
 
-    /* 3. Modern Toasts & Modal Dialogs */
+    /* 3. Modern Toast & Modal Dialogs */
     window.showToast = function(title, message, type) {
       type = type || 'info';
       var container = document.getElementById("toast-container");
@@ -1407,6 +1445,7 @@
       });
 
       listenToUserCreatedShops(user.uid);
+      listenToPrivateOrders(user.uid);
     }
 
     function updateUserInterface(user, displayName, handle) {
@@ -1450,6 +1489,13 @@
 
       document.getElementById("myShopsList").innerHTML = "<p style='color:var(--text-subtle); font-size:0.9rem;'>Sign in to see shops created by you.</p>";
       document.getElementById("myShopsCountBadge").textContent = "0 Created";
+
+      if (ordersUnsubscribe) {
+        ordersUnsubscribe();
+        ordersUnsubscribe = null;
+      }
+      document.getElementById("activeOrdersList").style.display = "none";
+      document.getElementById("placedEmptyBox").style.display = "flex";
     }
 
     auth.onAuthStateChanged(function(user) {
@@ -1643,42 +1689,64 @@
       console.error("Shops listener error:", error);
     });
 
-    /* 8. Realtime Firestore Listener: ORDERS */
-    db.collection("orders").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
+    /* 8. Private Filtered Listener: Client's Own Placed Orders */
+    function listenToPrivateOrders(uid) {
+      if (ordersUnsubscribe) {
+        ordersUnsubscribe();
+      }
+
       var list = document.getElementById("activeOrdersList");
       var emptyBox = document.getElementById("placedEmptyBox");
 
-      if (snapshot.empty) {
-        if (emptyBox) emptyBox.style.display = "flex";
-        if (list) list.style.display = "none";
-        return;
-      }
+      ordersUnsubscribe = db.collection("orders")
+        .where("clientUid", "==", uid)
+        .onSnapshot(function(snapshot) {
+          if (snapshot.empty) {
+            if (emptyBox) emptyBox.style.display = "flex";
+            if (list) list.style.display = "none";
+            return;
+          }
 
-      if (emptyBox) emptyBox.style.display = "none";
-      if (list) {
-        list.style.display = "flex";
-        list.innerHTML = "";
+          if (emptyBox) emptyBox.style.display = "none";
+          if (list) {
+            list.style.display = "flex";
+            list.innerHTML = "";
 
-        snapshot.forEach(function(doc) {
-          var data = doc.data();
-          var orderHtml = 
-            '<div class="running-order-item">' +
-              '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-                '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
-                '<span class="order-badge-pill status-running">● ' + escapeHtml(data.status) + '</span>' +
-              '</div>' +
-              '<small style="color:var(--text-muted);">Client: <strong>' + escapeHtml(data.clientName) + ' (@' + escapeHtml(data.clientHandle || "user") + ')</strong> &bull; Editor: <strong>' + escapeHtml(data.editorName) + '</strong></small>' +
-              '<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:4px;">' +
-                '<span style="font-size:0.9rem; color:var(--text-muted);">Duration / Volume: ' + data.duration + 's</span>' +
-                '<strong style="font-size:1.15rem; color:var(--primary);">Escrow Locked: ₹' + data.price + '</strong>' +
-              '</div>' +
-            '</div>';
-          list.insertAdjacentHTML("beforeend", orderHtml);
+            snapshot.forEach(function(doc) {
+              var data = doc.data();
+              var notesHtml = data.instructions 
+                ? '<p style="font-size:0.85rem; color:var(--text-muted); background:var(--bg-base); padding:8px 12px; border-radius:8px; border:1px solid var(--border-subtle);"><strong>Note:</strong> ' + escapeHtml(data.instructions) + '</p>'
+                : '';
+
+              var driveHtml = data.footageLink
+                ? '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" rel="noopener noreferrer" class="order-link-btn">' +
+                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>' +
+                    'Open Footage / Assets Link &rarr;' +
+                  '</a>'
+                : '';
+
+              var orderHtml = 
+                '<div class="running-order-item">' +
+                  '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+                    '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
+                    '<span class="order-badge-pill status-running">● ' + escapeHtml(data.status) + '</span>' +
+                  '</div>' +
+                  '<small style="color:var(--text-muted);">Assigned Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName || "Standard") + '</strong></small>' +
+                  '<div style="display:flex; justify-content:space-between; align-items:baseline;">' +
+                    '<span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span>' +
+                    '<strong style="font-size:1.15rem; color:var(--primary);">Escrow Locked: ₹' + data.price + '</strong>' +
+                  '</div>' +
+                  driveHtml +
+                  notesHtml +
+                '</div>';
+
+              list.insertAdjacentHTML("beforeend", orderHtml);
+            });
+          }
+        }, function(error) {
+          console.error("Orders listener error:", error);
         });
-      }
-    }, function(error) {
-      console.error("Firestore Orders Error:", error);
-    });
+    }
 
     /* 9. Navigation Control */
     window.openSidebar = function() {
@@ -1923,6 +1991,10 @@
       document.getElementById("modePriceMedium").textContent = "₹" + editor.rates.medium + " " + uShort;
       document.getElementById("modePriceHigh").textContent = "₹" + editor.rates.high + " " + uShort;
 
+      // Reset footage inputs
+      document.getElementById("orderFootageUrl").value = "";
+      document.getElementById("orderInstructions").value = "";
+
       window.selectMode("medium");
       window.switchTab("viewOrderConfig");
     };
@@ -1990,34 +2062,53 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    /* 12. Place Order in Firestore */
+    /* 12. Validated Order Submission */
     window.submitConfiguredOrder = function() {
+      if (!currentUser) {
+        showToast("Sign In Required", "Please sign in with Google before placing an order.", "error");
+        window.switchTab("viewProfile");
+        return;
+      }
+
       var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) {
         showToast("Error", "Please select a valid editor shop first.", "error");
         return;
       }
 
-      var clientName = currentUser ? currentUser.displayName : "Guest Client";
-      var clientEmail = currentUser ? currentUser.email : "guest@rex hub";
+      var footageUrl = document.getElementById("orderFootageUrl").value.trim();
+      var instructions = document.getElementById("orderInstructions").value.trim();
+
+      if (!footageUrl) {
+        showToast("Footage Missing", "Please paste your Google Drive or cloud assets folder link.", "error");
+        document.getElementById("orderFootageUrl").focus();
+        return;
+      }
+
+      var modeDisplayName = editor.modeNames ? editor.modeNames[currentConfig.mode] : "Selected Tier";
 
       var orderData = {
         orderId: "RX-" + Math.floor(1000 + Math.random() * 9000),
+        editorId: currentConfig.editorKey,
         editorName: editor.name,
+        editorUid: editor.ownerUid || "unknown",
         category: editor.category,
+        modeName: modeDisplayName,
         duration: currentConfig.duration,
         price: currentConfig.calculatedPrice,
-        clientName: clientName,
-        clientEmail: clientEmail,
-        clientUid: currentUser ? currentUser.uid : "guest",
-        clientHandle: currentUserIdHandle || "guest",
+        footageLink: footageUrl,
+        instructions: instructions,
+        clientName: currentUser.displayName || "Client",
+        clientEmail: currentUser.email,
+        clientUid: currentUser.uid,
+        clientHandle: currentUserIdHandle || "client",
         status: "In Progress",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       db.collection("orders").add(orderData)
         .then(function() {
-          showToast("Order Placed", "₹" + currentConfig.calculatedPrice + " successfully locked in escrow.", "success");
+          showToast("Order Placed", "₹" + currentConfig.calculatedPrice + " locked in escrow. Editor notified!", "success");
           window.switchTab("viewPlacedOrder");
         })
         .catch(function(error) {
@@ -2077,7 +2168,6 @@
         </svg>
       </button>
 
-      <!-- Clean Logo & Brand Heading (Preserves Exact Proportions) -->
       <div class="brand-wrap">
         <img src="logo.png" alt="Rex Edit Hub Logo" class="header-logo-img">
         <div class="brand-stack">
@@ -2187,7 +2277,6 @@
           </div>
         </div>
 
-        <!-- 5 Multi-Theme Selector -->
         <div class="theme-selector-section">
           <label class="config-label">Studio Theme (Appearance)</label>
           <div class="theme-grid">
@@ -2233,7 +2322,6 @@
         <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile & UserID</button>
         <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()" type="button">Sign Out of Rex Hub</button>
 
-        <!-- My Created Shops Section -->
         <div class="my-shops-container">
           <div class="my-shops-header">
             <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Shops Created by You</h3>
@@ -2360,12 +2448,12 @@
       <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
-    <!-- 5. Order Terminal -->
+    <!-- 5. Order Terminal (With Footage Link & Note Inputs) -->
     <section id="viewOrderConfig" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewShop')" type="button">&larr; Back to Shop</button>
         <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Editor Terminal</h1>
-        <p>Configure project length, edit mode quality, and verify your calculated escrow payment.</p>
+        <p>Configure project length, provide footage assets, and verify your calculated escrow payment.</p>
       </div>
 
       <div class="config-layout">
@@ -2411,6 +2499,19 @@
               </div>
             </div>
 
+            <div class="config-group">
+              <label class="config-label" for="orderFootageUrl">Raw Video / Google Drive Link <span style="color:var(--danger);">*</span></label>
+              <input type="url" id="orderFootageUrl" class="form-input-field" placeholder="https://drive.google.com/drive/folders/... (Access: Anyone with link)">
+              <small style="color:var(--text-muted); display:block; margin-top:-8px; font-size:0.8rem;">
+                Make sure your Google Drive link has view/download permission set to 'Anyone with the link'.
+              </small>
+            </div>
+
+            <div class="config-group">
+              <label class="config-label" for="orderInstructions">Editing Instructions & Notes (Optional)</label>
+              <textarea id="orderInstructions" class="form-textarea-field" placeholder="e.g. Keep cuts fast-paced, add Minecraft sound effects, sync with background music..."></textarea>
+            </div>
+
             <div class="calculation-summary-box">
               <div class="summary-line">
                 <span>Calculated Volume:</span>
@@ -2427,7 +2528,7 @@
               </div>
             </div>
 
-            <button class="btn-confirm-order" onclick="window.submitConfiguredOrder()" type="button">
+            <button class="btn-confirm-order" onclick="window.submitConfiguredOrder()" type="button" style="width:100%; justify-content:center;">
               Lock Escrow & Place Order &rarr;
             </button>
           </div>
@@ -2435,16 +2536,16 @@
       </div>
     </section>
 
-    <!-- 6. Placed Order View -->
+    <!-- 6. Placed Order View (Private to current client) -->
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header">
         <h1>Placed Order</h1>
-        <p>Live progress tracking and active escrow projects currently being edited.</p>
+        <p>Live progress tracking and active escrow projects placed by your account.</p>
       </div>
       <div class="info-card">
         <div class="empty-state-box" id="placedEmptyBox">
           <h2 class="empty-title">No Order Placed</h2>
-          <p class="empty-desc">You currently have no active editing orders in progress. Hire a verified editor to get started.</p>
+          <p class="empty-desc">You currently have no active editing orders in progress. Hire a verified editor from the shop to start.</p>
           <button class="btn-return-shop" onclick="window.switchTab('viewShop')" type="button">Shop Editors</button>
         </div>
 
