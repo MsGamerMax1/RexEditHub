@@ -49,6 +49,10 @@
       --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04);
       --shadow-card: 0 12px 30px -6px rgba(15, 23, 42, 0.08);
       --logo-shadow: 0 2px 10px rgba(79, 70, 229, 0.35);
+      --bg-pattern: radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 85%, rgba(14, 165, 233, 0.06) 0%, transparent 40%),
+                    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
     }
 
     /* 2. Midnight Dark Theme */
@@ -73,54 +77,64 @@
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.5);
       --logo-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+      --bg-pattern: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                    linear-gradient(rgba(30, 41, 59, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
     }
 
-    /* 3. Royal Gold Luxury Theme */
+    /* 3. Royal Gold Theme (White & Rich Gold) */
     [data-theme="golden"] {
-      --bg-base: #0d0c09;
-      --bg-card: #171510;
-      --border-subtle: #29241b;
-      --border-strong: #453c29;
-      --primary: #eab308;
-      --primary-hover: #ca8a04;
-      --primary-light: rgba(234, 179, 8, 0.15);
-      --text-main: #fef9c3;
-      --text-muted: #d4cfb4;
-      --text-subtle: #877f68;
-      --brand-grad: linear-gradient(135deg, #ffffff 20%, #facc15 100%);
-      --success: #10b981;
-      --success-light: rgba(16, 185, 129, 0.15);
-      --warning: #eab308;
-      --warning-light: rgba(234, 179, 8, 0.15);
-      --danger: #f87171;
-      --danger-light: rgba(248, 113, 113, 0.15);
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
-      --logo-shadow: 0 0 14px rgba(234, 179, 8, 0.45);
+      --bg-base: #fffdf9;
+      --bg-card: #ffffff;
+      --border-subtle: #fef08a;
+      --border-strong: #fde047;
+      --primary: #ca8a04;
+      --primary-hover: #a16207;
+      --primary-light: #fefce8;
+      --text-main: #422006;
+      --text-muted: #713f12;
+      --text-subtle: #a16207;
+      --brand-grad: linear-gradient(135deg, #422006 20%, #ca8a04 100%);
+      --success: #059669;
+      --success-light: #ecfdf5;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --shadow-sm: 0 4px 14px rgba(202, 138, 4, 0.08);
+      --shadow-card: 0 12px 30px -6px rgba(202, 138, 4, 0.12);
+      --logo-shadow: 0 2px 12px rgba(202, 138, 4, 0.35);
+      --bg-pattern: radial-gradient(circle at 15% 15%, rgba(234, 179, 8, 0.08) 0%, transparent 45%),
+                    linear-gradient(rgba(254, 240, 138, 0.3) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(254, 240, 138, 0.3) 1px, transparent 1px);
     }
 
-    /* 4. Crimson Red Creator Theme */
+    /* 4. Crimson Red Theme (Intense Red + Structured Design Background) */
     [data-theme="red"] {
-      --bg-base: #0f0707;
-      --bg-card: #1a0c0c;
-      --border-subtle: #2b1414;
-      --border-strong: #4a1f1f;
+      --bg-base: #140303;
+      --bg-card: #200707;
+      --border-subtle: #3f1212;
+      --border-strong: #7f1d1d;
       --primary: #ef4444;
       --primary-hover: #dc2626;
-      --primary-light: rgba(239, 68, 68, 0.15);
-      --text-main: #fee2e2;
+      --primary-light: rgba(239, 68, 68, 0.18);
+      --text-main: #fef2f2;
       --text-muted: #fca5a5;
-      --text-subtle: #8a4848;
+      --text-subtle: #b91c1c;
       --brand-grad: linear-gradient(135deg, #ffffff 20%, #ef4444 100%);
       --success: #10b981;
       --success-light: rgba(16, 185, 129, 0.15);
       --warning: #f59e0b;
       --warning-light: rgba(245, 158, 11, 0.15);
       --danger: #ef4444;
-      --danger-light: rgba(239, 68, 68, 0.15);
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
-      --logo-shadow: 0 0 14px rgba(239, 68, 68, 0.45);
+      --danger-light: rgba(239, 68, 68, 0.2);
+      --shadow-sm: 0 4px 14px rgba(239, 68, 68, 0.2);
+      --shadow-card: 0 12px 35px -6px rgba(239, 68, 68, 0.35);
+      --logo-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+      --bg-pattern: radial-gradient(circle at 85% 15%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 15% 85%, rgba(220, 38, 38, 0.12) 0%, transparent 50%),
+                    linear-gradient(rgba(63, 18, 18, 0.5) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(63, 18, 18, 0.5) 1px, transparent 1px);
     }
 
     /* 5. Editor Neon Cyberpunk Theme */
@@ -145,6 +159,9 @@
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.7);
       --logo-shadow: 0 0 16px rgba(6, 182, 212, 0.6);
+      --bg-pattern: radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 45%),
+                    linear-gradient(rgba(31, 31, 77, 0.5) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(31, 31, 77, 0.5) 1px, transparent 1px);
     }
 
     * {
@@ -169,13 +186,9 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 90% 85%, rgba(14, 165, 233, 0.06) 0%, transparent 40%),
-        linear-gradient(var(--border-subtle) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+      background: var(--bg-pattern);
       background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
-      opacity: 0.7;
+      opacity: 0.85;
     }
 
     /* Top Navigation Bar */
@@ -1689,7 +1702,7 @@
       console.error("Shops listener error:", error);
     });
 
-    /* 8. Private Filtered Listener: Client's Own Placed Orders */
+    /* 8. Private Filtered Listener: Client's Placed Orders ("Wait for editor response") */
     function listenToPrivateOrders(uid) {
       if (ordersUnsubscribe) {
         ordersUnsubscribe();
@@ -1729,7 +1742,7 @@
                 '<div class="running-order-item">' +
                   '<div style="display:flex; justify-content:space-between; align-items:center;">' +
                     '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
-                    '<span class="order-badge-pill status-running">● ' + escapeHtml(data.status) + '</span>' +
+                    '<span class="order-badge-pill status-running">● Wait for editor response</span>' +
                   '</div>' +
                   '<small style="color:var(--text-muted);">Assigned Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName || "Standard") + '</strong></small>' +
                   '<div style="display:flex; justify-content:space-between; align-items:baseline;">' +
@@ -1991,7 +2004,6 @@
       document.getElementById("modePriceMedium").textContent = "₹" + editor.rates.medium + " " + uShort;
       document.getElementById("modePriceHigh").textContent = "₹" + editor.rates.high + " " + uShort;
 
-      // Reset footage inputs
       document.getElementById("orderFootageUrl").value = "";
       document.getElementById("orderInstructions").value = "";
 
@@ -2062,10 +2074,10 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    /* 12. Validated Order Submission */
+    /* 12. Validated Request Submission ("Send Request") */
     window.submitConfiguredOrder = function() {
       if (!currentUser) {
-        showToast("Sign In Required", "Please sign in with Google before placing an order.", "error");
+        showToast("Sign In Required", "Please sign in with Google before sending a request.", "error");
         window.switchTab("viewProfile");
         return;
       }
@@ -2102,18 +2114,18 @@
         clientEmail: currentUser.email,
         clientUid: currentUser.uid,
         clientHandle: currentUserIdHandle || "client",
-        status: "In Progress",
+        status: "Wait for editor response",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       db.collection("orders").add(orderData)
         .then(function() {
-          showToast("Order Placed", "₹" + currentConfig.calculatedPrice + " locked in escrow. Editor notified!", "success");
+          showToast("Request Sent", "Request sent successfully! Wait for editor response.", "success");
           window.switchTab("viewPlacedOrder");
         })
         .catch(function(error) {
           console.error("Order Save Error:", error);
-          showToast("Order Failed", error.message, "error");
+          showToast("Request Failed", error.message, "error");
         });
     };
 
@@ -2255,7 +2267,7 @@
       <div class="earn-banner-card">
         <div class="earn-banner-text">
           <h3>Become a Verified Editor</h3>
-          <p>Open your video editing shop, set custom rates, and get client orders with escrow protection.</p>
+          <p>Open your video editing shop, set custom rates, and get client requests with total ease.</p>
         </div>
         <button class="btn-apply-earn" onclick="window.startApplyForEarn()" type="button">Apply for Earn &rarr;</button>
       </div>
@@ -2289,11 +2301,11 @@
               <span class="theme-label-title">Midnight Dark</span>
             </button>
             <button type="button" class="theme-card-btn" data-theme-target="golden" onclick="window.setTheme('golden')">
-              <span class="theme-color-dot" style="background:#eab308; box-shadow:0 0 6px #eab308;"></span>
+              <span class="theme-color-dot" style="background:#ffffff; border:2px solid #ca8a04; box-shadow:0 0 6px #eab308;"></span>
               <span class="theme-label-title">Royal Gold</span>
             </button>
             <button type="button" class="theme-card-btn" data-theme-target="red" onclick="window.setTheme('red')">
-              <span class="theme-color-dot" style="background:#ef4444; box-shadow:0 0 6px #ef4444;"></span>
+              <span class="theme-color-dot" style="background:#ef4444; box-shadow:0 0 8px #ef4444;"></span>
               <span class="theme-label-title">Crimson Red</span>
             </button>
             <button type="button" class="theme-card-btn" data-theme-target="neon" onclick="window.setTheme('neon')">
@@ -2448,12 +2460,12 @@
       <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
-    <!-- 5. Order Terminal (With Footage Link & Note Inputs) -->
+    <!-- 5. Order Terminal (Send Request) -->
     <section id="viewOrderConfig" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewShop')" type="button">&larr; Back to Shop</button>
         <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Editor Terminal</h1>
-        <p>Configure project length, provide footage assets, and verify your calculated escrow payment.</p>
+        <p>Configure project length, provide footage assets, and verify your request details.</p>
       </div>
 
       <div class="config-layout">
@@ -2523,29 +2535,29 @@
               </div>
               <div class="summary-divider"></div>
               <div class="summary-total-line">
-                <span>Total Escrow Amount:</span>
+                <span>Total Amount:</span>
                 <span class="total-calculated-price" id="summaryTotal">₹0</span>
               </div>
             </div>
 
             <button class="btn-confirm-order" onclick="window.submitConfiguredOrder()" type="button" style="width:100%; justify-content:center;">
-              Lock Escrow & Place Order &rarr;
+              Send Request &rarr;
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. Placed Order View (Private to current client) -->
+    <!-- 6. Placed Order View ("Wait for editor response") -->
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header">
         <h1>Placed Order</h1>
-        <p>Live progress tracking and active escrow projects placed by your account.</p>
+        <p>Live progress tracking and active requests placed by your account.</p>
       </div>
       <div class="info-card">
         <div class="empty-state-box" id="placedEmptyBox">
           <h2 class="empty-title">No Order Placed</h2>
-          <p class="empty-desc">You currently have no active editing orders in progress. Hire a verified editor from the shop to start.</p>
+          <p class="empty-desc">You currently have no active requests in progress. Hire a verified editor from the shop to start.</p>
           <button class="btn-return-shop" onclick="window.switchTab('viewShop')" type="button">Shop Editors</button>
         </div>
 
@@ -2557,7 +2569,7 @@
     <section id="viewOrderDelivered" style="display: none;">
       <div class="section-header">
         <h1>Order Delivered</h1>
-        <p>Download and access finalized clean video files from approved escrow orders.</p>
+        <p>Download and access finalized clean video files from approved requests.</p>
       </div>
       <div class="info-card">
         <div class="empty-state-box">
@@ -2576,12 +2588,12 @@
       </div>
       <div class="info-card">
         <div class="policy-item">
-          <h4>1. Escrow Guarantee</h4>
-          <p>Client payments remain locked in platform escrow before editing starts. Payouts are made only after preview approval.</p>
+          <h4>1. Guarantee & Safety</h4>
+          <p>Client project details remain protected. Payouts are made only after preview approval.</p>
         </div>
         <div class="policy-item">
           <h4>2. Anti-Theft Watermarking</h4>
-          <p>Draft video cuts must contain a center watermark. Clean unwatermarked files are provided once escrow release is confirmed.</p>
+          <p>Draft video cuts must contain a center watermark. Clean unwatermarked files are provided once release is confirmed.</p>
         </div>
         <div class="policy-item">
           <h4>3. Delay Penalties & Refund</h4>
