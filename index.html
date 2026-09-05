@@ -140,33 +140,6 @@
                     linear-gradient(90deg, rgba(63, 18, 18, 0.5) 1px, transparent 1px);
     }
 
-    /* 5. Editor Neon Cyberpunk Theme */
-    [data-theme="neon"] {
-      --bg-base: #070714;
-      --bg-card: #0f0f26;
-      --border-subtle: #1f1f4d;
-      --border-strong: #373780;
-      --primary: #06b6d4;
-      --primary-hover: #0891b2;
-      --primary-light: rgba(6, 182, 212, 0.16);
-      --text-main: #f0fdf4;
-      --text-muted: #99f6e4;
-      --text-subtle: #6b7280;
-      --brand-grad: linear-gradient(135deg, #ec4899 10%, #06b6d4 90%);
-      --success: #10b981;
-      --success-light: rgba(16, 185, 129, 0.15);
-      --warning: #f59e0b;
-      --warning-light: rgba(245, 158, 11, 0.15);
-      --danger: #f43f5e;
-      --danger-light: rgba(244, 63, 94, 0.15);
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
-      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.7);
-      --logo-shadow: 0 0 16px rgba(6, 182, 212, 0.6);
-      --bg-pattern: radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 45%),
-                    linear-gradient(rgba(31, 31, 77, 0.5) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(31, 31, 77, 0.5) 1px, transparent 1px);
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -226,12 +199,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      touch-action: manipulation;
-    }
-
-    .three-dot-btn:active {
-      background: var(--primary-light);
-      border-color: var(--primary);
     }
 
     .brand-wrap {
@@ -248,11 +215,6 @@
       object-fit: contain;
       display: block;
       filter: drop-shadow(var(--logo-shadow));
-      transition: transform 0.2s ease;
-    }
-
-    .header-logo-img:hover {
-      transform: scale(1.05);
     }
 
     .brand-stack {
@@ -318,7 +280,6 @@
       backdrop-filter: blur(4px);
       z-index: 9998;
       display: none;
-      touch-action: manipulation;
     }
 
     .sidebar-overlay.open {
@@ -509,23 +470,9 @@
       border-radius: 8px;
     }
 
-    .format-badge-short {
-      background: var(--warning-light);
-      border: 1px solid var(--warning);
-      color: var(--warning);
-    }
-
-    .format-badge-long {
-      background: var(--primary-light);
-      border: 1px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .format-badge-custom {
-      background: var(--success-light);
-      border: 1px solid var(--success);
-      color: var(--success);
-    }
+    .format-badge-short { background: var(--warning-light); border: 1px solid var(--warning); color: var(--warning); }
+    .format-badge-long { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); }
+    .format-badge-custom { background: var(--success-light); border: 1px solid var(--success); color: var(--success); }
 
     .editor-header {
       display: flex;
@@ -546,27 +493,7 @@
       color: #ffffff;
     }
 
-    .editor-status {
-      font-size: 0.8rem;
-      color: var(--success);
-      font-weight: 700;
-    }
-
-    .skill-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .pill {
-      background: var(--bg-base);
-      border: 1px solid var(--border-subtle);
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 4px 11px;
-      border-radius: 999px;
-      color: var(--text-muted);
-    }
+    .editor-status { font-size: 0.8rem; color: var(--success); font-weight: 700; }
 
     .card-footer {
       display: flex;
@@ -576,19 +503,8 @@
       padding-top: 1.15rem;
     }
 
-    .price-label {
-      font-size: 0.72rem;
-      color: var(--text-subtle);
-      text-transform: uppercase;
-      font-weight: 700;
-      display: block;
-    }
-
-    .price-value {
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: var(--text-main);
-    }
+    .price-label { font-size: 0.72rem; color: var(--text-subtle); text-transform: uppercase; font-weight: 700; display: block; }
+    .price-value { font-size: 1.35rem; font-weight: 900; color: var(--text-main); }
 
     .btn-hire-redirect, .btn-return-shop, .btn-save-profile, .btn-confirm-order, .btn-action-primary {
       background: var(--primary);
@@ -605,10 +521,6 @@
       gap: 8px;
     }
 
-    .btn-hire-redirect:active, .btn-confirm-order:active, .btn-action-primary:active {
-      background: var(--primary-hover);
-    }
-
     .btn-delete-shop {
       background: var(--danger-light);
       border: 1px solid var(--danger);
@@ -618,15 +530,6 @@
       padding: 6px 12px;
       border-radius: 8px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.15s ease;
-    }
-
-    .btn-delete-shop:hover {
-      background: var(--danger);
-      color: #ffffff;
     }
 
     .btn-back {
@@ -649,9 +552,7 @@
     }
 
     @media (max-width: 768px) {
-      .config-layout {
-        grid-template-columns: 1fr;
-      }
+      .config-layout { grid-template-columns: 1fr; }
     }
 
     .preview-card {
@@ -685,57 +586,18 @@
       position: relative;
       overflow: hidden;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-      transition: all 0.3s ease;
     }
 
     .screen-box.ratio-9-16 { width: 170px; height: 302px; }
     .screen-box.ratio-16-9 { width: 250px; height: 140px; }
-    .screen-box.ratio-thumb { width: 240px; height: 135px; }
-    .screen-box.ratio-doc { width: 200px; height: 240px; }
 
-    .screen-time-display {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #38bdf8;
-      letter-spacing: 0.05em;
-      z-index: 2;
-    }
+    .screen-time-display { font-size: 1.8rem; font-weight: 900; color: #38bdf8; z-index: 2; }
+    .screen-caption { font-size: 0.76rem; font-weight: 700; color: var(--text-subtle); margin-top: 1rem; }
 
-    .screen-watermark-hint {
-      font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      position: absolute;
-      bottom: 12px;
-    }
+    .config-group { margin-bottom: 1.4rem; }
+    .config-label { display: block; font-size: 0.84rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; margin-bottom: 0.5rem; }
 
-    .screen-caption {
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--text-subtle);
-      margin-top: 1rem;
-    }
-
-    .config-group {
-      margin-bottom: 1.4rem;
-    }
-
-    .config-label {
-      display: block;
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.5rem;
-    }
-
-    .mode-selector-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
+    .mode-selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
     .mode-btn {
       background: var(--bg-base);
@@ -747,27 +609,11 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
 
-    .mode-btn .mode-name {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .mode-btn .mode-price {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--primary);
-      margin: 3px 0;
-    }
-
-    .mode-btn.active {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary);
-    }
+    .mode-btn .mode-name { font-size: 0.95rem; font-weight: 800; color: var(--text-main); }
+    .mode-btn .mode-price { font-size: 0.8rem; font-weight: 800; color: var(--primary); margin: 3px 0; }
+    .mode-btn.active { background: var(--primary-light); border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
 
     .input-duration-wrap {
       display: flex;
@@ -790,56 +636,13 @@
       outline: none;
     }
 
-    .input-duration-wrap .input-unit {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
+    .calculation-summary-box { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.4rem; }
+    .summary-line { display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px; }
+    .summary-divider { height: 1px; background: var(--border-subtle); margin: 10px 0; }
+    .summary-total-line { display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; font-weight: 800; color: var(--text-main); }
+    .total-calculated-price { font-size: 1.7rem; font-weight: 900; color: var(--primary); }
 
-    .time-limit-indicator {
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: var(--warning);
-    }
-
-    .calculation-summary-box {
-      background: var(--bg-base);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 1.25rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .summary-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin: 10px 0;
-    }
-
-    .summary-total-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .total-calculated-price {
-      font-size: 1.7rem;
-      font-weight: 900;
-      color: var(--primary);
-    }
-
-    /* Placed Order UI */
+    /* Placed Order & Management UI */
     .running-order-item {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -847,25 +650,14 @@
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       box-shadow: var(--shadow-sm);
     }
 
-    .order-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 6px;
-      width: fit-content;
-    }
-
-    .status-running {
-      background: var(--warning-light);
-      color: var(--warning);
-    }
+    .order-badge-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; width: fit-content; }
+    .status-running { background: var(--warning-light); color: var(--warning); }
+    .status-accepted { background: var(--success-light); color: var(--success); }
+    .status-rejected { background: var(--danger-light); color: var(--danger); }
 
     .order-link-btn {
       display: inline-flex;
@@ -882,414 +674,91 @@
       width: fit-content;
     }
 
-    .order-link-btn:hover {
-      background: var(--primary-light);
-    }
-
-    .empty-state-box {
+    .editor-action-row {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 3.5rem 1.5rem;
-    }
-
-    .empty-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 0.45rem;
-    }
-
-    .empty-desc {
-      color: var(--text-muted);
-      font-size: 0.94rem;
-      max-width: 420px;
-      line-height: 1.55;
-      margin-bottom: 1.6rem;
-    }
-
-    .profile-card-large {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 1.75rem;
-      background: var(--bg-base);
-      border: 1px solid var(--border-subtle);
-      border-radius: 18px;
-      margin-bottom: 1.75rem;
-    }
-
-    .profile-avatar-large {
-      width: 80px;
-      height: 80px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--primary), #06b6d4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .form-input-field {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border-strong);
-      background: var(--bg-base);
-      margin: 6px 0 14px 0;
-      font-size: 0.95rem;
-      color: var(--text-main);
-      outline: none;
-    }
-
-    .form-input-field:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary);
-    }
-
-    .form-textarea-field {
-      width: 100%;
-      min-height: 75px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border-strong);
-      background: var(--bg-base);
-      margin: 6px 0 14px 0;
-      font-size: 0.92rem;
-      color: var(--text-main);
-      outline: none;
-      resize: vertical;
-    }
-
-    .form-textarea-field:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary);
-    }
-
-    .btn-google-auth {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-strong);
-      color: var(--text-main);
-      padding: 13px;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       gap: 10px;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .btn-action-accept {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.85rem;
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      transition: background 0.15s ease;
-      margin-bottom: 1.2rem;
     }
 
-    .btn-google-auth:hover {
-      background: var(--bg-base);
-    }
-
-    .btn-logout {
-      width: 100%;
+    .btn-action-reject {
       background: var(--danger-light);
       border: 1px solid var(--danger);
       color: var(--danger);
-      padding: 13px;
-      border-radius: 12px;
-      font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 8px;
       font-weight: 800;
-      cursor: pointer;
-      margin-top: 1rem;
-      display: none;
-    }
-
-    .policy-item {
-      border-left: 3px solid var(--primary);
-      padding-left: 16px;
-      margin-bottom: 1.6rem;
-    }
-
-    .policy-item h4 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-    }
-
-    .policy-item p {
-      margin-bottom: 0;
-      color: var(--text-muted);
-      font-size: 0.94rem;
-      line-height: 1.6;
-    }
-
-    .earn-banner-card {
-      background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%);
-      color: #ffffff;
-      border-radius: 18px;
-      padding: 1.6rem;
-      margin-bottom: 1.75rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
-    }
-
-    .earn-banner-text h3 {
-      font-size: 1.25rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .earn-banner-text p {
-      font-size: 0.88rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .btn-apply-earn {
-      background: #ffffff;
-      color: #0f172a;
-      font-weight: 800;
-      font-size: 0.92rem;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .warning-box {
-      background: var(--warning-light);
-      border: 1px solid var(--warning);
-      color: var(--warning);
-      padding: 12px 14px;
-      border-radius: 10px;
       font-size: 0.85rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0 16px 0;
-    }
-
-    .step-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      background: var(--primary-light);
-      color: var(--primary);
-      padding: 4px 10px;
-      border-radius: 999px;
-      margin-bottom: 0.8rem;
-    }
-
-    .mode-config-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .mode-config-card {
-      background: var(--bg-base);
-      border: 1px solid var(--border-strong);
-      border-radius: 12px;
-      padding: 12px;
-    }
-
-    .mode-config-card h5 {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .my-shops-container {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .my-shops-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.1rem;
-    }
-
-    .my-shop-badge {
-      background: var(--primary-light);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 0.8rem;
-      padding: 4px 12px;
-      border-radius: 999px;
-    }
-
-    .my-shop-item {
-      background: var(--bg-base);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .theme-selector-section {
-      margin: 1.8rem 0;
-      padding: 1.35rem 0;
-      border-top: 1px solid var(--border-subtle);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .theme-card-btn {
-      background: var(--bg-base);
-      border: 2px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
       cursor: pointer;
-      text-align: left;
-      position: relative;
     }
 
-    .theme-card-btn:hover {
-      border-color: var(--primary);
-    }
+    .empty-state-box { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3.5rem 1.5rem; }
+    .empty-title { font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.45rem; }
+    .empty-desc { color: var(--text-muted); font-size: 0.94rem; max-width: 420px; line-height: 1.55; margin-bottom: 1.6rem; }
 
-    .theme-card-btn.active {
-      border-color: var(--primary);
-      background: var(--primary-light);
-      box-shadow: 0 0 0 2px var(--primary);
-    }
+    .profile-card-large { display: flex; align-items: center; gap: 20px; padding: 1.75rem; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 18px; margin-bottom: 1.75rem; }
+    .profile-avatar-large { width: 80px; height: 80px; border-radius: 18px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 
-    .theme-color-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .form-input-field { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.95rem; color: var(--text-main); outline: none; }
+    .form-textarea-field { width: 100%; min-height: 75px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.92rem; color: var(--text-main); outline: none; resize: vertical; }
 
-    .theme-label-title {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: block;
-      line-height: 1.2;
-    }
+    .btn-google-auth { width: 100%; background: var(--bg-card); border: 1px solid var(--border-strong); color: var(--text-main); padding: 13px; border-radius: 12px; font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; box-shadow: var(--shadow-sm); margin-bottom: 1.2rem; }
+    .btn-logout { width: 100%; background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); padding: 13px; border-radius: 12px; font-size: 0.95rem; font-weight: 800; cursor: pointer; margin-top: 1rem; display: none; }
+
+    .policy-item { border-left: 3px solid var(--primary); padding-left: 16px; margin-bottom: 1.6rem; }
+    .policy-item h4 { font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.35rem; }
+    .policy-item p { margin-bottom: 0; color: var(--text-muted); font-size: 0.94rem; line-height: 1.6; }
+
+    .earn-banner-card { background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%); color: #ffffff; border-radius: 18px; padding: 1.6rem; margin-bottom: 1.75rem; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .btn-apply-earn { background: #ffffff; color: #0f172a; font-weight: 800; font-size: 0.92rem; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
+
+    .theme-selector-section { margin: 1.8rem 0; padding: 1.35rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+    .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-top: 10px; }
+    .theme-card-btn { background: var(--bg-base); border: 2px solid var(--border-subtle); border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; }
+    .theme-card-btn.active { border-color: var(--primary); background: var(--primary-light); }
+    .theme-color-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
+    .theme-label-title { font-size: 0.85rem; font-weight: 800; color: var(--text-main); display: block; }
 
     /* Toast Notifications */
-    #toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 100000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-    }
-
-    .rex-toast {
-      pointer-events: auto;
-      min-width: 300px;
-      max-width: 420px;
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-strong);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      box-shadow: var(--shadow-card);
-      transform: translateX(120%);
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-      opacity: 0;
-    }
-
-    .rex-toast.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .toast-icon-wrap {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 100000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+    .rex-toast { pointer-events: auto; min-width: 300px; max-width: 420px; background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 14px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; box-shadow: var(--shadow-card); transform: translateX(120%); transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease; opacity: 0; }
+    .rex-toast.show { transform: translateX(0); opacity: 1; }
+    .toast-icon-wrap { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .toast-success .toast-icon-wrap { background: var(--success-light); color: var(--success); }
     .toast-error .toast-icon-wrap { background: var(--danger-light); color: var(--danger); }
     .toast-info .toast-icon-wrap { background: var(--primary-light); color: var(--primary); }
-
     .toast-content { flex: 1; }
     .toast-title { font-size: 0.9rem; font-weight: 800; color: var(--text-main); margin-bottom: 2px; }
     .toast-desc { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); line-height: 1.4; }
-    .toast-close-btn { background: transparent; border: none; color: var(--text-subtle); cursor: pointer; font-size: 1.1rem; padding: 0 4px; line-height: 1; }
+    .toast-close-btn { background: transparent; border: none; color: var(--text-subtle); cursor: pointer; font-size: 1.1rem; }
 
     /* Modal Dialog */
-    .rex-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(8px);
-      z-index: 100001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-
+    .rex-modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(8px); z-index: 100001; display: flex; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
     .rex-modal-overlay.open { opacity: 1; pointer-events: auto; }
-
-    .rex-modal-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      width: 100%;
-      max-width: 440px;
-      border-radius: 20px;
-      padding: 1.8rem;
-      box-shadow: var(--shadow-card);
-      transform: scale(0.95) translateY(10px);
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
+    .rex-modal-card { background: var(--bg-card); border: 1px solid var(--border-subtle); width: 100%; max-width: 440px; border-radius: 20px; padding: 1.8rem; box-shadow: var(--shadow-card); transform: scale(0.95) translateY(10px); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
     .rex-modal-overlay.open .rex-modal-card { transform: scale(1) translateY(0); }
-
     .rex-modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem; }
     .rex-modal-icon-danger { width: 42px; height: 42px; border-radius: 12px; background: var(--danger-light); color: var(--danger); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .rex-modal-title { font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
     .rex-modal-text { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.6rem; }
     .rex-modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
     .rex-btn-cancel { background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--text-main); padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-    .rex-btn-confirm-delete { background: var(--danger); border: none; color: #ffffff; padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); }
+    .rex-btn-confirm-delete { background: var(--danger); border: none; color: #ffffff; padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; cursor: pointer; }
   </style>
 
   <script>
-    /* 1. Firebase & EmailJS Initialization */
     const firebaseConfig = {
       apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
       authDomain: "rex-edit-hub.firebaseapp.com",
@@ -1305,7 +774,6 @@
     const db = firebase.firestore();
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    // Initialize EmailJS with Public Key
     (function() {
       emailjs.init("kJYbkGdmk4nBp-KDl");
     })();
@@ -1314,6 +782,7 @@
     var currentUserIdHandle = "";
     var EDITORS_DATA = {};
     var ordersUnsubscribe = null;
+    var activeRejectOrderId = null;
 
     var currentConfig = {
       editorKey: null,
@@ -1322,117 +791,94 @@
       calculatedPrice: 0
     };
 
-    var tempRegistrationData = {
-      role: "Short Editor",
-      portfolioLink: ""
-    };
+    var tempRegistrationData = { role: "Short Editor", portfolioLink: "" };
 
     function escapeHtml(str) {
       if (!str) return "";
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    /* 2. Theme Controller */
     window.setTheme = function(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('rex_theme', themeName);
-
       var themeBtns = document.querySelectorAll('.theme-card-btn');
       themeBtns.forEach(function(btn) {
-        if (btn.getAttribute('data-theme-target') === themeName) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
+        if (btn.getAttribute('data-theme-target') === themeName) btn.classList.add('active');
+        else btn.classList.remove('active');
       });
-
-      var namesMap = {
-        'default': 'Original Indigo',
-        'dark': 'Midnight Dark',
-        'golden': 'Royal Gold',
-        'red': 'Crimson Red',
-        'neon': 'Editor Neon'
-      };
-
-      showToast("Theme Applied", "Switched to " + (namesMap[themeName] || themeName) + " theme.", "info");
+      showToast("Theme Applied", "Switched theme successfully.", "info");
     };
 
-    /* 3. Modern Toast & Modal Dialogs */
     window.showToast = function(title, message, type) {
       type = type || 'info';
       var container = document.getElementById("toast-container");
       if (!container) return;
-
       var toast = document.createElement("div");
       toast.className = "rex-toast toast-" + type;
-
-      var iconSvg = '';
-      if (type === 'success') {
-        iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>';
-      } else if (type === 'error') {
-        iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
-      } else {
-        iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
-      }
-
-      toast.innerHTML = 
-        '<div class="toast-icon-wrap">' + iconSvg + '</div>' +
-        '<div class="toast-content">' +
-          '<div class="toast-title">' + escapeHtml(title) + '</div>' +
-          '<div class="toast-desc">' + escapeHtml(message) + '</div>' +
-        '</div>' +
-        '<button class="toast-close-btn" onclick="this.parentElement.remove()">&times;</button>';
-
+      var iconSvg = type === 'success' ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>' : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+      toast.innerHTML = '<div class="toast-icon-wrap">' + iconSvg + '</div><div class="toast-content"><div class="toast-title">' + escapeHtml(title) + '</div><div class="toast-desc">' + escapeHtml(message) + '</div></div><button class="toast-close-btn" onclick="this.parentElement.remove()">&times;</button>';
       container.appendChild(toast);
       setTimeout(function() { toast.classList.add("show"); }, 20);
-
-      setTimeout(function() {
-        toast.classList.remove("show");
-        setTimeout(function() { if (toast.parentNode) toast.remove(); }, 300);
-      }, 4200);
+      setTimeout(function() { toast.classList.remove("show"); setTimeout(function() { if (toast.parentNode) toast.remove(); }, 300); }, 4200);
     };
 
-    var confirmPromiseResolve = null;
-    window.showConfirmDialog = function(title, message) {
-      return new Promise(function(resolve) {
-        confirmPromiseResolve = resolve;
-        document.getElementById("modalConfirmTitle").textContent = title;
-        document.getElementById("modalConfirmMessage").textContent = message;
-        document.getElementById("customConfirmModal").classList.add("open");
+    // Reject Modal Handlers
+    window.openRejectModal = function(docId) {
+      activeRejectOrderId = docId;
+      document.getElementById("rejectReasonInput").value = "";
+      document.getElementById("rejectReasonModal").classList.add("open");
+    };
+
+    window.closeRejectModal = function() {
+      document.getElementById("rejectReasonModal").classList.remove("open");
+      activeRejectOrderId = null;
+    };
+
+    window.submitOrderRejection = function() {
+      var reason = document.getElementById("rejectReasonInput").value.trim();
+      if (!reason) {
+        showToast("Reason Required", "Please specify a reason for rejection.", "error");
+        return;
+      }
+      if (!activeRejectOrderId) return;
+
+      db.collection("orders").doc(activeRejectOrderId).update({
+        status: "Rejected: " + reason
+      }).then(function() {
+        showToast("Order Rejected", "Status updated successfully.", "success");
+        window.closeRejectModal();
+      }).catch(function(err) {
+        showToast("Error", err.message, "error");
       });
     };
 
-    window.closeConfirmModal = function(decision) {
-      document.getElementById("customConfirmModal").classList.remove("open");
-      if (confirmPromiseResolve) {
-        confirmPromiseResolve(decision);
-        confirmPromiseResolve = null;
-      }
+    window.acceptOrderWithQR = function(docId, clientEmail, clientName, orderId, price) {
+      db.collection("orders").doc(docId).update({
+        status: "In Progress (QR Sent - Escrow Awaiting)"
+      }).then(function() {
+        showToast("Order Accepted", "Status updated to In Progress.", "success");
+        var mailtoLink = "mailto:" + clientEmail + "?subject=Payment%20QR%20for%20Order%20" + orderId + "&body=Hello%20" + encodeURIComponent(clientName) + ",%0D%0AYour%20order%20" + orderId + "%20for%20₹" + price + "%20has%20been%20accepted!%20Please%20scan%20our%20official%20UPI%20QR%20code%20to%20lock%20escrow.";
+        window.location.href = mailtoLink;
+      }).catch(function(err) {
+        showToast("Error", err.message, "error");
+      });
     };
 
-    /* 4. Google Auth & User Profile Sync */
     window.loginWithGoogle = function() {
-      auth.signInWithPopup(provider)
-        .then(function(result) {
-          currentUser = result.user;
-          showToast("Signed In", "Welcome back, " + currentUser.displayName + "!", "success");
-          syncUserProfile(currentUser);
-        })
-        .catch(function(error) {
-          console.error("Auth Error:", error);
-          if (location.protocol === "file:") {
-            showToast("Protocol Notice", "Please test via GitHub Pages: https://msgamermax1.github.io/RexEditHub/", "info");
-          } else {
-            showToast("Login Failed", error.message, "error");
-          }
-        });
+      auth.signInWithPopup(provider).then(function(result) {
+        currentUser = result.user;
+        showToast("Signed In", "Welcome back, " + currentUser.displayName + "!", "success");
+        syncUserProfile(currentUser);
+      }).catch(function(error) {
+        showToast("Login Failed", error.message, "error");
+      });
     };
 
     window.triggerLogout = function() {
       auth.signOut().then(function() {
         currentUser = null;
         currentUserIdHandle = "";
-        showToast("Logged Out", "Signed out of Rex Hub successfully.", "info");
+        showToast("Logged Out", "Signed out successfully.", "info");
         resetUserInterface();
       });
     };
@@ -1440,7 +886,6 @@
     function syncUserProfile(user) {
       if (!user) return;
       var userRef = db.collection("users").doc(user.uid);
-
       userRef.get().then(function(doc) {
         if (doc.exists) {
           var userData = doc.data();
@@ -1449,7 +894,6 @@
         } else {
           var baseHandle = user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
           currentUserIdHandle = baseHandle;
-          
           userRef.set({
             userId: baseHandle,
             displayName: user.displayName || baseHandle,
@@ -1460,13 +904,10 @@
             updateUserInterface(user, user.displayName, baseHandle);
           });
         }
-      }).catch(function(err) {
-        console.error("User fetch error:", err);
-        updateUserInterface(user, user.displayName, user.email.split("@")[0]);
       });
-
       listenToUserCreatedShops(user.uid);
       listenToPrivateOrders(user.uid);
+      listenToEditorIncomingOrders();
     }
 
     function updateUserInterface(user, displayName, handle) {
@@ -1475,15 +916,13 @@
       document.getElementById("sidebarProfileName").textContent = displayName || user.displayName;
       document.getElementById("profileUserIdDisplay").textContent = "@" + handle;
       document.getElementById("profileUserEmail").textContent = user.email;
-      
       document.getElementById("inputDisplayName").value = displayName || user.displayName;
       document.getElementById("inputUserId").value = handle;
 
       if (user.photoURL) {
         var avatarImg = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:18px;object-fit:cover;">';
-        var miniAvatarImg = '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:10px;object-fit:cover;">';
         document.getElementById("profileLargeAvatarContainer").innerHTML = avatarImg;
-        document.getElementById("sidebarAvatarContainer").innerHTML = miniAvatarImg;
+        document.getElementById("sidebarAvatarContainer").innerHTML = avatarImg;
       }
 
       document.getElementById("googleSignInBtn").style.display = "none";
@@ -1496,14 +935,6 @@
       document.getElementById("sidebarProfileName").textContent = "Guest Creator";
       document.getElementById("profileUserIdDisplay").textContent = "@guest";
       document.getElementById("profileUserEmail").textContent = "Sign in to activate profile";
-      document.getElementById("inputDisplayName").value = "";
-      document.getElementById("inputUserId").value = "";
-
-      document.getElementById("profileLargeAvatarContainer").innerHTML = 
-        '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
-      document.getElementById("sidebarAvatarContainer").innerHTML = 
-        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
-
       document.getElementById("googleSignInBtn").style.display = "flex";
       document.getElementById("headerLoginBtn").style.display = "flex";
       document.getElementById("logoutBtn").style.display = "none";
@@ -1511,526 +942,185 @@
       document.getElementById("myShopsList").innerHTML = "<p style='color:var(--text-subtle); font-size:0.9rem;'>Sign in to see shops created by you.</p>";
       document.getElementById("myShopsCountBadge").textContent = "0 Created";
 
-      if (ordersUnsubscribe) {
-        ordersUnsubscribe();
-        ordersUnsubscribe = null;
-      }
+      if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
       document.getElementById("activeOrdersList").style.display = "none";
       document.getElementById("placedEmptyBox").style.display = "flex";
     }
 
     auth.onAuthStateChanged(function(user) {
-      if (user) {
-        currentUser = user;
-        syncUserProfile(user);
-      } else {
-        resetUserInterface();
-      }
+      if (user) { currentUser = user; syncUserProfile(user); }
+      else { resetUserInterface(); }
     });
 
-    /* 5. UserID Validation & Profile Save */
     window.saveProfileInfo = function() {
-      if (!currentUser) {
-        showToast("Access Denied", "Please sign in with Google first to save your profile.", "error");
-        return;
-      }
-
+      if (!currentUser) { showToast("Access Denied", "Please sign in with Google first.", "error"); return; }
       var newDisplayName = document.getElementById("inputDisplayName").value.trim();
       var rawHandle = document.getElementById("inputUserId").value.trim().toLowerCase().replace(/^@/, '');
+      if (!newDisplayName || !rawHandle) { showToast("Error", "All fields are required.", "error"); return; }
 
-      if (!newDisplayName) {
-        showToast("Missing Name", "Please enter a display name for your profile.", "error");
-        return;
-      }
-
-      if (!rawHandle || rawHandle.length < 3) {
-        showToast("Invalid UserID", "UserID must be at least 3 characters long.", "error");
-        return;
-      }
-
-      var validHandleRegex = /^[a-z0-9_]+$/;
-      if (!validHandleRegex.test(rawHandle)) {
-        showToast("Invalid Characters", "UserID can only contain letters, numbers, and underscores.", "error");
-        return;
-      }
-
-      db.collection("users").where("userId", "==", rawHandle).get()
-        .then(function(querySnapshot) {
-          var isTaken = false;
-          querySnapshot.forEach(function(doc) {
-            if (doc.id !== currentUser.uid) {
-              isTaken = true;
-            }
-          });
-
-          if (isTaken) {
-            showToast("UserID Taken", "@" + rawHandle + " is already taken by another creator!", "error");
-            return;
-          }
-
-          return db.collection("users").doc(currentUser.uid).set({
-            userId: rawHandle,
-            displayName: newDisplayName,
-            email: currentUser.email,
-            photoURL: currentUser.photoURL || "",
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true }).then(function() {
-            currentUserIdHandle = rawHandle;
-            updateUserInterface(currentUser, newDisplayName, rawHandle);
-            showToast("Profile Saved", "Your UserID @" + rawHandle + " and details are permanently saved.", "success");
-          });
-        })
-        .catch(function(error) {
-          console.error("Profile Save Error:", error);
-          showToast("Save Error", error.message, "error");
-        });
+      db.collection("users").doc(currentUser.uid).set({
+        userId: rawHandle,
+        displayName: newDisplayName,
+        email: currentUser.email,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true }).then(function() {
+        currentUserIdHandle = rawHandle;
+        updateUserInterface(currentUser, newDisplayName, rawHandle);
+        showToast("Saved", "Profile updated successfully.", "success");
+      });
     };
 
-    /* 6. Realtime Listener: User's Created Shops */
     function listenToUserCreatedShops(uid) {
       db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
         var listContainer = document.getElementById("myShopsList");
         var countBadge = document.getElementById("myShopsCountBadge");
-
         countBadge.textContent = snapshot.size + " Created";
-
-        if (snapshot.empty) {
-          listContainer.innerHTML = "<p style='color:var(--text-subtle); font-size:0.9rem;'>You have not created any shops yet. Click 'Apply for Earn' above to start.</p>";
-          return;
-        }
-
+        if (snapshot.empty) { listContainer.innerHTML = "<p style='color:var(--text-muted); font-size:0.9rem;'>No shops created yet.</p>"; return; }
         listContainer.innerHTML = "";
         snapshot.forEach(function(doc) {
           var shop = doc.data();
-          var shopId = doc.id;
-
-          var itemHtml = 
-            '<div class="my-shop-item">' +
-              '<div>' +
-                '<strong style="font-size:1rem; color:var(--text-main); display:block;">' + escapeHtml(shop.name) + '</strong>' +
-                '<span style="font-size:0.8rem; color:var(--text-muted);">Specialty: ' + escapeHtml(shop.category) + ' &bull; Starts at ₹' + shop.rates.low + '</span>' +
-              '</div>' +
-              '<button class="btn-delete-shop" onclick="window.deleteShop(\'' + shopId + '\', \'' + escapeHtml(shop.name) + '\')" type="button">' +
-                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' +
-                'Delete' +
-              '</button>' +
-            '</div>';
-
-          listContainer.insertAdjacentHTML("beforeend", itemHtml);
+          listContainer.insertAdjacentHTML("beforeend", '<div class="my-shop-item"><div><strong style="color:var(--text-main);">' + escapeHtml(shop.name) + '</strong><span style="display:block; font-size:0.8rem; color:var(--text-muted);">' + escapeHtml(shop.category) + '</span></div><button class="btn-delete-shop" onclick="window.deleteShop(\'' + doc.id + '\', \'' + escapeHtml(shop.name) + '\')">Delete</button></div>');
         });
-      }, function(err) {
-        console.error("My shops listener error:", err);
       });
     }
 
     window.deleteShop = function(shopId, shopName) {
-      if (!currentUser) {
-        showToast("Authentication Required", "Please sign in to manage shops.", "error");
-        return;
-      }
-
-      showConfirmDialog("Delete Shop", "Are you sure you want to permanently delete \"" + shopName + "\"? This action cannot be undone.")
-        .then(function(confirmed) {
-          if (confirmed) {
-            db.collection("shops").doc(shopId).delete()
-              .then(function() {
-                showToast("Shop Deleted", "\"" + shopName + "\" was permanently removed.", "success");
-              })
-              .catch(function(error) {
-                console.error("Delete shop error:", error);
-                showToast("Deletion Error", error.message, "error");
-              });
-          }
-        });
+      db.collection("shops").doc(shopId).delete().then(function() { showToast("Deleted", shopName + " removed.", "success"); });
     };
 
-    /* 7. Realtime Firestore Listener: ALL SHOPS */
     db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var grid = document.getElementById("shopEditorGrid");
       var emptyBox = document.getElementById("shopEmptyBox");
       EDITORS_DATA = {};
-
-      if (snapshot.empty) {
-        if (emptyBox) emptyBox.style.display = "flex";
-        if (grid) grid.style.display = "none";
-        return;
-      }
-
+      if (snapshot.empty) { if (emptyBox) emptyBox.style.display = "flex"; if (grid) grid.style.display = "none"; return; }
       if (emptyBox) emptyBox.style.display = "none";
       if (grid) {
         grid.style.display = "grid";
         grid.innerHTML = "";
-
         snapshot.forEach(function(doc) {
           var data = doc.data();
-          var id = doc.id;
-          EDITORS_DATA[id] = data;
-
-          var badgeClass = "format-badge-custom";
-          if (data.category === "Short Editor") badgeClass = "format-badge-short";
-          else if (data.category === "Video Editor") badgeClass = "format-badge-long";
-
-          var initials = (data.name || "ED").substring(0, 2).toUpperCase();
-
-          var isOwner = currentUser && (data.ownerUid === currentUser.uid);
-          var ownerAction = isOwner 
-            ? '<button class="btn-delete-shop" onclick="window.deleteShop(\'' + id + '\', \'' + escapeHtml(data.name) + '\')" type="button" style="margin-top:6px;">Delete My Shop</button>' 
-            : '';
-
-          var cardHtml = 
-            '<article class="editor-card">' +
-              '<span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span>' +
-              '<div class="editor-header">' +
-                '<div class="editor-avatar">' + escapeHtml(initials) + '</div>' +
-                '<div class="editor-title">' +
-                  '<h3>' + escapeHtml(data.name) + ' <span style="color:#0284c7;">✓</span></h3>' +
-                  '<span class="editor-status">Ready for Orders</span>' +
-                '</div>' +
-              '</div>' +
-              '<p class="editor-bio">Verified editor &bull; by <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p>' +
-              '<div class="skill-pills">' +
-                '<span class="pill">' + escapeHtml(data.modeNames.low) + '</span>' +
-                '<span class="pill">' + escapeHtml(data.modeNames.medium) + '</span>' +
-                '<span class="pill">' + escapeHtml(data.modeNames.high) + '</span>' +
-              '</div>' +
-              '<div class="card-footer">' +
-                '<div>' +
-                  '<span class="price-label">Starts at</span>' +
-                  '<span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(data.unitShort) + '</small></span>' +
-                '</div>' +
-                '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + id + '\')" type="button">Hire Editor &rarr;</button>' +
-              '</div>' +
-              ownerAction +
-            '</article>';
-
+          EDITORS_DATA[doc.id] = data;
+          var badgeClass = data.category === "Short Editor" ? "format-badge-short" : "format-badge-long";
+          var cardHtml = '<article class="editor-card"><span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span><div class="editor-header"><div class="editor-avatar">' + escapeHtml((data.name || "ED").substring(0,2).toUpperCase()) + '</div><div><h3>' + escapeHtml(data.name) + ' <span style="color:#0284c7;">✓</span></h3><span class="editor-status">Ready for Orders</span></div></div><p style="font-size:0.85rem; color:var(--text-muted);">Verified editor by <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p><div class="card-footer"><div><span class="price-label">Starts at</span><span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(data.unitShort) + '</small></span></div><button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + doc.id + '\')">Hire Editor &rarr;</button></div></article>';
           grid.insertAdjacentHTML("beforeend", cardHtml);
         });
       }
-    }, function(error) {
-      console.error("Shops listener error:", error);
     });
 
-    /* 8. Private Filtered Listener: Client's Placed Orders ("Wait for editor response") */
     function listenToPrivateOrders(uid) {
-      if (ordersUnsubscribe) {
-        ordersUnsubscribe();
-      }
-
+      if (ordersUnsubscribe) ordersUnsubscribe();
       var list = document.getElementById("activeOrdersList");
       var emptyBox = document.getElementById("placedEmptyBox");
-
-      ordersUnsubscribe = db.collection("orders")
-        .where("clientUid", "==", uid)
-        .onSnapshot(function(snapshot) {
-          if (snapshot.empty) {
-            if (emptyBox) emptyBox.style.display = "flex";
-            if (list) list.style.display = "none";
-            return;
-          }
-
-          if (emptyBox) emptyBox.style.display = "none";
-          if (list) {
-            list.style.display = "flex";
-            list.innerHTML = "";
-
-            snapshot.forEach(function(doc) {
-              var data = doc.data();
-              var notesHtml = data.instructions 
-                ? '<p style="font-size:0.85rem; color:var(--text-muted); background:var(--bg-base); padding:8px 12px; border-radius:8px; border:1px solid var(--border-subtle);"><strong>Note:</strong> ' + escapeHtml(data.instructions) + '</p>'
-                : '';
-
-              var driveHtml = data.footageLink
-                ? '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" rel="noopener noreferrer" class="order-link-btn">' +
-                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>' +
-                    'Open Footage / Assets Link &rarr;' +
-                  '</a>'
-                : '';
-
-              var orderHtml = 
-                '<div class="running-order-item">' +
-                  '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-                    '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
-                    '<span class="order-badge-pill status-running">● Wait for editor response</span>' +
-                  '</div>' +
-                  '<small style="color:var(--text-muted);">Assigned Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName || "Standard") + '</strong></small>' +
-                  '<div style="display:flex; justify-content:space-between; align-items:baseline;">' +
-                    '<span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span>' +
-                    '<strong style="font-size:1.15rem; color:var(--primary);">Amount: ₹' + data.price + '</strong>' +
-                  '</div>' +
-                  driveHtml +
-                  notesHtml +
-                '</div>';
-
-              list.insertAdjacentHTML("beforeend", orderHtml);
-            });
-          }
-        }, function(error) {
-          console.error("Orders listener error:", error);
-        });
+      ordersUnsubscribe = db.collection("orders").where("clientUid", "==", uid).onSnapshot(function(snapshot) {
+        if (snapshot.empty) { if (emptyBox) emptyBox.style.display = "flex"; if (list) list.style.display = "none"; return; }
+        if (emptyBox) emptyBox.style.display = "none";
+        if (list) {
+          list.style.display = "flex";
+          list.innerHTML = "";
+          snapshot.forEach(function(doc) {
+            var data = doc.data();
+            var statusClass = data.status && data.status.startsWith("Rejected") ? "status-rejected" : (data.status && data.status.includes("Progress") ? "status-accepted" : "status-running");
+            var orderHtml = '<div class="running-order-item"><div style="display:flex; justify-content:space-between; align-items:center;"><strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong><span class="order-badge-pill ' + statusClass + '">● ' + escapeHtml(data.status) + '</span></div><small style="color:var(--text-muted);">Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName) + '</strong></small><div style="display:flex; justify-content:space-between; align-items:baseline;"><span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span><strong style="font-size:1.15rem; color:var(--primary);">Amount: ₹' + data.price + '</strong></div><a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">Open Footage Link &rarr;</a></div>';
+            list.insertAdjacentHTML("beforeend", orderHtml);
+          });
+        }
+      });
     }
 
-    /* 9. Navigation Control */
-    window.openSidebar = function() {
-      var sb = document.getElementById("sidebar");
-      var ov = document.getElementById("sidebarOverlay");
-      if (sb) sb.classList.add("open");
-      if (ov) ov.classList.add("open");
-      document.body.style.overflow = "hidden";
-    };
+    function listenToEditorIncomingOrders() {
+      db.collection("orders").onSnapshot(function(snapshot) {
+        var container = document.getElementById("incomingOrdersList");
+        if (!container) return;
+        container.innerHTML = "";
+        var count = 0;
+        snapshot.forEach(function(doc) {
+          var data = doc.data();
+          if (currentUser && data.editorUid === currentUser.uid) {
+            count++;
+            var actions = data.status === "Wait for editor response" ? 
+              '<div class="editor-action-row"><button class="btn-action-accept" onclick="window.acceptOrderWithQR(\'' + doc.id + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', \'' + escapeHtml(data.orderId) + '\', ' + data.price + ')">Accept & Send QR</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>' : 
+              '<span style="font-size:0.8rem; font-weight:700; color:var(--primary);">Status: ' + escapeHtml(data.status) + '</span>';
 
-    window.closeSidebar = function() {
-      var sb = document.getElementById("sidebar");
-      var ov = document.getElementById("sidebarOverlay");
-      if (sb) sb.classList.remove("open");
-      if (ov) ov.classList.remove("open");
-      document.body.style.overflow = "";
-    };
+            container.insertAdjacentHTML("beforeend", '<div class="running-order-item"><strong>Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong><small>Client: ' + escapeHtml(data.clientName) + ' (' + escapeHtml(data.clientEmail) + ')</small><small>Amount: ₹' + data.price + ' | Tier: ' + escapeHtml(data.modeName) + '</small><a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">View Footage Link</a>' + actions + '</div>');
+          }
+        });
+        if (count === 0 && container) {
+          container.innerHTML = "<p style='color:var(--text-muted); font-size:0.9rem;'>No incoming requests for your shops yet.</p>";
+        }
+      });
+    }
 
-    window.toggleSidebar = function() {
-      var sb = document.getElementById("sidebar");
-      if (sb && sb.classList.contains("open")) {
-        window.closeSidebar();
-      } else {
-        window.openSidebar();
-      }
-    };
+    window.openSidebar = function() { document.getElementById("sidebar").classList.add("open"); document.getElementById("sidebarOverlay").classList.add("open"); };
+    window.closeSidebar = function() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebarOverlay").classList.remove("open"); };
+    window.toggleSidebar = function() { var sb = document.getElementById("sidebar"); if (sb.classList.contains("open")) window.closeSidebar(); else window.openSidebar(); };
 
     window.switchTab = function(viewId) {
-      var viewsMap = {
-        "viewShop": "Shop",
-        "viewOrderConfig": "Order Setup",
-        "viewPlacedOrder": "Placed Order",
-        "viewOrderDelivered": "Order Delivered",
-        "viewProfile": "Profile",
-        "viewLawPolicy": "Law & Policy",
-        "viewRegisterStep1": "Apply for Earn",
-        "viewRegisterStep2": "Shop Confirmation"
-      };
-
-      var subtitleEl = document.getElementById("headerActiveSubtitle");
-      if (subtitleEl && viewsMap[viewId]) {
-        subtitleEl.textContent = viewsMap[viewId].toUpperCase();
-      }
-
-      var navBtns = document.getElementsByClassName("nav-link-btn");
-      for (var i = 0; i < navBtns.length; i++) {
-        navBtns[i].classList.remove("active");
-        if (navBtns[i].getAttribute("data-view") === viewId) {
-          navBtns[i].classList.add("active");
-        }
-      }
-
-      var allViewIds = [
-        "viewShop", "viewOrderConfig", "viewPlacedOrder", 
-        "viewOrderDelivered", "viewProfile", "viewLawPolicy",
-        "viewRegisterStep1", "viewRegisterStep2"
-      ];
-
-      for (var j = 0; j < allViewIds.length; j++) {
-        var sec = document.getElementById(allViewIds[j]);
-        if (sec) {
-          sec.style.display = (allViewIds[j] === viewId) ? "block" : "none";
-        }
-      }
-
+      var views = ["viewShop", "viewOrderConfig", "viewPlacedOrder", "viewOrderDelivered", "viewProfile", "viewLawPolicy", "viewRegisterStep1", "viewRegisterStep2", "viewEditorManage"];
+      views.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = (id === viewId) ? "block" : "none";
+      });
       window.closeSidebar();
       window.scrollTo(0, 0);
     };
 
-    /* 10. Registration Flow */
     window.startApplyForEarn = function() {
-      if (!currentUser) {
-        showToast("Sign In Required", "Please sign in with Google before opening an editor shop.", "info");
-        window.switchTab("viewProfile");
-        return;
-      }
+      if (!currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab("viewProfile"); return; }
       window.switchTab("viewRegisterStep1");
     };
 
     window.submitStep1Request = function() {
       var role = document.getElementById("regWorkType").value;
       var link = document.getElementById("regPortfolioLink").value.trim();
-
-      if (!link) {
-        showToast("Link Missing", "Please paste your work portfolio or drive link.", "error");
-        return;
-      }
-
+      if (!link) { showToast("Error", "Provide portfolio link.", "error"); return; }
       tempRegistrationData.role = role;
       tempRegistrationData.portfolioLink = link;
-
-      showToast("Application Verified", "Opening Step 2: Configure your shop rates.", "success");
-      window.prepareStep2Form(role);
-    };
-
-    window.prepareStep2Form = function(role) {
-      document.getElementById("step2ChosenRole").textContent = role;
-      var unitText = "";
-      var base = 20;
-
-      if (role === "Short Editor") {
-        unitText = "₹ per 10 seconds (Max 3 mins)";
-        base = 20;
-      } else if (role === "Video Editor") {
-        unitText = "₹ per 1 minute";
-        base = 60;
-      } else if (role === "Minecraft Mini Movie Editor") {
-        unitText = "₹ per 3 minutes";
-        base = 150;
-      } else if (role === "Thumbnail Designer") {
-        unitText = "₹ per thumbnail";
-        base = 100;
-      } else {
-        unitText = "₹ per research report";
-        base = 200;
-      }
-
-      document.getElementById("step2ChargeUnitLabel").textContent = "Pricing Rates (" + unitText + ")";
-      document.getElementById("modeUnitLabel1").textContent = "(" + unitText + ")";
-      document.getElementById("modeUnitLabel2").textContent = "(" + unitText + ")";
-      document.getElementById("modeUnitLabel3").textContent = "(" + unitText + ")";
-
-      document.getElementById("modeRate1").value = base;
-      document.getElementById("modeRate2").value = Math.round(base * 1.5);
-      document.getElementById("modeRate3").value = Math.round(base * 2.0);
-
       window.switchTab("viewRegisterStep2");
     };
 
     window.completeEditorRegistration = function() {
       var shopName = document.getElementById("regShopName").value.trim();
-      if (!shopName) {
-        showToast("Name Required", "Please enter a name for your shop!", "error");
-        return;
-      }
-
-      var mode1Name = document.getElementById("modeName1").value.trim() || "Mode 1";
-      var mode1Rate = parseInt(document.getElementById("modeRate1").value, 10) || 20;
-      var mode2Name = document.getElementById("modeName2").value.trim() || "Mode 2";
-      var mode2Rate = parseInt(document.getElementById("modeRate2").value, 10) || 30;
-      var mode3Name = document.getElementById("modeName3").value.trim() || "Mode 3";
-      var mode3Rate = parseInt(document.getElementById("modeRate3").value, 10) || 40;
-
+      if (!shopName) { showToast("Error", "Enter shop name.", "error"); return; }
       var role = tempRegistrationData.role;
-      var screenClass = "ratio-9-16";
-      var ratioText = "9:16 Vertical Cut";
-      var dimText = "1080 × 1920 • Mobile Format";
-      var maxSec = 180;
-      var unitShort = "/ 10s";
-
-      if (role === "Short Editor") {
-        screenClass = "ratio-9-16";
-        ratioText = "9:16 Vertical Cut";
-        dimText = "1080 × 1920 • Max 3 Mins (180s)";
-        maxSec = 180;
-        unitShort = "/ 10s";
-      } else if (role === "Video Editor") {
-        screenClass = "ratio-16-9";
-        ratioText = "16:9 Long-Form Cut";
-        dimText = "1920 × 1080 • YouTube Format";
-        maxSec = 1800;
-        unitShort = "/ 1m";
-      } else if (role === "Minecraft Mini Movie Editor") {
-        screenClass = "ratio-16-9";
-        ratioText = "16:9 Movie Cinema";
-        dimText = "Cinematic 1080p • 3-Min blocks";
-        maxSec = 1200;
-        unitShort = "/ 3m";
-      } else if (role === "Thumbnail Designer") {
-        screenClass = "ratio-thumb";
-        ratioText = "16:9 Thumbnail Graphic";
-        dimText = "High-CTR 1280 × 720 Image";
-        maxSec = 1;
-        unitShort = "/ thumb";
-      } else {
-        screenClass = "ratio-doc";
-        ratioText = "Script & Topic Dossier";
-        dimText = "Fact-Checked Outline Document";
-        maxSec = 1;
-        unitShort = "/ report";
-      }
-
       var newShop = {
         name: shopName,
         category: role,
         portfolioLink: tempRegistrationData.portfolioLink,
-        ratioText: ratioText,
-        screenClass: screenClass,
-        dimText: dimText,
-        maxSeconds: maxSec,
-        unitShort: unitShort,
-        rates: { low: mode1Rate, medium: mode2Rate, high: mode3Rate },
-        modeNames: { low: mode1Name, medium: mode2Name, high: mode3Name },
-        ownerUid: currentUser ? currentUser.uid : "anonymous",
-        ownerEmail: currentUser ? currentUser.email : "guest@rex hub",
+        ratioText: role === "Short Editor" ? "9:16 Vertical Cut" : "16:9 Long-Form",
+        screenClass: role === "Short Editor" ? "ratio-9-16" : "ratio-16-9",
+        dimText: "1080p Format",
+        maxSeconds: role === "Short Editor" ? 180 : 1800,
+        unitShort: role === "Short Editor" ? "/ 10s" : "/ 1m",
+        rates: { low: 20, medium: 30, high: 40 },
+        modeNames: { low: "Basic", medium: "Standard", high: "Premium" },
+        ownerUid: currentUser.uid,
+        ownerEmail: currentUser.email,
         ownerHandle: currentUserIdHandle || "creator",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
-
-      db.collection("shops").add(newShop)
-        .then(function() {
-          showToast("Shop Launched", "\"" + shopName + "\" is now live on the marketplace!", "success");
-          window.switchTab("viewShop");
-        })
-        .catch(function(error) {
-          console.error("Shop registration error:", error);
-          showToast("Registration Error", error.message, "error");
-        });
+      db.collection("shops").add(newShop).then(function() {
+        showToast("Success", "Shop launched live!", "success");
+        window.switchTab("viewShop");
+      });
     };
 
-    /* 11. Hire Terminal & Dynamic Pricing */
     window.openHireTerminal = function(editorKey) {
       var editor = EDITORS_DATA[editorKey];
-      if (!editor) {
-        showToast("Error", "Editor shop details not found.", "error");
-        return;
-      }
-
+      if (!editor) return;
       currentConfig.editorKey = editorKey;
       currentConfig.mode = "medium";
-      currentConfig.duration = (editor.category === "Short Editor") ? 20 : 60;
-
-      document.getElementById("configEditorTitle").textContent = "Hire " + editor.name + " (" + editor.category + ")";
-
-      var screenBox = document.getElementById("aspectScreenBox");
-      screenBox.className = "screen-box " + editor.screenClass;
-      document.getElementById("previewRatioBadge").textContent = editor.ratioText;
-      document.getElementById("aspectDimensionText").textContent = editor.dimText;
-
-      var durationInput = document.getElementById("videoDurationInput");
-      durationInput.max = editor.maxSeconds;
-      durationInput.value = currentConfig.duration;
-      document.getElementById("durationLimitText").textContent = "Max: " + editor.maxSeconds + "s";
-
-      var mNames = editor.modeNames || { low: "Mode 1", medium: "Mode 2", high: "Mode 3" };
-      document.getElementById("modeTitleLow").textContent = mNames.low;
-      document.getElementById("modeTitleMed").textContent = mNames.medium;
-      document.getElementById("modeTitleHigh").textContent = mNames.high;
-
-      var uShort = editor.unitShort || "";
-      document.getElementById("modePriceLow").textContent = "₹" + editor.rates.low + " " + uShort;
-      document.getElementById("modePriceMedium").textContent = "₹" + editor.rates.medium + " " + uShort;
-      document.getElementById("modePriceHigh").textContent = "₹" + editor.rates.high + " " + uShort;
-
-      document.getElementById("orderFootageUrl").value = "";
-      document.getElementById("orderInstructions").value = "";
-
+      currentConfig.duration = 20;
+      document.getElementById("configEditorTitle").textContent = "Hire " + editor.name;
+      document.getElementById("videoDurationInput").value = 20;
       window.selectMode("medium");
       window.switchTab("viewOrderConfig");
     };
 
     window.selectMode = function(modeName) {
       currentConfig.mode = modeName;
-      var modes = ["low", "medium", "high"];
-      modes.forEach(function(m) {
+      ["low", "medium", "high"].forEach(function(m) {
         var btn = document.getElementById("modeBtn" + m.charAt(0).toUpperCase() + m.slice(1));
-        if (btn) {
-          if (m === modeName) {
-            btn.classList.add("active");
-          } else {
-            btn.classList.remove("active");
-          }
-        }
+        if (btn) { if (m === modeName) btn.classList.add("active"); else btn.classList.remove("active"); }
       });
       window.calculateOrderPrice();
     };
@@ -2038,602 +1128,256 @@
     window.calculateOrderPrice = function() {
       var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) return;
-
-      var durationInput = document.getElementById("videoDurationInput");
-      var seconds = parseInt(durationInput.value, 10);
-
-      if (isNaN(seconds) || seconds < 1) seconds = 1;
-
-      if (seconds > editor.maxSeconds) {
-        seconds = editor.maxSeconds;
-        durationInput.value = seconds;
-      }
-
+      var seconds = parseInt(document.getElementById("videoDurationInput").value, 10) || 1;
       currentConfig.duration = seconds;
-
-      var m = Math.floor(seconds / 60);
-      var s = seconds % 60;
-      document.getElementById("screenTimeDisplay").textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-
       var rate = editor.rates[currentConfig.mode];
-      var totalPrice = 0;
-      var summaryUnitsText = "";
-
-      if (editor.category === "Short Editor") {
-        var units = (seconds / 10);
-        totalPrice = Math.round(units * rate);
-        summaryUnitsText = units.toFixed(1) + " units (per 10s)";
-      } else if (editor.category === "Video Editor") {
-        var mins = (seconds / 60);
-        totalPrice = Math.round(mins * rate);
-        summaryUnitsText = mins.toFixed(1) + " minutes";
-      } else if (editor.category === "Minecraft Mini Movie Editor") {
-        var blocks = (seconds / 180);
-        totalPrice = Math.round(blocks * rate);
-        summaryUnitsText = blocks.toFixed(1) + " blocks (per 3m)";
-      } else {
-        totalPrice = rate;
-        summaryUnitsText = "1 item unit";
-      }
-
+      var totalPrice = Math.round((seconds / 10) * rate);
       currentConfig.calculatedPrice = totalPrice;
-      document.getElementById("summaryBlocks").textContent = summaryUnitsText;
-      document.getElementById("summaryRate").textContent = "₹" + rate + " " + (editor.unitShort || "");
+      document.getElementById("summaryBlocks").textContent = (seconds / 10).toFixed(1) + " units";
+      document.getElementById("summaryRate").textContent = "₹" + rate;
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    /* 12. Validated Request Submission & EmailJS Notification */
     window.submitConfiguredOrder = function() {
-      if (!currentUser) {
-        showToast("Sign In Required", "Please sign in with Google before sending a request.", "error");
-        window.switchTab("viewProfile");
-        return;
-      }
-
+      if (!currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab("viewProfile"); return; }
       var editor = EDITORS_DATA[currentConfig.editorKey];
-      if (!editor) {
-        showToast("Error", "Please select a valid editor shop first.", "error");
-        return;
-      }
-
       var footageUrl = document.getElementById("orderFootageUrl").value.trim();
       var instructions = document.getElementById("orderInstructions").value.trim();
+      if (!footageUrl) { showToast("Error", "Provide footage link.", "error"); return; }
 
-      if (!footageUrl) {
-        showToast("Footage Missing", "Please paste your Google Drive or cloud assets folder link.", "error");
-        document.getElementById("orderFootageUrl").focus();
-        return;
-      }
-
-      var modeDisplayName = editor.modeNames ? editor.modeNames[currentConfig.mode] : "Selected Tier";
       var orderIdCode = "RX-" + Math.floor(1000 + Math.random() * 9000);
-
       var orderData = {
         orderId: orderIdCode,
         editorId: currentConfig.editorKey,
         editorName: editor.name,
-        editorUid: editor.ownerUid || "unknown",
+        editorUid: editor.ownerUid,
         category: editor.category,
-        modeName: modeDisplayName,
+        modeName: editor.modeNames[currentConfig.mode],
         duration: currentConfig.duration,
         price: currentConfig.calculatedPrice,
         footageLink: footageUrl,
         instructions: instructions,
-        clientName: currentUser.displayName || "Client",
+        clientName: currentUser.displayName,
         clientEmail: currentUser.email,
         clientUid: currentUser.uid,
-        clientHandle: currentUserIdHandle || "client",
         status: "Wait for editor response",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      // Save to Firestore
-      db.collection("orders").add(orderData)
-        .then(function() {
-          // Send EmailJS Notification
-          var templateParams = {
-            order_id: orderIdCode,
-            editor_name: editor.name,
-            client_name: currentUser.displayName || "Client",
-            client_email: currentUser.email,
-            category: editor.category,
-            mode_name: modeDisplayName,
-            duration: currentConfig.duration,
-            price: currentConfig.calculatedPrice,
-            footage_link: footageUrl,
-            instructions: instructions || "No special instructions provided."
-          };
-
-          emailjs.send("service_ii7zzqx", "template_ob1ef5u", templateParams)
-            .then(function(response) {
-              console.log("Email sent successfully!", response.status, response.text);
-            }, function(error) {
-              console.error("EmailJS failed...", error);
-            });
-
-          showToast("Request Sent", "Request sent successfully! Wait for editor response.", "success");
-          window.switchTab("viewPlacedOrder");
-        })
-        .catch(function(error) {
-          console.error("Order Save Error:", error);
-          showToast("Request Failed", error.message, "error");
+      db.collection("orders").add(orderData).then(function() {
+        emailjs.send("service_ii7zzqx", "template_ob1ef5u", {
+          order_id: orderIdCode,
+          editor_name: editor.name,
+          client_name: currentUser.displayName,
+          client_email: currentUser.email,
+          category: editor.category,
+          mode_name: editor.modeNames[currentConfig.mode],
+          duration: currentConfig.duration,
+          price: currentConfig.calculatedPrice,
+          footage_link: footageUrl,
+          instructions: instructions || "None"
         });
-    };
-
-    window.addEventListener('DOMContentLoaded', function() {
-      var activeTheme = localStorage.getItem('rex_theme') || 'default';
-      var themeBtns = document.querySelectorAll('.theme-card-btn');
-      themeBtns.forEach(function(btn) {
-        if (btn.getAttribute('data-theme-target') === activeTheme) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
+        showToast("Sent", "Request sent successfully!", "success");
+        window.switchTab("viewPlacedOrder");
       });
-    });
+    };
   </script>
 </head>
 <body>
 
   <div class="studio-bg"></div>
-
-  <!-- Toast Alerts Container -->
   <div id="toast-container"></div>
 
-  <!-- Modern Confirmation Modal -->
-  <div class="rex-modal-overlay" id="customConfirmModal">
+  <!-- Reject Reason Modal -->
+  <div class="rex-modal-overlay" id="rejectReasonModal">
     <div class="rex-modal-card">
       <div class="rex-modal-header">
         <div class="rex-modal-icon-danger">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          </svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </div>
-        <h3 class="rex-modal-title" id="modalConfirmTitle">Confirm Action</h3>
+        <h3 class="rex-modal-title">Reject Order Request</h3>
       </div>
-      <p class="rex-modal-text" id="modalConfirmMessage">Are you sure you want to proceed?</p>
+      <p class="rex-modal-text">Provide a clear reason for rejection. This will be shown directly on the client's placed order status.</p>
+      <textarea id="rejectReasonInput" class="form-textarea-field" placeholder="e.g. Invalid Google Drive link permissions, or timeframe too short..."></textarea>
       <div class="rex-modal-actions">
-        <button class="rex-btn-cancel" onclick="window.closeConfirmModal(false)" type="button">Cancel</button>
-        <button class="rex-btn-confirm-delete" onclick="window.closeConfirmModal(true)" type="button">Confirm Delete</button>
+        <button class="rex-btn-cancel" onclick="window.closeRejectModal()" type="button">Cancel</button>
+        <button class="rex-btn-confirm-delete" onclick="window.submitOrderRejection()" type="button">Confirm Rejection</button>
       </div>
     </div>
   </div>
 
-  <!-- Top Navigation Header -->
   <header class="top-header">
     <div class="nav-left">
-      <button class="three-dot-btn" onclick="window.toggleSidebar()" aria-label="Toggle Navigation" type="button">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="pointer-events: none;">
-          <circle cx="12" cy="5" r="2.3"/>
-          <circle cx="12" cy="12" r="2.3"/>
-          <circle cx="12" cy="19" r="2.3"/>
-        </svg>
+      <button class="three-dot-btn" onclick="window.toggleSidebar()" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.3"/><circle cx="12" cy="12" r="2.3"/><circle cx="12" cy="19" r="2.3"/></svg>
       </button>
-
       <div class="brand-wrap">
-        <img src="logo.png" alt="Rex Edit Hub Logo" class="header-logo-img">
+        <img src="logo.png" alt="Logo" class="header-logo-img">
         <div class="brand-stack">
           <span class="brand-title">REX EDIT HUB</span>
           <span class="brand-section-subtitle" id="headerActiveSubtitle">SHOP</span>
         </div>
       </div>
     </div>
-
     <div class="header-user-status">
-      <button class="btn-header-login" id="headerLoginBtn" onclick="window.loginWithGoogle()" type="button">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16" height="16" alt="G">
-        Sign in
-      </button>
+      <button class="btn-header-login" id="headerLoginBtn" onclick="window.loginWithGoogle()" type="button">Sign in</button>
     </div>
   </header>
 
-  <!-- Sidebar Overlay -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="window.closeSidebar()"></div>
 
-  <!-- Sidebar Drawer -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <span class="sidebar-label">Navigation Hub</span>
       <button class="sidebar-close-btn" onclick="window.closeSidebar()" type="button">&times;</button>
     </div>
-
     <div class="sidebar-mini-profile" onclick="window.switchTab('viewProfile')">
-      <div class="sidebar-avatar-box" id="sidebarAvatarContainer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </div>
-      <div class="sidebar-mini-info">
+      <div class="sidebar-avatar-box" id="sidebarAvatarContainer"></div>
+      <div>
         <div class="sidebar-mini-name" id="sidebarProfileName">Guest Creator</div>
         <div class="sidebar-mini-tag">View Profile &rarr;</div>
       </div>
     </div>
-
     <ul class="nav-list">
-      <li>
-        <button class="nav-link-btn" data-view="viewProfile" onclick="window.switchTab('viewProfile')" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          Profile
-        </button>
-      </li>
-      <li>
-        <button class="nav-link-btn active" data-view="viewShop" onclick="window.switchTab('viewShop')" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          Shop
-        </button>
-      </li>
-      <li>
-        <button class="nav-link-btn" data-view="viewPlacedOrder" onclick="window.switchTab('viewPlacedOrder')" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          Placed Order
-        </button>
-      </li>
-      <li>
-        <button class="nav-link-btn" data-view="viewOrderDelivered" onclick="window.switchTab('viewOrderDelivered')" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          Order Delivered
-        </button>
-      </li>
-      <li>
-        <button class="nav-link-btn" data-view="viewLawPolicy" onclick="window.switchTab('viewLawPolicy')" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          Law and Policy
-        </button>
-      </li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewProfile')">Profile</button></li>
+      <li><button class="nav-link-btn active" onclick="window.switchTab('viewShop')">Shop</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewPlacedOrder')">Placed Order</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewEditorManage')">Incoming Requests (Editor)</button></li>
+      <li><button class="nav-link-btn" onclick="window.switchTab('viewLawPolicy')">Law and Policy</button></li>
     </ul>
   </aside>
 
-  <!-- Main Container -->
   <main class="main-container">
 
-    <!-- 1. Profile View -->
     <section id="viewProfile" style="display: none;">
-      <div class="section-header">
-        <h1>Profile Settings</h1>
-        <p>Manage your unique creator handle, theme preferences, and shop listings.</p>
-      </div>
-
+      <div class="section-header"><h1>Profile Settings</h1></div>
       <div class="earn-banner-card">
-        <div class="earn-banner-text">
-          <h3>Become a Verified Editor</h3>
-          <p>Open your video editing shop, set custom rates, and get client requests with total ease.</p>
-        </div>
-        <button class="btn-apply-earn" onclick="window.startApplyForEarn()" type="button">Apply for Earn &rarr;</button>
+        <div><h3>Become a Verified Editor</h3><p>Open your shop and start accepting orders.</p></div>
+        <button class="btn-apply-earn" onclick="window.startApplyForEarn()">Apply for Earn &rarr;</button>
       </div>
-
       <div class="info-card">
-        <button type="button" class="btn-google-auth" id="googleSignInBtn" onclick="window.loginWithGoogle()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="G">
-          Continue with Google
-        </button>
-
+        <button class="btn-google-auth" id="googleSignInBtn" onclick="window.loginWithGoogle()">Continue with Google</button>
         <div class="profile-card-large">
-          <div class="profile-avatar-large" id="profileLargeAvatarContainer">
-            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          </div>
+          <div class="profile-avatar-large" id="profileLargeAvatarContainer"></div>
           <div>
-            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800; color: var(--text-main);">Guest Creator</h2>
-            <p id="profileUserIdDisplay" style="color: var(--primary); font-weight: 800; font-size: 1.05rem; margin-top: 2px;">@guest</p>
-            <p id="profileUserEmail" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 2px;">Sign in to activate account</p>
+            <h2 id="profileCardName" style="font-size: 1.45rem; font-weight: 800;">Guest Creator</h2>
+            <p id="profileUserIdDisplay" style="color: var(--primary); font-weight: 800;">@guest</p>
+            <p id="profileUserEmail" style="color: var(--text-muted); font-size: 0.85rem;">Sign in to activate account</p>
           </div>
         </div>
-
         <div class="theme-selector-section">
-          <label class="config-label">Studio Theme (Appearance)</label>
+          <label class="config-label">Studio Theme</label>
           <div class="theme-grid">
-            <button type="button" class="theme-card-btn active" data-theme-target="default" onclick="window.setTheme('default')">
-              <span class="theme-color-dot" style="background:#4f46e5; border:1px solid #c7d2fe;"></span>
-              <span class="theme-label-title">Original Indigo</span>
-            </button>
-            <button type="button" class="theme-card-btn" data-theme-target="dark" onclick="window.setTheme('dark')">
-              <span class="theme-color-dot" style="background:#0b0f19; border:1px solid #6366f1;"></span>
-              <span class="theme-label-title">Midnight Dark</span>
-            </button>
-            <button type="button" class="theme-card-btn" data-theme-target="golden" onclick="window.setTheme('golden')">
-              <span class="theme-color-dot" style="background:#ffffff; border:2px solid #ca8a04; box-shadow:0 0 6px #eab308;"></span>
-              <span class="theme-label-title">Royal Gold</span>
-            </button>
-            <button type="button" class="theme-card-btn" data-theme-target="red" onclick="window.setTheme('red')">
-              <span class="theme-color-dot" style="background:#ef4444; box-shadow:0 0 8px #ef4444;"></span>
-              <span class="theme-label-title">Crimson Red</span>
-            </button>
-            <button type="button" class="theme-card-btn" data-theme-target="neon" onclick="window.setTheme('neon')">
-              <span class="theme-color-dot" style="background:linear-gradient(135deg, #06b6d4, #ec4899);"></span>
-              <span class="theme-label-title">Editor Neon</span>
-            </button>
+            <button class="theme-card-btn active" onclick="window.setTheme('default')"><span class="theme-color-dot" style="background:#4f46e5;"></span><span class="theme-label-title">Indigo</span></button>
+            <button class="theme-card-btn" onclick="window.setTheme('dark')"><span class="theme-color-dot" style="background:#0b0f19;"></span><span class="theme-label-title">Dark</span></button>
+            <button class="theme-card-btn" onclick="window.setTheme('golden')"><span class="theme-color-dot" style="background:#ca8a04;"></span><span class="theme-label-title">Royal Gold</span></button>
+            <button class="theme-card-btn" onclick="window.setTheme('red')"><span class="theme-color-dot" style="background:#ef4444;"></span><span class="theme-label-title">Crimson Red</span></button>
           </div>
         </div>
-
-        <div class="form-row">
-          <label class="config-label" for="inputUserId">UserID</label>
-          <div style="position: relative; display: flex; align-items: center;">
-            <span style="position: absolute; left: 14px; top: 18px; font-weight: 800; color: var(--text-muted);">@</span>
-            <input type="text" id="inputUserId" class="form-input-field" style="padding-left: 32px;" placeholder="e.g. msgamer (letters, numbers, underscores)">
-          </div>
-          <small style="color: var(--text-muted); display: block; margin-top: -8px; margin-bottom: 12px;">
-            Unique creator handle. If already taken, an alert will be shown.
-          </small>
-        </div>
-
-        <div class="form-row">
-          <label class="config-label" for="inputDisplayName">Display Name</label>
-          <input type="text" id="inputDisplayName" class="form-input-field" placeholder="Enter your display name">
-        </div>
-
-        <button class="btn-save-profile" onclick="window.saveProfileInfo()" type="button">Save Profile & UserID</button>
-        <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()" type="button">Sign Out of Rex Hub</button>
-
+        <label class="config-label">UserID</label>
+        <input type="text" id="inputUserId" class="form-input-field">
+        <label class="config-label">Display Name</label>
+        <input type="text" id="inputDisplayName" class="form-input-field">
+        <button class="btn-save-profile" onclick="window.saveProfileInfo()">Save Profile</button>
+        <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()">Sign Out</button>
         <div class="my-shops-container">
-          <div class="my-shops-header">
-            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Shops Created by You</h3>
-            <span class="my-shop-badge" id="myShopsCountBadge">0 Created</span>
-          </div>
-          <div id="myShopsList">
-            <p style="color:var(--text-subtle); font-size:0.9rem;">Sign in to see shops created by you.</p>
-          </div>
+          <div class="my-shops-header"><h3>My Created Shops</h3><span class="my-shop-badge" id="myShopsCountBadge">0 Created</span></div>
+          <div id="myShopsList"><p style="color:var(--text-muted);">Sign in to view shops.</p></div>
         </div>
-
       </div>
     </section>
 
-    <!-- 2. Registration Step 1 -->
     <section id="viewRegisterStep1" style="display: none;">
       <div class="section-header">
-        <button class="btn-back" onclick="window.switchTab('viewProfile')" type="button">&larr; Back to Profile</button>
-        <h1 style="margin-top: 0.8rem;">Send Request for Apply</h1>
-        <p>Submit your profession and verified work portfolio to open your shop.</p>
+        <button class="btn-back" onclick="window.switchTab('viewProfile')">&larr; Back</button>
+        <h1 style="margin-top: 0.8rem;">Apply for Shop</h1>
       </div>
-
       <div class="info-card">
-        <span class="step-indicator">Step 1 of 2: Submission</span>
-
-        <div class="config-group">
-          <label class="config-label" for="regWorkType">1. What you want to sell</label>
-          <select id="regWorkType" class="form-input-field">
-            <option value="Short Editor">Short Editor (9:16 vertical)</option>
-            <option value="Minecraft Mini Movie Editor">Minecraft Mini Movie Editor</option>
-            <option value="Video Editor">Video Editor (16:9 Long-Form)</option>
-            <option value="Thumbnail Designer">Thumbnail Designer</option>
-            <option value="Researcher">Researcher</option>
-          </select>
-        </div>
-
-        <div class="config-group">
-          <label class="config-label" for="regPortfolioLink">2. Send the link of your work</label>
-          <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/... or portfolio link">
-          
-          <div class="warning-box">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            <span><strong>Notice:</strong> Verified portfolio links are listed live in Cloud Firestore.</span>
-          </div>
-        </div>
-
-        <div class="config-group">
-          <label class="config-label">3. Admin Verification Contact</label>
-          <input type="text" class="form-input-field" value="Rex Admin (admin.rexedithub@gmail.com)" readonly style="background:var(--bg-base); color:var(--text-muted); font-weight:700;">
-        </div>
-
-        <button class="btn-action-primary" onclick="window.submitStep1Request()" type="button" style="width:100%; justify-content:center;">
-          Continue to Step 2 &rarr;
-        </button>
+        <label class="config-label">Select Specialty</label>
+        <select id="regWorkType" class="form-input-field">
+          <option value="Short Editor">Short Editor (9:16 vertical)</option>
+          <option value="Video Editor">Video Editor (16:9)</option>
+        </select>
+        <label class="config-label">Portfolio Link</label>
+        <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/...">
+        <button class="btn-action-primary" onclick="window.submitStep1Request()" style="width:100%; justify-content:center;">Continue &rarr;</button>
       </div>
     </section>
 
-    <!-- 3. Registration Step 2 -->
     <section id="viewRegisterStep2" style="display: none;">
-      <div class="section-header">
-        <h1>Shop Setup & Rate Confirmation</h1>
-        <p>Configure your shop brand name and custom 3-mode rate tiers to launch in Firestore.</p>
-      </div>
-
+      <div class="section-header"><h1>Finalize Shop Setup</h1></div>
       <div class="info-card">
-        <span class="step-indicator" style="background:var(--success-light); color:var(--success);">Step 2 of 2: Setup Shop</span>
-
-        <div class="config-group">
-          <label class="config-label" for="regShopName">1. Name of your Shop</label>
-          <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Rex Studio, PixelLab Hub">
-          <small style="color:var(--text-muted);">Specialty: <strong id="step2ChosenRole" style="color:var(--primary);">Short Editor</strong></small>
-        </div>
-
-        <div class="config-group">
-          <label class="config-label" id="step2ChargeUnitLabel">2. Pricing Structure</label>
-          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom: 8px;">
-            Configure rates for up to 3 custom modes. Clients choose these tiers when ordering from you.
-          </p>
-
-          <div class="mode-config-grid">
-            <div class="mode-config-card">
-              <h5>Mode 1 (Entry)</h5>
-              <input type="text" id="modeName1" class="form-input-field" value="Basic Cut" placeholder="Mode Name">
-              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Rate <span id="modeUnitLabel1"></span></label>
-              <input type="number" id="modeRate1" class="form-input-field" value="20" min="5">
-            </div>
-
-            <div class="mode-config-card">
-              <h5>Mode 2 (Popular)</h5>
-              <input type="text" id="modeName2" class="form-input-field" value="Dynamic Standard" placeholder="Mode Name">
-              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Rate <span id="modeUnitLabel2"></span></label>
-              <input type="number" id="modeRate2" class="form-input-field" value="30" min="5">
-            </div>
-
-            <div class="mode-config-card">
-              <h5>Mode 3 (Premium)</h5>
-              <input type="text" id="modeName3" class="form-input-field" value="High Retention FX" placeholder="Mode Name">
-              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Rate <span id="modeUnitLabel3"></span></label>
-              <input type="number" id="modeRate3" class="form-input-field" value="40" min="5">
-            </div>
-          </div>
-        </div>
-
-        <button class="btn-action-primary" onclick="window.completeEditorRegistration()" type="button" style="width:100%; justify-content:center; margin-top:12px;">
-          Launch Real Shop in Cloud &rarr;
-        </button>
+        <label class="config-label">Shop Name</label>
+        <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Rex Cinema">
+        <button class="btn-action-primary" onclick="window.completeEditorRegistration()" style="width:100%; justify-content:center;">Launch Shop &rarr;</button>
       </div>
     </section>
 
-    <!-- 4. Shop View -->
     <section id="viewShop" style="display: block;">
-      <div class="section-header">
-        <h1>Editor Shop</h1>
-        <p>Book verified video editors with total project security. Choose your project format below.</p>
-      </div>
-
-      <div class="info-card" id="shopEmptyBox" style="display: none;">
-        <div class="empty-state-box">
-          <h2 class="empty-title">No Editors Available Yet</h2>
-          <p class="empty-desc">There are currently no active editing shops listed in the database. Open the first verified shop on Rex Edit Hub!</p>
-          <button class="btn-apply-earn" onclick="window.startApplyForEarn()" type="button">Open Your Shop &rarr;</button>
-        </div>
-      </div>
-
+      <div class="section-header"><h1>Editor Shop</h1><p>Choose an editor and request a project.</p></div>
+      <div class="info-card" id="shopEmptyBox" style="display: none;"><div class="empty-state-box"><h2 class="empty-title">No Editors Available</h2></div></div>
       <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
-    <!-- 5. Order Terminal (Send Request) -->
     <section id="viewOrderConfig" style="display: none;">
       <div class="section-header">
-        <button class="btn-back" onclick="window.switchTab('viewShop')" type="button">&larr; Back to Shop</button>
+        <button class="btn-back" onclick="window.switchTab('viewShop')">&larr; Back to Shop</button>
         <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Editor Terminal</h1>
-        <p>Configure project length, provide footage assets, and verify your request details.</p>
       </div>
-
       <div class="config-layout">
-        <div class="aspect-preview-column">
-          <div class="preview-card">
-            <span class="preview-ratio-label" id="previewRatioBadge">9:16 Vertical Cut</span>
-            <div class="screen-box" id="aspectScreenBox">
-              <div class="screen-time-display" id="screenTimeDisplay">00:20</div>
-              <div class="screen-watermark-hint">Watermarked Preview Draft</div>
-            </div>
-            <span class="screen-caption" id="aspectDimensionText">1080 × 1920 • Mobile Format</span>
-          </div>
+        <div class="preview-card">
+          <span class="preview-ratio-label">Preview Box</span>
+          <div class="screen-box ratio-9-16"><div class="screen-time-display" id="screenTimeDisplay">00:20</div></div>
         </div>
-
-        <div class="calculator-column">
-          <div class="info-card">
-            <div class="config-group">
-              <label class="config-label">Select Editing Quality Mode</label>
-              <div class="mode-selector-grid">
-                <button type="button" class="mode-btn" id="modeBtnLow" onclick="window.selectMode('low')">
-                  <span class="mode-name" id="modeTitleLow">Mode 1</span>
-                  <span class="mode-price" id="modePriceLow">₹0</span>
-                </button>
-                <button type="button" class="mode-btn active" id="modeBtnMedium" onclick="window.selectMode('medium')">
-                  <span class="mode-name" id="modeTitleMed">Mode 2</span>
-                  <span class="mode-price" id="modePriceMedium">₹0</span>
-                </button>
-                <button type="button" class="mode-btn" id="modeBtnHigh" onclick="window.selectMode('high')">
-                  <span class="mode-name" id="modeTitleHigh">Mode 3</span>
-                  <span class="mode-price" id="modePriceHigh">₹0</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="config-group">
-              <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                <label class="config-label" for="videoDurationInput">Video Duration (Units / Seconds)</label>
-                <span class="time-limit-indicator" id="durationLimitText">Max: 180s</span>
-              </div>
-              <div class="input-duration-wrap">
-                <input type="number" id="videoDurationInput" value="20" min="1" max="1800" oninput="window.calculateOrderPrice()">
-                <span class="input-unit">Units</span>
-              </div>
-            </div>
-
-            <div class="config-group">
-              <label class="config-label" for="orderFootageUrl">Raw Video / Google Drive Link <span style="color:var(--danger);">*</span></label>
-              <input type="url" id="orderFootageUrl" class="form-input-field" placeholder="https://drive.google.com/drive/folders/... (Access: Anyone with link)">
-              <small style="color:var(--text-muted); display:block; margin-top:-8px; font-size:0.8rem;">
-                Make sure your Google Drive link has view/download permission set to 'Anyone with the link'.
-              </small>
-            </div>
-
-            <div class="config-group">
-              <label class="config-label" for="orderInstructions">Editing Instructions & Notes (Optional)</label>
-              <textarea id="orderInstructions" class="form-textarea-field" placeholder="e.g. Keep cuts fast-paced, add Minecraft sound effects, sync with background music..."></textarea>
-            </div>
-
-            <div class="calculation-summary-box">
-              <div class="summary-line">
-                <span>Calculated Volume:</span>
-                <strong id="summaryBlocks">2.0 units</strong>
-              </div>
-              <div class="summary-line">
-                <span>Tier Rate:</span>
-                <strong id="summaryRate">₹0</strong>
-              </div>
-              <div class="summary-divider"></div>
-              <div class="summary-total-line">
-                <span>Total Amount:</span>
-                <span class="total-calculated-price" id="summaryTotal">₹0</span>
-              </div>
-            </div>
-
-            <button class="btn-confirm-order" onclick="window.submitConfiguredOrder()" type="button" style="width:100%; justify-content:center;">
-              Send Request &rarr;
-            </button>
+        <div class="info-card">
+          <label class="config-label">Select Tier</label>
+          <div class="mode-selector-grid">
+            <button class="mode-btn" id="modeBtnLow" onclick="window.selectMode('low')"><span class="mode-name">Basic</span></button>
+            <button class="mode-btn active" id="modeBtnMedium" onclick="window.selectMode('medium')"><span class="mode-name">Standard</span></button>
+            <button class="mode-btn" id="modeBtnHigh" onclick="window.selectMode('high')"><span class="mode-name">Premium</span></button>
           </div>
+          <label class="config-label" style="margin-top:1rem;">Duration (Seconds)</label>
+          <div class="input-duration-wrap"><input type="number" id="videoDurationInput" value="20" oninput="window.calculateOrderPrice()"></div>
+          <label class="config-label" style="margin-top:1rem;">Raw Footage Google Drive Link *</label>
+          <input type="url" id="orderFootageUrl" class="form-input-field" placeholder="https://drive.google.com/...">
+          <label class="config-label">Instructions</label>
+          <textarea id="orderInstructions" class="form-textarea-field" placeholder="Any specific requirements..."></textarea>
+          <div class="calculation-summary-box">
+            <div class="summary-line"><span>Volume:</span><strong id="summaryBlocks">2.0 units</strong></div>
+            <div class="summary-line"><span>Rate:</span><strong id="summaryRate">₹0</strong></div>
+            <div class="summary-divider"></div>
+            <div class="summary-total-line"><span>Total:</span><span class="total-calculated-price" id="summaryTotal">₹0</span></div>
+          </div>
+          <button class="btn-confirm-order" onclick="window.submitConfiguredOrder()" style="width:100%; justify-content:center;">Send Request &rarr;</button>
         </div>
       </div>
     </section>
 
-    <!-- 6. Placed Order View ("Wait for editor response") -->
     <section id="viewPlacedOrder" style="display: none;">
-      <div class="section-header">
-        <h1>Placed Order</h1>
-        <p>Live progress tracking and active requests placed by your account.</p>
-      </div>
+      <div class="section-header"><h1>Placed Orders</h1><p>Live tracking of your requests.</p></div>
       <div class="info-card">
-        <div class="empty-state-box" id="placedEmptyBox">
-          <h2 class="empty-title">No Order Placed</h2>
-          <p class="empty-desc">You currently have no active requests in progress. Hire a verified editor from the shop to start.</p>
-          <button class="btn-return-shop" onclick="window.switchTab('viewShop')" type="button">Shop Editors</button>
-        </div>
-
+        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop')">Shop Editors</button></div>
         <div id="activeOrdersList" style="display: none; flex-direction: column; gap: 14px;"></div>
       </div>
     </section>
 
-    <!-- 7. Order Delivered View -->
-    <section id="viewOrderDelivered" style="display: none;">
-      <div class="section-header">
-        <h1>Order Delivered</h1>
-        <p>Download and access finalized clean video files from approved requests.</p>
-      </div>
+    <!-- Editor Management Panel for Incoming Requests -->
+    <section id="viewEditorManage" style="display: none;">
+      <div class="section-header"><h1>Incoming Requests</h1><p>Accept or reject incoming client requests for your shop.</p></div>
       <div class="info-card">
-        <div class="empty-state-box">
-          <h2 class="empty-title">No Orders Delivered Yet</h2>
-          <p class="empty-desc">Once your editor completes a project and you approve the preview, your clean files will appear here.</p>
-          <button class="btn-return-shop" onclick="window.switchTab('viewShop')" type="button">Shop Editors</button>
+        <div id="incomingOrdersList" style="display: flex; flex-direction: column; gap: 14px;">
+          <p style="color:var(--text-muted);">Sign in to view incoming requests.</p>
         </div>
       </div>
     </section>
 
-    <!-- 8. Law & Policy View -->
     <section id="viewLawPolicy" style="display: none;">
-      <div class="section-header">
-        <h1>Law and Policy</h1>
-        <p>Binding protection rules ensuring transparent transactions for both clients and editors.</p>
-      </div>
+      <div class="section-header"><h1>Law and Policy</h1></div>
       <div class="info-card">
-        <div class="policy-item">
-          <h4>1. Guarantee & Safety</h4>
-          <p>Client project details remain protected. Payouts are made only after preview approval.</p>
-        </div>
-        <div class="policy-item">
-          <h4>2. Anti-Theft Watermarking</h4>
-          <p>Draft video cuts must contain a center watermark. Clean unwatermarked files are provided once release is confirmed.</p>
-        </div>
-        <div class="policy-item">
-          <h4>3. Delay Penalties & Refund</h4>
-          <p>If an editor fails to deliver within the agreed timeframe without mutual agreement, the client receives a 100% refund.</p>
-        </div>
+        <div class="policy-item"><h4>Escrow Protection</h4><p>Payments are secured and verified upon milestone delivery.</p></div>
       </div>
     </section>
 
   </main>
-
 </body>
 </html>
