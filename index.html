@@ -144,6 +144,8 @@
     .btn-action-accept { background: var(--success); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
     .btn-action-reject { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
     .btn-action-admin-approve { background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
+    .btn-action-pay { background: var(--success); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
+    .btn-action-proof { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
 
     .empty-state-box { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3.5rem 1.5rem; }
     .empty-title { font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.45rem; }
@@ -190,6 +192,7 @@
     .rex-modal-overlay.open .rex-modal-card { transform: scale(1) translateY(0); }
     .rex-modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem; }
     .rex-modal-icon-danger { width: 42px; height: 42px; border-radius: 12px; background: var(--danger-light); color: var(--danger); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .rex-modal-icon-info { width: 42px; height: 42px; border-radius: 12px; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .rex-modal-title { font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
     .rex-modal-text { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.6rem; }
     .rex-modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
@@ -220,7 +223,9 @@
     var EDITORS_DATA = {};
     var ordersUnsubscribe = null;
     var activeRejectOrderId = null;
+    var activeProofOrderId = null;
     var SUPER_ADMIN_EMAIL = "msgamer123098@gmail.com";
+    var OFFICIAL_UPI_ID = "msgamer123098@okaxis"; // Set your official Escrow UPI handle here
 
     var currentConfig = { editorKey: null, mode: "medium", duration: 20, calculatedPrice: 0 };
     var tempRegistrationData = { role: "Short Editor", portfolioLink: "" };
@@ -278,33 +283,57 @@
       }).catch(function(err) { showToast("Error", err.message, "error"); });
     };
 
-    // 1. Editor Confirms -> Locks & Dispatches Email with working button to Super Admin
+    // Client Payment & Proof Modal Controls
+    window.openClientPaymentModal = function(orderId, price) {
+      document.getElementById("payModalOrderId").textContent = orderId;
+      document.getElementById("payModalAmount").textContent = "₹" + price;
+      document.getElementById("payModalUpiId").textContent = OFFICIAL_UPI_ID;
+      document.getElementById("clientPayModal").classList.add("open");
+    };
+
+    window.closeClientPaymentModal = function() {
+      document.getElementById("clientPayModal").classList.remove("open");
+    };
+
+    window.openProofSubmitModal = function(docId, orderId) {
+      activeProofOrderId = docId;
+      document.getElementById("proofModalOrderId").textContent = orderId;
+      document.getElementById("paymentProofUrl").value = "";
+      document.getElementById("clientProofModal").classList.add("open");
+    };
+
+    window.closeProofSubmitModal = function() {
+      document.getElementById("clientProofModal").classList.remove("open");
+      activeProofOrderId = null;
+    };
+
+    window.submitPaymentProof = function() {
+      var proofLink = document.getElementById("paymentProofUrl").value.trim();
+      if (!proofLink) { showToast("Proof Required", "Please enter screenshot link or transaction UTR.", "error"); return; }
+      if (!activeProofOrderId) return;
+
+      db.collection("orders").doc(activeProofOrderId).update({
+        status: "Payment Under Review (Proof Submitted)",
+        paymentProof: proofLink
+      }).then(function() {
+        showToast("Submitted", "Payment proof sent to Admin for verification!", "success");
+        window.closeProofSubmitModal();
+      }).catch(function(err) { showToast("Error", err.message, "error"); });
+    };
+
+    // 1. Editor Confirms -> Locks Order & Alerts Admin
     window.editorConfirmOrder = function(docId, orderId, clientName, clientEmail, price, editorName, footageLink, instructions, modeName, duration, category) {
       db.collection("orders").doc(docId).update({
         status: "Pending Admin Approval (Locked)"
       }).then(function() {
         showToast("Order Confirmed", "Locked & forwarded to Super Admin.", "success");
 
-        var adminSendQrUrl = "mailto:" + encodeURIComponent(clientEmail) + 
-          "?subject=" + encodeURIComponent("Official Payment QR for Order " + orderId) + 
-          "&body=" + encodeURIComponent(
-            "Hello " + clientName + ",\n\n" +
-            "Your order " + orderId + " has been approved! Please scan our official UPI QR code below to lock your payment in escrow:\n\n" +
-            "[PASTE YOUR UPI QR IMAGE LINK OR UPI ID HERE]\n\n" +
-            "⚠️ WARNING: Do not upload fake or AI-generated payment receipts. Manual verification will be conducted.\n\n" +
-            "Reply to this email with your payment screenshot to begin video editing work.\n\n" +
-            "To cancel, reply 'CANCEL'."
-          );
-
-        var adminRejectUrl = "mailto:" + encodeURIComponent(clientEmail) + 
-          "?subject=" + encodeURIComponent("Order Declined - " + orderId) + 
-          "&body=" + encodeURIComponent("Hello " + clientName + ",\n\nYour order " + orderId + " was declined by admin.");
-
+        // Send Email notification to Admin
         emailjs.send("service_ii7zzqx", "template_ob1ef5u", {
           to_email: SUPER_ADMIN_EMAIL,
           recipient_name: "Super Admin",
           mail_title: "EDITOR CONFIRMED ORDER #" + orderId,
-          mail_message: "The assigned editor (" + editorName + ") has reviewed and locked the project details. Click 'Send QR to Client' below to dispatch official escrow instructions.",
+          mail_message: "The assigned editor (" + editorName + ") has approved the project. Open the Rex Edit Hub dashboard to click 'Dispatch QR to Client'.",
           order_id: orderId,
           client_name: clientName,
           client_email: clientEmail,
@@ -315,24 +344,42 @@
           price: price,
           footage_link: footageLink,
           instructions: instructions || "None",
-          primary_action_text: "Send QR to Client",
-          primary_action_url: adminSendQrUrl,
-          secondary_action_text: "Decline Request",
-          secondary_action_url: adminRejectUrl
+          primary_action_text: "Open Admin Dashboard",
+          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Reject Request",
+          secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
         });
       }).catch(function(err) { showToast("Error", err.message, "error"); });
     };
 
-    // 2. Admin Quick Dispatch from Dashboard
+    // 2. Admin Dispatches QR to Client (Directly Updates Firestore + Sends Client Email)
     window.adminApproveOrder = function(docId, orderId, clientEmail, clientName, price) {
       db.collection("orders").doc(docId).update({
         status: "In Progress (QR Sent - Escrow Awaiting)"
       }).then(function() {
-        showToast("Admin Dispatched", "Escrow initiated. Opening mail client.", "success");
-        var mailtoClient = "mailto:" + clientEmail + 
-          "?subject=Official%20Payment%20QR%20for%20Order%20" + orderId + 
-          "&body=Hello%20" + encodeURIComponent(clientName) + ",%0D%0A%0D%0AYour%20order%20" + orderId + "%20for%20₹" + price + "%20has%20been%20officially%20approved!%20Please%20scan%20our%20official%20UPI%20QR%20code%20to%20lock%20escrow:%0D%0A%0D%0A[PASTE%20UPI%20ID%20OR%20QR%20LINK%20HERE]%0D%0A%0D%0A⚠️%20WARNING:%20Do%20not%20share%20fake%20payment%20images%20generated%20by%20AI%20or%20third-party%20tools.%20Manual%20verification%20is%20strictly%20enforced.%0D%0A%0D%0APlease%20reply%20to%20this%20email%20with%20your%20payment%20screenshot%20to%20start%20work.%0D%0A%0D%0AIf%20you%20wish%20to%20cancel,%20reply%20'CANCEL'%20to%20" + SUPER_ADMIN_EMAIL;
-        window.location.href = mailtoClient;
+        showToast("QR Dispatched", "Order marked In Progress! Email sent to client.", "success");
+
+        // Automated Secure Email directly to Client
+        emailjs.send("service_ii7zzqx", "template_ob1ef5u", {
+          to_email: clientEmail,
+          recipient_name: clientName,
+          mail_title: "OFFICIAL ESCROW PAYMENT QR - " + orderId,
+          mail_message: "Your project has been approved by admin! Pay via UPI ID (" + OFFICIAL_UPI_ID + ") or scan your official QR in your Placed Orders dashboard.\n\n⚠️ WARNING: Do not share fake payment images generated by AI or third-party tools. Manual verification is strictly enforced.",
+          order_id: orderId,
+          client_name: clientName,
+          client_email: clientEmail,
+          editor_name: "Verified Platform Editor",
+          category: "Video Commission",
+          mode_name: "Standard",
+          duration: "Assigned",
+          price: price,
+          footage_link: "Locked in Escrow",
+          instructions: "Complete payment to lock escrow and start video editing.",
+          primary_action_text: "View Order & Pay",
+          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Cancel Commission",
+          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL + "?subject=Cancel%20Order%20" + orderId
+        });
       }).catch(function(err) { showToast("Error", err.message, "error"); });
     };
 
@@ -467,6 +514,7 @@
       }
     });
 
+    // Client Placed Orders Listener (With Real-Time Pay & Submit Proof Buttons)
     function listenToPrivateOrders(uid) {
       if (ordersUnsubscribe) ordersUnsubscribe();
       var list = document.getElementById("activeOrdersList");
@@ -480,7 +528,17 @@
           snapshot.forEach(function(doc) {
             var data = doc.data();
             var statusClass = data.status && data.status.startsWith("Rejected") ? "status-rejected" : (data.status && data.status.includes("Progress") ? "status-accepted" : "status-running");
-            var orderHtml = '<div class="running-order-item"><div style="display:flex; justify-content:space-between; align-items:center;"><strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong><span class="order-badge-pill ' + statusClass + '">● ' + escapeHtml(data.status) + '</span></div><small style="color:var(--text-muted);">Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName) + '</strong></small><div style="display:flex; justify-content:space-between; align-items:baseline;"><span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span><strong style="font-size:1.15rem; color:var(--primary);">Amount: ₹' + data.price + '</strong></div><a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">Open Footage Link &rarr;</a></div>';
+            
+            var clientActionButtons = "";
+            if (data.status === "In Progress (QR Sent - Escrow Awaiting)") {
+              clientActionButtons = 
+                '<div style="display:flex; gap:10px; margin-top:8px; border-top:1px solid var(--border-subtle); padding-top:10px;">' +
+                  '<button class="btn-action-pay" onclick="window.openClientPaymentModal(\'' + escapeHtml(data.orderId) + '\', ' + data.price + ')">Do Payment (View QR)</button>' +
+                  '<button class="btn-action-proof" onclick="window.openProofSubmitModal(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\')">Submit Payment Proof</button>' +
+                '</div>';
+            }
+
+            var orderHtml = '<div class="running-order-item"><div style="display:flex; justify-content:space-between; align-items:center;"><strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong><span class="order-badge-pill ' + statusClass + '">● ' + escapeHtml(data.status) + '</span></div><small style="color:var(--text-muted);">Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName) + '</strong></small><div style="display:flex; justify-content:space-between; align-items:baseline;"><span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span><strong style="font-size:1.15rem; color:var(--primary);">Amount: ₹' + data.price + '</strong></div><a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">Open Footage Link &rarr;</a>' + clientActionButtons + '</div>';
             list.insertAdjacentHTML("beforeend", orderHtml);
           });
         }
@@ -504,7 +562,7 @@
             if (data.status === "Wait for editor response" && isShopOwner) {
               actions = '<div class="editor-action-row"><button class="btn-action-accept" onclick="window.editorConfirmOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientName) + '\', \'' + escapeHtml(data.clientEmail) + '\', ' + data.price + ', \'' + escapeHtml(data.editorName) + '\', \'' + escapeHtml(data.footageLink) + '\', \'' + escapeHtml(data.instructions) + '\', \'' + escapeHtml(data.modeName) + '\', ' + data.duration + ', \'' + escapeHtml(data.category) + '\')">Confirm Order (Send to Admin)</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
             } else if (data.status === "Pending Admin Approval (Locked)" && isSuperAdmin) {
-              actions = '<div class="editor-action-row"><button class="btn-action-admin-approve" onclick="window.adminApproveOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', ' + data.price + ')">Admin Dispatch QR to Client &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
+              actions = '<div class="editor-action-row"><button class="btn-action-admin-approve" onclick="window.adminApproveOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', ' + data.price + ')">Approve & Dispatch QR to Client &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
             } else {
               actions = '<span style="font-size:0.8rem; font-weight:700; color:var(--primary); margin-top:6px;">Status: ' + escapeHtml(data.status) + '</span>';
             }
@@ -616,7 +674,6 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    // Client Submits -> Dispatches directly to Editor's Email
     window.submitConfiguredOrder = function() {
       if (!currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab('viewProfile'); return; }
       var editor = EDITORS_DATA[currentConfig.editorKey];
@@ -634,16 +691,11 @@
       };
 
       db.collection("orders").add(orderData).then(function() {
-        var editorAcceptUrl = "https://msgamermax1.github.io/RexEditHub/";
-        var editorRejectUrl = "mailto:" + encodeURIComponent(currentUser.email) + 
-          "?subject=" + encodeURIComponent("Order Declined - " + orderIdCode) + 
-          "&body=" + encodeURIComponent("Hello " + currentUser.displayName + ",\n\nUnfortunately I cannot take your order " + orderIdCode + " at this time.");
-
         emailjs.send("service_ii7zzqx", "template_ob1ef5u", {
           to_email: editor.ownerEmail || SUPER_ADMIN_EMAIL,
           recipient_name: editor.name,
           mail_title: "NEW ORDER REQUEST RECEIVED",
-          mail_message: "A new client has requested an editing project. Review the details below and select your action.",
+          mail_message: "A new client has requested an editing commission on Rex Edit Hub. Review the details below and log in to confirm or reject.",
           order_id: orderIdCode,
           client_name: currentUser.displayName,
           client_email: currentUser.email,
@@ -654,10 +706,10 @@
           price: currentConfig.calculatedPrice,
           footage_link: footageUrl,
           instructions: instructions || "None",
-          primary_action_text: "Accept Order",
-          primary_action_url: editorAcceptUrl,
+          primary_action_text: "Open Dashboard",
+          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
           secondary_action_text: "Decline Order",
-          secondary_action_url: editorRejectUrl
+          secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
         });
 
         showToast("Sent", "Order sent to " + editor.name + " for review!", "success");
@@ -671,6 +723,47 @@
   <div class="studio-bg"></div>
   <div id="toast-container"></div>
 
+  <!-- Client Payment Modal -->
+  <div class="rex-modal-overlay" id="clientPayModal">
+    <div class="rex-modal-card">
+      <div class="rex-modal-header">
+        <div class="rex-modal-icon-info">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3 class="rex-modal-title">Lock Payment in Escrow</h3>
+      </div>
+      <p class="rex-modal-text">Order: <strong id="payModalOrderId"></strong> &bull; Total: <strong id="payModalAmount" style="color:var(--success);"></strong></p>
+      <div style="background:var(--bg-base); padding:16px; border-radius:12px; border:1px solid var(--border-subtle); text-align:center; margin-bottom:1.2rem;">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">Official Platform UPI ID:</p>
+        <h3 id="payModalUpiId" style="font-size:1.15rem; color:var(--primary); word-break:break-all;">msgamer123098@okaxis</h3>
+        <p style="font-size:0.75rem; color:var(--text-subtle); margin-top:6px;">Pay via Google Pay, PhonePe, Paytm, or any UPI App.</p>
+      </div>
+      <p style="font-size:0.8rem; color:var(--danger); font-weight:700; margin-bottom:1.2rem;">⚠️ WARNING: Do not upload fake payment screenshots generated by AI or third parties. Every transaction is manually audited.</p>
+      <div class="rex-modal-actions">
+        <button class="rex-btn-cancel" onclick="window.closeClientPaymentModal()" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Proof Submit Modal -->
+  <div class="rex-modal-overlay" id="clientProofModal">
+    <div class="rex-modal-card">
+      <div class="rex-modal-header">
+        <div class="rex-modal-icon-info">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3 class="rex-modal-title">Submit Payment Proof</h3>
+      </div>
+      <p class="rex-modal-text">Upload your transaction receipt screenshot (Google Drive / Imgur link) or enter the UPI UTR / Transaction ID for <strong id="proofModalOrderId"></strong>.</p>
+      <input type="text" id="paymentProofUrl" class="form-input-field" placeholder="e.g. UPI Ref: 42109823412 or Drive Link">
+      <div class="rex-modal-actions">
+        <button class="rex-btn-cancel" onclick="window.closeProofSubmitModal()" type="button">Cancel</button>
+        <button class="btn-action-primary" onclick="window.submitPaymentProof()" type="button">Confirm Submission</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection Modal -->
   <div class="rex-modal-overlay" id="rejectReasonModal">
     <div class="rex-modal-card">
       <div class="rex-modal-header">
@@ -835,8 +928,9 @@
       </div>
     </section>
 
+    <!-- Placed Orders Section (With Interactive Action Bar) -->
     <section id="viewPlacedOrder" style="display: none;">
-      <div class="section-header"><h1>Placed Orders</h1><p>Live tracking of your requests.</p></div>
+      <div class="section-header"><h1>Placed Orders</h1><p>Live tracking and payment terminal for your commissions.</p></div>
       <div class="info-card">
         <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop', null)">Shop Editors</button></div>
         <div id="activeOrdersList" style="display: none; flex-direction: column; gap: 14px;"></div>
