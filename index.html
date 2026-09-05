@@ -18,6 +18,9 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+  <!-- EmailJS Library -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
   <!-- Instant Theme Loader -->
   <script>
     (function() {
@@ -1286,7 +1289,7 @@
   </style>
 
   <script>
-    /* 1. Firebase Initialization */
+    /* 1. Firebase & EmailJS Initialization */
     const firebaseConfig = {
       apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
       authDomain: "rex-edit-hub.firebaseapp.com",
@@ -1301,6 +1304,11 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
     const provider = new firebase.auth.GoogleAuthProvider();
+
+    // Initialize EmailJS with Public Key
+    (function() {
+      emailjs.init("kJYbkGdmk4nBp-KDl");
+    })();
 
     var currentUser = null;
     var currentUserIdHandle = "";
@@ -1747,7 +1755,7 @@
                   '<small style="color:var(--text-muted);">Assigned Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName || "Standard") + '</strong></small>' +
                   '<div style="display:flex; justify-content:space-between; align-items:baseline;">' +
                     '<span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span>' +
-                    '<strong style="font-size:1.15rem; color:var(--primary);">Escrow Locked: ₹' + data.price + '</strong>' +
+                    '<strong style="font-size:1.15rem; color:var(--primary);">Amount: ₹' + data.price + '</strong>' +
                   '</div>' +
                   driveHtml +
                   notesHtml +
@@ -2074,7 +2082,7 @@
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    /* 12. Validated Request Submission ("Send Request") */
+    /* 12. Validated Request Submission & EmailJS Notification */
     window.submitConfiguredOrder = function() {
       if (!currentUser) {
         showToast("Sign In Required", "Please sign in with Google before sending a request.", "error");
@@ -2098,9 +2106,10 @@
       }
 
       var modeDisplayName = editor.modeNames ? editor.modeNames[currentConfig.mode] : "Selected Tier";
+      var orderIdCode = "RX-" + Math.floor(1000 + Math.random() * 9000);
 
       var orderData = {
-        orderId: "RX-" + Math.floor(1000 + Math.random() * 9000),
+        orderId: orderIdCode,
         editorId: currentConfig.editorKey,
         editorName: editor.name,
         editorUid: editor.ownerUid || "unknown",
@@ -2118,8 +2127,30 @@
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
+      // Save to Firestore
       db.collection("orders").add(orderData)
         .then(function() {
+          // Send EmailJS Notification
+          var templateParams = {
+            order_id: orderIdCode,
+            editor_name: editor.name,
+            client_name: currentUser.displayName || "Client",
+            client_email: currentUser.email,
+            category: editor.category,
+            mode_name: modeDisplayName,
+            duration: currentConfig.duration,
+            price: currentConfig.calculatedPrice,
+            footage_link: footageUrl,
+            instructions: instructions || "No special instructions provided."
+          };
+
+          emailjs.send("service_ii7zzqx", "template_ob1ef5u", templateParams)
+            .then(function(response) {
+              console.log("Email sent successfully!", response.status, response.text);
+            }, function(error) {
+              console.error("EmailJS failed...", error);
+            });
+
           showToast("Request Sent", "Request sent successfully! Wait for editor response.", "success");
           window.switchTab("viewPlacedOrder");
         })
@@ -2446,7 +2477,7 @@
     <section id="viewShop" style="display: block;">
       <div class="section-header">
         <h1>Editor Shop</h1>
-        <p>Book verified video editors with 100% escrow protection. Choose your project format below.</p>
+        <p>Book verified video editors with total project security. Choose your project format below.</p>
       </div>
 
       <div class="info-card" id="shopEmptyBox" style="display: none;">
