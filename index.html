@@ -814,7 +814,6 @@
       setTimeout(function() { toast.classList.remove("show"); setTimeout(function() { if (toast.parentNode) toast.remove(); }, 300); }, 4200);
     };
 
-    // Reject Modal Handlers
     window.openRejectModal = function(docId) {
       activeRejectOrderId = docId;
       document.getElementById("rejectReasonInput").value = "";
@@ -1047,11 +1046,16 @@
     window.toggleSidebar = function() { var sb = document.getElementById("sidebar"); if (sb.classList.contains("open")) window.closeSidebar(); else window.openSidebar(); };
 
     window.switchTab = function(viewId) {
+      // Correctly hide ALL views first
       var views = ["viewShop", "viewOrderConfig", "viewPlacedOrder", "viewEditorManage", "viewProfile", "viewLawPolicy", "viewRegisterStep1", "viewRegisterStep2"];
       views.forEach(function(id) {
         var el = document.getElementById(id);
-        if (el) el.style.display = (id === viewId) ? "block" : "none";
+        if (el) el.style.display = "none";
       });
+
+      // Show requested view
+      var targetEl = document.getElementById(viewId);
+      if (targetEl) targetEl.style.display = "block";
 
       var subtitleMap = {
         "viewShop": "Shop",
@@ -1369,7 +1373,6 @@
       </div>
     </section>
 
-    <!-- Editor Management Panel for Incoming Requests -->
     <section id="viewEditorManage" style="display: none;">
       <div class="section-header"><h1>Incoming Requests</h1><p>Accept or reject incoming client requests for your shop.</p></div>
       <div class="info-card">
