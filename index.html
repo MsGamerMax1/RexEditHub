@@ -33,8 +33,15 @@
       --text-subtle: #94a3b8; --brand-grad: linear-gradient(135deg, #0f172a 30%, #4338ca 100%); --success: #059669;
       --success-light: #ecfdf5; --warning: #d97706; --warning-light: #fffbeb; --danger: #ef4444; --danger-light: #fef2f2;
       --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04); --shadow-card: 0 12px 30px -6px rgba(15, 23, 42, 0.08);
-      --logo-shadow: 0 2px 10px rgba(79, 70, 229, 0.35);
-      --glow-1: rgba(99, 102, 241, 0.18); --glow-2: rgba(14, 165, 233, 0.16);
+      --logo-shadow: 0 2px 10px rgba(79, 70, 229, 0.35); --glow-1: rgba(99, 102, 241, 0.22); --glow-2: rgba(14, 165, 233, 0.18);
+    }
+    [data-theme="snow"] {
+      --bg-base: #f1f7fc; --bg-card: rgba(255, 255, 255, 0.92); --border-subtle: #dbeafe; --border-strong: #93c5fd;
+      --primary: #0284c7; --primary-hover: #0369a1; --primary-light: #f0f9ff; --text-main: #0f2744; --text-muted: #537599;
+      --text-subtle: #94a3b8; --brand-grad: linear-gradient(135deg, #0369a1 20%, #38bdf8 100%); --success: #0d9488;
+      --success-light: #ccfbf1; --warning: #d97706; --warning-light: #fef3c7; --danger: #e11d48; --danger-light: #ffe4e6;
+      --shadow-sm: 0 4px 12px rgba(2, 132, 199, 0.08); --shadow-card: 0 12px 30px -6px rgba(2, 132, 199, 0.15);
+      --logo-shadow: 0 0 15px rgba(56, 189, 248, 0.6); --glow-1: rgba(186, 230, 253, 0.5); --glow-2: rgba(224, 242, 254, 0.6);
     }
     [data-theme="dark"] {
       --bg-base: #0b0f19; --bg-card: rgba(19, 27, 46, 0.92); --border-subtle: #1e293b; --border-strong: #334155; --primary: #6366f1;
@@ -54,56 +61,127 @@
       --shadow-card: 0 12px 32px -6px rgba(0, 240, 255, 0.25); --logo-shadow: 0 0 18px rgba(0, 240, 255, 0.8);
       --glow-1: rgba(0, 240, 255, 0.3); --glow-2: rgba(217, 70, 239, 0.25);
     }
+    [data-theme="coral"] {
+      --bg-base: #fff7f5; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #ffe4e1; --border-strong: #fca5a5;
+      --primary: #f43f5e; --primary-hover: #e11d48; --primary-light: #ffe4e6; --text-main: #4c0519; --text-muted: #881337;
+      --text-subtle: #fda4af; --brand-grad: linear-gradient(135deg, #e11d48 10%, #f97316 100%); --success: #059669;
+      --success-light: #ecfdf5; --warning: #ea580c; --warning-light: #ffedd5; --danger: #be123c; --danger-light: #ffe4e6;
+      --glow-1: rgba(244, 63, 94, 0.2); --glow-2: rgba(249, 115, 22, 0.2);
+    }
+    [data-theme="lavender"] {
+      --bg-base: #fbf8ff; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #ede9fe; --border-strong: #c4b5fd;
+      --primary: #8b5cf6; --primary-hover: #7c3aed; --primary-light: #f3e8ff; --text-main: #2e1065; --text-muted: #5b21b6;
+      --text-subtle: #a78bfa; --brand-grad: linear-gradient(135deg, #6d28d9 20%, #c084fc 100%); --success: #059669;
+      --glow-1: rgba(139, 92, 246, 0.22); --glow-2: rgba(192, 132, 252, 0.2);
+    }
+    [data-theme="mint"] {
+      --bg-base: #f0fdf9; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #ccfbf1; --border-strong: #5eead4;
+      --primary: #0d9488; --primary-hover: #0f766e; --primary-light: #e6fffa; --text-main: #134e4a; --text-muted: #115e59;
+      --text-subtle: #2dd4bf; --brand-grad: linear-gradient(135deg, #0f766e 20%, #14b8a6 100%); --success: #059669;
+      --glow-1: rgba(13, 148, 136, 0.2); --glow-2: rgba(45, 212, 191, 0.2);
+    }
     [data-theme="golden"] {
-      --bg-base: #fffdf9; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #fef08a; --border-strong: #fde047; --primary: #ca8a04;
+      --bg-base: #fffdf9; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #fef08a; --border-strong: #fde047; --primary: #ca8a04;
       --primary-hover: #a16207; --primary-light: #fefce8; --text-main: #422006; --text-muted: #713f12; --text-subtle: #a16207;
-      --brand-grad: linear-gradient(135deg, #422006 20%, #ca8a04 100%); --success: #059669; --success-light: #ecfdf5;
-      --warning: #d97706; --warning-light: #fffbeb; --danger: #dc2626; --danger-light: #fef2f2;
-      --glow-1: rgba(234, 179, 8, 0.2); --glow-2: rgba(251, 191, 36, 0.15);
+      --brand-grad: linear-gradient(135deg, #422006 20%, #ca8a04 100%); --success: #059669; --glow-1: rgba(234, 179, 8, 0.25); --glow-2: rgba(251, 191, 36, 0.2);
     }
     [data-theme="red"] {
       --bg-base: #140303; --bg-card: rgba(32, 7, 7, 0.92); --border-subtle: #3f1212; --border-strong: #7f1d1d; --primary: #ef4444;
       --primary-hover: #dc2626; --primary-light: rgba(239, 68, 68, 0.18); --text-main: #fef2f2; --text-muted: #fca5a5;
       --text-subtle: #b91c1c; --brand-grad: linear-gradient(135deg, #ffffff 20%, #ef4444 100%); --success: #10b981;
-      --glow-1: rgba(239, 68, 68, 0.28); --glow-2: rgba(185, 28, 28, 0.2);
+      --glow-1: rgba(239, 68, 68, 0.3); --glow-2: rgba(185, 28, 28, 0.25);
     }
     [data-theme="emerald"] {
       --bg-base: #03140e; --bg-card: rgba(8, 35, 26, 0.92); --border-subtle: #124434; --border-strong: #059669; --primary: #10b981;
       --primary-hover: #059669; --primary-light: rgba(16, 185, 129, 0.15); --text-main: #f0fdf4; --text-muted: #86efac;
       --text-subtle: #15803d; --brand-grad: linear-gradient(135deg, #ffffff 20%, #10b981 100%); --success: #10b981;
-      --shadow-card: 0 12px 35px -6px rgba(16, 185, 129, 0.25);
-      --glow-1: rgba(16, 185, 129, 0.25); --glow-2: rgba(4, 120, 87, 0.2);
+      --glow-1: rgba(16, 185, 129, 0.3); --glow-2: rgba(4, 120, 87, 0.25);
     }
     [data-theme="slate"] {
       --bg-base: #020408; --bg-card: rgba(11, 17, 30, 0.92); --border-subtle: #1b263b; --border-strong: #38bdf8; --primary: #38bdf8;
       --primary-hover: #0284c7; --primary-light: rgba(56, 189, 248, 0.12); --text-main: #f1f5f9; --text-muted: #94a3b8;
       --text-subtle: #475569; --brand-grad: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%); --success: #10b981;
-      --shadow-card: 0 12px 35px -6px rgba(56, 189, 248, 0.2);
       --glow-1: rgba(56, 189, 248, 0.25); --glow-2: rgba(99, 102, 241, 0.2);
+    }
+    [data-theme="sakura"] {
+      --bg-base: #fff5f8; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #fce7f3; --border-strong: #f472b6;
+      --primary: #ec4899; --primary-hover: #db2777; --primary-light: #fdf2f8; --text-main: #500724; --text-muted: #831843;
+      --text-subtle: #f9a8d4; --brand-grad: linear-gradient(135deg, #be185d 20%, #f472b6 100%); --success: #059669;
+      --glow-1: rgba(236, 72, 153, 0.22); --glow-2: rgba(244, 114, 182, 0.18);
+    }
+    [data-theme="synthwave"] {
+      --bg-base: #180828; --bg-card: rgba(36, 14, 60, 0.92); --border-subtle: #4c1d95; --border-strong: #e879f9; --primary: #f43f5e;
+      --primary-hover: #e11d48; --primary-light: rgba(244, 63, 94, 0.15); --text-main: #faf5ff; --text-muted: #d8b4fe;
+      --text-subtle: #a855f7; --brand-grad: linear-gradient(135deg, #f43f5e 10%, #38bdf8 100%); --success: #2dd4bf;
+      --glow-1: rgba(244, 63, 94, 0.35); --glow-2: rgba(56, 189, 248, 0.25);
+    }
+    [data-theme="ocean"] {
+      --bg-base: #031326; --bg-card: rgba(7, 30, 58, 0.92); --border-subtle: #0c4a6e; --border-strong: #0284c7; --primary: #0ea5e9;
+      --primary-hover: #0284c7; --primary-light: rgba(14, 165, 233, 0.15); --text-main: #f0f9ff; --text-muted: #7dd3fc;
+      --text-subtle: #0369a1; --brand-grad: linear-gradient(135deg, #e0f2fe 10%, #0ea5e9 100%); --success: #10b981;
+      --glow-1: rgba(14, 165, 233, 0.3); --glow-2: rgba(3, 105, 161, 0.25);
+    }
+    [data-theme="amber"] {
+      --bg-base: #fffbeb; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #fde68a; --border-strong: #f59e0b;
+      --primary: #d97706; --primary-hover: #b45309; --primary-light: #fef3c7; --text-main: #451a03; --text-muted: #78350f;
+      --text-subtle: #fbbf24; --brand-grad: linear-gradient(135deg, #78350f 20%, #f59e0b 100%); --success: #059669;
+      --glow-1: rgba(217, 119, 6, 0.22); --glow-2: rgba(245, 158, 11, 0.2);
+    }
+    [data-theme="aurora"] {
+      --bg-base: #031716; --bg-card: rgba(6, 38, 36, 0.92); --border-subtle: #115e59; --border-strong: #2dd4bf; --primary: #2dd4bf;
+      --primary-hover: #14b8a6; --primary-light: rgba(45, 212, 191, 0.15); --text-main: #ccfbf1; --text-muted: #5eead4;
+      --text-subtle: #0f766e; --brand-grad: linear-gradient(135deg, #a7f3d0 10%, #38bdf8 100%); --success: #34d399;
+      --glow-1: rgba(45, 212, 191, 0.3); --glow-2: rgba(56, 189, 248, 0.25);
+    }
+    [data-theme="caramel"] {
+      --bg-base: #fcf9f6; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #e7dfd8; --border-strong: #b89f8b;
+      --primary: #854d0e; --primary-hover: #713f12; --primary-light: #fef3c7; --text-main: #27170a; --text-muted: #57371d;
+      --text-subtle: #a16207; --brand-grad: linear-gradient(135deg, #451a03 20%, #9a3412 100%); --success: #059669;
+      --glow-1: rgba(133, 77, 14, 0.2); --glow-2: rgba(161, 98, 7, 0.15);
+    }
+    [data-theme="arctic"] {
+      --bg-base: #f8fafc; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #e2e8f0; --border-strong: #94a3b8;
+      --primary: #475569; --primary-hover: #334155; --primary-light: #f1f5f9; --text-main: #0f172a; --text-muted: #475569;
+      --text-subtle: #64748b; --brand-grad: linear-gradient(135deg, #0f172a 20%, #475569 100%); --success: #059669;
+      --glow-1: rgba(148, 163, 184, 0.25); --glow-2: rgba(203, 213, 225, 0.2);
+    }
+    [data-theme="twilight"] {
+      --bg-base: #0f0728; --bg-card: rgba(25, 12, 60, 0.92); --border-subtle: #3b137b; --border-strong: #9333ea; --primary: #a855f7;
+      --primary-hover: #9333ea; --primary-light: rgba(168, 85, 247, 0.15); --text-main: #f3e8ff; --text-muted: #d8b4fe;
+      --text-subtle: #7e22ce; --brand-grad: linear-gradient(135deg, #ffffff 10%, #c084fc 100%); --success: #10b981;
+      --glow-1: rgba(168, 85, 247, 0.3); --glow-2: rgba(147, 51, 234, 0.25);
+    }
+    [data-theme="noir"] {
+      --bg-base: #000000; --bg-card: rgba(18, 18, 18, 0.95); --border-subtle: #27272a; --border-strong: #52525b;
+      --primary: #ffffff; --primary-hover: #d4d4d8; --primary-light: rgba(255, 255, 255, 0.1); --text-main: #ffffff;
+      --text-muted: #a1a1aa; --text-subtle: #71717a; --brand-grad: linear-gradient(135deg, #ffffff 10%, #a1a1aa 100%);
+      --success: #22c55e; --glow-1: rgba(255, 255, 255, 0.15); --glow-2: rgba(113, 113, 122, 0.15);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
 
-    /* Animated Dynamic Background */
     .studio-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
       background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px),
                         linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-      background-size: 42px 42px; opacity: 0.35;
+      background-size: 38px 38px; opacity: 0.38;
     }
     .orb-glow {
-      position: fixed; border-radius: 50%; filter: blur(95px); pointer-events: none; z-index: 0;
-      animation: floatMotion 16s ease-in-out infinite alternate;
+      position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0;
+      animation: floatMotion 18s ease-in-out infinite alternate;
     }
-    .orb-1 { width: 440px; height: 440px; background: var(--glow-1); top: -80px; left: -80px; }
-    .orb-2 { width: 520px; height: 520px; background: var(--glow-2); bottom: -120px; right: -100px; animation-delay: -7s; }
+    .orb-1 { width: 450px; height: 450px; background: var(--glow-1); top: -80px; left: -80px; }
+    .orb-2 { width: 550px; height: 550px; background: var(--glow-2); bottom: -120px; right: -100px; animation-delay: -8s; }
 
     @keyframes floatMotion {
       0% { transform: translate(0px, 0px) scale(1); }
-      50% { transform: translate(60px, 70px) scale(1.12); }
-      100% { transform: translate(-40px, 40px) scale(0.92); }
+      50% { transform: translate(65px, 80px) scale(1.15); }
+      100% { transform: translate(-45px, 45px) scale(0.9); }
     }
+
+    #snowCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; display: none; }
+    [data-theme="snow"] #snowCanvas { display: block; }
 
     .top-header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.3rem; background: var(--bg-card); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
     .nav-left { display: flex; align-items: center; gap: 1.15rem; }
@@ -220,11 +298,11 @@
     .btn-apply-earn { background: #ffffff; color: #0f172a; font-weight: 800; font-size: 0.92rem; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
 
     .theme-selector-section { margin: 1.8rem 0; padding: 1.35rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
-    .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
+    .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 12px; }
     .theme-card-btn { background: var(--bg-base); border: 2px solid var(--border-subtle); border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; }
     .theme-card-btn.active { border-color: var(--primary); background: var(--primary-light); }
     .theme-color-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
-    .theme-label-title { font-size: 0.85rem; font-weight: 800; color: var(--text-main); display: block; }
+    .theme-label-title { font-size: 0.83rem; font-weight: 800; color: var(--text-main); display: block; }
 
     #toast-container { position: fixed; top: 20px; right: 20px; z-index: 100000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
     .rex-toast { pointer-events: auto; min-width: 300px; max-width: 420px; background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 14px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; box-shadow: var(--shadow-card); transform: translateX(120%); transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease; opacity: 0; }
@@ -270,7 +348,6 @@
 
     (function() { emailjs.init("kJYbkGdmk4nBp-KDl"); })();
 
-    // Central Config Settings Updated with template_ob1ef5u
     var CURRENT_EMAIL_TEMPLATE_ID = "template_ob1ef5u";
     var SUPER_ADMIN_EMAIL = "msgamer123098@gmail.com";
     var OFFICIAL_UPI_ID = "msgamer123098@okaxis";
@@ -283,6 +360,7 @@
     var activeRejectOrderId = null;
     var activeProofOrderId = null;
     var activeProgressOrderId = null;
+    var snowAnimFrameId = null;
 
     var currentConfig = { editorKey: null, mode: "medium", duration: 20, calculatedPrice: 0 };
     var tempRegistrationData = { role: "Short Editor", portfolioLink: "" };
@@ -300,6 +378,14 @@
         if (btn.getAttribute('data-theme-target') === themeName) btn.classList.add('active');
         else btn.classList.remove('active');
       });
+      
+      // Control snow animation performance
+      if (themeName === 'snow') {
+        startSnowEngine();
+      } else {
+        stopSnowEngine();
+      }
+
       showToast("Theme Applied", "Switched to " + themeName.toUpperCase() + " style.", "info");
     };
 
@@ -389,17 +475,51 @@
       activeRejectOrderId = null;
     };
 
+    /* Safe Rejection Logic: Ensures Email is Sent FIRST, then Deletes Record */
     window.submitOrderRejection = function() {
       var reason = document.getElementById("rejectReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejection.", "error"); return; }
       if (!activeRejectOrderId) return;
 
-      db.collection("orders").doc(activeRejectOrderId).update({
-        status: "Rejected: " + reason
-      }).then(function() {
-        showToast("Order Rejected", "Status updated successfully.", "success");
-        window.closeRejectModal();
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      var docRef = db.collection("orders").doc(activeRejectOrderId);
+      docRef.get().then(function(docSnap) {
+        if (!docSnap.exists) {
+          window.closeRejectModal();
+          return;
+        }
+        var orderData = docSnap.data();
+
+        // 1. Send Email Notification
+        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
+          to_email: orderData.clientEmail,
+          recipient_name: orderData.clientName,
+          mail_title: "ORDER DECLINED - #" + orderData.orderId,
+          mail_message: "We regret to inform you that your editing request could not be accepted. The commission has been cancelled and removed from the active system.\n\nReason: " + reason,
+          order_id: orderData.orderId,
+          client_name: orderData.clientName,
+          client_email: orderData.clientEmail,
+          editor_name: orderData.editorName,
+          category: orderData.category,
+          mode_name: orderData.modeName,
+          duration: orderData.duration,
+          price: orderData.price,
+          footage_link: orderData.footageLink,
+          instructions: "Declined with feedback: " + reason,
+          primary_action_text: "Browse Other Editors",
+          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Contact Support",
+          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL
+        }).then(function() {
+          // 2. Safely Delete from Firestore
+          return docRef.delete();
+        }).then(function() {
+          delete ALL_ORDERS_MAP[activeRejectOrderId];
+          showToast("Order Rejected & Removed", "Notification dispatched to client and order deleted.", "info");
+          window.closeRejectModal();
+        }).catch(function(err) {
+          showToast("Error", "Action failed: " + err.message, "error");
+        });
+      });
     };
 
     window.openClientPaymentModal = function(orderId, price) {
@@ -970,11 +1090,85 @@
         window.switchTab('viewPlacedOrder');
       });
     };
+
+    /* High Performance Snow Engine with Start/Stop capability */
+    var flakes = [];
+    function initSnowflakes() {
+      var canvas = document.getElementById('snowCanvas');
+      if (!canvas) return;
+      var width = canvas.width = window.innerWidth;
+      var height = canvas.height = window.innerHeight;
+      flakes = [];
+      for (var i = 0; i < 50; i++) {
+        flakes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 2.8 + 1.2,
+          d: Math.random() * 1.4 + 0.5,
+          o: Math.random() * 0.6 + 0.3
+        });
+      }
+    }
+
+    function renderSnow() {
+      var canvas = document.getElementById('snowCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < flakes.length; i++) {
+        var f = flakes[i];
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, false);
+        ctx.fillStyle = "rgba(147, 197, 253, " + f.o + ")";
+        ctx.fill();
+
+        f.y += f.d;
+        f.x += Math.sin(f.y * 0.02) * 0.5;
+        if (f.y > canvas.height) {
+          f.y = -5;
+          f.x = Math.random() * canvas.width;
+        }
+      }
+      snowAnimFrameId = requestAnimationFrame(renderSnow);
+    }
+
+    function startSnowEngine() {
+      if (!snowAnimFrameId) {
+        initSnowflakes();
+        renderSnow();
+      }
+    }
+
+    function stopSnowEngine() {
+      if (snowAnimFrameId) {
+        cancelAnimationFrame(snowAnimFrameId);
+        snowAnimFrameId = null;
+        var canvas = document.getElementById('snowCanvas');
+        if (canvas) {
+          var ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      if (document.documentElement.getAttribute('data-theme') === 'snow') {
+        startSnowEngine();
+      }
+      window.addEventListener('resize', function() {
+        var canvas = document.getElementById('snowCanvas');
+        if (canvas) {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+      });
+    });
   </script>
 </head>
 <body>
 
-  <!-- Floating Animated Background Glow Orbs -->
+  <canvas id="snowCanvas"></canvas>
+
   <div class="orb-glow orb-1"></div>
   <div class="orb-glow orb-2"></div>
   <div class="studio-bg"></div>
@@ -1105,11 +1299,11 @@
         </div>
         <h3 class="rex-modal-title">Reject Order Request</h3>
       </div>
-      <p class="rex-modal-text">Provide a clear reason for rejection.</p>
+      <p class="rex-modal-text">Provide a clear reason for rejection. This reason will be emailed directly to the client and the order will be permanently deleted.</p>
       <textarea id="rejectReasonInput" class="form-textarea-field" placeholder="Reason for rejection..."></textarea>
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeRejectModal()" type="button">Cancel</button>
-        <button class="rex-btn-confirm-delete" onclick="window.submitOrderRejection()" type="button">Confirm Rejection</button>
+        <button class="rex-btn-confirm-delete" onclick="window.submitOrderRejection()" type="button">Decline & Delete Order</button>
       </div>
     </div>
   </div>
@@ -1173,18 +1367,33 @@
             <p id="profileUserEmail" style="color: var(--text-muted); font-size: 0.85rem;">Sign in to activate account</p>
           </div>
         </div>
+
         <div class="theme-selector-section">
-          <label class="config-label">Studio Theme Select</label>
+          <label class="config-label">Select Studio Theme (20 Visual Modes)</label>
           <div class="theme-grid">
-            <button class="theme-card-btn active" data-theme-target="default" onclick="window.setTheme('default')"><span class="theme-color-dot" style="background:#4f46e5;"></span><span class="theme-label-title">Indigo</span></button>
-            <button class="theme-card-btn" data-theme-target="dark" onclick="window.setTheme('dark')"><span class="theme-color-dot" style="background:#0b0f19;"></span><span class="theme-label-title">Midnight</span></button>
+            <button class="theme-card-btn active" data-theme-target="default" onclick="window.setTheme('default')"><span class="theme-color-dot" style="background:#4f46e5;"></span><span class="theme-label-title">Indigo Studio</span></button>
+            <button class="theme-card-btn" data-theme-target="snow" onclick="window.setTheme('snow')"><span class="theme-color-dot" style="background:#0284c7; box-shadow:0 0 6px #93c5fd;"></span><span class="theme-label-title">Winter Snow ❄️</span></button>
+            <button class="theme-card-btn" data-theme-target="dark" onclick="window.setTheme('dark')"><span class="theme-color-dot" style="background:#0b0f19;"></span><span class="theme-label-title">Midnight Dark</span></button>
             <button class="theme-card-btn" data-theme-target="neon" onclick="window.setTheme('neon')"><span class="theme-color-dot" style="background:#00f0ff; box-shadow:0 0 8px #00f0ff;"></span><span class="theme-label-title">Cyber Neon</span></button>
-            <button class="theme-card-btn" data-theme-target="emerald" onclick="window.setTheme('emerald')"><span class="theme-color-dot" style="background:#10b981;"></span><span class="theme-label-title">Emerald</span></button>
-            <button class="theme-card-btn" data-theme-target="slate" onclick="window.setTheme('slate')"><span class="theme-color-dot" style="background:#38bdf8;"></span><span class="theme-label-title">Obsidian</span></button>
-            <button class="theme-card-btn" data-theme-target="golden" onclick="window.setTheme('golden')"><span class="theme-color-dot" style="background:#ca8a04;"></span><span class="theme-label-title">Gold</span></button>
-            <button class="theme-card-btn" data-theme-target="red" onclick="window.setTheme('red')"><span class="theme-color-dot" style="background:#ef4444;"></span><span class="theme-label-title">Crimson</span></button>
+            <button class="theme-card-btn" data-theme-target="coral" onclick="window.setTheme('coral')"><span class="theme-color-dot" style="background:#f43f5e;"></span><span class="theme-label-title">Sunset Coral</span></button>
+            <button class="theme-card-btn" data-theme-target="lavender" onclick="window.setTheme('lavender')"><span class="theme-color-dot" style="background:#8b5cf6;"></span><span class="theme-label-title">Lavender Glow</span></button>
+            <button class="theme-card-btn" data-theme-target="mint" onclick="window.setTheme('mint')"><span class="theme-color-dot" style="background:#0d9488;"></span><span class="theme-label-title">Mint Fresh</span></button>
+            <button class="theme-card-btn" data-theme-target="golden" onclick="window.setTheme('golden')"><span class="theme-color-dot" style="background:#ca8a04;"></span><span class="theme-label-title">Royal Gold</span></button>
+            <button class="theme-card-btn" data-theme-target="red" onclick="window.setTheme('red')"><span class="theme-color-dot" style="background:#ef4444;"></span><span class="theme-label-title">Crimson Red</span></button>
+            <button class="theme-card-btn" data-theme-target="emerald" onclick="window.setTheme('emerald')"><span class="theme-color-dot" style="background:#10b981;"></span><span class="theme-label-title">Emerald Luxury</span></button>
+            <button class="theme-card-btn" data-theme-target="slate" onclick="window.setTheme('slate')"><span class="theme-color-dot" style="background:#38bdf8;"></span><span class="theme-label-title">Obsidian Slate</span></button>
+            <button class="theme-card-btn" data-theme-target="sakura" onclick="window.setTheme('sakura')"><span class="theme-color-dot" style="background:#ec4899;"></span><span class="theme-label-title">Sakura Pink</span></button>
+            <button class="theme-card-btn" data-theme-target="synthwave" onclick="window.setTheme('synthwave')"><span class="theme-color-dot" style="background:#f43f5e; box-shadow:0 0 6px #38bdf8;"></span><span class="theme-label-title">Synthwave</span></button>
+            <button class="theme-card-btn" data-theme-target="ocean" onclick="window.setTheme('ocean')"><span class="theme-color-dot" style="background:#0ea5e9;"></span><span class="theme-label-title">Deep Ocean</span></button>
+            <button class="theme-card-btn" data-theme-target="amber" onclick="window.setTheme('amber')"><span class="theme-color-dot" style="background:#d97706;"></span><span class="theme-label-title">Solar Amber</span></button>
+            <button class="theme-card-btn" data-theme-target="aurora" onclick="window.setTheme('aurora')"><span class="theme-color-dot" style="background:#2dd4bf;"></span><span class="theme-label-title">Aurora Green</span></button>
+            <button class="theme-card-btn" data-theme-target="caramel" onclick="window.setTheme('caramel')"><span class="theme-color-dot" style="background:#854d0e;"></span><span class="theme-label-title">Coffee Caramel</span></button>
+            <button class="theme-card-btn" data-theme-target="arctic" onclick="window.setTheme('arctic')"><span class="theme-color-dot" style="background:#475569;"></span><span class="theme-label-title">Nordic Arctic</span></button>
+            <button class="theme-card-btn" data-theme-target="twilight" onclick="window.setTheme('twilight')"><span class="theme-color-dot" style="background:#a855f7;"></span><span class="theme-label-title">Twilight Violet</span></button>
+            <button class="theme-card-btn" data-theme-target="noir" onclick="window.setTheme('noir')"><span class="theme-color-dot" style="background:#ffffff; border:1px solid #71717a;"></span><span class="theme-label-title">Monochrome Noir</span></button>
           </div>
         </div>
+
         <label class="config-label">UserID</label>
         <input type="text" id="inputUserId" class="form-input-field">
         <label class="config-label">Display Name</label>
