@@ -27,6 +27,7 @@
   </script>
 
   <style>
+    /* --- PAGE 1 THEMES (1-10: Clean & Studio) --- */
     :root, [data-theme="default"] {
       --bg-base: #f8fafc; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #e2e8f0; --border-strong: #cbd5e1;
       --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff; --text-main: #0f172a; --text-muted: #64748b;
@@ -34,14 +35,6 @@
       --success-light: #ecfdf5; --warning: #d97706; --warning-light: #fffbeb; --danger: #ef4444; --danger-light: #fef2f2;
       --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04); --shadow-card: 0 12px 30px -6px rgba(15, 23, 42, 0.08);
       --logo-shadow: 0 2px 10px rgba(79, 70, 229, 0.35); --glow-1: rgba(99, 102, 241, 0.22); --glow-2: rgba(14, 165, 233, 0.18);
-    }
-    [data-theme="snow"] {
-      --bg-base: #f1f7fc; --bg-card: rgba(255, 255, 255, 0.92); --border-subtle: #dbeafe; --border-strong: #93c5fd;
-      --primary: #0284c7; --primary-hover: #0369a1; --primary-light: #f0f9ff; --text-main: #0f2744; --text-muted: #537599;
-      --text-subtle: #94a3b8; --brand-grad: linear-gradient(135deg, #0369a1 20%, #38bdf8 100%); --success: #0d9488;
-      --success-light: #ccfbf1; --warning: #d97706; --warning-light: #fef3c7; --danger: #e11d48; --danger-light: #ffe4e6;
-      --shadow-sm: 0 4px 12px rgba(2, 132, 199, 0.08); --shadow-card: 0 12px 30px -6px rgba(2, 132, 199, 0.15);
-      --logo-shadow: 0 0 15px rgba(56, 189, 248, 0.6); --glow-1: rgba(186, 230, 253, 0.5); --glow-2: rgba(224, 242, 254, 0.6);
     }
     [data-theme="dark"] {
       --bg-base: #0b0f19; --bg-card: rgba(19, 27, 46, 0.92); --border-subtle: #1e293b; --border-strong: #334155; --primary: #6366f1;
@@ -52,20 +45,10 @@
       --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.5); --logo-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
       --glow-1: rgba(99, 102, 241, 0.25); --glow-2: rgba(56, 189, 248, 0.18);
     }
-    [data-theme="neon"] {
-      --bg-base: #05050d; --bg-card: rgba(13, 14, 31, 0.92); --border-subtle: #1f2247; --border-strong: #00f0ff; --primary: #00f0ff;
-      --primary-hover: #00c8d6; --primary-light: rgba(0, 240, 255, 0.12); --text-main: #ffffff; --text-muted: #94a3b8;
-      --text-subtle: #6366f1; --brand-grad: linear-gradient(135deg, #00f0ff 10%, #d946ef 100%); --success: #10e793;
-      --success-light: rgba(16, 231, 147, 0.15); --warning: #facc15; --warning-light: rgba(250, 204, 21, 0.15);
-      --danger: #ff0055; --danger-light: rgba(255, 0, 85, 0.2); --shadow-sm: 0 4px 14px rgba(0, 240, 255, 0.15);
-      --shadow-card: 0 12px 32px -6px rgba(0, 240, 255, 0.25); --logo-shadow: 0 0 18px rgba(0, 240, 255, 0.8);
-      --glow-1: rgba(0, 240, 255, 0.3); --glow-2: rgba(217, 70, 239, 0.25);
-    }
     [data-theme="coral"] {
       --bg-base: #fff7f5; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #ffe4e1; --border-strong: #fca5a5;
       --primary: #f43f5e; --primary-hover: #e11d48; --primary-light: #ffe4e6; --text-main: #4c0519; --text-muted: #881337;
       --text-subtle: #fda4af; --brand-grad: linear-gradient(135deg, #e11d48 10%, #f97316 100%); --success: #059669;
-      --success-light: #ecfdf5; --warning: #ea580c; --warning-light: #ffedd5; --danger: #be123c; --danger-light: #ffe4e6;
       --glow-1: rgba(244, 63, 94, 0.2); --glow-2: rgba(249, 115, 22, 0.2);
     }
     [data-theme="lavender"] {
@@ -109,12 +92,8 @@
       --text-subtle: #f9a8d4; --brand-grad: linear-gradient(135deg, #be185d 20%, #f472b6 100%); --success: #059669;
       --glow-1: rgba(236, 72, 153, 0.22); --glow-2: rgba(244, 114, 182, 0.18);
     }
-    [data-theme="synthwave"] {
-      --bg-base: #180828; --bg-card: rgba(36, 14, 60, 0.92); --border-subtle: #4c1d95; --border-strong: #e879f9; --primary: #f43f5e;
-      --primary-hover: #e11d48; --primary-light: rgba(244, 63, 94, 0.15); --text-main: #faf5ff; --text-muted: #d8b4fe;
-      --text-subtle: #a855f7; --brand-grad: linear-gradient(135deg, #f43f5e 10%, #38bdf8 100%); --success: #2dd4bf;
-      --glow-1: rgba(244, 63, 94, 0.35); --glow-2: rgba(56, 189, 248, 0.25);
-    }
+
+    /* --- PAGE 2 THEMES (11-20: Deep & Atmospheric) --- */
     [data-theme="ocean"] {
       --bg-base: #031326; --bg-card: rgba(7, 30, 58, 0.92); --border-subtle: #0c4a6e; --border-strong: #0284c7; --primary: #0ea5e9;
       --primary-hover: #0284c7; --primary-light: rgba(14, 165, 233, 0.15); --text-main: #f0f9ff; --text-muted: #7dd3fc;
@@ -126,12 +105,6 @@
       --primary: #d97706; --primary-hover: #b45309; --primary-light: #fef3c7; --text-main: #451a03; --text-muted: #78350f;
       --text-subtle: #fbbf24; --brand-grad: linear-gradient(135deg, #78350f 20%, #f59e0b 100%); --success: #059669;
       --glow-1: rgba(217, 119, 6, 0.22); --glow-2: rgba(245, 158, 11, 0.2);
-    }
-    [data-theme="aurora"] {
-      --bg-base: #031716; --bg-card: rgba(6, 38, 36, 0.92); --border-subtle: #115e59; --border-strong: #2dd4bf; --primary: #2dd4bf;
-      --primary-hover: #14b8a6; --primary-light: rgba(45, 212, 191, 0.15); --text-main: #ccfbf1; --text-muted: #5eead4;
-      --text-subtle: #0f766e; --brand-grad: linear-gradient(135deg, #a7f3d0 10%, #38bdf8 100%); --success: #34d399;
-      --glow-1: rgba(45, 212, 191, 0.3); --glow-2: rgba(56, 189, 248, 0.25);
     }
     [data-theme="caramel"] {
       --bg-base: #fcf9f6; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #e7dfd8; --border-strong: #b89f8b;
@@ -145,22 +118,119 @@
       --text-subtle: #64748b; --brand-grad: linear-gradient(135deg, #0f172a 20%, #475569 100%); --success: #059669;
       --glow-1: rgba(148, 163, 184, 0.25); --glow-2: rgba(203, 213, 225, 0.2);
     }
-    [data-theme="twilight"] {
-      --bg-base: #0f0728; --bg-card: rgba(25, 12, 60, 0.92); --border-subtle: #3b137b; --border-strong: #9333ea; --primary: #a855f7;
-      --primary-hover: #9333ea; --primary-light: rgba(168, 85, 247, 0.15); --text-main: #f3e8ff; --text-muted: #d8b4fe;
-      --text-subtle: #7e22ce; --brand-grad: linear-gradient(135deg, #ffffff 10%, #c084fc 100%); --success: #10b981;
-      --glow-1: rgba(168, 85, 247, 0.3); --glow-2: rgba(147, 51, 234, 0.25);
-    }
     [data-theme="noir"] {
       --bg-base: #000000; --bg-card: rgba(18, 18, 18, 0.95); --border-subtle: #27272a; --border-strong: #52525b;
       --primary: #ffffff; --primary-hover: #d4d4d8; --primary-light: rgba(255, 255, 255, 0.1); --text-main: #ffffff;
       --text-muted: #a1a1aa; --text-subtle: #71717a; --brand-grad: linear-gradient(135deg, #ffffff 10%, #a1a1aa 100%);
       --success: #22c55e; --glow-1: rgba(255, 255, 255, 0.15); --glow-2: rgba(113, 113, 122, 0.15);
     }
+    [data-theme="desert"] {
+      --bg-base: #fbf7ee; --bg-card: rgba(255, 255, 255, 0.95); --border-subtle: #e9dec9; --border-strong: #d4a373;
+      --primary: #bc6c25; --primary-hover: #9b5319; --primary-light: #fefae0; --text-main: #283618; --text-muted: #606c38;
+      --text-subtle: #dda15e; --brand-grad: linear-gradient(135deg, #606c38 20%, #bc6c25 100%); --success: #2a9d8f;
+      --glow-1: rgba(221, 161, 94, 0.25); --glow-2: rgba(188, 108, 37, 0.2);
+    }
+    [data-theme="electric"] {
+      --bg-base: #0a0518; --bg-card: rgba(21, 11, 46, 0.92); --border-subtle: #311868; --border-strong: #a855f7;
+      --primary: #c084fc; --primary-hover: #a855f7; --primary-light: rgba(168, 85, 247, 0.15); --text-main: #faf5ff;
+      --text-muted: #c084fc; --text-subtle: #7e22ce; --brand-grad: linear-gradient(135deg, #ffffff 20%, #a855f7 100%);
+      --success: #34d399; --glow-1: rgba(168, 85, 247, 0.3); --glow-2: rgba(192, 132, 252, 0.2);
+    }
+    [data-theme="jade"] {
+      --bg-base: #051a14; --bg-card: rgba(10, 36, 29, 0.92); --border-subtle: #174e3f; --border-strong: #34d399;
+      --primary: #10b981; --primary-hover: #059669; --primary-light: rgba(16, 185, 129, 0.15); --text-main: #ecfdf5;
+      --text-muted: #a7f3d0; --text-subtle: #047857; --brand-grad: linear-gradient(135deg, #ffffff 20%, #34d399 100%);
+      --success: #10b981; --glow-1: rgba(52, 211, 153, 0.28); --glow-2: rgba(16, 185, 129, 0.2);
+    }
+    [data-theme="velvet"] {
+      --bg-base: #1b0711; --bg-card: rgba(38, 12, 26, 0.92); --border-subtle: #581c38; --border-strong: #fb7185;
+      --primary: #f43f5e; --primary-hover: #e11d48; --primary-light: rgba(244, 63, 94, 0.15); --text-main: #fff1f2;
+      --text-muted: #fda4af; --text-subtle: #9f1239; --brand-grad: linear-gradient(135deg, #ffffff 20%, #fb7185 100%);
+      --success: #34d399; --glow-1: rgba(251, 113, 133, 0.3); --glow-2: rgba(244, 63, 94, 0.25);
+    }
+    [data-theme="glacial"] {
+      --bg-base: #eaf8fc; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #c7edfa; --border-strong: #38bdf8;
+      --primary: #0284c7; --primary-hover: #0369a1; --primary-light: #e0f2fe; --text-main: #0c4a6e; --text-muted: #0369a1;
+      --text-subtle: #7dd3fc; --brand-grad: linear-gradient(135deg, #0369a1 20%, #38bdf8 100%); --success: #059669;
+      --glow-1: rgba(56, 189, 248, 0.25); --glow-2: rgba(125, 211, 252, 0.2);
+    }
+
+    /* --- PAGE 3 THEMES (21-30: 10 LIVE ANIMATED THEMES) --- */
+    /* 21. Winter Snow */
+    [data-theme="snow"] {
+      --bg-base: #f1f7fc; --bg-card: rgba(255, 255, 255, 0.92); --border-subtle: #dbeafe; --border-strong: #93c5fd;
+      --primary: #0284c7; --primary-hover: #0369a1; --primary-light: #f0f9ff; --text-main: #0f2744; --text-muted: #537599;
+      --text-subtle: #94a3b8; --brand-grad: linear-gradient(135deg, #0369a1 20%, #38bdf8 100%); --success: #0d9488;
+      --shadow-card: 0 12px 30px -6px rgba(2, 132, 199, 0.15); --glow-1: rgba(186, 230, 253, 0.5); --glow-2: rgba(224, 242, 254, 0.6);
+    }
+    /* 22. Cosmic Starfield */
+    [data-theme="starfield"] {
+      --bg-base: #03030c; --bg-card: rgba(11, 12, 33, 0.92); --border-subtle: #1e1e4a; --border-strong: #818cf8;
+      --primary: #a5b4fc; --primary-hover: #818cf8; --primary-light: rgba(129, 140, 248, 0.15); --text-main: #ffffff;
+      --text-muted: #c7d2fe; --text-subtle: #6366f1; --brand-grad: linear-gradient(135deg, #ffffff 10%, #818cf8 100%);
+      --success: #34d399; --glow-1: rgba(99, 102, 241, 0.35); --glow-2: rgba(165, 180, 252, 0.25);
+    }
+    /* 23. Cyber Rain */
+    [data-theme="cyberrain"] {
+      --bg-base: #04090c; --bg-card: rgba(8, 20, 26, 0.92); --border-subtle: #133444; --border-strong: #00f0ff;
+      --primary: #00f0ff; --primary-hover: #0284c7; --primary-light: rgba(0, 240, 255, 0.12); --text-main: #e0f7fa;
+      --text-muted: #80deea; --text-subtle: #00838f; --brand-grad: linear-gradient(135deg, #ffffff 20%, #00f0ff 100%);
+      --success: #00e676; --glow-1: rgba(0, 240, 255, 0.35); --glow-2: rgba(2, 132, 199, 0.25);
+    }
+    /* 24. Deep Ocean Bubbles */
+    [data-theme="bubbles"] {
+      --bg-base: #021224; --bg-card: rgba(6, 28, 54, 0.92); --border-subtle: #0f3f72; --border-strong: #38bdf8;
+      --primary: #38bdf8; --primary-hover: #0284c7; --primary-light: rgba(56, 189, 248, 0.15); --text-main: #f0f9ff;
+      --text-muted: #bae6fd; --text-subtle: #0369a1; --brand-grad: linear-gradient(135deg, #ffffff 20%, #38bdf8 100%);
+      --success: #2dd4bf; --glow-1: rgba(56, 189, 248, 0.3); --glow-2: rgba(14, 165, 233, 0.25);
+    }
+    /* 25. Matrix Stream */
+    [data-theme="matrix"] {
+      --bg-base: #020904; --bg-card: rgba(4, 24, 12, 0.92); --border-subtle: #0c381c; --border-strong: #22c55e;
+      --primary: #22c55e; --primary-hover: #16a34a; --primary-light: rgba(34, 197, 94, 0.15); --text-main: #f0fdf4;
+      --text-muted: #86efac; --text-subtle: #15803d; --brand-grad: linear-gradient(135deg, #ffffff 20%, #22c55e 100%);
+      --success: #22c55e; --glow-1: rgba(34, 197, 94, 0.35); --glow-2: rgba(22, 163, 74, 0.25);
+    }
+    /* 26. Firefly Embers */
+    [data-theme="embers"] {
+      --bg-base: #140702; --bg-card: rgba(36, 15, 6, 0.92); --border-subtle: #4d1f08; --border-strong: #f97316;
+      --primary: #f97316; --primary-hover: #ea580c; --primary-light: rgba(249, 115, 22, 0.15); --text-main: #fff7ed;
+      --text-muted: #fed7aa; --text-subtle: #9a3412; --brand-grad: linear-gradient(135deg, #ffffff 20%, #f97316 100%);
+      --success: #10b981; --glow-1: rgba(249, 115, 22, 0.35); --glow-2: rgba(234, 88, 12, 0.25);
+    }
+    /* 27. Plasma Pulsar */
+    [data-theme="plasma"] {
+      --bg-base: #16041a; --bg-card: rgba(38, 11, 46, 0.92); --border-subtle: #4d175e; --border-strong: #d946ef;
+      --primary: #d946ef; --primary-hover: #c026d3; --primary-light: rgba(217, 70, 239, 0.15); --text-main: #fdf4ff;
+      --text-muted: #f5d0fe; --text-subtle: #86198f; --brand-grad: linear-gradient(135deg, #ffffff 20%, #d946ef 100%);
+      --success: #2dd4bf; --glow-1: rgba(217, 70, 239, 0.35); --glow-2: rgba(192, 38, 211, 0.25);
+    }
+    /* 28. (MIXED 1) RGB Chroma Wave (Rainbow Morphing Glow) */
+    [data-theme="chroma"] {
+      --bg-base: #07070a; --bg-card: rgba(17, 17, 24, 0.92); --border-subtle: #2d2d42; --border-strong: #ff007f;
+      --primary: #00f0ff; --primary-hover: #ff007f; --primary-light: rgba(0, 240, 255, 0.15); --text-main: #ffffff;
+      --text-muted: #e2e8f0; --text-subtle: #a855f7; --brand-grad: linear-gradient(135deg, #ff007f 0%, #00f0ff 50%, #facc15 100%);
+      --success: #10e793; --glow-1: rgba(255, 0, 127, 0.35); --glow-2: rgba(0, 240, 255, 0.35);
+    }
+    /* 29. (MIXED 2) Prism Spectrum Burst (Cyan, Magenta & Yellow Live Pulse) */
+    [data-theme="prism"] {
+      --bg-base: #06040a; --bg-card: rgba(16, 12, 28, 0.92); --border-subtle: #332454; --border-strong: #00f0ff;
+      --primary: #f43f5e; --primary-hover: #e11d48; --primary-light: rgba(244, 63, 94, 0.15); --text-main: #ffffff;
+      --text-muted: #cbd5e1; --text-subtle: #e879f9; --brand-grad: linear-gradient(135deg, #00f0ff 0%, #f43f5e 50%, #facc15 100%);
+      --success: #00f0ff; --glow-1: rgba(0, 240, 255, 0.35); --glow-2: rgba(244, 63, 94, 0.35);
+    }
+    /* 30. (MIXED 3) Aurora Borealis Cosmic Flow (Emerald, Violet & Aqua morph) */
+    [data-theme="auroraflow"] {
+      --bg-base: #031014; --bg-card: rgba(6, 26, 33, 0.92); --border-subtle: #104250; --border-strong: #2dd4bf;
+      --primary: #2dd4bf; --primary-hover: #a855f7; --primary-light: rgba(45, 212, 191, 0.15); --text-main: #f0fdfa;
+      --text-muted: #99f6e4; --text-subtle: #6366f1; --brand-grad: linear-gradient(135deg, #2dd4bf 0%, #a855f7 50%, #38bdf8 100%);
+      --success: #2dd4bf; --glow-1: rgba(45, 212, 191, 0.35); --glow-2: rgba(168, 85, 247, 0.35);
+    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
 
+    /* Animated Dynamic Background Elements */
     .studio-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
       background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px),
@@ -180,8 +250,8 @@
       100% { transform: translate(-45px, 45px) scale(0.9); }
     }
 
-    #snowCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; display: none; }
-    [data-theme="snow"] #snowCanvas { display: block; }
+    /* Universal Live Effects Canvas */
+    #liveCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; display: none; }
 
     .top-header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.3rem; background: var(--bg-card); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
     .nav-left { display: flex; align-items: center; gap: 1.15rem; }
@@ -297,8 +367,17 @@
     .earn-banner-card { background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%); color: #ffffff; border-radius: 18px; padding: 1.6rem; margin-bottom: 1.75rem; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
     .btn-apply-earn { background: #ffffff; color: #0f172a; font-weight: 800; font-size: 0.92rem; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
 
+    /* Theme Pagination System Styling */
     .theme-selector-section { margin: 1.8rem 0; padding: 1.35rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
-    .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 12px; }
+    .theme-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .theme-page-tag { font-size: 0.8rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-radius: 20px; }
+    .theme-pagination-controls { display: flex; align-items: center; gap: 10px; }
+    .btn-theme-page-nav { background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--text-main); font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-theme-page-nav:disabled { opacity: 0.45; cursor: not-allowed; }
+    
+    .theme-page-view { display: none; }
+    .theme-page-view.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+
     .theme-card-btn { background: var(--bg-base); border: 2px solid var(--border-subtle); border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; }
     .theme-card-btn.active { border-color: var(--primary); background: var(--primary-light); }
     .theme-color-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
@@ -360,7 +439,10 @@
     var activeRejectOrderId = null;
     var activeProofOrderId = null;
     var activeProgressOrderId = null;
-    var snowAnimFrameId = null;
+
+    // Theme Pagination State
+    var currentThemePage = 1;
+    var totalThemePages = 3;
 
     var currentConfig = { editorKey: null, mode: "medium", duration: 20, calculatedPrice: 0 };
     var tempRegistrationData = { role: "Short Editor", portfolioLink: "" };
@@ -370,6 +452,7 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    // Theme Switcher & Visual Engine Binder
     window.setTheme = function(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('rex_theme', themeName);
@@ -379,14 +462,34 @@
         else btn.classList.remove('active');
       });
       
-      // Control snow animation performance
-      if (themeName === 'snow') {
-        startSnowEngine();
-      } else {
-        stopSnowEngine();
+      // Update Active Animation Engine
+      bindVisualAnimationEngine(themeName);
+      showToast("Theme Applied", "Switched to " + themeName.toUpperCase() + ".", "info");
+    };
+
+    // Theme Pagination Navigation
+    window.changeThemePage = function(direction) {
+      var newPage = currentThemePage + direction;
+      if (newPage < 1 || newPage > totalThemePages) return;
+      currentThemePage = newPage;
+
+      for (var p = 1; p <= totalThemePages; p++) {
+        var pageEl = document.getElementById("themePage" + p);
+        if (pageEl) {
+          if (p === currentThemePage) pageEl.classList.add("active");
+          else pageEl.classList.remove("active");
+        }
       }
 
-      showToast("Theme Applied", "Switched to " + themeName.toUpperCase() + " style.", "info");
+      document.getElementById("btnThemePrev").disabled = (currentThemePage === 1);
+      document.getElementById("btnThemeNext").disabled = (currentThemePage === totalThemePages);
+
+      var titles = [
+        "Page 1 of 3: Classic Studio",
+        "Page 2 of 3: Atmospheric & Deep",
+        "Page 3 of 3: ✨ Live Animated Effects (10 Modes)"
+      ];
+      document.getElementById("themePageIndicator").textContent = titles[currentThemePage - 1];
     };
 
     window.showToast = function(title, message, type) {
@@ -489,7 +592,6 @@
         }
         var orderData = docSnap.data();
 
-        // 1. Send Email Notification
         emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
           to_email: orderData.clientEmail,
           recipient_name: orderData.clientName,
@@ -510,7 +612,6 @@
           secondary_action_text: "Contact Support",
           secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL
         }).then(function() {
-          // 2. Safely Delete from Firestore
           return docRef.delete();
         }).then(function() {
           delete ALL_ORDERS_MAP[activeRejectOrderId];
@@ -1091,72 +1192,182 @@
       });
     };
 
-    /* High Performance Snow Engine with Start/Stop capability */
-    var flakes = [];
-    function initSnowflakes() {
-      var canvas = document.getElementById('snowCanvas');
-      if (!canvas) return;
-      var width = canvas.width = window.innerWidth;
-      var height = canvas.height = window.innerHeight;
-      flakes = [];
-      for (var i = 0; i < 50; i++) {
-        flakes.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          r: Math.random() * 2.8 + 1.2,
-          d: Math.random() * 1.4 + 0.5,
-          o: Math.random() * 0.6 + 0.3
+    /* --- Universal Live Dynamic FX Canvas Engine (10 Animated Modes) --- */
+    var liveCanvasAnimId = null;
+    var liveParticles = [];
+
+    var animatedThemeKeys = ["snow", "starfield", "cyberrain", "bubbles", "matrix", "embers", "plasma", "chroma", "prism", "auroraflow"];
+
+    function initFxParticles(mode, w, h) {
+      liveParticles = [];
+      var count = 50;
+      if (mode === "matrix") count = 35;
+      if (mode === "starfield") count = 75;
+      if (mode === "bubbles") count = 40;
+
+      for (var i = 0; i < count; i++) {
+        liveParticles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 3 + 1,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: Math.random() * 2 + 0.8,
+          alpha: Math.random() * 0.7 + 0.3,
+          colorHue: Math.floor(Math.random() * 360),
+          char: String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
         });
       }
     }
 
-    function renderSnow() {
-      var canvas = document.getElementById('snowCanvas');
+    function renderActiveFx(mode) {
+      var canvas = document.getElementById('liveCanvas');
       if (!canvas) return;
       var ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (var i = 0; i < flakes.length; i++) {
-        var f = flakes[i];
-        ctx.beginPath();
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, false);
-        ctx.fillStyle = "rgba(147, 197, 253, " + f.o + ")";
-        ctx.fill();
+      var w = canvas.width;
+      var h = canvas.height;
 
-        f.y += f.d;
-        f.x += Math.sin(f.y * 0.02) * 0.5;
-        if (f.y > canvas.height) {
-          f.y = -5;
-          f.x = Math.random() * canvas.width;
-        }
+      // Selective Clear with Trails
+      if (mode === "matrix" || mode === "cyberrain") {
+        ctx.fillStyle = "rgba(4, 9, 12, 0.2)";
+        ctx.fillRect(0, 0, w, h);
+      } else {
+        ctx.clearRect(0, 0, w, h);
       }
-      snowAnimFrameId = requestAnimationFrame(renderSnow);
+
+      for (var i = 0; i < liveParticles.length; i++) {
+        var p = liveParticles[i];
+
+        if (mode === "snow") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r + 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(147, 197, 253, " + p.alpha + ")";
+          ctx.fill();
+          p.y += p.vy * 0.8;
+          p.x += Math.sin(p.y * 0.02) * 0.4;
+        } 
+        else if (mode === "starfield") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 0.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(199, 210, 254, " + p.alpha + ")";
+          ctx.fill();
+          p.y -= p.vy * 0.3;
+          p.alpha = 0.3 + Math.abs(Math.sin(Date.now() * 0.002 + i));
+        }
+        else if (mode === "cyberrain") {
+          ctx.fillStyle = "#00f0ff";
+          ctx.fillRect(p.x, p.y, 1.6, p.r * 7);
+          p.y += p.vy * 4;
+        }
+        else if (mode === "bubbles") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(56, 189, 248, " + p.alpha + ")";
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+          p.y -= p.vy * 0.9;
+          p.x += Math.sin(p.y * 0.03) * 0.6;
+        }
+        else if (mode === "matrix") {
+          ctx.font = "14px monospace";
+          ctx.fillStyle = "#22c55e";
+          ctx.fillText(p.char, p.x, p.y);
+          p.y += p.vy * 3.5;
+        }
+        else if (mode === "embers") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(249, 115, 22, " + p.alpha + ")";
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = "#f97316";
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          p.y -= p.vy * 1.1;
+          p.x += Math.sin(p.y * 0.04) * 0.8;
+        }
+        else if (mode === "plasma") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(217, 70, 239, " + (p.alpha * 0.5) + ")";
+          ctx.fill();
+          p.x += Math.cos(p.y * 0.01) * 1.5;
+          p.y += Math.sin(p.x * 0.01) * 1.5;
+        }
+        /* Multi-Color Mixed Animated 1: Chroma Wave */
+        else if (mode === "chroma") {
+          p.colorHue = (p.colorHue + 1.2) % 360;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = "hsla(" + p.colorHue + ", 100%, 65%, " + p.alpha + ")";
+          ctx.fill();
+          p.x += p.vx * 1.5;
+          p.y += Math.sin(p.x * 0.02) * 1.5;
+        }
+        /* Multi-Color Mixed Animated 2: Prism Spectrum Burst */
+        else if (mode === "prism") {
+          var prismColors = ["#00f0ff", "#f43f5e", "#facc15", "#d946ef"];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = prismColors[i % 4];
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = prismColors[i % 4];
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          p.x += p.vx * 2;
+          p.y -= p.vy * 1.5;
+        }
+        /* Multi-Color Mixed Animated 3: Aurora Cosmic Flow */
+        else if (mode === "auroraflow") {
+          var auroraHues = ["#2dd4bf", "#a855f7", "#38bdf8"];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2);
+          ctx.fillStyle = auroraHues[i % 3];
+          ctx.globalAlpha = p.alpha * 0.45;
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+          p.x += Math.sin(p.y * 0.015) * 2;
+          p.y += p.vy * 0.5;
+        }
+
+        // Loop Boundaries Safely
+        if (p.y > h + 10) { p.y = -10; p.x = Math.random() * w; }
+        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+        if (p.x > w + 10) { p.x = -10; }
+        if (p.x < -10) { p.x = w + 10; }
+      }
+
+      liveCanvasAnimId = requestAnimationFrame(function() {
+        renderActiveFx(mode);
+      });
     }
 
-    function startSnowEngine() {
-      if (!snowAnimFrameId) {
-        initSnowflakes();
-        renderSnow();
-      }
-    }
+    function bindVisualAnimationEngine(themeName) {
+      var canvas = document.getElementById('liveCanvas');
+      if (!canvas) return;
 
-    function stopSnowEngine() {
-      if (snowAnimFrameId) {
-        cancelAnimationFrame(snowAnimFrameId);
-        snowAnimFrameId = null;
-        var canvas = document.getElementById('snowCanvas');
-        if (canvas) {
-          var ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+      if (liveCanvasAnimId) {
+        cancelAnimationFrame(liveCanvasAnimId);
+        liveCanvasAnimId = null;
+      }
+
+      if (animatedThemeKeys.indexOf(themeName) !== -1) {
+        canvas.style.display = "block";
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initFxParticles(themeName, canvas.width, canvas.height);
+        renderActiveFx(themeName);
+      } else {
+        canvas.style.display = "none";
+        var ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
     }
 
     window.addEventListener('DOMContentLoaded', function() {
-      if (document.documentElement.getAttribute('data-theme') === 'snow') {
-        startSnowEngine();
-      }
+      var initialTheme = localStorage.getItem('rex_theme') || 'default';
+      bindVisualAnimationEngine(initialTheme);
+
       window.addEventListener('resize', function() {
-        var canvas = document.getElementById('snowCanvas');
+        var canvas = document.getElementById('liveCanvas');
         if (canvas) {
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
@@ -1167,7 +1378,8 @@
 </head>
 <body>
 
-  <canvas id="snowCanvas"></canvas>
+  <!-- Universal Hardware-Accelerated Dynamic FX Canvas -->
+  <canvas id="liveCanvas"></canvas>
 
   <div class="orb-glow orb-1"></div>
   <div class="orb-glow orb-2"></div>
@@ -1368,29 +1580,60 @@
           </div>
         </div>
 
+        <!-- 30 Themes Architecture: 3 Pages with Smooth Arrows -->
         <div class="theme-selector-section">
-          <label class="config-label">Select Studio Theme (20 Visual Modes)</label>
-          <div class="theme-grid">
+          <div class="theme-page-header">
+            <div>
+              <label class="config-label" style="margin-bottom:2px;">Studio Theme Library (30 Styles)</label>
+              <span class="theme-page-tag" id="themePageIndicator">Page 1 of 3: Classic Studio</span>
+            </div>
+            <div class="theme-pagination-controls">
+              <button class="btn-theme-page-nav" id="btnThemePrev" onclick="window.changeThemePage(-1)" disabled>&larr; Prev</button>
+              <button class="btn-theme-page-nav" id="btnThemeNext" onclick="window.changeThemePage(1)">Next &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Page 1: Themes 1 - 10 (Clean Studio Styles) -->
+          <div class="theme-page-view active" id="themePage1">
             <button class="theme-card-btn active" data-theme-target="default" onclick="window.setTheme('default')"><span class="theme-color-dot" style="background:#4f46e5;"></span><span class="theme-label-title">Indigo Studio</span></button>
-            <button class="theme-card-btn" data-theme-target="snow" onclick="window.setTheme('snow')"><span class="theme-color-dot" style="background:#0284c7; box-shadow:0 0 6px #93c5fd;"></span><span class="theme-label-title">Winter Snow ❄️</span></button>
             <button class="theme-card-btn" data-theme-target="dark" onclick="window.setTheme('dark')"><span class="theme-color-dot" style="background:#0b0f19;"></span><span class="theme-label-title">Midnight Dark</span></button>
-            <button class="theme-card-btn" data-theme-target="neon" onclick="window.setTheme('neon')"><span class="theme-color-dot" style="background:#00f0ff; box-shadow:0 0 8px #00f0ff;"></span><span class="theme-label-title">Cyber Neon</span></button>
             <button class="theme-card-btn" data-theme-target="coral" onclick="window.setTheme('coral')"><span class="theme-color-dot" style="background:#f43f5e;"></span><span class="theme-label-title">Sunset Coral</span></button>
-            <button class="theme-card-btn" data-theme-target="lavender" onclick="window.setTheme('lavender')"><span class="theme-color-dot" style="background:#8b5cf6;"></span><span class="theme-label-title">Lavender Glow</span></button>
+            <button class="theme-card-btn" data-theme-target="lavender" onclick="window.setTheme('lavender')"><span class="theme-color-dot" style="background:#8b5cf6;"></span><span class="theme-label-title">Lavender Dream</span></button>
             <button class="theme-card-btn" data-theme-target="mint" onclick="window.setTheme('mint')"><span class="theme-color-dot" style="background:#0d9488;"></span><span class="theme-label-title">Mint Fresh</span></button>
             <button class="theme-card-btn" data-theme-target="golden" onclick="window.setTheme('golden')"><span class="theme-color-dot" style="background:#ca8a04;"></span><span class="theme-label-title">Royal Gold</span></button>
             <button class="theme-card-btn" data-theme-target="red" onclick="window.setTheme('red')"><span class="theme-color-dot" style="background:#ef4444;"></span><span class="theme-label-title">Crimson Red</span></button>
             <button class="theme-card-btn" data-theme-target="emerald" onclick="window.setTheme('emerald')"><span class="theme-color-dot" style="background:#10b981;"></span><span class="theme-label-title">Emerald Luxury</span></button>
             <button class="theme-card-btn" data-theme-target="slate" onclick="window.setTheme('slate')"><span class="theme-color-dot" style="background:#38bdf8;"></span><span class="theme-label-title">Obsidian Slate</span></button>
             <button class="theme-card-btn" data-theme-target="sakura" onclick="window.setTheme('sakura')"><span class="theme-color-dot" style="background:#ec4899;"></span><span class="theme-label-title">Sakura Pink</span></button>
-            <button class="theme-card-btn" data-theme-target="synthwave" onclick="window.setTheme('synthwave')"><span class="theme-color-dot" style="background:#f43f5e; box-shadow:0 0 6px #38bdf8;"></span><span class="theme-label-title">Synthwave</span></button>
+          </div>
+
+          <!-- Page 2: Themes 11 - 20 (Deep Atmospheric Styles) -->
+          <div class="theme-page-view" id="themePage2">
             <button class="theme-card-btn" data-theme-target="ocean" onclick="window.setTheme('ocean')"><span class="theme-color-dot" style="background:#0ea5e9;"></span><span class="theme-label-title">Deep Ocean</span></button>
             <button class="theme-card-btn" data-theme-target="amber" onclick="window.setTheme('amber')"><span class="theme-color-dot" style="background:#d97706;"></span><span class="theme-label-title">Solar Amber</span></button>
-            <button class="theme-card-btn" data-theme-target="aurora" onclick="window.setTheme('aurora')"><span class="theme-color-dot" style="background:#2dd4bf;"></span><span class="theme-label-title">Aurora Green</span></button>
             <button class="theme-card-btn" data-theme-target="caramel" onclick="window.setTheme('caramel')"><span class="theme-color-dot" style="background:#854d0e;"></span><span class="theme-label-title">Coffee Caramel</span></button>
             <button class="theme-card-btn" data-theme-target="arctic" onclick="window.setTheme('arctic')"><span class="theme-color-dot" style="background:#475569;"></span><span class="theme-label-title">Nordic Arctic</span></button>
-            <button class="theme-card-btn" data-theme-target="twilight" onclick="window.setTheme('twilight')"><span class="theme-color-dot" style="background:#a855f7;"></span><span class="theme-label-title">Twilight Violet</span></button>
             <button class="theme-card-btn" data-theme-target="noir" onclick="window.setTheme('noir')"><span class="theme-color-dot" style="background:#ffffff; border:1px solid #71717a;"></span><span class="theme-label-title">Monochrome Noir</span></button>
+            <button class="theme-card-btn" data-theme-target="desert" onclick="window.setTheme('desert')"><span class="theme-color-dot" style="background:#bc6c25;"></span><span class="theme-label-title">Desert Dune</span></button>
+            <button class="theme-card-btn" data-theme-target="electric" onclick="window.setTheme('electric')"><span class="theme-color-dot" style="background:#c084fc;"></span><span class="theme-label-title">Electric Violet</span></button>
+            <button class="theme-card-btn" data-theme-target="jade" onclick="window.setTheme('jade')"><span class="theme-color-dot" style="background:#34d399;"></span><span class="theme-label-title">Jade Forest</span></button>
+            <button class="theme-card-btn" data-theme-target="velvet" onclick="window.setTheme('velvet')"><span class="theme-color-dot" style="background:#f43f5e;"></span><span class="theme-label-title">Velvet Rose</span></button>
+            <button class="theme-card-btn" data-theme-target="glacial" onclick="window.setTheme('glacial')"><span class="theme-color-dot" style="background:#38bdf8;"></span><span class="theme-label-title">Glacial Cyan</span></button>
+          </div>
+
+          <!-- Page 3: Themes 21 - 30 (10 LIVE ANIMATED MODES & MIXED PARTICLES) -->
+          <div class="theme-page-view" id="themePage3">
+            <button class="theme-card-btn" data-theme-target="snow" onclick="window.setTheme('snow')"><span class="theme-color-dot" style="background:#0284c7; box-shadow:0 0 6px #93c5fd;"></span><span class="theme-label-title">Winter Snow ❄️</span></button>
+            <button class="theme-card-btn" data-theme-target="starfield" onclick="window.setTheme('starfield')"><span class="theme-color-dot" style="background:#6366f1; box-shadow:0 0 6px #818cf8;"></span><span class="theme-label-title">Cosmic Stars 🌌</span></button>
+            <button class="theme-card-btn" data-theme-target="cyberrain" onclick="window.setTheme('cyberrain')"><span class="theme-color-dot" style="background:#00f0ff; box-shadow:0 0 8px #00f0ff;"></span><span class="theme-label-title">Cyber Rain 🌧️</span></button>
+            <button class="theme-card-btn" data-theme-target="bubbles" onclick="window.setTheme('bubbles')"><span class="theme-color-dot" style="background:#38bdf8; box-shadow:0 0 6px #38bdf8;"></span><span class="theme-label-title">Sea Bubbles 🫧</span></button>
+            <button class="theme-card-btn" data-theme-target="matrix" onclick="window.setTheme('matrix')"><span class="theme-color-dot" style="background:#22c55e; box-shadow:0 0 8px #22c55e;"></span><span class="theme-label-title">Matrix Stream ⚡</span></button>
+            <button class="theme-card-btn" data-theme-target="embers" onclick="window.setTheme('embers')"><span class="theme-color-dot" style="background:#f97316; box-shadow:0 0 8px #f97316;"></span><span class="theme-label-title">Firefly Embers 🔥</span></button>
+            <button class="theme-card-btn" data-theme-target="plasma" onclick="window.setTheme('plasma')"><span class="theme-color-dot" style="background:#d946ef; box-shadow:0 0 8px #d946ef;"></span><span class="theme-label-title">Plasma Pulsar 🌊</span></button>
+            <!-- 3 Mixed Multi-Color Animated Themes -->
+            <button class="theme-card-btn" data-theme-target="chroma" onclick="window.setTheme('chroma')"><span class="theme-color-dot" style="background:linear-gradient(45deg, #ff007f, #00f0ff, #facc15); box-shadow:0 0 8px #00f0ff;"></span><span class="theme-label-title">RGB Chroma 🔮</span></button>
+            <button class="theme-card-btn" data-theme-target="prism" onclick="window.setTheme('prism')"><span class="theme-color-dot" style="background:linear-gradient(45deg, #00f0ff, #f43f5e, #facc15); box-shadow:0 0 8px #f43f5e;"></span><span class="theme-label-title">Prism Spectrum ⚡</span></button>
+            <button class="theme-card-btn" data-theme-target="auroraflow" onclick="window.setTheme('auroraflow')"><span class="theme-color-dot" style="background:linear-gradient(45deg, #2dd4bf, #a855f7, #38bdf8); box-shadow:0 0 8px #2dd4bf;"></span><span class="theme-label-title">Aurora Flow 🌌</span></button>
           </div>
         </div>
 
