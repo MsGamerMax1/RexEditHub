@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Rex Edit Hub</title>
   <meta name="description" content="Rex Edit Hub - Secure escrow video editing marketplace for creators and verified editors.">
-  <meta name="keywords" content="Rex Edit Hub, video editing, hire video editor, shorts editor, youtube editor escrow">
+  <meta name="keywords" content="Rex Edit Hub, video editing, hire video editor, shorts editor, thumbnail designer, motion graphics escrow">
 
   <link rel="icon" type="image/png" href="logo.png?v=2">
   <link rel="shortcut icon" type="image/png" href="logo.png?v=2">
@@ -27,7 +27,7 @@
   </script>
 
   <style>
-    /* --- PAGE 1 THEMES (1-10: Clean & Studio) --- */
+    /* --- PAGE 1 THEMES (1-10) --- */
     :root, [data-theme="default"] {
       --bg-base: #f8fafc; --bg-card: rgba(255, 255, 255, 0.94); --border-subtle: #e2e8f0; --border-strong: #cbd5e1;
       --primary: #4f46e5; --primary-hover: #4338ca; --primary-light: #eef2ff; --text-main: #0f172a; --text-muted: #64748b;
@@ -93,7 +93,7 @@
       --glow-1: rgba(236, 72, 153, 0.22); --glow-2: rgba(244, 114, 182, 0.18);
     }
 
-    /* --- PAGE 2 THEMES (11-20: Deep & Atmospheric) --- */
+    /* --- PAGE 2 THEMES (11-20) --- */
     [data-theme="ocean"] {
       --bg-base: #031326; --bg-card: rgba(7, 30, 58, 0.92); --border-subtle: #0c4a6e; --border-strong: #0284c7; --primary: #0ea5e9;
       --primary-hover: #0284c7; --primary-light: rgba(14, 165, 233, 0.15); --text-main: #f0f9ff; --text-muted: #7dd3fc;
@@ -155,71 +155,61 @@
       --glow-1: rgba(56, 189, 248, 0.25); --glow-2: rgba(125, 211, 252, 0.2);
     }
 
-    /* --- PAGE 3 THEMES (21-30: 10 LIVE ANIMATED THEMES) --- */
-    /* 21. Winter Snow */
+    /* --- PAGE 3 THEMES (21-30: ANIMATED) --- */
     [data-theme="snow"] {
       --bg-base: #f1f7fc; --bg-card: rgba(255, 255, 255, 0.92); --border-subtle: #dbeafe; --border-strong: #93c5fd;
       --primary: #0284c7; --primary-hover: #0369a1; --primary-light: #f0f9ff; --text-main: #0f2744; --text-muted: #537599;
       --text-subtle: #94a3b8; --brand-grad: linear-gradient(135deg, #0369a1 20%, #38bdf8 100%); --success: #0d9488;
       --shadow-card: 0 12px 30px -6px rgba(2, 132, 199, 0.15); --glow-1: rgba(186, 230, 253, 0.5); --glow-2: rgba(224, 242, 254, 0.6);
     }
-    /* 22. Cosmic Starfield */
     [data-theme="starfield"] {
       --bg-base: #03030c; --bg-card: rgba(11, 12, 33, 0.92); --border-subtle: #1e1e4a; --border-strong: #818cf8;
       --primary: #a5b4fc; --primary-hover: #818cf8; --primary-light: rgba(129, 140, 248, 0.15); --text-main: #ffffff;
       --text-muted: #c7d2fe; --text-subtle: #6366f1; --brand-grad: linear-gradient(135deg, #ffffff 10%, #818cf8 100%);
       --success: #34d399; --glow-1: rgba(99, 102, 241, 0.35); --glow-2: rgba(165, 180, 252, 0.25);
     }
-    /* 23. Cyber Rain */
     [data-theme="cyberrain"] {
       --bg-base: #04090c; --bg-card: rgba(8, 20, 26, 0.92); --border-subtle: #133444; --border-strong: #00f0ff;
       --primary: #00f0ff; --primary-hover: #0284c7; --primary-light: rgba(0, 240, 255, 0.12); --text-main: #e0f7fa;
       --text-muted: #80deea; --text-subtle: #00838f; --brand-grad: linear-gradient(135deg, #ffffff 20%, #00f0ff 100%);
       --success: #00e676; --glow-1: rgba(0, 240, 255, 0.35); --glow-2: rgba(2, 132, 199, 0.25);
     }
-    /* 24. Deep Ocean Bubbles */
     [data-theme="bubbles"] {
       --bg-base: #021224; --bg-card: rgba(6, 28, 54, 0.92); --border-subtle: #0f3f72; --border-strong: #38bdf8;
       --primary: #38bdf8; --primary-hover: #0284c7; --primary-light: rgba(56, 189, 248, 0.15); --text-main: #f0f9ff;
       --text-muted: #bae6fd; --text-subtle: #0369a1; --brand-grad: linear-gradient(135deg, #ffffff 20%, #38bdf8 100%);
       --success: #2dd4bf; --glow-1: rgba(56, 189, 248, 0.3); --glow-2: rgba(14, 165, 233, 0.25);
     }
-    /* 25. Matrix Stream */
     [data-theme="matrix"] {
       --bg-base: #020904; --bg-card: rgba(4, 24, 12, 0.92); --border-subtle: #0c381c; --border-strong: #22c55e;
       --primary: #22c55e; --primary-hover: #16a34a; --primary-light: rgba(34, 197, 94, 0.15); --text-main: #f0fdf4;
       --text-muted: #86efac; --text-subtle: #15803d; --brand-grad: linear-gradient(135deg, #ffffff 20%, #22c55e 100%);
       --success: #22c55e; --glow-1: rgba(34, 197, 94, 0.35); --glow-2: rgba(22, 163, 74, 0.25);
     }
-    /* 26. Firefly Embers */
     [data-theme="embers"] {
       --bg-base: #140702; --bg-card: rgba(36, 15, 6, 0.92); --border-subtle: #4d1f08; --border-strong: #f97316;
       --primary: #f97316; --primary-hover: #ea580c; --primary-light: rgba(249, 115, 22, 0.15); --text-main: #fff7ed;
       --text-muted: #fed7aa; --text-subtle: #9a3412; --brand-grad: linear-gradient(135deg, #ffffff 20%, #f97316 100%);
       --success: #10b981; --glow-1: rgba(249, 115, 22, 0.35); --glow-2: rgba(234, 88, 12, 0.25);
     }
-    /* 27. Plasma Pulsar */
     [data-theme="plasma"] {
       --bg-base: #16041a; --bg-card: rgba(38, 11, 46, 0.92); --border-subtle: #4d175e; --border-strong: #d946ef;
       --primary: #d946ef; --primary-hover: #c026d3; --primary-light: rgba(217, 70, 239, 0.15); --text-main: #fdf4ff;
       --text-muted: #f5d0fe; --text-subtle: #86198f; --brand-grad: linear-gradient(135deg, #ffffff 20%, #d946ef 100%);
       --success: #2dd4bf; --glow-1: rgba(217, 70, 239, 0.35); --glow-2: rgba(192, 38, 211, 0.25);
     }
-    /* 28. (MIXED 1) RGB Chroma Wave (Rainbow Morphing Glow) */
     [data-theme="chroma"] {
       --bg-base: #07070a; --bg-card: rgba(17, 17, 24, 0.92); --border-subtle: #2d2d42; --border-strong: #ff007f;
       --primary: #00f0ff; --primary-hover: #ff007f; --primary-light: rgba(0, 240, 255, 0.15); --text-main: #ffffff;
       --text-muted: #e2e8f0; --text-subtle: #a855f7; --brand-grad: linear-gradient(135deg, #ff007f 0%, #00f0ff 50%, #facc15 100%);
       --success: #10e793; --glow-1: rgba(255, 0, 127, 0.35); --glow-2: rgba(0, 240, 255, 0.35);
     }
-    /* 29. (MIXED 2) Prism Spectrum Burst (Cyan, Magenta & Yellow Live Pulse) */
     [data-theme="prism"] {
       --bg-base: #06040a; --bg-card: rgba(16, 12, 28, 0.92); --border-subtle: #332454; --border-strong: #00f0ff;
       --primary: #f43f5e; --primary-hover: #e11d48; --primary-light: rgba(244, 63, 94, 0.15); --text-main: #ffffff;
       --text-muted: #cbd5e1; --text-subtle: #e879f9; --brand-grad: linear-gradient(135deg, #00f0ff 0%, #f43f5e 50%, #facc15 100%);
       --success: #00f0ff; --glow-1: rgba(0, 240, 255, 0.35); --glow-2: rgba(244, 63, 94, 0.35);
     }
-    /* 30. (MIXED 3) Aurora Borealis Cosmic Flow (Emerald, Violet & Aqua morph) */
     [data-theme="auroraflow"] {
       --bg-base: #031014; --bg-card: rgba(6, 26, 33, 0.92); --border-subtle: #104250; --border-strong: #2dd4bf;
       --primary: #2dd4bf; --primary-hover: #a855f7; --primary-light: rgba(45, 212, 191, 0.15); --text-main: #f0fdfa;
@@ -230,7 +220,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
 
-    /* Animated Dynamic Background Elements */
     .studio-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
       background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px),
@@ -250,7 +239,6 @@
       100% { transform: translate(-45px, 45px) scale(0.9); }
     }
 
-    /* Universal Live Effects Canvas */
     #liveCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; display: none; }
 
     .top-header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.3rem; background: var(--bg-card); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
@@ -291,6 +279,10 @@
     .demo-tag { position: absolute; top: 18px; right: 18px; font-size: 0.72rem; font-weight: 800; padding: 4px 9px; border-radius: 8px; }
     .format-badge-short { background: var(--warning-light); border: 1px solid var(--warning); color: var(--warning); }
     .format-badge-long { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); }
+    .format-badge-thumb { background: #fdf2f8; border: 1px solid #ec4899; color: #ec4899; }
+    .format-badge-research { background: #fefce8; border: 1px solid #ca8a04; color: #ca8a04; }
+    .format-badge-motion { background: #f3e8ff; border: 1px solid #9333ea; color: #9333ea; }
+
     .editor-header { display: flex; align-items: center; gap: 14px; }
     .editor-avatar { width: 58px; height: 58px; border-radius: 16px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: 800; color: #ffffff; }
     .editor-status { font-size: 0.8rem; color: var(--success); font-weight: 700; }
@@ -301,14 +293,24 @@
     .btn-delete-shop { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); font-weight: 800; font-size: 0.8rem; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
     .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 6px 14px; border-radius: 8px; cursor: pointer; }
 
-    .config-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; align-items: start; }
+    .config-layout { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
     @media (max-width: 768px) { .config-layout { grid-template-columns: 1fr; } }
     .preview-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); }
     .preview-ratio-label { font-size: 0.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem; }
-    .screen-box { background: #090e1a; border: 2px solid var(--border-strong); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); }
+    
+    /* Dynamic Screen / Canvas Box */
+    .screen-box { background: #090e1a; border: 2px solid var(--border-strong); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); transition: all 0.3s ease; }
     .screen-box.ratio-9-16 { width: 170px; height: 302px; }
-    .screen-box.ratio-16-9 { width: 250px; height: 140px; }
+    .screen-box.ratio-16-9 { width: 260px; height: 146px; }
+    .screen-box.ratio-1-1 { width: 200px; height: 200px; }
+    .screen-box.ratio-4-5 { width: 180px; height: 225px; }
+
     .screen-time-display { font-size: 1.8rem; font-weight: 900; color: #38bdf8; z-index: 2; }
+    .screen-tag-label { font-size: 0.75rem; font-weight: 800; color: #94a3b8; margin-top: 6px; z-index: 2; }
+
+    .thumbnail-ratio-bar { display: flex; gap: 6px; margin-top: 14px; width: 100%; justify-content: center; }
+    .btn-ratio-switch { background: var(--bg-base); border: 1px solid var(--border-subtle); font-size: 0.72rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; cursor: pointer; color: var(--text-main); }
+    .btn-ratio-switch.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     .config-group { margin-bottom: 1.4rem; }
     .config-label { display: block; font-size: 0.84rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; margin-bottom: 0.5rem; }
@@ -367,7 +369,7 @@
     .earn-banner-card { background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%); color: #ffffff; border-radius: 18px; padding: 1.6rem; margin-bottom: 1.75rem; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
     .btn-apply-earn { background: #ffffff; color: #0f172a; font-weight: 800; font-size: 0.92rem; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; white-space: nowrap; }
 
-    /* Theme Pagination System Styling */
+    /* Theme Pagination System */
     .theme-selector-section { margin: 1.8rem 0; padding: 1.35rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
     .theme-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .theme-page-tag { font-size: 0.8rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-radius: 20px; }
@@ -440,19 +442,17 @@
     var activeProofOrderId = null;
     var activeProgressOrderId = null;
 
-    // Theme Pagination State
     var currentThemePage = 1;
     var totalThemePages = 3;
 
-    var currentConfig = { editorKey: null, mode: "medium", duration: 20, calculatedPrice: 0 };
-    var tempRegistrationData = { role: "Short Editor", portfolioLink: "" };
+    var currentConfig = { editorKey: null, mode: "medium", duration: 20, calculatedPrice: 0, selectedRatio: "16-9" };
+    var tempRegistrationData = { role: "Short-Form Video Editor", portfolioLink: "" };
 
     function escapeHtml(str) {
       if (!str) return "";
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    // Theme Switcher & Visual Engine Binder
     window.setTheme = function(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('rex_theme', themeName);
@@ -462,12 +462,10 @@
         else btn.classList.remove('active');
       });
       
-      // Update Active Animation Engine
       bindVisualAnimationEngine(themeName);
       showToast("Theme Applied", "Switched to " + themeName.toUpperCase() + ".", "info");
     };
 
-    // Theme Pagination Navigation
     window.changeThemePage = function(direction) {
       var newPage = currentThemePage + direction;
       if (newPage < 1 || newPage > totalThemePages) return;
@@ -512,7 +510,7 @@
       document.getElementById("modalDetailClient").textContent = data.clientName + " (" + data.clientEmail + ")";
       document.getElementById("modalDetailEditor").textContent = data.editorName;
       document.getElementById("modalDetailCategory").textContent = data.category + " (" + data.modeName + ")";
-      document.getElementById("modalDetailDuration").textContent = data.duration + " seconds";
+      document.getElementById("modalDetailDuration").textContent = (data.category === "Thumbnail Designer" ? data.duration + " Thumbnails" : data.duration + " seconds");
       document.getElementById("modalDetailPrice").textContent = "₹" + data.price;
       document.getElementById("modalDetailStatus").textContent = data.status || "Pending";
       
@@ -578,7 +576,6 @@
       activeRejectOrderId = null;
     };
 
-    /* Safe Rejection Logic: Ensures Email is Sent FIRST, then Deletes Record */
     window.submitOrderRejection = function() {
       var reason = document.getElementById("rejectReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejection.", "error"); return; }
@@ -711,7 +708,7 @@
           duration: "Active",
           price: "Escrow Locked",
           footage_link: "Assigned",
-          instructions: "Video production in progress.",
+          instructions: "Production in progress.",
           primary_action_text: "View Live Status",
           primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
           secondary_action_text: "Support",
@@ -764,7 +761,7 @@
           client_name: clientName,
           client_email: clientEmail,
           editor_name: "Verified Platform Editor",
-          category: "Video Commission",
+          category: "Commission",
           mode_name: "Standard",
           duration: "Assigned",
           price: price,
@@ -902,8 +899,14 @@
         snapshot.forEach(function(doc) {
           var data = doc.data();
           EDITORS_DATA[doc.id] = data;
-          var badgeClass = data.category === "Short Editor" ? "format-badge-short" : "format-badge-long";
-          var cardHtml = '<article class="editor-card"><span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span><div class="editor-header"><div class="editor-avatar">' + escapeHtml((data.name || "ED").substring(0,2).toUpperCase()) + '</div><div><h3>' + escapeHtml(data.name) + ' <span style="color:#0284c7;">✓</span></h3><span class="editor-status">Ready for Orders</span></div></div><p style="font-size:0.85rem; color:var(--text-muted);">Verified editor by <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p><div class="card-footer"><div><span class="price-label">Starts at</span><span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(data.unitShort) + '</small></span></div><button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + doc.id + '\')">Hire Editor &rarr;</button></div></article>';
+
+          var badgeClass = "format-badge-long";
+          if (data.category.includes("Short")) badgeClass = "format-badge-short";
+          else if (data.category.includes("Thumbnail")) badgeClass = "format-badge-thumb";
+          else if (data.category.includes("Researcher")) badgeClass = "format-badge-research";
+          else if (data.category.includes("Motion")) badgeClass = "format-badge-motion";
+
+          var cardHtml = '<article class="editor-card"><span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span><div class="editor-header"><div class="editor-avatar">' + escapeHtml((data.name || "ED").substring(0,2).toUpperCase()) + '</div><div><h3>' + escapeHtml(data.name) + ' <span style="color:#0284c7;">✓</span></h3><span class="editor-status">Ready for Orders</span></div></div><p style="font-size:0.85rem; color:var(--text-muted);">Verified creator by <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p><div class="card-footer"><div><span class="price-label">Starts at</span><span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(data.unitShort) + '</small></span></div><button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + doc.id + '\')">Hire Creator &rarr;</button></div></article>';
           grid.insertAdjacentHTML("beforeend", cardHtml);
         });
       }
@@ -962,15 +965,15 @@
                   '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
                   '<span class="order-badge-pill ' + statusClass + '">● ' + escapeHtml(data.status) + '</span>' +
                 '</div>' +
-                '<small style="color:var(--text-muted);">Editor: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName) + '</strong></small>' +
+                '<small style="color:var(--text-muted);">Creator: <strong>' + escapeHtml(data.editorName) + '</strong> &bull; Tier: <strong>' + escapeHtml(data.modeName) + '</strong></small>' +
                 '<div style="display:flex; justify-content:space-between; align-items:baseline;">' +
-                  '<span style="font-size:0.9rem; color:var(--text-muted);">Duration: ' + data.duration + 's</span>' +
+                  '<span style="font-size:0.9rem; color:var(--text-muted);">' + (data.category === "Thumbnail Designer" ? "Quantity: " + data.duration + " Thumbnails" : "Duration: " + data.duration + "s") + '</span>' +
                   '<strong style="font-size:1.15rem; color:var(--primary);">Amount: ₹' + data.price + '</strong>' +
                 '</div>' +
                 progressSection +
                 '<div class="order-actions-row">' +
                   '<button class="btn-action-view-details" onclick="window.openOrderDetailsModal(\'' + doc.id + '\')">View Full Details</button>' +
-                  '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">Raw Footage Link &rarr;</a>' +
+                  '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">Asset / Brief Link &rarr;</a>' +
                 '</div>' +
                 clientActionButtons +
               '</div>';
@@ -1031,7 +1034,7 @@
                 progressSection +
                 '<div class="order-actions-row">' +
                   '<button class="btn-action-view-details" onclick="window.openOrderDetailsModal(\'' + doc.id + '\')">View Details</button>' +
-                  '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">View Footage Link</a>' +
+                  '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">View Asset Link</a>' +
                 '</div>' +
                 actions +
               '</div>'
@@ -1085,11 +1088,38 @@
       window.switchTab('viewRegisterStep1');
     };
 
+    // Step 1 Application Submission with Automated Email Alert to Super Admin
     window.submitStep1Request = function() {
       var role = document.getElementById("regWorkType").value;
       var link = document.getElementById("regPortfolioLink").value.trim();
       if (!link) { showToast("Error", "Provide portfolio link.", "error"); return; }
-      tempRegistrationData.role = role; tempRegistrationData.portfolioLink = link;
+      
+      tempRegistrationData.role = role; 
+      tempRegistrationData.portfolioLink = link;
+
+      // Dispatch Candidate Application Notification to Super Admin
+      emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
+        to_email: SUPER_ADMIN_EMAIL,
+        recipient_name: "Super Admin",
+        mail_title: "NEW CREATOR / EDITOR APPLICATION",
+        mail_message: "A creator has submitted their application on Rex Edit Hub!\n\nCandidate: " + currentUser.displayName + " (" + currentUser.email + ")\nApplied Specialty: " + role + "\nPortfolio / Work Proof: " + link + "\n\nReview the submission and shop creation.",
+        order_id: "APP-" + Math.floor(1000 + Math.random() * 9000),
+        client_name: currentUser.displayName,
+        client_email: currentUser.email,
+        editor_name: "Pending Verification",
+        category: role,
+        mode_name: "Application",
+        duration: "N/A",
+        price: "Review",
+        footage_link: link,
+        instructions: "Portfolio link provided for application review.",
+        primary_action_text: "Open Admin Hub",
+        primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+        secondary_action_text: "View Portfolio",
+        secondary_action_url: link
+      });
+
+      showToast("Application Sent", "Details forwarded to admin. Setup your shop name.", "success");
       window.switchTab('viewRegisterStep2');
     };
 
@@ -1097,27 +1127,100 @@
       var shopName = document.getElementById("regShopName").value.trim();
       if (!shopName) { showToast("Error", "Enter shop name.", "error"); return; }
       var role = tempRegistrationData.role;
+
+      var screenClass = "ratio-16-9";
+      var ratioText = "16:9 Standard Widescreen";
+      var unitShort = "/ 1m";
+      var maxUnits = 1800;
+
+      if (role.includes("Short-Form") || role === "Motion Graphics (Short-Form)") {
+        screenClass = "ratio-9-16";
+        ratioText = "9:16 Vertical Reel";
+        unitShort = "/ 10s";
+        maxUnits = 180;
+      } else if (role === "Thumbnail Designer") {
+        screenClass = "ratio-16-9";
+        ratioText = "Multi-Canvas (16:9 / 1:1 / 9:16 / 4:5)";
+        unitShort = "/ Thumb";
+        maxUnits = 10;
+      } else if (role === "Content & Video Researcher") {
+        screenClass = "ratio-16-9";
+        ratioText = "Research Brief & Script Format";
+        unitShort = "/ Script";
+        maxUnits = 10;
+      }
+
       var newShop = {
-        name: shopName, category: role, portfolioLink: tempRegistrationData.portfolioLink,
-        ratioText: role === "Short Editor" ? "9:16 Vertical Cut" : "16:9 Long-Form",
-        screenClass: role === "Short Editor" ? "ratio-9-16" : "ratio-16-9", dimText: "1080p Format",
-        maxSeconds: role === "Short Editor" ? 180 : 1800, unitShort: role === "Short Editor" ? "/ 10s" : "/ 1m",
-        rates: { low: 20, medium: 30, high: 40 }, modeNames: { low: "Basic", medium: "Standard", high: "Premium" },
-        ownerUid: currentUser.uid, ownerEmail: currentUser.email, ownerHandle: currentUserIdHandle || "creator",
+        name: shopName, 
+        category: role, 
+        portfolioLink: tempRegistrationData.portfolioLink,
+        ratioText: ratioText,
+        screenClass: screenClass, 
+        dimText: "High Definition",
+        maxSeconds: maxUnits, 
+        unitShort: unitShort,
+        rates: { low: 20, medium: 35, high: 50 }, 
+        modeNames: { low: "Basic", medium: "Standard", high: "Premium" },
+        ownerUid: currentUser.uid, 
+        ownerEmail: currentUser.email, 
+        ownerHandle: currentUserIdHandle || "creator",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
+
       db.collection("shops").add(newShop).then(function() {
-        showToast("Success", "Shop launched live!", "success"); window.switchTab('viewShop');
+        showToast("Success", "Shop launched live!", "success"); 
+        window.switchTab('viewShop');
       });
     };
 
     window.openHireTerminal = function(editorKey) {
       var editor = EDITORS_DATA[editorKey];
       if (!editor) return;
-      currentConfig.editorKey = editorKey; currentConfig.mode = "medium"; currentConfig.duration = 20;
+      currentConfig.editorKey = editorKey; 
+      currentConfig.mode = "medium"; 
+      currentConfig.duration = (editor.category === "Thumbnail Designer" ? 1 : 20);
+      
       document.getElementById("configEditorTitle").textContent = "Hire " + editor.name;
-      document.getElementById("videoDurationInput").value = 20;
-      window.selectMode("medium"); window.switchTab('viewOrderConfig');
+      document.getElementById("videoDurationInput").value = currentConfig.duration;
+
+      var thumbRatioBar = document.getElementById("thumbnailRatioSwitchBar");
+      var screenBox = document.getElementById("previewScreenBox");
+      var labelInput = document.getElementById("durationInputLabel");
+
+      if (editor.category === "Thumbnail Designer") {
+        thumbRatioBar.style.display = "flex";
+        labelInput.textContent = "Number of Thumbnails Required";
+        window.setCanvasRatio("16-9");
+      } else {
+        thumbRatioBar.style.display = "none";
+        labelInput.textContent = "Duration (Seconds) / Quantity";
+        screenBox.className = "screen-box " + (editor.screenClass || "ratio-16-9");
+      }
+
+      window.selectMode("medium"); 
+      window.switchTab('viewOrderConfig');
+    };
+
+    // Thumbnail Designer Multiple Canvas Switcher
+    window.setCanvasRatio = function(ratioType) {
+      currentConfig.selectedRatio = ratioType;
+      var box = document.getElementById("previewScreenBox");
+      box.className = "screen-box ratio-" + ratioType;
+
+      var tag = document.getElementById("screenTagLabel");
+      var ratioNames = {
+        "16-9": "16:9 Standard YouTube (1920x1080)",
+        "1-1": "1:1 Square Community / Post (1080x1080)",
+        "9-16": "9:16 Shorts / Story Cover (1080x1920)",
+        "4-5": "4:5 Portrait Grid (1080x1350)"
+      };
+      tag.textContent = ratioNames[ratioType] || ratioType;
+
+      var buttons = document.querySelectorAll('.btn-ratio-switch');
+      buttons.forEach(function(b) {
+        if (b.getAttribute('data-ratio') === ratioType) b.classList.add('active');
+        else b.classList.remove('active');
+      });
     };
 
     window.selectMode = function(modeName) {
@@ -1132,18 +1235,26 @@
     window.calculateOrderPrice = function() {
       var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) return;
-      var seconds = parseInt(document.getElementById("videoDurationInput").value, 10) || 1;
-      currentConfig.duration = seconds;
+      var value = parseInt(document.getElementById("videoDurationInput").value, 10) || 1;
+      currentConfig.duration = value;
 
-      var m = Math.floor(seconds / 60);
-      var s = seconds % 60;
-      document.getElementById("screenTimeDisplay").textContent = 
-        (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
-
+      var timerDisplay = document.getElementById("screenTimeDisplay");
       var rate = editor.rates[currentConfig.mode];
-      var totalPrice = Math.round((seconds / 10) * rate);
+      var totalPrice = 0;
+
+      if (editor.category === "Thumbnail Designer") {
+        totalPrice = value * rate;
+        timerDisplay.textContent = value + " THUMB";
+        document.getElementById("summaryBlocks").textContent = value + " Item(s)";
+      } else {
+        var m = Math.floor(value / 60);
+        var s = value % 60;
+        timerDisplay.textContent = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+        totalPrice = Math.round((value / 10) * rate);
+        document.getElementById("summaryBlocks").textContent = (value / 10).toFixed(1) + " units";
+      }
+
       currentConfig.calculatedPrice = totalPrice;
-      document.getElementById("summaryBlocks").textContent = (seconds / 10).toFixed(1) + " units";
       document.getElementById("summaryRate").textContent = "₹" + rate;
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
@@ -1153,15 +1264,28 @@
       var editor = EDITORS_DATA[currentConfig.editorKey];
       var footageUrl = document.getElementById("orderFootageUrl").value.trim();
       var instructions = document.getElementById("orderInstructions").value.trim();
-      if (!footageUrl) { showToast("Error", "Provide footage link.", "error"); return; }
+      if (!footageUrl) { showToast("Error", "Provide asset link.", "error"); return; }
 
       var orderIdCode = "RX-" + Math.floor(1000 + Math.random() * 9000);
       var orderData = {
-        orderId: orderIdCode, editorId: currentConfig.editorKey, editorName: editor.name,
-        editorUid: editor.ownerUid, editorEmail: editor.ownerEmail || "", category: editor.category,
-        modeName: editor.modeNames[currentConfig.mode], duration: currentConfig.duration, price: currentConfig.calculatedPrice,
-        footageLink: footageUrl, instructions: instructions, clientName: currentUser.displayName, clientEmail: currentUser.email,
-        clientUid: currentUser.uid, status: "Wait for editor response", workProgress: 0, workProgressNote: "Waiting for editor acceptance",
+        orderId: orderIdCode, 
+        editorId: currentConfig.editorKey, 
+        editorName: editor.name,
+        editorUid: editor.ownerUid, 
+        editorEmail: editor.ownerEmail || "", 
+        category: editor.category,
+        modeName: editor.modeNames[currentConfig.mode], 
+        duration: currentConfig.duration, 
+        price: currentConfig.calculatedPrice,
+        canvasRatio: (editor.category === "Thumbnail Designer" ? currentConfig.selectedRatio : "standard"),
+        footageLink: footageUrl, 
+        instructions: instructions, 
+        clientName: currentUser.displayName, 
+        clientEmail: currentUser.email,
+        clientUid: currentUser.uid, 
+        status: "Wait for editor response", 
+        workProgress: 0, 
+        workProgressNote: "Waiting for creator acceptance",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
@@ -1169,8 +1293,8 @@
         emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
           to_email: editor.ownerEmail || SUPER_ADMIN_EMAIL,
           recipient_name: editor.name,
-          mail_title: "NEW ORDER REQUEST RECEIVED",
-          mail_message: "A new client has requested an editing commission on Rex Edit Hub. Review details in your dashboard.",
+          mail_title: "NEW ORDER COMMISSION RECEIVED",
+          mail_message: "A new client has requested a commission on Rex Edit Hub. Review details in your dashboard.",
           order_id: orderIdCode,
           client_name: currentUser.displayName,
           client_email: currentUser.email,
@@ -1192,10 +1316,9 @@
       });
     };
 
-    /* --- Universal Live Dynamic FX Canvas Engine (10 Animated Modes) --- */
+    /* --- Universal Live Dynamic FX Canvas Engine --- */
     var liveCanvasAnimId = null;
     var liveParticles = [];
-
     var animatedThemeKeys = ["snow", "starfield", "cyberrain", "bubbles", "matrix", "embers", "plasma", "chroma", "prism", "auroraflow"];
 
     function initFxParticles(mode, w, h) {
@@ -1226,7 +1349,6 @@
       var w = canvas.width;
       var h = canvas.height;
 
-      // Selective Clear with Trails
       if (mode === "matrix" || mode === "cyberrain") {
         ctx.fillStyle = "rgba(4, 9, 12, 0.2)";
         ctx.fillRect(0, 0, w, h);
@@ -1292,7 +1414,6 @@
           p.x += Math.cos(p.y * 0.01) * 1.5;
           p.y += Math.sin(p.x * 0.01) * 1.5;
         }
-        /* Multi-Color Mixed Animated 1: Chroma Wave */
         else if (mode === "chroma") {
           p.colorHue = (p.colorHue + 1.2) % 360;
           ctx.beginPath();
@@ -1302,7 +1423,6 @@
           p.x += p.vx * 1.5;
           p.y += Math.sin(p.x * 0.02) * 1.5;
         }
-        /* Multi-Color Mixed Animated 2: Prism Spectrum Burst */
         else if (mode === "prism") {
           var prismColors = ["#00f0ff", "#f43f5e", "#facc15", "#d946ef"];
           ctx.beginPath();
@@ -1315,7 +1435,6 @@
           p.x += p.vx * 2;
           p.y -= p.vy * 1.5;
         }
-        /* Multi-Color Mixed Animated 3: Aurora Cosmic Flow */
         else if (mode === "auroraflow") {
           var auroraHues = ["#2dd4bf", "#a855f7", "#38bdf8"];
           ctx.beginPath();
@@ -1328,7 +1447,6 @@
           p.y += p.vy * 0.5;
         }
 
-        // Loop Boundaries Safely
         if (p.y > h + 10) { p.y = -10; p.x = Math.random() * w; }
         if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
         if (p.x > w + 10) { p.x = -10; }
@@ -1378,7 +1496,7 @@
 </head>
 <body>
 
-  <!-- Universal Hardware-Accelerated Dynamic FX Canvas -->
+  <!-- Dynamic Live FX Canvas -->
   <canvas id="liveCanvas"></canvas>
 
   <div class="orb-glow orb-1"></div>
@@ -1402,10 +1520,10 @@
       
       <div style="display:flex; flex-direction:column; gap:10px; font-size:0.9rem; background:var(--bg-base); padding:16px; border-radius:12px; border:1px solid var(--border-subtle); margin-bottom:1.2rem;">
         <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Client Info</span><strong id="modalDetailClient">-</strong></div>
-        <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Editor Assigned</span><strong id="modalDetailEditor">-</strong></div>
+        <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Creator Assigned</span><strong id="modalDetailEditor">-</strong></div>
         <div style="display:flex; justify-content:space-between;">
-          <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Tier & Type</span><strong id="modalDetailCategory">-</strong></div>
-          <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Duration</span><strong id="modalDetailDuration">-</strong></div>
+          <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Tier & Specialty</span><strong id="modalDetailCategory">-</strong></div>
+          <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Scope</span><strong id="modalDetailDuration">-</strong></div>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); padding-top:8px;">
           <span style="color:var(--text-muted); font-size:0.85rem; font-weight:700;">Locked Amount:</span>
@@ -1414,10 +1532,10 @@
         <div><span style="color:var(--text-muted); display:block; font-size:0.75rem; text-transform:uppercase; font-weight:800;">Current Status</span><span id="modalDetailStatus" style="font-weight:800; color:var(--primary);">-</span></div>
       </div>
 
-      <p style="font-size:0.8rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">RAW FOOTAGE / ASSET LINK</p>
+      <p style="font-size:0.8rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">RAW ASSET / BRIEF LINK</p>
       <p style="background:var(--bg-base); padding:10px; border-radius:8px; border:1px solid var(--border-subtle); margin-bottom:1rem;"><a id="modalDetailFootage" href="#" target="_blank" style="color:var(--primary); font-size:0.85rem; word-break:break-all;">-</a></p>
 
-      <p style="font-size:0.8rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">CLIENT INSTRUCTIONS</p>
+      <p style="font-size:0.8rem; font-weight:800; color:var(--text-main); margin-bottom:4px;">INSTRUCTIONS</p>
       <p id="modalDetailInstructions" style="background:var(--bg-base); padding:10px; border-radius:8px; border:1px solid var(--border-subtle); font-size:0.85rem; color:var(--text-main); margin-bottom:1rem;">-</p>
 
       <div id="modalDetailProofBox" style="display:none; margin-bottom:1.2rem;">
@@ -1444,16 +1562,16 @@
       
       <label class="config-label">Select Progress Stage</label>
       <select id="progressPercentageSelect" class="form-input-field">
-        <option value="15">15% - Footage Ingested & Timeline Setup</option>
-        <option value="35">35% - Rough Cut / Assembly Ready</option>
-        <option value="55">55% - Pacing, Transitions & Motion Added</option>
-        <option value="75">75% - Sound Design & SFX Complete</option>
-        <option value="90">90% - Color Grading & Final Rendering</option>
-        <option value="100">100% - Project Fully Completed & Ready</option>
+        <option value="15">15% - Ingestion / Concept Draft Setup</option>
+        <option value="35">35% - Rough Assembly / Concept Proof Ready</option>
+        <option value="55">55% - Motion, Typography & Layout Refinements</option>
+        <option value="75">75% - Detailed Polish & SFX / Effects</option>
+        <option value="90">90% - Color Grading & Final HD Rendering</option>
+        <option value="100">100% - Fully Completed & Delivered</option>
       </select>
 
-      <label class="config-label">Editor Note for Client</label>
-      <input type="text" id="progressNoteInput" class="form-input-field" placeholder="e.g. Syncing beat drops and color grading now...">
+      <label class="config-label">Creator Note for Client</label>
+      <input type="text" id="progressNoteInput" class="form-input-field" placeholder="e.g. Exporting high-res files now...">
 
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeProgressModal()" type="button">Cancel</button>
@@ -1566,7 +1684,7 @@
     <section id="viewProfile" style="display: none;">
       <div class="section-header"><h1>Profile Settings</h1></div>
       <div class="earn-banner-card">
-        <div><h3>Become a Verified Editor</h3><p>Open your shop and start accepting orders.</p></div>
+        <div><h3>Become a Verified Creator / Editor</h3><p>Open your shop and start accepting escrow orders.</p></div>
         <button class="btn-apply-earn" onclick="window.startApplyForEarn()">Apply for Earn &rarr;</button>
       </div>
       <div class="info-card">
@@ -1580,7 +1698,7 @@
           </div>
         </div>
 
-        <!-- 30 Themes Architecture: 3 Pages with Smooth Arrows -->
+        <!-- 30 Themes System: 3 Pages with Smooth Arrows -->
         <div class="theme-selector-section">
           <div class="theme-page-header">
             <div>
@@ -1621,7 +1739,7 @@
             <button class="theme-card-btn" data-theme-target="glacial" onclick="window.setTheme('glacial')"><span class="theme-color-dot" style="background:#38bdf8;"></span><span class="theme-label-title">Glacial Cyan</span></button>
           </div>
 
-          <!-- Page 3: Themes 21 - 30 (10 LIVE ANIMATED MODES & MIXED PARTICLES) -->
+          <!-- Page 3: Themes 21 - 30 (10 LIVE ANIMATED MODES) -->
           <div class="theme-page-view" id="themePage3">
             <button class="theme-card-btn" data-theme-target="snow" onclick="window.setTheme('snow')"><span class="theme-color-dot" style="background:#0284c7; box-shadow:0 0 6px #93c5fd;"></span><span class="theme-label-title">Winter Snow ❄️</span></button>
             <button class="theme-card-btn" data-theme-target="starfield" onclick="window.setTheme('starfield')"><span class="theme-color-dot" style="background:#6366f1; box-shadow:0 0 6px #818cf8;"></span><span class="theme-label-title">Cosmic Stars 🌌</span></button>
@@ -1630,7 +1748,6 @@
             <button class="theme-card-btn" data-theme-target="matrix" onclick="window.setTheme('matrix')"><span class="theme-color-dot" style="background:#22c55e; box-shadow:0 0 8px #22c55e;"></span><span class="theme-label-title">Matrix Stream ⚡</span></button>
             <button class="theme-card-btn" data-theme-target="embers" onclick="window.setTheme('embers')"><span class="theme-color-dot" style="background:#f97316; box-shadow:0 0 8px #f97316;"></span><span class="theme-label-title">Firefly Embers 🔥</span></button>
             <button class="theme-card-btn" data-theme-target="plasma" onclick="window.setTheme('plasma')"><span class="theme-color-dot" style="background:#d946ef; box-shadow:0 0 8px #d946ef;"></span><span class="theme-label-title">Plasma Pulsar 🌊</span></button>
-            <!-- 3 Mixed Multi-Color Animated Themes -->
             <button class="theme-card-btn" data-theme-target="chroma" onclick="window.setTheme('chroma')"><span class="theme-color-dot" style="background:linear-gradient(45deg, #ff007f, #00f0ff, #facc15); box-shadow:0 0 8px #00f0ff;"></span><span class="theme-label-title">RGB Chroma 🔮</span></button>
             <button class="theme-card-btn" data-theme-target="prism" onclick="window.setTheme('prism')"><span class="theme-color-dot" style="background:linear-gradient(45deg, #00f0ff, #f43f5e, #facc15); box-shadow:0 0 8px #f43f5e;"></span><span class="theme-label-title">Prism Spectrum ⚡</span></button>
             <button class="theme-card-btn" data-theme-target="auroraflow" onclick="window.setTheme('auroraflow')"><span class="theme-color-dot" style="background:linear-gradient(45deg, #2dd4bf, #a855f7, #38bdf8); box-shadow:0 0 8px #2dd4bf;"></span><span class="theme-label-title">Aurora Flow 🌌</span></button>
@@ -1652,47 +1769,69 @@
       </div>
     </section>
 
+    <!-- STEP 1: Candidate Application Terminal (Updated Skills) -->
     <section id="viewRegisterStep1" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewProfile', null)">&larr; Back</button>
-        <h1 style="margin-top: 0.8rem;">Apply for Shop</h1>
+        <h1 style="margin-top: 0.8rem;">Apply for Creator Shop</h1>
+        <p>Submit your specialty and portfolio for onboarding verification.</p>
       </div>
       <div class="info-card">
-        <label class="config-label">Select Specialty</label>
+        <label class="config-label">Select Specialty / Skill</label>
         <select id="regWorkType" class="form-input-field">
-          <option value="Short Editor">Short Editor (9:16 vertical)</option>
-          <option value="Video Editor">Video Editor (16:9)</option>
+          <option value="Short-Form Video Editor">Short-Form Video Editor (Reels / Shorts / TikTok)</option>
+          <option value="Long-Form YouTube Video Editor">Long-Form YouTube Video Editor (Widescreen 16:9)</option>
+          <option value="Thumbnail Designer">Thumbnail Designer (Multi-Canvas: YouTube, Post, Story)</option>
+          <option value="Content & Video Researcher">Content & Video Researcher (Scripts, Facts & Briefs)</option>
+          <option value="Movie & Cinematic Recaps / Documentaries">Movie & Cinematic Recaps / Documentaries</option>
+          <option value="Motion Graphics (Short-Form)">Motion Graphics (Short-Form / Vertical Animation)</option>
+          <option value="Motion Graphics (Long-Form)">Motion Graphics (Long-Form / Widescreen Animation)</option>
         </select>
-        <label class="config-label">Portfolio Link</label>
-        <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/...">
-        <button class="btn-action-primary" onclick="window.submitStep1Request()" style="width:100%; justify-content:center;">Continue &rarr;</button>
+        <label class="config-label">Portfolio / Work Drive Link *</label>
+        <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/... or Behance/YouTube">
+        <button class="btn-action-primary" onclick="window.submitStep1Request()" style="width:100%; justify-content:center;">Submit Application & Setup Shop &rarr;</button>
       </div>
     </section>
 
+    <!-- STEP 2: Shop Launch Terminal -->
     <section id="viewRegisterStep2" style="display: none;">
-      <div class="section-header"><h1>Finalize Shop Setup</h1></div>
+      <div class="section-header">
+        <h1 style="margin-top: 0.8rem;">Finalize Shop Setup</h1>
+        <p>Give your professional shop a brand name visible to clients.</p>
+      </div>
       <div class="info-card">
-        <label class="config-label">Shop Name</label>
-        <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Rex Cinema">
-        <button class="btn-action-primary" onclick="window.completeEditorRegistration()" style="width:100%; justify-content:center;">Launch Shop &rarr;</button>
+        <label class="config-label">Brand / Shop Name</label>
+        <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Apex Visuals / Neon Studio">
+        <button class="btn-action-primary" onclick="window.completeEditorRegistration()" style="width:100%; justify-content:center;">Launch Creator Shop &rarr;</button>
       </div>
     </section>
 
     <section id="viewShop" style="display: block;">
-      <div class="section-header"><h1>Editor Shop</h1><p>Choose an editor and request a project.</p></div>
-      <div class="info-card" id="shopEmptyBox" style="display: none;"><div class="empty-state-box"><h2 class="empty-title">No Editors Available</h2></div></div>
+      <div class="section-header"><h1>Editor & Creator Shop</h1><p>Choose a creator and commission your project.</p></div>
+      <div class="info-card" id="shopEmptyBox" style="display: none;"><div class="empty-state-box"><h2 class="empty-title">No Creators Available</h2></div></div>
       <div class="editor-grid" id="shopEditorGrid"></div>
     </section>
 
+    <!-- Order Configuration Screen (With Dynamic Thumbnail Ratios) -->
     <section id="viewOrderConfig" style="display: none;">
       <div class="section-header">
         <button class="btn-back" onclick="window.switchTab('viewShop', null)">&larr; Back to Shop</button>
-        <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Editor Terminal</h1>
+        <h1 id="configEditorTitle" style="margin-top: 0.8rem;">Hire Terminal</h1>
       </div>
       <div class="config-layout">
         <div class="preview-card">
-          <span class="preview-ratio-label">Preview Box</span>
-          <div class="screen-box ratio-9-16"><div class="screen-time-display" id="screenTimeDisplay">00:20</div></div>
+          <span class="preview-ratio-label">Preview Canvas</span>
+          <div class="screen-box ratio-16-9" id="previewScreenBox">
+            <div class="screen-time-display" id="screenTimeDisplay">00:20</div>
+            <div class="screen-tag-label" id="screenTagLabel">16:9 Standard Format</div>
+          </div>
+          <!-- Thumbnail Multiple Aspect Ratio Selector Bar -->
+          <div class="thumbnail-ratio-bar" id="thumbnailRatioSwitchBar" style="display: none;">
+            <button class="btn-ratio-switch active" data-ratio="16-9" onclick="window.setCanvasRatio('16-9')">16:9 YT</button>
+            <button class="btn-ratio-switch" data-ratio="1-1" onclick="window.setCanvasRatio('1-1')">1:1 Square</button>
+            <button class="btn-ratio-switch" data-ratio="9-16" onclick="window.setCanvasRatio('9-16')">9:16 Shorts</button>
+            <button class="btn-ratio-switch" data-ratio="4-5" onclick="window.setCanvasRatio('4-5')">4:5 Feed</button>
+          </div>
         </div>
         <div class="info-card">
           <label class="config-label">Select Tier</label>
@@ -1701,14 +1840,14 @@
             <button class="mode-btn active" id="modeBtnMedium" onclick="window.selectMode('medium')"><span class="mode-name">Standard</span></button>
             <button class="mode-btn" id="modeBtnHigh" onclick="window.selectMode('high')"><span class="mode-name">Premium</span></button>
           </div>
-          <label class="config-label" style="margin-top:1rem;">Duration (Seconds)</label>
+          <label class="config-label" id="durationInputLabel" style="margin-top:1rem;">Duration (Seconds) / Quantity</label>
           <div class="input-duration-wrap"><input type="number" id="videoDurationInput" value="20" oninput="window.calculateOrderPrice()"></div>
-          <label class="config-label" style="margin-top:1rem;">Raw Footage Google Drive Link *</label>
+          <label class="config-label" style="margin-top:1rem;">Asset / Footage / Brief Link *</label>
           <input type="url" id="orderFootageUrl" class="form-input-field" placeholder="https://drive.google.com/...">
-          <label class="config-label">Instructions</label>
-          <textarea id="orderInstructions" class="form-textarea-field" placeholder="Requirements..."></textarea>
+          <label class="config-label">Instructions / Details</label>
+          <textarea id="orderInstructions" class="form-textarea-field" placeholder="Requirements & concept brief..."></textarea>
           <div class="calculation-summary-box">
-            <div class="summary-line"><span>Volume:</span><strong id="summaryBlocks">2.0 units</strong></div>
+            <div class="summary-line"><span>Units:</span><strong id="summaryBlocks">2.0 units</strong></div>
             <div class="summary-line"><span>Rate:</span><strong id="summaryRate">₹0</strong></div>
             <div class="summary-divider"></div>
             <div class="summary-total-line"><span>Total:</span><span class="total-calculated-price" id="summaryTotal">₹0</span></div>
@@ -1722,7 +1861,7 @@
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header"><h1>Placed Orders</h1><p>Live tracking, progress updates, and payment terminal for your commissions.</p></div>
       <div class="info-card">
-        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop', null)">Shop Editors</button></div>
+        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop', null)">Shop Creators</button></div>
         <div id="activeOrdersList" style="display: none; flex-direction: column; gap: 14px;"></div>
       </div>
     </section>
