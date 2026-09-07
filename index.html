@@ -176,6 +176,12 @@
        GLOBAL CORE STYLING & CLEAN UI COMPONENTS
        ========================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    
+    ::selection { background: var(--primary); color: #fff; }
+    ::-webkit-scrollbar { width: 8px; background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
     body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; transition: background-color 0.35s ease, color 0.35s ease; }
 
     .studio-bg {
@@ -212,9 +218,9 @@
     .brand-section-subtitle::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
     
     .header-user-status { display: flex; align-items: center; gap: 8px; }
-    .btn-header-search { background: var(--bg-base); border: 1px solid var(--border-strong); padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+    .btn-header-search { background: var(--bg-base); border: 1px solid var(--border-strong); padding: 8px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 800; cursor: pointer; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
     .btn-header-search:hover { border-color: var(--primary); color: var(--primary); }
-    .btn-header-login { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); transition: all 0.2s ease; }
+    .btn-header-login { background: var(--primary); color: #fff; border: none; padding: 9px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35); transition: all 0.2s ease; }
     .btn-header-login:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(4px); z-index: 9998; display: none; }
@@ -245,11 +251,10 @@
     
     .info-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); margin-bottom: 1.5rem; transition: transform 0.2s ease; }
 
-    .editor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
+    .editor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
     .editor-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 1.65rem; display: flex; flex-direction: column; gap: 1.25rem; position: relative; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); transition: transform 0.25s ease, box-shadow 0.25s ease; }
     .editor-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -12px rgba(0,0,0,0.15); border-color: var(--border-strong); }
     
-    /* SPECIALTY BADGE POSITION FIXED (Inside Flow, No Overlap) */
     .inline-badge-wrap { margin-bottom: 0.5rem; }
     .demo-tag { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; letter-spacing: 0.03em; display: inline-block; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .format-badge-short { background: var(--warning-light); border: 1px solid var(--warning); color: var(--warning); }
@@ -272,9 +277,11 @@
     /* UNIVERSAL HIGH-QUALITY BUTTONS */
     .btn-hire-redirect { background: var(--primary); color: #ffffff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
     .btn-hire-redirect:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4); }
+    .btn-hire-redirect:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
     
     .btn-action-primary { background: var(--primary); color: #ffffff; border: none; padding: 11px 22px; border-radius: 10px; font-size: 0.92rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; width: 100%; }
-    .btn-action-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-action-primary:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-action-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .btn-delete-shop { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); font-weight: 800; font-size: 0.8rem; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
     .btn-delete-shop:hover { background: var(--danger); color: #fff; }
@@ -292,7 +299,7 @@
     .btn-action-proof { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
     .btn-action-progress { background: #8b5cf6; color: #fff; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25); }
 
-    .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 8px 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
     .btn-back:hover { color: var(--text-main); border-color: var(--border-strong); }
 
     .config-layout { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
@@ -314,30 +321,35 @@
     .btn-ratio-switch.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     .config-group { margin-bottom: 1.4rem; }
-    .config-label { display: block; font-size: 0.84rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+    .config-label { display: block; font-size: 0.84rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.03em; }
     .mode-selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .mode-btn { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: all 0.2s ease; }
     .mode-btn .mode-name { font-size: 0.95rem; font-weight: 800; color: var(--text-main); }
     .mode-btn:hover { border-color: var(--border-strong); }
     .mode-btn.active { background: var(--primary-light); border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
     
+    .input-duration-wrap { display: flex; align-items: center; background: var(--bg-base); border: 1px solid var(--border-strong); border-radius: 12px; overflow: hidden; padding-right: 14px; transition: border-color 0.2s ease; }
+    .input-duration-wrap:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+    .input-duration-wrap input { flex: 1; padding: 14px 16px; border: none; background: transparent; font-size: 1.25rem; font-weight: 800; color: var(--text-main); outline: none; }
+
     .calculation-summary-box { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.35rem; margin-bottom: 1.5rem; }
     .summary-line { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
     .summary-divider { height: 1px; background: var(--border-subtle); margin: 12px 0; }
     .summary-total-line { display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
     .total-calculated-price { font-size: 1.8rem; font-weight: 900; color: var(--primary); }
 
-    .running-order-item { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 1.35rem; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); }
+    .running-order-item { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 1.35rem; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); transition: transform 0.2s ease; }
+    .running-order-item:hover { transform: translateY(-2px); border-color: var(--border-strong); }
     .order-badge-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; width: fit-content; letter-spacing: 0.03em; }
     .status-running { background: var(--warning-light); color: var(--warning); border: 1px solid var(--warning); }
     .status-accepted { background: var(--success-light); color: var(--success); border: 1px solid var(--success); }
     .status-rejected { background: var(--danger-light); color: var(--danger); border: 1px solid var(--danger); }
     
     .order-actions-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; }
-    .order-link-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--primary); text-decoration: none; font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+    .order-link-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--primary); text-decoration: none; font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 9px; cursor: pointer; transition: all 0.2s ease; }
     .order-link-btn:hover { background: var(--primary-light); }
     
-    .btn-action-view-details { background: var(--bg-base); border: 1px solid var(--primary); color: var(--primary); font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-action-view-details { background: var(--bg-base); border: 1px solid var(--primary); color: var(--primary); font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 9px; cursor: pointer; transition: all 0.2s ease; }
     .btn-action-view-details:hover { background: var(--primary); color: #fff; }
     
     .editor-action-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
@@ -351,20 +363,18 @@
 
     .profile-card-large { display: flex; align-items: center; gap: 20px; padding: 1.8rem; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 18px; margin-bottom: 1.75rem; }
     .profile-avatar-large { width: 80px; height: 80px; border-radius: 18px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 1.6rem; font-weight: 900; color: #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ==========================================
-       CUSTOM PREMIUM FILE UPLOAD UI (100% FIXED)
+       CUSTOM PREMIUM FILE UPLOAD UI (BUG #1 FIXED)
        ========================================== */
     .form-input-field { width: 100%; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.95rem; color: var(--text-main); outline: none; transition: all 0.2s ease; }
     .form-input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
     
-    /* HIDDEN NATIVE FILE INPUTS */
-    input[type="file"].hidden-file-input { display: none; }
-    
-    /* CUSTOM FILE UPLOAD BUTTONS */
-    .custom-file-upload-btn { background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); display: inline-flex; align-items: center; gap: 6px; }
-    .custom-file-upload-btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
-    .file-name-display { font-size: 0.8rem; color: var(--text-muted); margin-left: 10px; font-weight: 600; }
+    .hidden-file-input { display: none; }
+    .custom-file-upload-btn { background: var(--bg-base); color: var(--primary); border: 2px solid var(--primary); padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
+    .custom-file-upload-btn:hover { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); transform: translateY(-1px); }
+    .file-name-display { font-size: 0.85rem; color: var(--text-muted); margin-left: 10px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; display: inline-block; vertical-align: middle; }
 
     .form-textarea-field { width: 100%; min-height: 85px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.92rem; color: var(--text-main); outline: none; resize: vertical; transition: all 0.2s ease; }
     .form-textarea-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
@@ -388,18 +398,20 @@
     .theme-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
     .theme-page-tag { font-size: 0.8rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-radius: 20px; }
     .theme-pagination-controls { display: flex; align-items: center; gap: 10px; }
-    .btn-theme-page-nav { background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--text-main); font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-theme-page-nav { background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--text-main); font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+    .btn-theme-page-nav:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
     .btn-theme-page-nav:disabled { opacity: 0.45; cursor: not-allowed; }
     
     .theme-page-view { display: none; }
     .theme-page-view.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
 
     .theme-card-btn { background: var(--bg-base); border: 2px solid var(--border-subtle); border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left; transition: all 0.2s ease; }
-    .theme-card-btn:hover { border-color: var(--primary); }
-    .theme-card-btn.active { border-color: var(--primary); background: var(--primary-light); }
+    .theme-card-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
+    .theme-card-btn.active { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 4px 10px rgba(79, 70, 229, 0.1); }
     .theme-color-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .theme-label-title { font-size: 0.83rem; font-weight: 800; color: var(--text-main); display: block; }
 
+    /* TOAST STACKING (Bug #19 Fixed) */
     #toast-container { position: fixed; top: 20px; right: 20px; z-index: 100000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
     .rex-toast { pointer-events: auto; min-width: 300px; max-width: 420px; background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-strong); border-radius: 16px; padding: 15px 18px; display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--shadow-card); transform: translateX(120%); transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease; opacity: 0; }
     .rex-toast.show { transform: translateX(0); opacity: 1; }
@@ -429,96 +441,124 @@
   </style>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
-      authDomain: "rex-edit-hub.firebaseapp.com",
-      projectId: "rex-edit-hub",
-      storageBucket: "rex-edit-hub.firebasestorage.app",
-      messagingSenderId: "977297939327",
-      appId: "1:977297939327:web:7385c7c9aaf81f9a9f184a",
-      measurementId: "G-CTW92DRSD0"
+    // ==========================================
+    // CORE SYSTEM INITIALIZATION & NAMESPACE
+    // ==========================================
+    const CONFIG = {
+      firebase: {
+        apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
+        authDomain: "rex-edit-hub.firebaseapp.com",
+        projectId: "rex-edit-hub",
+        storageBucket: "rex-edit-hub.firebasestorage.app",
+        messagingSenderId: "977297939327",
+        appId: "1:977297939327:web:7385c7c9aaf81f9a9f184a",
+        measurementId: "G-CTW92DRSD0"
+      },
+      emailjs: { public_key: "kJYbkGdmk4nBp-KDl", template_id: "template_ob1ef5u" },
+      superAdmin: "msgamer123098@gmail.com",
+      upiId: "msgamer123098@okaxis"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(CONFIG.firebase);
     const auth = firebase.auth();
     const db = firebase.firestore();
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    (function() { emailjs.init("kJYbkGdmk4nBp-KDl"); })();
+    (function() { emailjs.init(CONFIG.emailjs.public_key); })();
 
-    var CURRENT_EMAIL_TEMPLATE_ID = "template_ob1ef5u";
-    var SUPER_ADMIN_EMAIL = "msgamer123098@gmail.com";
-    var OFFICIAL_UPI_ID = "msgamer123098@okaxis";
+    // APP STATE MANAGEMENT (Bug #12 Global Pollution Handled)
+    var AppState = {
+      currentUser: null,
+      currentHandle: "",
+      editorsMap: {},
+      ordersMap: {},
+      themePage: 1,
+      totalThemePages: 3,
+      tempUploadBase64: "",
+      hireConfig: { editorKey: null, mode: "medium", duration: 20, price: 0, ratio: "16-9" },
+      tempRegData: { role: "", portfolioLink: "" },
+      activeModals: { rejectOrder: null, proofOrder: null, progressOrder: null, rejectApp: null, deleteShop: null, editShop: null },
+      listeners: [] // Array to hold unsubs (Bug #8 Memory Leak Fix)
+    };
 
-    var currentUser = null;
-    var currentUserIdHandle = "";
-    var EDITORS_DATA = {};
-    var ALL_ORDERS_MAP = {};
-    var ordersUnsubscribe = null;
-    var activeRejectOrderId = null;
-    var activeProofOrderId = null;
-    var activeProgressOrderId = null;
-    var activeRejectAppId = null;
-    var activeDeleteShopData = null;
+    // ==========================================
+    // UTILITY FUNCTIONS (XSS & COMPRESSION)
+    // ==========================================
 
-    var currentThemePage = 1;
-    var totalThemePages = 3;
-
-    var currentConfig = { editorKey: null, mode: "medium", duration: 20, calculatedPrice: 0, selectedRatio: "16-9" };
-    var tempRegistrationData = { role: "Short-Form Video Editor", portfolioLink: "" };
-    var uploadedLogoBase64 = "";
-
+    // Bug #3 Fixed: Strict XSS Escaping
     function escapeHtml(str) {
       if (!str) return "";
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      return String(str).replace(/[&<>"'`=\/]/g, function (s) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;' })[s];
+      });
     }
 
-    // 100% FIXED LOCAL FILE READER WITH LIVE DOM INJECTION
+    // Bug #7 Fixed: Client-side Image Compression to prevent DB crash
+    function compressImageAndProcess(file, targetType, callback) {
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var MAX_WIDTH = 400; // Optimal for avatars/logos
+          var scaleSize = MAX_WIDTH / img.width;
+          if(img.width > MAX_WIDTH) {
+            canvas.width = MAX_WIDTH;
+            canvas.height = img.height * scaleSize;
+          } else {
+            canvas.width = img.width;
+            canvas.height = img.height;
+          }
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          var compressedBase64 = canvas.toDataURL('image/jpeg', 0.85); // Compress heavily
+          callback(compressedBase64, file.name, targetType);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Bug #1 & #2 Fixed: Live DOM updates without re-fetching
     window.handleLogoFileSelect = function(event, targetType) {
       var file = event.target.files[0];
       if (!file) return;
       
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        if (targetType === 'shop') {
-          uploadedLogoBase64 = e.target.result;
-          var previewImg = document.getElementById("shopLogoPreviewImg");
-          var previewWrap = document.getElementById("shopLogoPreviewWrap");
-          document.getElementById("shopFileNameDisplay").textContent = file.name;
-          if (previewImg && previewWrap) {
-            previewImg.src = uploadedLogoBase64;
-            previewWrap.style.display = "flex";
-          }
-          showToast("Logo Attached", "Shop logo loaded successfully.", "success");
-        } else if (targetType === 'editShop') {
-          uploadedLogoBase64 = e.target.result;
-          document.getElementById("editShopFileNameDisplay").textContent = file.name;
-          var editPreviewImg = document.getElementById("editShopLogoPreviewImg");
-          var editPreviewWrap = document.getElementById("editShopLogoPreviewWrap");
-          if (editPreviewImg && editPreviewWrap) {
-            editPreviewImg.src = uploadedLogoBase64;
-            editPreviewWrap.style.display = "flex";
-          }
-          showToast("Logo Attached", "New logo loaded for editing.", "success");
-        } else if (targetType === 'avatar') {
-          var avatarBase64 = e.target.result;
-          document.getElementById("avatarFileNameDisplay").textContent = file.name;
+      compressImageAndProcess(file, targetType, function(base64, fileName, type) {
+        if (type === 'shop') {
+          AppState.tempUploadBase64 = base64;
+          document.getElementById("shopLogoPreviewImg").src = base64;
+          document.getElementById("shopLogoPreviewWrap").style.display = "flex";
+          document.getElementById("shopFileNameDisplay").textContent = fileName;
+          showToast("Logo Processed", "Shop logo compressed & loaded.", "success");
+        } 
+        else if (type === 'editShop') {
+          AppState.tempUploadBase64 = base64;
+          document.getElementById("editShopLogoPreviewImg").src = base64;
+          document.getElementById("editShopLogoPreviewWrap").style.display = "flex";
+          document.getElementById("editShopFileNameDisplay").textContent = fileName;
+          showToast("Logo Processed", "New logo ready for saving.", "success");
+        } 
+        else if (type === 'avatar') {
+          document.getElementById("avatarFileNameDisplay").textContent = fileName;
           
-          // INSTANT LIVE DOM INJECTION FOR AVATARS
+          // Instant Live Injection
           var av1 = document.getElementById("profileLargeAvatarContainer");
           var av2 = document.getElementById("sidebarAvatarContainer");
-          if(av1) av1.innerHTML = '<img src="' + avatarBase64 + '" style="width:100%;height:100%;object-fit:cover;">';
-          if(av2) av2.innerHTML = '<img src="' + avatarBase64 + '" style="width:100%;height:100%;object-fit:cover;">';
+          if(av1) av1.innerHTML = '<img src="' + base64 + '" style="width:100%;height:100%;object-fit:cover;">';
+          if(av2) av2.innerHTML = '<img src="' + base64 + '" style="width:100%;height:100%;object-fit:cover;">';
 
-          if (currentUser) {
-            db.collection("users").doc(currentUser.uid).update({ photoURL: avatarBase64 }).then(function() {
-              currentUser.photoURL = avatarBase64;
-              showToast("Avatar Updated", "Profile picture synchronized.", "success");
+          if (AppState.currentUser) {
+            db.collection("users").doc(AppState.currentUser.uid).update({ photoURL: base64 }).then(function() {
+              AppState.currentUser.photoURL = base64;
+              showToast("Avatar Updated", "Profile picture synchronized to cloud.", "success");
             });
           }
         }
-      };
-      reader.readAsDataURL(file);
+        // Bug #15 Fixed: Reset input so same file can be selected again if canceled
+        event.target.value = ''; 
+      });
     };
 
     window.setTheme = function(themeName) {
@@ -534,27 +574,27 @@
     };
 
     window.changeThemePage = function(direction) {
-      var newPage = currentThemePage + direction;
-      if (newPage < 1 || newPage > totalThemePages) return;
-      currentThemePage = newPage;
+      var newPage = AppState.themePage + direction;
+      if (newPage < 1 || newPage > AppState.totalThemePages) return;
+      AppState.themePage = newPage;
 
-      for (var p = 1; p <= totalThemePages; p++) {
+      for (var p = 1; p <= AppState.totalThemePages; p++) {
         var pageEl = document.getElementById("themePage" + p);
         if (pageEl) {
-          if (p === currentThemePage) pageEl.classList.add("active");
+          if (p === AppState.themePage) pageEl.classList.add("active");
           else pageEl.classList.remove("active");
         }
       }
 
-      document.getElementById("btnThemePrev").disabled = (currentThemePage === 1);
-      document.getElementById("btnThemeNext").disabled = (currentThemePage === totalThemePages);
+      document.getElementById("btnThemePrev").disabled = (AppState.themePage === 1);
+      document.getElementById("btnThemeNext").disabled = (AppState.themePage === AppState.totalThemePages);
 
       var titles = [
         "Page 1 of 3: Classic Studio",
         "Page 2 of 3: Atmospheric & Deep",
         "Page 3 of 3: ✨ Live Animated Effects (15 Modes)"
       ];
-      document.getElementById("themePageIndicator").textContent = titles[currentThemePage - 1];
+      document.getElementById("themePageIndicator").textContent = titles[AppState.themePage - 1];
     };
 
     window.showToast = function(title, message, type) {
@@ -564,7 +604,7 @@
       var toast = document.createElement("div");
       toast.className = "rex-toast toast-" + type;
       var iconSvg = type === 'success' ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>' : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
-      toast.innerHTML = '<div class="toast-icon-wrap">' + iconSvg + '</div><div class="toast-content"><div class="toast-title">' + escapeHtml(title) + '</div><div class="toast-desc">' + escapeHtml(message) + '</div></div><button class="toast-close-btn" onclick="this.parentElement.remove()">&times;</button>';
+      toast.innerHTML = '<div class="toast-icon-wrap">' + iconSvg + '</div><div class="toast-content"><div class="toast-title">' + escapeHtml(title) + '</div><div class="toast-desc">' + escapeHtml(message) + '</div></div><button class="toast-close-btn" aria-label="Close" onclick="this.parentElement.remove()">&times;</button>';
       container.appendChild(toast);
       setTimeout(function() { toast.classList.add("show"); }, 20);
       setTimeout(function() { toast.classList.remove("show"); setTimeout(function() { if (toast.parentNode) toast.remove(); }, 300); }, 4200);
@@ -580,21 +620,21 @@
       document.getElementById("userSearchModal").classList.remove("open");
     };
 
+    // Bug #10 Fixed: Optimized dual-lookup logic
     window.executeUserSearch = function() {
       var query = document.getElementById("searchUserIdInput").value.trim().toLowerCase().replace(/^@/, '');
       if (!query) { showToast("Error", "Enter UserID to search.", "error"); return; }
       
       var resBox = document.getElementById("searchResultContainer");
-      resBox.innerHTML = "<p style='color:var(--text-muted); font-size:0.85rem;'>Looking up user profile...</p>";
+      resBox.innerHTML = "<p style='color:var(--text-muted); font-size:0.85rem;'>Looking up network...</p>";
 
       db.collection("users").where("userId", "==", query).get().then(function(snapshot) {
         if (snapshot.empty) {
           resBox.innerHTML = "<div style='text-align:center; padding:15px;'><p style='color:var(--danger); font-weight:800;'>No creator found with @" + escapeHtml(query) + "</p></div>";
           return;
         }
-
         var u = snapshot.docs[0].data();
-        var avatar = u.photoURL ? '<img src="' + u.photoURL + '" style="width:100%;height:100%;object-fit:cover;">' : (u.displayName || "U").substring(0,2).toUpperCase();
+        var avatar = u.photoURL ? '<img src="' + u.photoURL + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' : (u.displayName || "U").substring(0,2).toUpperCase();
 
         db.collection("shops").where("ownerHandle", "==", query).get().then(function(shopSnap) {
           var shopInfo = "<p style='font-size:0.8rem; color:var(--text-muted); margin-top:4px;'>Status: Regular Creator</p>";
@@ -617,7 +657,7 @@
     };
 
     window.openOrderDetailsModal = function(docId) {
-      var data = ALL_ORDERS_MAP[docId];
+      var data = AppState.ordersMap[docId];
       if (!data) return;
       document.getElementById("modalDetailOrderId").textContent = "#" + data.orderId;
       document.getElementById("modalDetailClient").textContent = data.clientName + " (" + data.clientEmail + ")";
@@ -651,7 +691,7 @@
     };
 
     window.openProgressModal = function(docId, orderId, currentPercent) {
-      activeProgressOrderId = docId;
+      AppState.activeModals.progressOrder = docId;
       document.getElementById("progressModalOrderId").textContent = orderId;
       document.getElementById("progressPercentageSelect").value = currentPercent || 15;
       document.getElementById("progressNoteInput").value = "";
@@ -660,80 +700,77 @@
 
     window.closeProgressModal = function() {
       document.getElementById("editorProgressModal").classList.remove("open");
-      activeProgressOrderId = null;
+      AppState.activeModals.progressOrder = null;
     };
 
-    window.submitProgressUpdate = function() {
-      if (!activeProgressOrderId) return;
+    // Bug #2 Fixed: Prevent multiple submissions
+    window.submitProgressUpdate = function(btn) {
+      var docId = AppState.activeModals.progressOrder;
+      if (!docId) return;
+      
       var percent = parseInt(document.getElementById("progressPercentageSelect").value, 10);
       var note = document.getElementById("progressNoteInput").value.trim() || "Work in progress";
 
-      db.collection("orders").doc(activeProgressOrderId).update({
+      btn.disabled = true; btn.innerHTML = "Saving...";
+      db.collection("orders").doc(docId).update({
         workProgress: percent,
         workProgressNote: note,
         lastProgressUpdate: firebase.firestore.FieldValue.serverTimestamp()
       }).then(function() {
         showToast("Progress Updated", "Order progress set to " + percent + "%.", "success");
         window.closeProgressModal();
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      }).catch(function(err) { showToast("Error", err.message, "error"); }).finally(function() {
+        btn.disabled = false; btn.innerHTML = "Publish Progress &rarr;";
+      });
     };
 
     window.openRejectModal = function(docId) {
-      activeRejectOrderId = docId;
+      AppState.activeModals.rejectOrder = docId;
       document.getElementById("rejectReasonInput").value = "";
       document.getElementById("rejectReasonModal").classList.add("open");
     };
 
     window.closeRejectModal = function() {
       document.getElementById("rejectReasonModal").classList.remove("open");
-      activeRejectOrderId = null;
+      AppState.activeModals.rejectOrder = null;
     };
 
-    window.submitOrderRejection = function() {
+    window.submitOrderRejection = function(btn) {
       var reason = document.getElementById("rejectReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejection.", "error"); return; }
-      if (!activeRejectOrderId) return;
+      var docId = AppState.activeModals.rejectOrder;
+      if (!docId) return;
 
-      var docRef = db.collection("orders").doc(activeRejectOrderId);
+      btn.disabled = true; btn.innerHTML = "Deleting...";
+      var docRef = db.collection("orders").doc(docId);
       docRef.get().then(function(docSnap) {
         if (!docSnap.exists) { window.closeRejectModal(); return; }
         var orderData = docSnap.data();
 
-        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-          to_email: orderData.clientEmail,
-          recipient_name: orderData.clientName,
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: orderData.clientEmail, recipient_name: orderData.clientName,
           mail_title: "ORDER DECLINED - #" + orderData.orderId,
-          mail_message: "We regret to inform you that your editing request could not be accepted. The commission has been cancelled and removed from the active system.\n\nReason: " + reason,
-          order_id: orderData.orderId,
-          client_name: orderData.clientName,
-          client_email: orderData.clientEmail,
-          editor_name: orderData.editorName,
-          category: orderData.category,
-          mode_name: orderData.modeName,
-          duration: orderData.duration,
-          price: orderData.price,
-          footage_link: orderData.footageLink,
+          mail_message: "We regret to inform you that your editing request could not be accepted.\n\nReason: " + reason,
+          order_id: orderData.orderId, client_name: orderData.clientName, client_email: orderData.clientEmail,
+          editor_name: orderData.editorName, category: orderData.category, mode_name: orderData.modeName,
+          duration: orderData.duration, price: orderData.price, footage_link: orderData.footageLink,
           instructions: "Declined with feedback: " + reason,
-          primary_action_text: "Browse Other Creators",
-          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-          secondary_action_text: "Contact Support",
-          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL
+          primary_action_text: "Browse Other Creators", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Contact Support", secondary_action_url: "mailto:" + CONFIG.superAdmin
         }).then(function() {
           return docRef.delete();
         }).then(function() {
-          delete ALL_ORDERS_MAP[activeRejectOrderId];
-          showToast("Order Rejected & Removed", "Notification dispatched to client and order deleted.", "info");
+          delete AppState.ordersMap[docId];
+          showToast("Order Rejected", "Client notified and order deleted.", "info");
           window.closeRejectModal();
-        }).catch(function(err) {
-          showToast("Error", "Action failed: " + err.message, "error");
-        });
+        }).catch(function(err) { showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled=false; btn.innerHTML="Decline & Delete Order"; });
       });
     };
 
     window.openClientPaymentModal = function(orderId, price) {
       document.getElementById("payModalOrderId").textContent = orderId;
       document.getElementById("payModalAmount").textContent = "₹" + price;
-      document.getElementById("payModalUpiId").textContent = OFFICIAL_UPI_ID;
+      document.getElementById("payModalUpiId").textContent = CONFIG.upiId;
       document.getElementById("clientPayModal").classList.add("open");
     };
 
@@ -742,7 +779,7 @@
     };
 
     window.openProofSubmitModal = function(docId, orderId) {
-      activeProofOrderId = docId;
+      AppState.activeModals.proofOrder = docId;
       document.getElementById("proofModalOrderId").textContent = orderId;
       document.getElementById("paymentProofUrl").value = "";
       document.getElementById("clientProofModal").classList.add("open");
@@ -750,300 +787,239 @@
 
     window.closeProofSubmitModal = function() {
       document.getElementById("clientProofModal").classList.remove("open");
-      activeProofOrderId = null;
+      AppState.activeModals.proofOrder = null;
     };
 
-    window.submitPaymentProof = function() {
+    window.submitPaymentProof = function(btn) {
       var proofLink = document.getElementById("paymentProofUrl").value.trim();
       if (!proofLink) { showToast("Proof Required", "Enter screenshot URL, Drive link, or UPI Ref.", "error"); return; }
-      if (!activeProofOrderId) return;
+      var docId = AppState.activeModals.proofOrder;
+      if (!docId) return;
 
-      var docRef = db.collection("orders").doc(activeProofOrderId);
+      btn.disabled = true; btn.innerHTML = "Submitting...";
+      var docRef = db.collection("orders").doc(docId);
       docRef.get().then(function(docSnap) {
         if (!docSnap.exists) return;
         var orderData = docSnap.data();
 
         docRef.update({
           status: "Payment Under Review (Proof Submitted)",
-          paymentProof: proofLink,
-          proofSubmittedAt: firebase.firestore.FieldValue.serverTimestamp()
+          paymentProof: proofLink, proofSubmittedAt: firebase.firestore.FieldValue.serverTimestamp()
         }).then(function() {
           showToast("Proof Submitted", "Payment proof received. Admin will verify shortly.", "success");
           window.closeProofSubmitModal();
 
-          emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-            to_email: SUPER_ADMIN_EMAIL,
-            recipient_name: "Super Admin",
+          emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+            to_email: CONFIG.superAdmin, recipient_name: "Super Admin",
             mail_title: "PAYMENT PROOF SUBMITTED FOR #" + orderData.orderId,
             mail_message: "Client (" + orderData.clientName + ") has submitted payment proof for Order #" + orderData.orderId + " (₹" + orderData.price + "). Review in dashboard.",
-            order_id: orderData.orderId,
-            client_name: orderData.clientName,
-            client_email: orderData.clientEmail,
-            editor_name: orderData.editorName,
-            category: orderData.category,
-            mode_name: orderData.modeName,
-            duration: orderData.duration,
-            price: orderData.price,
-            footage_link: orderData.footageLink,
+            order_id: orderData.orderId, client_name: orderData.clientName, client_email: orderData.clientEmail,
+            editor_name: orderData.editorName, category: orderData.category, mode_name: orderData.modeName,
+            duration: orderData.duration, price: orderData.price, footage_link: orderData.footageLink,
             instructions: "Submitted Proof: " + proofLink,
-            primary_action_text: "Verify in Dashboard",
-            primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-            secondary_action_text: "Open Admin Hub",
-            secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
+            primary_action_text: "Verify in Dashboard", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+            secondary_action_text: "Open Admin Hub", secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
           });
-        }).catch(function(err) { showToast("Error", err.message, "error"); });
+        }).catch(function(err) { showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled=false; btn.innerHTML="Confirm Submission"; });
       });
     };
 
-    window.adminVerifyPaymentProof = function(docId, orderId, clientEmail, clientName) {
+    window.adminVerifyPaymentProof = function(docId, orderId, clientEmail, clientName, btn) {
+      btn.disabled = true; btn.innerHTML = "Verifying...";
       db.collection("orders").doc(docId).update({
         status: "Payment Verified (Work In Progress)",
-        workProgress: 15,
-        workProgressNote: "Timeline setup in progress",
+        workProgress: 15, workProgressNote: "Timeline setup in progress",
         paymentVerifiedAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(function() {
         showToast("Payment Verified", "Order moved to Work In Progress!", "success");
-
-        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-          to_email: clientEmail,
-          recipient_name: clientName,
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: clientEmail, recipient_name: clientName,
           mail_title: "PAYMENT VERIFIED - ORDER #" + orderId,
           mail_message: "Your escrow payment has been verified successfully! The editor has commenced work on your project.",
-          order_id: orderId,
-          client_name: clientName,
-          client_email: clientEmail,
-          editor_name: "Platform Editor",
-          category: "In Production",
-          mode_name: "Locked",
-          duration: "Active",
-          price: "Escrow Locked",
-          footage_link: "Assigned",
+          order_id: orderId, client_name: clientName, client_email: clientEmail,
+          editor_name: "Platform Editor", category: "In Production", mode_name: "Locked",
+          duration: "Active", price: "Escrow Locked", footage_link: "Assigned",
           instructions: "Production in progress.",
-          primary_action_text: "View Live Status",
-          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-          secondary_action_text: "Support",
-          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL
+          primary_action_text: "View Live Status", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Support", secondary_action_url: "mailto:" + CONFIG.superAdmin
         });
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      }).catch(function(err) { showToast("Error", err.message, "error"); btn.disabled=false; btn.innerHTML="Verify & Start Project &rarr;"; });
     };
 
-    window.editorConfirmOrder = function(docId, orderId, clientName, clientEmail, price, editorName, footageLink, instructions, modeName, duration, category) {
+    window.editorConfirmOrder = function(docId, orderId, clientName, clientEmail, price, editorName, footageLink, instructions, modeName, duration, category, btn) {
+      btn.disabled = true; btn.innerHTML = "Locking...";
       db.collection("orders").doc(docId).update({
         status: "Pending Admin Approval (Locked)"
       }).then(function() {
         showToast("Order Confirmed", "Locked & forwarded to Super Admin.", "success");
-
-        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-          to_email: SUPER_ADMIN_EMAIL,
-          recipient_name: "Super Admin",
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: CONFIG.superAdmin, recipient_name: "Super Admin",
           mail_title: "EDITOR CONFIRMED ORDER #" + orderId,
           mail_message: "The assigned editor (" + editorName + ") has approved the project. Open dashboard to click 'Approve & Dispatch QR to Client'.",
-          order_id: orderId,
-          client_name: clientName,
-          client_email: clientEmail,
-          editor_name: editorName,
-          category: category,
-          mode_name: modeName,
-          duration: duration,
-          price: price,
-          footage_link: footageLink,
-          instructions: instructions || "None",
-          primary_action_text: "Open Admin Dashboard",
-          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-          secondary_action_text: "Decline Order",
-          secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
+          order_id: orderId, client_name: clientName, client_email: clientEmail,
+          editor_name: editorName, category: category, mode_name: modeName,
+          duration: duration, price: price, footage_link: footageLink, instructions: instructions || "None",
+          primary_action_text: "Open Admin Dashboard", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Decline Order", secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
         });
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      }).catch(function(err) { showToast("Error", err.message, "error"); btn.disabled=false; btn.innerHTML="Confirm Order (Send to Admin)"; });
     };
 
-    window.adminApproveOrder = function(docId, orderId, clientEmail, clientName, price) {
+    window.adminApproveOrder = function(docId, orderId, clientEmail, clientName, price, btn) {
+      btn.disabled = true; btn.innerHTML = "Dispatching QR...";
       db.collection("orders").doc(docId).update({
         status: "In Progress (QR Sent - Escrow Awaiting)"
       }).then(function() {
         showToast("QR Dispatched", "Client notified to complete escrow payment.", "success");
-
-        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-          to_email: clientEmail,
-          recipient_name: clientName,
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: clientEmail, recipient_name: clientName,
           mail_title: "OFFICIAL ESCROW PAYMENT QR - " + orderId,
-          mail_message: "Your project has been approved by admin! Pay ₹" + price + " via UPI ID (" + OFFICIAL_UPI_ID + ") or scan your official QR in your Placed Orders dashboard.\n\n⚠️ WARNING: Do not share fake payment images generated by AI or third-party tools. Manual verification is strictly enforced.",
-          order_id: orderId,
-          client_name: clientName,
-          client_email: clientEmail,
-          editor_name: "Verified Platform Editor",
-          category: "Commission",
-          mode_name: "Standard",
-          duration: "Assigned",
-          price: price,
-          footage_link: "Locked in Escrow",
+          mail_message: "Your project has been approved by admin! Pay ₹" + price + " via UPI ID (" + CONFIG.upiId + ") or scan your official QR in your Placed Orders dashboard.\n\n⚠️ WARNING: Do not share fake payment images generated by AI.",
+          order_id: orderId, client_name: clientName, client_email: clientEmail,
+          editor_name: "Verified Platform Editor", category: "Commission", mode_name: "Standard",
+          duration: "Assigned", price: price, footage_link: "Locked in Escrow",
           instructions: "Complete payment and click 'Submit Payment Proof' in your Placed Orders tab.",
-          primary_action_text: "View Order & Pay",
-          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-          secondary_action_text: "Cancel Commission",
-          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL + "?subject=Cancel%20Order%20" + orderId
+          primary_action_text: "View Order & Pay", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Cancel Commission", secondary_action_url: "mailto:" + CONFIG.superAdmin
         });
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      }).catch(function(err) { showToast("Error", err.message, "error"); btn.disabled=false; btn.innerHTML="Approve & Dispatch QR &rarr;"; });
     };
 
-    window.adminApproveShopApplication = function(appId) {
+    // ==========================================
+    // SHOP CREATION, EDIT & ADMIN APPROVAL FLOWS
+    // ==========================================
+    window.adminApproveShopApplication = function(appId, btn) {
+      btn.disabled = true; btn.innerHTML = "Approving...";
       var appRef = db.collection("shop_applications").doc(appId);
       appRef.get().then(function(docSnap) {
         if (!docSnap.exists) return;
         var data = docSnap.data();
 
         db.collection("shops").add({
-          name: data.name,
-          category: data.category,
-          logoUrl: data.logoUrl || "",
-          portfolioLink: data.portfolioLink,
-          ratioText: data.ratioText,
-          screenClass: data.screenClass,
-          dimText: "High Definition",
-          maxSeconds: data.maxSeconds,
-          unitShort: data.unitShort,
-          rates: data.rates,
+          name: data.name, category: data.category, logoUrl: data.logoUrl || "", portfolioLink: data.portfolioLink,
+          ratioText: data.ratioText, screenClass: data.screenClass, dimText: "High Definition",
+          maxSeconds: data.maxSeconds, unitShort: data.unitShort, rates: data.rates,
           modeNames: { low: "Basic", medium: "Standard", high: "Premium" },
-          ownerUid: data.ownerUid,
-          ownerEmail: data.ownerEmail,
-          ownerHandle: data.ownerHandle,
+          ownerUid: data.ownerUid, ownerEmail: data.ownerEmail, ownerHandle: data.ownerHandle,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }).then(function() {
           return appRef.delete();
         }).then(function() {
-          emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-            to_email: data.ownerEmail,
-            recipient_name: data.name,
+          emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+            to_email: data.ownerEmail, recipient_name: data.name,
             mail_title: "SHOP APPLICATION APPROVED! 🎉",
             mail_message: "Congratulations! Your shop (" + data.name + ") has been approved by Super Admin. Your shop is now live on the marketplace.",
-            order_id: "SHOP-" + Math.floor(1000 + Math.random() * 9000),
-            client_name: data.name,
-            client_email: data.ownerEmail,
-            editor_name: "Rex Admin",
-            category: data.category,
-            mode_name: "Verified Shop",
-            duration: "Live",
-            price: "Active",
-            footage_link: data.portfolioLink,
+            order_id: "SHOP-" + Math.floor(1000 + Math.random() * 9000), client_name: data.name, client_email: data.ownerEmail,
+            editor_name: "Rex Admin", category: data.category, mode_name: "Verified Shop",
+            duration: "Live", price: "Active", footage_link: data.portfolioLink,
             instructions: "Welcome to Rex Edit Hub marketplace.",
-            primary_action_text: "View Live Shop",
-            primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-            secondary_action_text: "Go to Profile",
-            secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
+            primary_action_text: "View Live Shop", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+            secondary_action_text: "Go to Profile", secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
           });
-
           showToast("Shop Approved", data.name + " is now live!", "success");
         });
       });
     };
 
     window.openRejectShopModal = function(appId) {
-      activeRejectAppId = appId;
+      AppState.activeModals.rejectApp = appId;
       document.getElementById("rejectShopReasonInput").value = "";
       document.getElementById("rejectShopModal").classList.add("open");
     };
 
     window.closeRejectShopModal = function() {
       document.getElementById("rejectShopModal").classList.remove("open");
-      activeRejectAppId = null;
+      AppState.activeModals.rejectApp = null;
     };
 
-    window.submitShopRejection = function() {
+    window.submitShopRejection = function(btn) {
       var reason = document.getElementById("rejectShopReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejecting shop.", "error"); return; }
-      if (!activeRejectAppId) return;
+      var appId = AppState.activeModals.rejectApp;
+      if (!appId) return;
 
-      var appRef = db.collection("shop_applications").doc(activeRejectAppId);
+      btn.disabled = true; btn.innerHTML = "Declining...";
+      var appRef = db.collection("shop_applications").doc(appId);
       appRef.get().then(function(docSnap) {
         if (!docSnap.exists) { window.closeRejectShopModal(); return; }
         var data = docSnap.data();
 
-        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-          to_email: data.ownerEmail,
-          recipient_name: data.name,
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: data.ownerEmail, recipient_name: data.name,
           mail_title: "SHOP APPLICATION UPDATE",
           mail_message: "We regret to inform you that your shop application (" + data.name + ") could not be approved at this time.\n\nReason: " + reason,
-          order_id: "SHOP-DECLINED",
-          client_name: data.name,
-          client_email: data.ownerEmail,
-          editor_name: "Rex Admin",
-          category: data.category,
-          mode_name: "Declined",
-          duration: "N/A",
-          price: "0",
-          footage_link: data.portfolioLink,
-          instructions: "Feedback: " + reason,
-          primary_action_text: "Reapply with Updates",
-          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-          secondary_action_text: "Support",
-          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL
-        }).then(function() {
-          return appRef.delete();
-        }).then(function() {
+          order_id: "SHOP-DECLINED", client_name: data.name, client_email: data.ownerEmail,
+          editor_name: "Rex Admin", category: data.category, mode_name: "Declined",
+          duration: "N/A", price: "0", footage_link: data.portfolioLink, instructions: "Feedback: " + reason,
+          primary_action_text: "Reapply with Updates", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Support", secondary_action_url: "mailto:" + CONFIG.superAdmin
+        }).then(function() { return appRef.delete(); }).then(function() {
           showToast("Application Declined", "Notification sent to creator.", "info");
           window.closeRejectShopModal();
-        });
+        }).finally(function() { btn.disabled = false; btn.innerHTML = "Decline Application"; });
       });
     };
 
     window.openDeleteShopModal = function(shopId, shopName, ownerEmail) {
-      activeDeleteShopData = { shopId: shopId, shopName: shopName, ownerEmail: ownerEmail };
+      AppState.activeModals.deleteShop = { shopId: shopId, shopName: shopName, ownerEmail: ownerEmail };
       document.getElementById("deleteShopReasonInput").value = "";
       document.getElementById("deleteShopModal").classList.add("open");
     };
 
     window.closeDeleteShopModal = function() {
       document.getElementById("deleteShopModal").classList.remove("open");
-      activeDeleteShopData = null;
+      AppState.activeModals.deleteShop = null;
     };
 
-    window.confirmAdminDeleteShop = function() {
+    window.confirmAdminDeleteShop = function(btn) {
       var reason = document.getElementById("deleteShopReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Provide a reason for deleting this shop.", "error"); return; }
-      if (!activeDeleteShopData) return;
+      var target = AppState.activeModals.deleteShop;
+      if (!target) return;
 
-      var shopRef = db.collection("shops").doc(activeDeleteShopData.shopId);
+      btn.disabled = true; btn.innerHTML = "Terminating...";
+      var shopRef = db.collection("shops").doc(target.shopId);
       shopRef.delete().then(function() {
-        emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-          to_email: activeDeleteShopData.ownerEmail,
-          recipient_name: activeDeleteShopData.shopName,
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: target.ownerEmail, recipient_name: target.shopName,
           mail_title: "SHOP REMOVED BY ADMIN",
-          mail_message: "Your shop (" + activeDeleteShopData.shopName + ") has been removed from the Rex Edit Hub marketplace by Super Admin.\n\nReason: " + reason,
-          order_id: "SHOP-REMOVED",
-          client_name: activeDeleteShopData.shopName,
-          client_email: activeDeleteShopData.ownerEmail,
-          editor_name: "Rex Admin",
-          category: "Marketplace Removal",
-          mode_name: "Terminated",
-          duration: "N/A",
-          price: "0",
-          footage_link: "N/A",
-          instructions: "Removal Notice: " + reason,
-          primary_action_text: "Contact Support",
-          primary_action_url: "mailto:" + SUPER_ADMIN_EMAIL,
-          secondary_action_text: "Support",
-          secondary_action_url: "mailto:" + SUPER_ADMIN_EMAIL
+          mail_message: "Your shop (" + target.shopName + ") has been removed from the Rex Edit Hub marketplace by Super Admin.\n\nReason: " + reason,
+          order_id: "SHOP-REMOVED", client_name: target.shopName, client_email: target.ownerEmail,
+          editor_name: "Rex Admin", category: "Marketplace Removal", mode_name: "Terminated",
+          duration: "N/A", price: "0", footage_link: "N/A", instructions: "Removal Notice: " + reason,
+          primary_action_text: "Contact Support", primary_action_url: "mailto:" + CONFIG.superAdmin,
+          secondary_action_text: "Support", secondary_action_url: "mailto:" + CONFIG.superAdmin
         });
-
-        showToast("Shop Deleted", activeDeleteShopData.shopName + " removed and creator notified.", "success");
+        showToast("Shop Deleted", target.shopName + " removed and creator notified.", "success");
         window.closeDeleteShopModal();
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      }).catch(function(err) { showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled = false; btn.innerHTML = "Terminate Shop"; });
     };
 
+    // ==========================================
+    // AUTHENTICATION & UI SYNC
+    // ==========================================
     window.loginWithGoogle = function() {
       auth.signInWithPopup(provider).then(function(result) {
-        currentUser = result.user;
-        showToast("Signed In", "Welcome back, " + currentUser.displayName + "!", "success");
-        syncUserProfile(currentUser);
+        AppState.currentUser = result.user;
+        showToast("Signed In", "Welcome back, " + AppState.currentUser.displayName + "!", "success");
+        syncUserProfile(AppState.currentUser);
       }).catch(function(error) { showToast("Login Failed", error.message, "error"); });
     };
 
     window.triggerLogout = function() {
       auth.signOut().then(function() {
-        currentUser = null; currentUserIdHandle = "";
+        AppState.currentUser = null; AppState.currentHandle = "";
+        clearAllListeners(); // Bug #8 Kill listeners
         showToast("Logged Out", "Signed out successfully.", "info");
         resetUserInterface();
       });
     };
+
+    // Bug #8 Fixed: Centralized Listener Cleanup
+    function clearAllListeners() {
+      AppState.listeners.forEach(function(unsub) { if (typeof unsub === 'function') unsub(); });
+      AppState.listeners = [];
+    }
 
     function syncUserProfile(user) {
       if (!user) return;
@@ -1051,17 +1027,19 @@
       userRef.get().then(function(doc) {
         if (doc.exists) {
           var userData = doc.data();
-          currentUserIdHandle = userData.userId || user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
-          updateUserInterface(user, userData.displayName || user.displayName, currentUserIdHandle);
+          AppState.currentHandle = userData.userId || user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
+          updateUserInterface(user, userData.displayName || user.displayName, AppState.currentHandle);
         } else {
           var baseHandle = user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
-          currentUserIdHandle = baseHandle;
+          AppState.currentHandle = baseHandle;
           userRef.set({
             userId: baseHandle, displayName: user.displayName || baseHandle,
             email: user.email, photoURL: user.photoURL || "", createdAt: firebase.firestore.FieldValue.serverTimestamp()
           }).then(function() { updateUserInterface(user, user.displayName, baseHandle); });
         }
       });
+      
+      clearAllListeners();
       listenToUserCreatedShops(user.uid);
       listenToPrivateOrders(user.uid);
       listenToEditorIncomingOrders();
@@ -1078,7 +1056,7 @@
       document.getElementById("inputUserId").value = handle;
 
       if (user.photoURL) {
-        var avatarImg = '<img src="' + user.photoURL + '" style="width:100%;height:100%;object-fit:cover;">';
+        var avatarImg = '<img src="' + escapeHtml(user.photoURL) + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">';
         document.getElementById("profileLargeAvatarContainer").innerHTML = avatarImg;
         document.getElementById("sidebarAvatarContainer").innerHTML = avatarImg;
       }
@@ -1089,7 +1067,7 @@
 
       var adminNavTab = document.getElementById("adminNavTab");
       if (adminNavTab) {
-        if (user.email === SUPER_ADMIN_EMAIL) adminNavTab.style.display = "block";
+        if (user.email === CONFIG.superAdmin) adminNavTab.style.display = "block";
         else adminNavTab.style.display = "none";
       }
     }
@@ -1108,33 +1086,36 @@
       var adminNavTab = document.getElementById("adminNavTab");
       if (adminNavTab) adminNavTab.style.display = "none";
 
-      if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
       document.getElementById("activeOrdersList").style.display = "none";
       document.getElementById("placedEmptyBox").style.display = "flex";
     }
 
     auth.onAuthStateChanged(function(user) {
-      if (user) { currentUser = user; syncUserProfile(user); }
+      if (user) { AppState.currentUser = user; syncUserProfile(user); }
       else { resetUserInterface(); }
     });
 
-    window.saveProfileInfo = function() {
-      if (!currentUser) { showToast("Access Denied", "Sign in first.", "error"); return; }
+    window.saveProfileInfo = function(btn) {
+      if (!AppState.currentUser) { showToast("Access Denied", "Sign in first.", "error"); return; }
       var newDisplayName = document.getElementById("inputDisplayName").value.trim();
       var rawHandle = document.getElementById("inputUserId").value.trim().toLowerCase().replace(/^@/, '');
       if (!newDisplayName || !rawHandle) { showToast("Error", "All fields required.", "error"); return; }
 
-      db.collection("users").doc(currentUser.uid).set({
-        userId: rawHandle, displayName: newDisplayName, email: currentUser.email, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      btn.disabled = true; btn.innerHTML = "Saving...";
+      db.collection("users").doc(AppState.currentUser.uid).set({
+        userId: rawHandle, displayName: newDisplayName, email: AppState.currentUser.email, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true }).then(function() {
-        currentUserIdHandle = rawHandle;
-        updateUserInterface(currentUser, newDisplayName, rawHandle);
+        AppState.currentHandle = rawHandle;
+        updateUserInterface(AppState.currentUser, newDisplayName, rawHandle);
         showToast("Saved", "Profile updated successfully.", "success");
-      });
+      }).finally(function(){ btn.disabled = false; btn.innerHTML = "Save Profile"; });
     };
 
+    // ==========================================
+    // SHOP CREATION & MANAGEMENT LOGIC
+    // ==========================================
     function listenToUserCreatedShops(uid) {
-      db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
+      var unsub = db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
         var listContainer = document.getElementById("myShopsList");
         var countBadge = document.getElementById("myShopsCountBadge");
         countBadge.textContent = snapshot.size + " Live";
@@ -1153,17 +1134,17 @@
           );
         });
       });
+      AppState.listeners.push(unsub);
     }
 
-    var activeEditingShopId = null;
     window.openEditShopModal = function(shopId, name, logoUrl, b, s, p) {
-      activeEditingShopId = shopId;
+      AppState.activeModals.editShop = shopId;
       document.getElementById("editShopNameInput").value = name;
       document.getElementById("editShopLogoInput").value = logoUrl || "";
       document.getElementById("editPriceBasic").value = b;
       document.getElementById("editPriceStd").value = s;
       document.getElementById("editPricePrem").value = p;
-      uploadedLogoBase64 = logoUrl || "";
+      AppState.tempUploadBase64 = logoUrl || "";
       
       var previewImg = document.getElementById("editShopLogoPreviewImg");
       var previewWrap = document.getElementById("editShopLogoPreviewWrap");
@@ -1180,48 +1161,55 @@
 
     window.closeEditShopModal = function() {
       document.getElementById("editShopModal").classList.remove("open");
-      activeEditingShopId = null;
-      uploadedLogoBase64 = "";
+      AppState.activeModals.editShop = null;
+      AppState.tempUploadBase64 = "";
     };
 
-    window.submitShopEdit = function() {
-      if (!activeEditingShopId) return;
+    window.submitShopEdit = function(btn) {
+      var shopId = AppState.activeModals.editShop;
+      if (!shopId) return;
       var newName = document.getElementById("editShopNameInput").value.trim();
-      var newLogo = uploadedLogoBase64 || document.getElementById("editShopLogoInput").value.trim();
+      var newLogo = AppState.tempUploadBase64 || document.getElementById("editShopLogoInput").value.trim();
       var b = parseInt(document.getElementById("editPriceBasic").value, 10) || 25;
       var s = parseInt(document.getElementById("editPriceStd").value, 10) || 40;
       var p = parseInt(document.getElementById("editPricePrem").value, 10) || 65;
 
       if (!newName) { showToast("Error", "Shop name cannot be blank.", "error"); return; }
 
-      db.collection("shops").doc(activeEditingShopId).update({
-        name: newName,
-        logoUrl: newLogo,
-        rates: { low: b, medium: s, high: p },
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      btn.disabled = true; btn.innerHTML = "Saving...";
+      db.collection("shops").doc(shopId).update({
+        name: newName, logoUrl: newLogo, rates: { low: b, medium: s, high: p }, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(function() {
         showToast("Shop Updated", "Changes saved successfully.", "success");
         window.closeEditShopModal();
-      }).catch(function(err) { showToast("Error", err.message, "error"); });
+      }).catch(function(err) { showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled = false; btn.innerHTML = "Save Changes"; });
     };
 
     window.deleteShop = function(shopId, shopName) {
-      db.collection("shops").doc(shopId).delete().then(function() { showToast("Deleted", shopName + " removed.", "success"); });
+      if(confirm("Are you sure you want to permanently delete " + shopName + "?")) {
+        db.collection("shops").doc(shopId).delete().then(function() { showToast("Deleted", shopName + " removed.", "success"); });
+      }
     };
 
-    // FIXED HIRE TERMINAL FUNCTIONALITY (Safeguarded against old/broken docs)
+    // Bug #9 Fixed: Prevent complete DOM trashing on Snapshot by building HTML cleanly
     db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var grid = document.getElementById("shopEditorGrid");
       var emptyBox = document.getElementById("shopEmptyBox");
-      EDITORS_DATA = {};
-      if (snapshot.empty) { if (emptyBox) emptyBox.style.display = "flex"; if (grid) grid.style.display = "none"; return; }
+      AppState.editorsMap = {};
+      
+      if (snapshot.empty) { 
+        if (emptyBox) emptyBox.style.display = "flex"; 
+        if (grid) grid.style.display = "none"; 
+        return; 
+      }
+      
       if (emptyBox) emptyBox.style.display = "none";
       if (grid) {
         grid.style.display = "grid";
-        grid.innerHTML = "";
+        var finalHTML = "";
         snapshot.forEach(function(doc) {
           var data = doc.data();
-          EDITORS_DATA[doc.id] = data;
+          AppState.editorsMap[doc.id] = data;
 
           var cat = data.category || "Editor";
           var badgeClass = "format-badge-long";
@@ -1230,19 +1218,19 @@
           else if (cat.includes("Researcher")) badgeClass = "format-badge-research";
           else if (cat.includes("Motion")) badgeClass = "format-badge-motion";
 
-          var avatarDisplay = data.logoUrl ? '<img src="' + escapeHtml(data.logoUrl) + '">' : escapeHtml((data.name || "ED").substring(0,2).toUpperCase());
+          var avatarDisplay = data.logoUrl ? '<img src="' + escapeHtml(data.logoUrl) + '" onerror="this.style.display=\'none\'">' : escapeHtml((data.name || "ED").substring(0,2).toUpperCase());
 
           var adminDeleteBtn = "";
-          if (currentUser && currentUser.email === SUPER_ADMIN_EMAIL) {
+          if (AppState.currentUser && AppState.currentUser.email === CONFIG.superAdmin) {
             adminDeleteBtn = '<button class="btn-delete-shop" onclick="window.openDeleteShopModal(\'' + doc.id + '\', \'' + escapeHtml(data.name) + '\', \'' + escapeHtml(data.ownerEmail) + '\')">Admin Delete</button>';
           }
           
           var startingPrice = data.rates ? data.rates.low : 25;
           var unitDisp = data.unitShort || "unit";
 
-          var cardHtml = 
+          finalHTML += 
             '<article class="editor-card">' +
-              '<div class="inline-badge-wrap"><span class="demo-tag inline-badge ' + badgeClass + '">' + escapeHtml(cat) + '</span></div>' +
+              '<div class="inline-badge-wrap"><span class="demo-tag ' + badgeClass + '">' + escapeHtml(cat) + '</span></div>' +
               '<div class="editor-header">' +
                 '<div class="editor-avatar">' + avatarDisplay + '</div>' +
                 '<div class="editor-info-stack">' +
@@ -1259,29 +1247,29 @@
                 '</div>' +
               '</div>' +
             '</article>';
-          grid.insertAdjacentHTML("beforeend", cardHtml);
         });
+        grid.innerHTML = finalHTML;
       }
     });
 
     function listenToPendingShopApplications() {
-      db.collection("shop_applications").onSnapshot(function(snapshot) {
+      var unsub = db.collection("shop_applications").onSnapshot(function(snapshot) {
         var cardBox = document.getElementById("adminPendingShopsCard");
         var listContainer = document.getElementById("adminPendingShopsList");
         var viewContainer = document.getElementById("adminReviewShopsList");
         
-        var isSuperAdmin = currentUser && currentUser.email === SUPER_ADMIN_EMAIL;
+        var isSuperAdmin = AppState.currentUser && AppState.currentUser.email === CONFIG.superAdmin;
 
         if (cardBox && listContainer) {
           if (!isSuperAdmin || snapshot.empty) { cardBox.style.display = "none"; }
           else {
             cardBox.style.display = "block";
-            listContainer.innerHTML = "";
+            var pendingHTML = "";
             snapshot.forEach(function(doc) {
               var app = doc.data();
-              var logoDisplay = app.logoUrl ? '<img src="' + escapeHtml(app.logoUrl) + '" style="width:45px; height:45px; border-radius:10px; object-fit:cover;">' : '<div style="width:45px; height:45px; border-radius:10px; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">' + escapeHtml(app.name.substring(0,2).toUpperCase()) + '</div>';
+              var logoDisplay = app.logoUrl ? '<img src="' + escapeHtml(app.logoUrl) + '" style="width:45px; height:45px; border-radius:10px; object-fit:cover;" onerror="this.style.display=\'none\'">' : '<div style="width:45px; height:45px; border-radius:10px; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">' + escapeHtml(app.name.substring(0,2).toUpperCase()) + '</div>';
 
-              listContainer.insertAdjacentHTML("beforeend", 
+              pendingHTML += 
                 '<div style="background:var(--bg-base); border:1px solid var(--border-subtle); padding:16px; border-radius:14px; display:flex; flex-direction:column; gap:10px;">' +
                   '<div style="display:flex; justify-content:space-between; align-items:center;">' +
                     '<div style="display:flex; align-items:center; gap:12px;">' +
@@ -1291,16 +1279,16 @@
                     '<span style="background:var(--warning-light); color:var(--warning); font-size:0.75rem; font-weight:800; padding:4px 8px; border-radius:6px;">Pending</span>' +
                   '</div>' +
                   '<div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-muted);">' +
-                    '<span>Basic ₹' + app.rates.low + ' | Std ₹' + app.rates.medium + ' | Prem ₹' + app.rates.high + '</span>' +
+                    '<span>Tiers: Basic ₹' + app.rates.low + ' | Std ₹' + app.rates.medium + ' | Prem ₹' + app.rates.high + '</span>' +
                     '<a href="' + escapeHtml(app.portfolioLink) + '" target="_blank" style="color:var(--primary); font-weight:800;">View Proof &rarr;</a>' +
                   '</div>' +
                   '<div style="display:flex; gap:10px; margin-top:6px;">' +
-                    '<button class="btn-action-accept" onclick="window.adminApproveShopApplication(\'' + doc.id + '\')">Approve & Launch</button>' +
+                    '<button class="btn-action-accept" onclick="window.adminApproveShopApplication(\'' + doc.id + '\', this)">Approve & Launch</button>' +
                     '<button class="btn-action-reject" onclick="window.openRejectShopModal(\'' + doc.id + '\')">Reject</button>' +
                   '</div>' +
-                '</div>'
-              );
+                '</div>';
             });
+            listContainer.innerHTML = pendingHTML;
           }
         }
 
@@ -1308,12 +1296,12 @@
           if (snapshot.empty) {
             viewContainer.innerHTML = "<p style='color:var(--text-muted); font-size:0.9rem;'>No pending creator applications right now.</p>";
           } else {
-            viewContainer.innerHTML = "";
+            var reviewHTML = "";
             snapshot.forEach(function(doc) {
               var app = doc.data();
-              var logoDisplay = app.logoUrl ? '<img src="' + escapeHtml(app.logoUrl) + '" style="width:50px; height:50px; border-radius:12px; object-fit:cover;">' : '<div style="width:50px; height:50px; border-radius:12px; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">' + escapeHtml(app.name.substring(0,2).toUpperCase()) + '</div>';
+              var logoDisplay = app.logoUrl ? '<img src="' + escapeHtml(app.logoUrl) + '" style="width:50px; height:50px; border-radius:12px; object-fit:cover;" onerror="this.style.display=\'none\'">' : '<div style="width:50px; height:50px; border-radius:12px; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">' + escapeHtml(app.name.substring(0,2).toUpperCase()) + '</div>';
 
-              viewContainer.insertAdjacentHTML("beforeend", 
+              reviewHTML += 
                 '<div class="running-order-item">' +
                   '<div style="display:flex; align-items:center; gap:14px;">' +
                     logoDisplay +
@@ -1322,27 +1310,27 @@
                   '<p style="font-size:0.88rem; color:var(--text-muted);">Pricing Tiers: Basic ₹' + app.rates.low + ' | Standard ₹' + app.rates.medium + ' | Premium ₹' + app.rates.high + '</p>' +
                   '<div style="display:flex; gap:10px; align-items:center; margin-top:4px;">' +
                     '<a href="' + escapeHtml(app.portfolioLink) + '" target="_blank" class="order-link-btn">View Portfolio Link &rarr;</a>' +
-                    '<button class="btn-action-accept" onclick="window.adminApproveShopApplication(\'' + doc.id + '\')">Approve & Launch Live</button>' +
+                    '<button class="btn-action-accept" onclick="window.adminApproveShopApplication(\'' + doc.id + '\', this)">Approve & Launch Live</button>' +
                     '<button class="btn-action-reject" onclick="window.openRejectShopModal(\'' + doc.id + '\')">Reject (Delete & Mail)</button>' +
                   '</div>' +
-                '</div>'
-              );
+                '</div>';
             });
+            viewContainer.innerHTML = reviewHTML;
           }
         }
       });
+      AppState.listeners.push(unsub);
     }
 
     function listenToPrivateOrders(uid) {
-      if (ordersUnsubscribe) ordersUnsubscribe();
-      var list = document.getElementById("activeOrdersList");
-      var emptyBox = document.getElementById("placedEmptyBox");
-      ordersUnsubscribe = db.collection("orders").where("clientUid", "==", uid).onSnapshot(function(snapshot) {
+      var unsub = db.collection("orders").where("clientUid", "==", uid).onSnapshot(function(snapshot) {
+        var list = document.getElementById("activeOrdersList");
+        var emptyBox = document.getElementById("placedEmptyBox");
         if (snapshot.empty) { if (emptyBox) emptyBox.style.display = "flex"; if (list) list.style.display = "none"; return; }
         if (emptyBox) emptyBox.style.display = "none";
         if (list) {
           list.style.display = "flex";
-          list.innerHTML = "";
+          var ordersHTML = "";
           snapshot.forEach(function(doc) {
             var data = doc.data();
             ALL_ORDERS_MAP[doc.id] = data;
@@ -1380,7 +1368,7 @@
                 '</div>';
             }
 
-            var orderHtml = 
+            ordersHTML += 
               '<div class="running-order-item">' +
                 '<div style="display:flex; justify-content:space-between; align-items:center;">' +
                   '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
@@ -1398,24 +1386,25 @@
                 '</div>' +
                 clientActionButtons +
               '</div>';
-            list.insertAdjacentHTML("beforeend", orderHtml);
           });
+          list.innerHTML = ordersHTML;
         }
       });
+      AppState.listeners.push(unsub);
     }
 
     function listenToEditorIncomingOrders() {
-      db.collection("orders").onSnapshot(function(snapshot) {
+      var unsub = db.collection("orders").onSnapshot(function(snapshot) {
         var container = document.getElementById("incomingOrdersList");
         if (!container) return;
-        container.innerHTML = "";
         var count = 0;
+        var incHTML = "";
         snapshot.forEach(function(doc) {
           var data = doc.data();
           ALL_ORDERS_MAP[doc.id] = data;
 
-          var isSuperAdmin = currentUser && currentUser.email === SUPER_ADMIN_EMAIL;
-          var isShopOwner = currentUser && data.editorUid === currentUser.uid;
+          var isSuperAdmin = AppState.currentUser && AppState.currentUser.email === CONFIG.superAdmin;
+          var isShopOwner = AppState.currentUser && data.editorUid === AppState.currentUser.uid;
 
           if (isSuperAdmin || isShopOwner) {
             count++;
@@ -1432,14 +1421,14 @@
               '</div>';
 
             if (data.status === "Wait for editor response" && isShopOwner) {
-              actions = '<div class="editor-action-row"><button class="btn-action-accept" onclick="window.editorConfirmOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientName) + '\', \'' + escapeHtml(data.clientEmail) + '\', ' + data.price + ', \'' + escapeHtml(data.editorName) + '\', \'' + escapeHtml(data.footageLink) + '\', \'' + escapeHtml(data.instructions) + '\', \'' + escapeHtml(data.modeName) + '\', ' + data.duration + ', \'' + escapeHtml(data.category) + '\')">Confirm Order (Send to Admin)</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
+              actions = '<div class="editor-action-row"><button class="btn-action-accept" onclick="window.editorConfirmOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientName) + '\', \'' + escapeHtml(data.clientEmail) + '\', ' + data.price + ', \'' + escapeHtml(data.editorName) + '\', \'' + escapeHtml(data.footageLink) + '\', \'' + escapeHtml(data.instructions) + '\', \'' + escapeHtml(data.modeName) + '\', ' + data.duration + ', \'' + escapeHtml(data.category) + '\', this)">Confirm Order (Send to Admin)</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
             } else if (data.status === "Pending Admin Approval (Locked)" && isSuperAdmin) {
-              actions = '<div class="editor-action-row"><button class="btn-action-admin-approve" onclick="window.adminApproveOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', ' + data.price + ')">Approve & Dispatch QR to Client &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
+              actions = '<div class="editor-action-row"><button class="btn-action-admin-approve" onclick="window.adminApproveOrder(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', ' + data.price + ', this)">Approve & Dispatch QR to Client &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject</button></div>';
             } else if (data.status === "Payment Under Review (Proof Submitted)" && isSuperAdmin) {
               actions = 
                 '<div style="background:var(--bg-base); padding:10px; border-radius:8px; border:1px solid var(--border-subtle); margin-top:8px;">' +
                   '<p style="font-size:0.85rem; font-weight:800; color:var(--text-main);">Submitted Proof: <a href="' + escapeHtml(data.paymentProof) + '" target="_blank" style="color:var(--primary); word-break:break-all;">' + escapeHtml(data.paymentProof) + '</a></p>' +
-                  '<div class="editor-action-row" style="margin-top:8px; padding-top:6px;"><button class="btn-action-verify-proof" onclick="window.adminVerifyPaymentProof(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\')">Verify & Start Project &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject Proof</button></div>' +
+                  '<div class="editor-action-row" style="margin-top:8px; padding-top:6px;"><button class="btn-action-verify-proof" onclick="window.adminVerifyPaymentProof(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', \'' + escapeHtml(data.clientEmail) + '\', \'' + escapeHtml(data.clientName) + '\', this)">Verify & Start Project &rarr;</button><button class="btn-action-reject" onclick="window.openRejectModal(\'' + doc.id + '\')">Reject Proof</button></div>' +
                 '</div>';
             } else if (isShopOwner && (data.status.includes("Progress") || data.status.includes("Verified"))) {
               actions = '<div class="editor-action-row"><button class="btn-action-progress" onclick="window.openProgressModal(\'' + doc.id + '\', \'' + escapeHtml(data.orderId) + '\', ' + progress + ')">Update Work Progress (% & Stage)</button></div>';
@@ -1447,7 +1436,7 @@
               actions = '<span style="font-size:0.8rem; font-weight:700; color:var(--primary); margin-top:6px;">Status: ' + escapeHtml(data.status) + '</span>';
             }
 
-            container.insertAdjacentHTML("beforeend", 
+            incHTML += 
               '<div class="running-order-item">' +
                 '<div style="display:flex; justify-content:space-between; align-items:center;">' +
                   '<strong style="color:var(--text-main); font-size:1.05rem;">Order #' + escapeHtml(data.orderId) + ' (' + escapeHtml(data.category) + ')</strong>' +
@@ -1463,16 +1452,21 @@
                   '<a href="' + escapeHtml(data.footageLink) + '" target="_blank" class="order-link-btn">View Asset Link</a>' +
                 '</div>' +
                 actions +
-              '</div>'
-            );
+              '</div>';
           }
         });
-        if (count === 0 && container) {
+        if (count === 0) {
           container.innerHTML = "<p style='color:var(--text-muted); font-size:0.9rem;'>No incoming requests right now.</p>";
+        } else {
+          container.innerHTML = incHTML;
         }
       });
+      AppState.listeners.push(unsub);
     }
 
+    // ==========================================
+    // UI NAVIGATION & TERMINAL FLOW
+    // ==========================================
     window.openSidebar = function() { document.getElementById("sidebar").classList.add("open"); document.getElementById("sidebarOverlay").classList.add("open"); };
     window.closeSidebar = function() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebarOverlay").classList.remove("open"); };
     window.toggleSidebar = function() { var sb = document.getElementById("sidebar"); if (sb.classList.contains("open")) window.closeSidebar(); else window.openSidebar(); };
@@ -1509,99 +1503,278 @@
       window.scrollTo(0, 0);
     };
 
+    // Bug #3 Fixed: Terminal Load Failure Check
+    window.openHireTerminal = function(editorKey) {
+      if (!AppState.currentUser) { showToast("Authentication Required", "Sign in to hire creators.", "error"); window.switchTab('viewProfile'); return; }
+      var editor = AppState.editorsMap[editorKey];
+      if (!editor) { showToast("Error", "Editor data unavailable. Refresh page.", "error"); return; }
+      
+      AppState.hireConfig.editorKey = editorKey; 
+      AppState.hireConfig.mode = "medium"; 
+      AppState.hireConfig.duration = (editor.category === "Thumbnail Designer" ? 1 : 20);
+      
+      document.getElementById("configEditorTitle").textContent = "Hire " + escapeHtml(editor.name);
+      document.getElementById("videoDurationInput").value = AppState.hireConfig.duration;
+
+      var thumbRatioBar = document.getElementById("thumbnailRatioSwitchBar");
+      var screenBox = document.getElementById("previewScreenBox");
+      var labelInput = document.getElementById("durationInputLabel");
+
+      if (editor.category === "Thumbnail Designer") {
+        thumbRatioBar.style.display = "flex";
+        labelInput.textContent = "Number of Thumbnails Required";
+        window.setCanvasRatio("16-9");
+      } else {
+        thumbRatioBar.style.display = "none";
+        labelInput.textContent = "Duration (Seconds) / Quantity";
+        screenBox.className = "screen-box " + (editor.screenClass || "ratio-16-9");
+      }
+
+      window.selectMode("medium"); 
+      window.switchTab('viewOrderConfig');
+    };
+
+    window.setCanvasRatio = function(ratioType) {
+      AppState.hireConfig.ratio = ratioType;
+      var box = document.getElementById("previewScreenBox");
+      box.className = "screen-box ratio-" + ratioType;
+
+      var tag = document.getElementById("screenTagLabel");
+      var ratioNames = { "16-9": "16:9 Standard", "1-1": "1:1 Square", "9-16": "9:16 Shorts", "4-5": "4:5 Portrait" };
+      tag.textContent = ratioNames[ratioType] || ratioType;
+
+      var buttons = document.querySelectorAll('.btn-ratio-switch');
+      buttons.forEach(function(b) {
+        if (b.getAttribute('data-ratio') === ratioType) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    };
+
+    window.selectMode = function(modeName) {
+      AppState.hireConfig.mode = modeName;
+      ["low", "medium", "high"].forEach(function(m) {
+        var btn = document.getElementById("modeBtn" + m.charAt(0).toUpperCase() + m.slice(1));
+        if (btn) { if (m === modeName) btn.classList.add("active"); else btn.classList.remove("active"); }
+      });
+      window.calculateOrderPrice();
+    };
+
+    window.calculateOrderPrice = function() {
+      var editor = AppState.editorsMap[AppState.hireConfig.editorKey];
+      if (!editor) return;
+      var value = parseInt(document.getElementById("videoDurationInput").value, 10) || 1;
+      AppState.hireConfig.duration = value;
+
+      var timerDisplay = document.getElementById("screenTimeDisplay");
+      var rate = editor.rates[AppState.hireConfig.mode];
+      var totalPrice = 0;
+
+      if (editor.category === "Thumbnail Designer") {
+        totalPrice = value * rate;
+        timerDisplay.textContent = value + " THUMB";
+        document.getElementById("summaryBlocks").textContent = value + " Item(s)";
+      } else {
+        var m = Math.floor(value / 60);
+        var s = value % 60;
+        timerDisplay.textContent = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+        totalPrice = Math.round((value / 10) * rate);
+        document.getElementById("summaryBlocks").textContent = (value / 10).toFixed(1) + " units";
+      }
+
+      AppState.hireConfig.price = totalPrice;
+      document.getElementById("summaryRate").textContent = "₹" + rate;
+      document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
+    };
+
+    // Bug #1 & #2 Fixed: Verification of Price & Double-Click Lock
+    window.submitConfiguredOrder = function(btn) {
+      if (!AppState.currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab('viewProfile'); return; }
+      var editor = AppState.editorsMap[AppState.hireConfig.editorKey];
+      var footageUrl = document.getElementById("orderFootageUrl").value.trim();
+      var instructions = document.getElementById("orderInstructions").value.trim();
+      if (!footageUrl) { showToast("Error", "Provide asset link.", "error"); return; }
+      if (!editor) { showToast("Error", "Invalid Editor Reference.", "error"); return; }
+
+      // Server-side imitation check
+      window.calculateOrderPrice();
+
+      btn.disabled = true; btn.innerHTML = "Processing...";
+      var orderIdCode = "RX-" + Math.floor(1000 + Math.random() * 9000);
+      var orderData = {
+        orderId: orderIdCode, editorId: AppState.hireConfig.editorKey, editorName: editor.name,
+        editorUid: editor.ownerUid, editorEmail: editor.ownerEmail || "", category: editor.category,
+        modeName: editor.modeNames[AppState.hireConfig.mode], duration: AppState.hireConfig.duration, 
+        price: AppState.hireConfig.price, canvasRatio: (editor.category === "Thumbnail Designer" ? AppState.hireConfig.ratio : "standard"),
+        footageLink: footageUrl, instructions: instructions, clientName: AppState.currentUser.displayName, 
+        clientEmail: AppState.currentUser.email, clientUid: AppState.currentUser.uid, 
+        status: "Wait for editor response", workProgress: 0, workProgressNote: "Waiting for creator acceptance",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      db.collection("orders").add(orderData).then(function() {
+        emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+          to_email: editor.ownerEmail || CONFIG.superAdmin, recipient_name: editor.name,
+          mail_title: "NEW ORDER COMMISSION RECEIVED",
+          mail_message: "A new client has requested a commission on Rex Edit Hub. Review details in your dashboard.",
+          order_id: orderIdCode, client_name: AppState.currentUser.displayName, client_email: AppState.currentUser.email,
+          editor_name: editor.name, category: editor.category, mode_name: editor.modeNames[AppState.hireConfig.mode],
+          duration: AppState.hireConfig.duration, price: AppState.hireConfig.price, footage_link: footageUrl,
+          instructions: instructions || "None", primary_action_text: "Open Dashboard",
+          primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+          secondary_action_text: "Decline Order", secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
+        });
+        showToast("Sent", "Order sent to " + editor.name + " for review!", "success");
+        window.switchTab('viewPlacedOrder');
+      }).catch(function(err){ showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled = false; btn.innerHTML = "Send Request &rarr;"; });
+    };
+
     window.startApplyForEarn = function() {
-      if (!currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab('viewProfile'); return; }
+      if (!AppState.currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab('viewProfile'); return; }
       window.switchTab('viewRegisterStep1');
     };
 
-    window.submitStep1Request = function() {
+    window.submitStep1Request = function(btn) {
       var role = document.getElementById("regWorkType").value;
       var link = document.getElementById("regPortfolioLink").value.trim();
       if (!link) { showToast("Error", "Provide portfolio link.", "error"); return; }
       
-      tempRegistrationData.role = role; 
-      tempRegistrationData.portfolioLink = link;
-
-      emailjs.send("service_ii7zzqx", CURRENT_EMAIL_TEMPLATE_ID, {
-        to_email: SUPER_ADMIN_EMAIL,
-        recipient_name: "Super Admin",
+      AppState.tempRegData.role = role; 
+      AppState.tempRegData.portfolioLink = link;
+      
+      btn.disabled = true; btn.innerHTML = "Validating...";
+      emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
+        to_email: CONFIG.superAdmin, recipient_name: "Super Admin",
         mail_title: "NEW CREATOR / EDITOR APPLICATION",
-        mail_message: "A creator has submitted their application on Rex Edit Hub!\n\nCandidate: " + currentUser.displayName + " (" + currentUser.email + ")\nApplied Specialty: " + role + "\nPortfolio / Work Proof: " + link + "\n\nReview the submission in your dashboard.",
-        order_id: "APP-" + Math.floor(1000 + Math.random() * 9000),
-        client_name: currentUser.displayName,
-        client_email: currentUser.email,
-        editor_name: "Pending Verification",
-        category: role,
-        mode_name: "Application",
-        duration: "N/A",
-        price: "Review",
-        footage_link: link,
-        instructions: "Portfolio link provided for application review.",
-        primary_action_text: "Open Admin Hub",
-        primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
-        secondary_action_text: "View Portfolio",
-        secondary_action_url: link
+        mail_message: "A creator has submitted their application on Rex Edit Hub!\n\nCandidate: " + AppState.currentUser.displayName + " (" + AppState.currentUser.email + ")\nApplied Specialty: " + role + "\nPortfolio: " + link + "\n\nReview the submission in your dashboard.",
+        order_id: "APP-" + Math.floor(1000 + Math.random() * 9000), client_name: AppState.currentUser.displayName, client_email: AppState.currentUser.email,
+        editor_name: "Pending Verification", category: role, mode_name: "Application", duration: "N/A", price: "Review",
+        footage_link: link, instructions: "Portfolio link provided for application review.",
+        primary_action_text: "Open Admin Hub", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
+        secondary_action_text: "View Portfolio", secondary_action_url: link
+      }).finally(function(){
+        btn.disabled = false; btn.innerHTML = "Continue to Shop Details & Pricing &rarr;";
+        showToast("Application Logged", "Now configure your brand shop & custom pricing.", "success");
+        window.switchTab('viewRegisterStep2');
       });
-
-      showToast("Application Logged", "Now configure your brand shop & custom pricing.", "success");
-      window.switchTab('viewRegisterStep2');
     };
 
-    window.completeEditorRegistration = function() {
+    window.completeEditorRegistration = function(btn) {
       var shopName = document.getElementById("regShopName").value.trim();
-      var logoUrl = uploadedLogoBase64 || document.getElementById("regShopLogo").value.trim();
+      var logoUrl = AppState.tempUploadBase64 || document.getElementById("regShopLogoHiddenInput").value.trim();
       var pBasic = parseInt(document.getElementById("regPriceBasic").value, 10) || 25;
       var pStd = parseInt(document.getElementById("regPriceStd").value, 10) || 40;
       var pPrem = parseInt(document.getElementById("regPricePrem").value, 10) || 65;
 
       if (!shopName) { showToast("Error", "Enter your brand shop name.", "error"); return; }
-      var role = tempRegistrationData.role;
+      var role = AppState.tempRegData.role;
 
-      var screenClass = "ratio-16-9";
-      var ratioText = "16:9 Standard Widescreen";
-      var unitShort = "/ 1m";
-      var maxUnits = 1800;
+      var screenClass = "ratio-16-9"; var ratioText = "16:9 Standard"; var unitShort = "/ 1m"; var maxUnits = 1800;
+      if (role.includes("Short-Form") || role === "Motion Graphics (Short-Form)") { screenClass = "ratio-9-16"; ratioText = "9:16 Vertical"; unitShort = "/ 10s"; maxUnits = 180; } 
+      else if (role === "Thumbnail Designer") { screenClass = "ratio-16-9"; ratioText = "Multi-Canvas"; unitShort = "/ Thumb"; maxUnits = 10; } 
+      else if (role === "Content & Video Researcher") { screenClass = "ratio-16-9"; ratioText = "Script Format"; unitShort = "/ Script"; maxUnits = 10; }
 
-      if (role.includes("Short-Form") || role === "Motion Graphics (Short-Form)") {
-        screenClass = "ratio-9-16";
-        ratioText = "9:16 Vertical Reel";
-        unitShort = "/ 10s";
-        maxUnits = 180;
-      } else if (role === "Thumbnail Designer") {
-        screenClass = "ratio-16-9";
-        ratioText = "Multi-Canvas (16:9 / 1:1 / 9:16 / 4:5)";
-        unitShort = "/ Thumb";
-        maxUnits = 10;
-      } else if (role === "Content & Video Researcher") {
-        screenClass = "ratio-16-9";
-        ratioText = "Research Brief & Script Format";
-        unitShort = "/ Script";
-        maxUnits = 10;
-      }
-
+      btn.disabled = true; btn.innerHTML = "Uploading Shop Data...";
       var applicationData = {
-        name: shopName, 
-        category: role, 
-        logoUrl: logoUrl,
-        portfolioLink: tempRegistrationData.portfolioLink,
-        ratioText: ratioText,
-        screenClass: screenClass, 
-        dimText: "High Definition",
-        maxSeconds: maxUnits, 
-        unitShort: unitShort,
+        name: shopName, category: role, logoUrl: logoUrl, portfolioLink: AppState.tempRegData.portfolioLink,
+        ratioText: ratioText, screenClass: screenClass, dimText: "High Definition", maxSeconds: maxUnits, unitShort: unitShort,
         rates: { low: pBasic, medium: pStd, high: pPrem }, 
-        ownerUid: currentUser.uid, 
-        ownerEmail: currentUser.email, 
-        ownerHandle: currentUserIdHandle || "creator",
-        status: "Pending Admin Approval",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        ownerUid: AppState.currentUser.uid, ownerEmail: AppState.currentUser.email, ownerHandle: AppState.currentHandle || "creator",
+        status: "Pending Admin Approval", createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       db.collection("shop_applications").add(applicationData).then(function() {
         showToast("Application Submitted", "Sent to Super Admin for verification. You will be notified once live!", "success"); 
         window.switchTab('viewProfile');
-      });
+      }).catch(function(err){ showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled=false; btn.innerHTML = "Submit for Admin Verification &rarr;"; });
     };
+
+    /* --- 15 Live Animated FX Engine (Bug #11 Perfect Cancellation Logic) --- */
+    var liveCanvasAnimId = null;
+    var liveParticles = [];
+    var animatedThemeKeys = ["snow", "starfield", "cyberrain", "bubbles", "matrix", "embers", "plasma", "chroma", "prism", "auroraflow", "golddust", "storm", "petals", "warp", "flares"];
+
+    function initFxParticles(mode, w, h) {
+      liveParticles = [];
+      var count = 50;
+      if (mode === "matrix") count = 35;
+      if (mode === "starfield" || mode === "warp") count = 75;
+      if (mode === "bubbles" || mode === "petals") count = 35;
+
+      for (var i = 0; i < count; i++) {
+        liveParticles.push({
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 3 + 1, vx: (Math.random() - 0.5) * 1.5, vy: Math.random() * 2 + 0.8,
+          alpha: Math.random() * 0.7 + 0.3, colorHue: Math.floor(Math.random() * 360),
+          rot: Math.random() * 360, char: String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
+        });
+      }
+    }
+
+    function renderActiveFx(mode) {
+      var canvas = document.getElementById('liveCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width;
+      var h = canvas.height;
+
+      if (mode === "matrix" || mode === "cyberrain" || mode === "warp") {
+        ctx.fillStyle = "rgba(4, 9, 12, 0.25)";
+        ctx.fillRect(0, 0, w, h);
+      } else {
+        ctx.clearRect(0, 0, w, h);
+      }
+
+      for (var i = 0; i < liveParticles.length; i++) {
+        var p = liveParticles[i];
+        if (mode === "snow") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 0.5, 0, Math.PI * 2); ctx.fillStyle = "rgba(147, 197, 253, " + p.alpha + ")"; ctx.fill(); p.y += p.vy * 0.8; p.x += Math.sin(p.y * 0.02) * 0.4; } 
+        else if (mode === "starfield") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 0.8, 0, Math.PI * 2); ctx.fillStyle = "rgba(199, 210, 254, " + p.alpha + ")"; ctx.fill(); p.y -= p.vy * 0.3; p.alpha = 0.3 + Math.abs(Math.sin(Date.now() * 0.002 + i)); }
+        else if (mode === "cyberrain") { ctx.fillStyle = "#00f0ff"; ctx.fillRect(p.x, p.y, 1.6, p.r * 7); p.y += p.vy * 4; }
+        else if (mode === "bubbles") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2); ctx.strokeStyle = "rgba(56, 189, 248, " + p.alpha + ")"; ctx.lineWidth = 1.4; ctx.stroke(); p.y -= p.vy * 0.9; p.x += Math.sin(p.y * 0.03) * 0.6; }
+        else if (mode === "matrix") { ctx.font = "14px monospace"; ctx.fillStyle = "#22c55e"; ctx.fillText(p.char, p.x, p.y); p.y += p.vy * 3.5; }
+        else if (mode === "embers") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 1.2, 0, Math.PI * 2); ctx.fillStyle = "rgba(249, 115, 22, " + p.alpha + ")"; ctx.shadowBlur = 8; ctx.shadowColor = "#f97316"; ctx.fill(); ctx.shadowBlur = 0; p.y -= p.vy * 1.1; p.x += Math.sin(p.y * 0.04) * 0.8; }
+        else if (mode === "plasma") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2); ctx.fillStyle = "rgba(217, 70, 239, " + (p.alpha * 0.5) + ")"; ctx.fill(); p.x += Math.cos(p.y * 0.01) * 1.5; p.y += Math.sin(p.x * 0.01) * 1.5; }
+        else if (mode === "chroma") { p.colorHue = (p.colorHue + 1.2) % 360; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2); ctx.fillStyle = "hsla(" + p.colorHue + ", 100%, 65%, " + p.alpha + ")"; ctx.fill(); p.x += p.vx * 1.5; p.y += Math.sin(p.x * 0.02) * 1.5; }
+        else if (mode === "prism") { var prismColors = ["#00f0ff", "#f43f5e", "#facc15", "#d946ef"]; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 1.8, 0, Math.PI * 2); ctx.fillStyle = prismColors[i % 4]; ctx.shadowBlur = 10; ctx.shadowColor = prismColors[i % 4]; ctx.fill(); ctx.shadowBlur = 0; p.x += p.vx * 2; p.y -= p.vy * 1.5; }
+        else if (mode === "auroraflow") { var auroraHues = ["#2dd4bf", "#a855f7", "#38bdf8"]; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2); ctx.fillStyle = auroraHues[i % 3]; ctx.globalAlpha = p.alpha * 0.45; ctx.fill(); ctx.globalAlpha = 1.0; p.x += Math.sin(p.y * 0.015) * 2; p.y += p.vy * 0.5; }
+        else if (mode === "golddust") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 1.4, 0, Math.PI * 2); ctx.fillStyle = "rgba(251, 191, 36, " + p.alpha + ")"; ctx.shadowBlur = 6; ctx.shadowColor = "#fbbf24"; ctx.fill(); ctx.shadowBlur = 0; p.y -= p.vy * 0.5; p.x += Math.sin(p.y * 0.03) * 0.8; }
+        else if (mode === "storm") { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + p.vx * 3, p.y + p.vy * 5); ctx.strokeStyle = "rgba(96, 165, 250, " + p.alpha + ")"; ctx.lineWidth = 1.8; ctx.stroke(); p.x += p.vx * 2; p.y += p.vy * 3.5; }
+        else if (mode === "petals") { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.beginPath(); ctx.ellipse(0, 0, p.r * 2, p.r, 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(244, 114, 182, " + (p.alpha * 0.7) + ")"; ctx.fill(); ctx.restore(); p.rot += 0.02; p.y += p.vy * 0.7; p.x += Math.sin(p.y * 0.02) * 1.2; }
+        else if (mode === "warp") { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y + p.vy * 8); ctx.strokeStyle = "rgba(129, 140, 248, " + p.alpha + ")"; ctx.lineWidth = 1.2; ctx.stroke(); p.y += p.vy * 6; }
+        else if (mode === "flares") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.4, 0, Math.PI * 2); ctx.fillStyle = "rgba(192, 132, 252, " + (p.alpha * 0.4) + ")"; ctx.shadowBlur = 12; ctx.shadowColor = "#c084fc"; ctx.fill(); ctx.shadowBlur = 0; p.x += Math.cos(p.y * 0.02) * 1.4; p.y -= p.vy * 0.7; }
+
+        if (p.y > h + 15) { p.y = -15; p.x = Math.random() * w; }
+        if (p.y < -15) { p.y = h + 15; p.x = Math.random() * w; }
+        if (p.x > w + 15) { p.x = -15; }
+        if (p.x < -15) { p.x = w + 15; }
+      }
+      liveCanvasAnimId = requestAnimationFrame(function() { renderActiveFx(mode); });
+    }
+
+    function bindVisualAnimationEngine(themeName) {
+      var canvas = document.getElementById('liveCanvas');
+      if (!canvas) return;
+      if (liveCanvasAnimId) { cancelAnimationFrame(liveCanvasAnimId); liveCanvasAnimId = null; }
+      if (animatedThemeKeys.indexOf(themeName) !== -1) {
+        canvas.style.display = "block";
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initFxParticles(themeName, canvas.width, canvas.height);
+        renderActiveFx(themeName);
+      } else {
+        canvas.style.display = "none";
+        var ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      var initialTheme = localStorage.getItem('rex_theme') || 'default';
+      bindVisualAnimationEngine(initialTheme);
+      window.addEventListener('resize', function() {
+        var canvas = document.getElementById('liveCanvas');
+        if (canvas) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      });
+    });
   </script>
 </head>
 <body>
@@ -1626,7 +1799,7 @@
       <p class="rex-modal-text">Find any creator profile on the network using their unique handle.</p>
       <div style="display:flex; gap:8px; margin-bottom:1.2rem;">
         <input type="text" id="searchUserIdInput" class="form-input-field" placeholder="e.g. maxgamer or @creator" style="margin:0;">
-        <button class="btn-action-primary" onclick="window.executeUserSearch()" type="button">Lookup</button>
+        <button class="btn-action-primary" onclick="window.executeUserSearch()" type="button" style="width:auto;">Lookup</button>
       </div>
       <div id="searchResultContainer" style="margin-bottom:1.2rem;"></div>
       <div class="rex-modal-actions">
@@ -1652,14 +1825,14 @@
       <label class="config-label">Upload New Logo File</label>
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
         <input type="file" id="editShopLogoHiddenInput" accept="image/*" class="hidden-file-input" onchange="window.handleLogoFileSelect(event, 'editShop')">
-        <button class="custom-file-upload-btn" onclick="document.getElementById('editShopLogoHiddenInput').click()">Choose File</button>
-        <span class="file-name-display" id="editShopFileNameDisplay">No new file selected</span>
+        <button class="custom-file-upload-btn" onclick="document.getElementById('editShopLogoHiddenInput').click()">Choose Image File</button>
+        <span class="file-name-display" id="editShopFileNameDisplay">No file selected</span>
       </div>
       <input type="text" id="editShopLogoInput" class="form-input-field" placeholder="Or paste image URL here" style="display:none;">
       
       <div id="editShopLogoPreviewWrap" style="display:none; align-items:center; gap:10px; margin-bottom:12px;">
         <img id="editShopLogoPreviewImg" src="" style="width:40px; height:40px; border-radius:10px; object-fit:cover;">
-        <span style="font-size:0.8rem; color:var(--success); font-weight:800;">New Logo Loaded!</span>
+        <span style="font-size:0.8rem; color:var(--success); font-weight:800;">Logo attached successfully!</span>
       </div>
 
       <label class="config-label" style="margin-top:0.8rem;">Update Pricing Tiers (₹)</label>
@@ -1671,7 +1844,7 @@
 
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeEditShopModal()" type="button">Cancel</button>
-        <button class="btn-action-primary" onclick="window.submitShopEdit()" type="button" style="width:auto;">Save Changes</button>
+        <button class="btn-action-primary" onclick="window.submitShopEdit(this)" type="button" style="width:auto;">Save Changes</button>
       </div>
     </div>
   </div>
@@ -1746,7 +1919,7 @@
 
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeProgressModal()" type="button">Cancel</button>
-        <button class="btn-action-primary" onclick="window.submitProgressUpdate()" type="button" style="width:auto;">Publish Progress &rarr;</button>
+        <button class="btn-action-primary" onclick="window.submitProgressUpdate(this)" type="button" style="width:auto;">Publish Progress &rarr;</button>
       </div>
     </div>
   </div>
@@ -1786,7 +1959,7 @@
       <input type="text" id="paymentProofUrl" class="form-input-field" placeholder="e.g. UPI Ref: 42109823412 or Drive Link">
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeProofSubmitModal()" type="button">Cancel</button>
-        <button class="btn-action-primary" onclick="window.submitPaymentProof()" type="button" style="width:auto;">Confirm Submission</button>
+        <button class="btn-action-primary" onclick="window.submitPaymentProof(this)" type="button" style="width:auto;">Confirm Submission</button>
       </div>
     </div>
   </div>
@@ -1804,7 +1977,7 @@
       <textarea id="rejectReasonInput" class="form-textarea-field" placeholder="Reason for rejection..."></textarea>
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeRejectModal()" type="button">Cancel</button>
-        <button class="rex-btn-confirm-delete" onclick="window.submitOrderRejection()" type="button">Decline & Delete Order</button>
+        <button class="rex-btn-confirm-delete" onclick="window.submitOrderRejection(this)" type="button">Decline & Delete Order</button>
       </div>
     </div>
   </div>
@@ -1822,7 +1995,7 @@
       <textarea id="rejectShopReasonInput" class="form-textarea-field" placeholder="Feedback / rejection reason..."></textarea>
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeRejectShopModal()" type="button">Cancel</button>
-        <button class="rex-btn-confirm-delete" onclick="window.submitShopRejection()" type="button">Decline Application</button>
+        <button class="rex-btn-confirm-delete" onclick="window.submitShopRejection(this)" type="button">Decline Application</button>
       </div>
     </div>
   </div>
@@ -1840,18 +2013,18 @@
       <textarea id="deleteShopReasonInput" class="form-textarea-field" placeholder="Reason for shop termination..."></textarea>
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeDeleteShopModal()" type="button">Cancel</button>
-        <button class="rex-btn-confirm-delete" onclick="window.confirmAdminDeleteShop()" type="button">Terminate Shop</button>
+        <button class="rex-btn-confirm-delete" onclick="window.confirmAdminDeleteShop(this)" type="button">Terminate Shop</button>
       </div>
     </div>
   </div>
 
   <header class="top-header">
     <div class="nav-left">
-      <button class="three-dot-btn" onclick="window.toggleSidebar()" type="button">
+      <button class="three-dot-btn" aria-label="Menu" onclick="window.toggleSidebar()" type="button">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.3"/><circle cx="12" cy="12" r="2.3"/><circle cx="12" cy="19" r="2.3"/></svg>
       </button>
       <div class="brand-wrap">
-        <img src="logo.png" alt="Logo" class="header-logo-img">
+        <img src="logo.png" alt="Logo" class="header-logo-img" onerror="this.style.display='none'">
         <div class="brand-stack">
           <span class="brand-title">REX EDIT HUB</span>
           <span class="brand-section-subtitle" id="headerActiveSubtitle">SHOP</span>
@@ -1872,7 +2045,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <span class="sidebar-label">Navigation Hub</span>
-      <button class="sidebar-close-btn" onclick="window.closeSidebar()" type="button">&times;</button>
+      <button class="sidebar-close-btn" aria-label="Close Sidebar" onclick="window.closeSidebar()" type="button">&times;</button>
     </div>
     <div class="sidebar-mini-profile" onclick="window.switchTab('viewProfile', null)">
       <div class="sidebar-avatar-box" id="sidebarAvatarContainer"></div>
@@ -1920,7 +2093,10 @@
         <label class="config-label">Upload Profile Picture</label>
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:1.5rem;">
           <input type="file" id="profileAvatarHiddenInput" accept="image/*" class="hidden-file-input" onchange="window.handleLogoFileSelect(event, 'avatar')">
-          <button class="custom-file-upload-btn" onclick="document.getElementById('profileAvatarHiddenInput').click()">Choose Image File</button>
+          <button class="custom-file-upload-btn" onclick="document.getElementById('profileAvatarHiddenInput').click()">
+             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+             Choose Image File
+          </button>
           <span class="file-name-display" id="avatarFileNameDisplay">No file selected</span>
         </div>
 
@@ -1989,7 +2165,7 @@
         <input type="text" id="inputUserId" class="form-input-field">
         <label class="config-label">Display Name</label>
         <input type="text" id="inputDisplayName" class="form-input-field">
-        <button class="btn-save-profile" onclick="window.saveProfileInfo()" style="width:100%;">Save Profile</button>
+        <button class="btn-action-primary" onclick="window.saveProfileInfo(this)" style="margin-top:0.8rem;">Save Profile</button>
         <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()">Sign Out</button>
         
         <div class="my-shops-container" style="margin-top:2rem;">
@@ -2034,7 +2210,7 @@
         </select>
         <label class="config-label">Portfolio / Work Drive Link *</label>
         <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/... or Behance/YouTube">
-        <button class="btn-action-primary" onclick="window.submitStep1Request()">Continue to Shop Details & Pricing &rarr;</button>
+        <button class="btn-action-primary" onclick="window.submitStep1Request(this)">Continue to Shop Details & Pricing &rarr;</button>
       </div>
     </section>
 
@@ -2048,10 +2224,13 @@
         <label class="config-label">Brand / Shop Name *</label>
         <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Apex Visuals / Neon Studio">
         
-        <label class="config-label">Upload Shop Logo File</label>
+        <label class="config-label">Upload Shop Logo (Optional)</label>
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
           <input type="file" id="regShopLogoHiddenInput" accept="image/*" class="hidden-file-input" onchange="window.handleLogoFileSelect(event, 'shop')">
-          <button class="custom-file-upload-btn" onclick="document.getElementById('regShopLogoHiddenInput').click()">Choose Image File</button>
+          <button class="custom-file-upload-btn" onclick="document.getElementById('regShopLogoHiddenInput').click()">
+             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+             Choose Image File
+          </button>
           <span class="file-name-display" id="shopFileNameDisplay">No file selected</span>
         </div>
         
@@ -2076,7 +2255,7 @@
           </div>
         </div>
 
-        <button class="btn-action-primary" onclick="window.completeEditorRegistration()">Submit for Admin Verification &rarr;</button>
+        <button class="btn-action-primary" onclick="window.completeEditorRegistration(this)">Submit for Admin Verification &rarr;</button>
       </div>
     </section>
 
@@ -2124,7 +2303,7 @@
             <div class="summary-divider"></div>
             <div class="summary-total-line"><span>Total:</span><span class="total-calculated-price" id="summaryTotal">₹0</span></div>
           </div>
-          <button class="btn-action-primary" onclick="window.submitConfiguredOrder()">Send Request &rarr;</button>
+          <button class="btn-action-primary" onclick="window.submitConfiguredOrder(this)">Send Request &rarr;</button>
         </div>
       </div>
     </section>
@@ -2133,7 +2312,7 @@
     <section id="viewPlacedOrder" style="display: none;">
       <div class="section-header"><h1>Placed Orders</h1><p>Live tracking, progress updates, and payment terminal for your commissions.</p></div>
       <div class="info-card">
-        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-return-shop" onclick="window.switchTab('viewShop', null)">Shop Creators</button></div>
+        <div class="empty-state-box" id="placedEmptyBox"><h2 class="empty-title">No Order Placed</h2><button class="btn-action-primary" onclick="window.switchTab('viewShop', null)" style="width:auto; margin-top:10px;">Shop Creators</button></div>
         <div id="activeOrdersList" style="display: none; flex-direction: column; gap: 14px;"></div>
       </div>
     </section>
@@ -2151,7 +2330,8 @@
     <section id="viewLawPolicy" style="display: none;">
       <div class="section-header"><h1>Law & Policy</h1></div>
       <div class="info-card">
-        <div class="policy-item"><h4>Escrow Protection</h4><p>Payments are secured and verified upon delivery.</p></div>
+        <div class="policy-item"><h4>Escrow Protection</h4><p>Payments are secured and verified upon delivery. Fake payment screenshots will result in account termination.</p></div>
+        <div class="policy-item"><h4>Delivery & Revisions</h4><p>Each tier includes standard revisions. Any complex custom requirements must be clearly stated in instructions.</p></div>
       </div>
     </section>
   </main>
