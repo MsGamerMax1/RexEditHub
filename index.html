@@ -218,9 +218,9 @@
     .brand-section-subtitle::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
     
     .header-user-status { display: flex; align-items: center; gap: 8px; }
-    .btn-header-search { background: var(--bg-base); border: 1px solid var(--border-strong); padding: 8px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 800; cursor: pointer; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+    .btn-header-search { background: var(--bg-base); border: 1px solid var(--border-strong); padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
     .btn-header-search:hover { border-color: var(--primary); color: var(--primary); }
-    .btn-header-login { background: var(--primary); color: #fff; border: none; padding: 9px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35); transition: all 0.2s ease; }
+    .btn-header-login { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); transition: all 0.2s ease; }
     .btn-header-login:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(4px); z-index: 9998; display: none; }
@@ -246,7 +246,7 @@
 
     .main-container { position: relative; z-index: 10; flex: 1; width: 100%; max-width: 1050px; margin: 0 auto; padding: 2.2rem 1.25rem 4rem; }
     .section-header { margin-bottom: 2rem; }
-    .section-header h1 { font-size: 2rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.02em; }
+    .section-header h1 { font-size: 2.1rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.02em; }
     .section-header p { color: var(--text-muted); font-size: 1rem; margin-top: 4px; }
     
     .info-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); margin-bottom: 1.5rem; transition: transform 0.2s ease; }
@@ -255,6 +255,7 @@
     .editor-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 1.65rem; display: flex; flex-direction: column; gap: 1.25rem; position: relative; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); transition: transform 0.25s ease, box-shadow 0.25s ease; }
     .editor-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -12px rgba(0,0,0,0.15); border-color: var(--border-strong); }
     
+    /* SPECIALTY BADGE POSITION FIXED (Inside Flow, No Overlap) */
     .inline-badge-wrap { margin-bottom: 0.5rem; }
     .demo-tag { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; letter-spacing: 0.03em; display: inline-block; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .format-badge-short { background: var(--warning-light); border: 1px solid var(--warning); color: var(--warning); }
@@ -299,7 +300,7 @@
     .btn-action-proof { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
     .btn-action-progress { background: #8b5cf6; color: #fff; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25); }
 
-    .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 8px 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
     .btn-back:hover { color: var(--text-main); border-color: var(--border-strong); }
 
     .config-layout { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
@@ -328,11 +329,7 @@
     .mode-btn:hover { border-color: var(--border-strong); }
     .mode-btn.active { background: var(--primary-light); border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
     
-    .input-duration-wrap { display: flex; align-items: center; background: var(--bg-base); border: 1px solid var(--border-strong); border-radius: 12px; overflow: hidden; padding-right: 14px; transition: border-color 0.2s ease; }
-    .input-duration-wrap:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-    .input-duration-wrap input { flex: 1; padding: 14px 16px; border: none; background: transparent; font-size: 1.25rem; font-weight: 800; color: var(--text-main); outline: none; }
-
-    .calculation-summary-box { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.35rem; margin-bottom: 1.5rem; }
+    .calculation-summary-box { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.4rem; }
     .summary-line { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
     .summary-divider { height: 1px; background: var(--border-subtle); margin: 12px 0; }
     .summary-total-line { display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
@@ -366,7 +363,7 @@
     .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ==========================================
-       CUSTOM PREMIUM FILE UPLOAD UI (BUG #1 FIXED)
+       CUSTOM PREMIUM FILE UPLOAD UI
        ========================================== */
     .form-input-field { width: 100%; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.95rem; color: var(--text-main); outline: none; transition: all 0.2s ease; }
     .form-input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
@@ -411,7 +408,7 @@
     .theme-color-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .theme-label-title { font-size: 0.83rem; font-weight: 800; color: var(--text-main); display: block; }
 
-    /* TOAST STACKING (Bug #19 Fixed) */
+    /* TOAST STACKING */
     #toast-container { position: fixed; top: 20px; right: 20px; z-index: 100000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
     .rex-toast { pointer-events: auto; min-width: 300px; max-width: 420px; background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-strong); border-radius: 16px; padding: 15px 18px; display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--shadow-card); transform: translateX(120%); transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease; opacity: 0; }
     .rex-toast.show { transform: translateX(0); opacity: 1; }
@@ -441,9 +438,6 @@
   </style>
 
   <script>
-    // ==========================================
-    // CORE SYSTEM INITIALIZATION & NAMESPACE
-    // ==========================================
     const CONFIG = {
       firebase: {
         apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
@@ -466,26 +460,33 @@
 
     (function() { emailjs.init(CONFIG.emailjs.public_key); })();
 
-    // APP STATE MANAGEMENT (Bug #12 Global Pollution Handled)
-    var AppState = {
-      currentUser: null,
-      currentHandle: "",
-      editorsMap: {},
-      ordersMap: {},
-      themePage: 1,
-      totalThemePages: 3,
-      tempUploadBase64: "",
-      hireConfig: { editorKey: null, mode: "medium", duration: 20, price: 0, ratio: "16-9" },
-      tempRegData: { role: "", portfolioLink: "" },
-      activeModals: { rejectOrder: null, proofOrder: null, progressOrder: null, rejectApp: null, deleteShop: null, editShop: null },
-      listeners: [] // Array to hold unsubs (Bug #8 Memory Leak Fix)
-    };
+    // GLOBALS RESTORED TO AVOID APPSTATE LEAKS
+    var currentUser = null;
+    var currentUserIdHandle = "";
+    var EDITORS_DATA = {};
+    var ALL_ORDERS_MAP = {};
+    
+    // Explicit Listeners for manual cleanup
+    var ordersUnsubscribe = null;
+    var incomingOrdersUnsubscribe = null;
+    var pendingAppsUnsubscribe = null;
+    var userShopsUnsubscribe = null;
 
-    // ==========================================
-    // UTILITY FUNCTIONS (XSS & COMPRESSION)
-    // ==========================================
+    var currentThemePage = 1;
+    var totalThemePages = 3;
 
-    // Bug #3 Fixed: Strict XSS Escaping
+    var currentConfig = { editorKey: null, mode: "medium", duration: 20, price: 0, ratio: "16-9" };
+    var tempRegistrationData = { role: "Short-Form Video Editor", portfolioLink: "" };
+    var uploadedLogoBase64 = "";
+
+    var activeRejectOrderId = null;
+    var activeProofOrderId = null;
+    var activeProgressOrderId = null;
+    var activeRejectAppId = null;
+    var activeDeleteShopData = null;
+    var activeEditingShopId = null;
+
+    // Secure HTML Escape Function
     function escapeHtml(str) {
       if (!str) return "";
       return String(str).replace(/[&<>"'`=\/]/g, function (s) {
@@ -493,7 +494,7 @@
       });
     }
 
-    // Bug #7 Fixed: Client-side Image Compression to prevent DB crash
+    // Client-side image compression to prevent heavy Firebase writes
     function compressImageAndProcess(file, targetType, callback) {
       if (!file) return;
       var reader = new FileReader();
@@ -501,7 +502,7 @@
         var img = new Image();
         img.onload = function() {
           var canvas = document.createElement('canvas');
-          var MAX_WIDTH = 400; // Optimal for avatars/logos
+          var MAX_WIDTH = 400; 
           var scaleSize = MAX_WIDTH / img.width;
           if(img.width > MAX_WIDTH) {
             canvas.width = MAX_WIDTH;
@@ -512,7 +513,7 @@
           }
           var ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          var compressedBase64 = canvas.toDataURL('image/jpeg', 0.85); // Compress heavily
+          var compressedBase64 = canvas.toDataURL('image/jpeg', 0.85); 
           callback(compressedBase64, file.name, targetType);
         };
         img.src = e.target.result;
@@ -520,21 +521,21 @@
       reader.readAsDataURL(file);
     }
 
-    // Bug #1 & #2 Fixed: Live DOM updates without re-fetching
+    // Instant Base64 Update
     window.handleLogoFileSelect = function(event, targetType) {
       var file = event.target.files[0];
       if (!file) return;
       
       compressImageAndProcess(file, targetType, function(base64, fileName, type) {
         if (type === 'shop') {
-          AppState.tempUploadBase64 = base64;
+          uploadedLogoBase64 = base64;
           document.getElementById("shopLogoPreviewImg").src = base64;
           document.getElementById("shopLogoPreviewWrap").style.display = "flex";
           document.getElementById("shopFileNameDisplay").textContent = fileName;
           showToast("Logo Processed", "Shop logo compressed & loaded.", "success");
         } 
         else if (type === 'editShop') {
-          AppState.tempUploadBase64 = base64;
+          uploadedLogoBase64 = base64;
           document.getElementById("editShopLogoPreviewImg").src = base64;
           document.getElementById("editShopLogoPreviewWrap").style.display = "flex";
           document.getElementById("editShopFileNameDisplay").textContent = fileName;
@@ -542,21 +543,18 @@
         } 
         else if (type === 'avatar') {
           document.getElementById("avatarFileNameDisplay").textContent = fileName;
-          
-          // Instant Live Injection
           var av1 = document.getElementById("profileLargeAvatarContainer");
           var av2 = document.getElementById("sidebarAvatarContainer");
           if(av1) av1.innerHTML = '<img src="' + base64 + '" style="width:100%;height:100%;object-fit:cover;">';
           if(av2) av2.innerHTML = '<img src="' + base64 + '" style="width:100%;height:100%;object-fit:cover;">';
 
-          if (AppState.currentUser) {
-            db.collection("users").doc(AppState.currentUser.uid).update({ photoURL: base64 }).then(function() {
-              AppState.currentUser.photoURL = base64;
+          if (currentUser) {
+            db.collection("users").doc(currentUser.uid).update({ photoURL: base64 }).then(function() {
+              currentUser.photoURL = base64;
               showToast("Avatar Updated", "Profile picture synchronized to cloud.", "success");
             });
           }
         }
-        // Bug #15 Fixed: Reset input so same file can be selected again if canceled
         event.target.value = ''; 
       });
     };
@@ -574,27 +572,27 @@
     };
 
     window.changeThemePage = function(direction) {
-      var newPage = AppState.themePage + direction;
-      if (newPage < 1 || newPage > AppState.totalThemePages) return;
-      AppState.themePage = newPage;
+      var newPage = currentThemePage + direction;
+      if (newPage < 1 || newPage > totalThemePages) return;
+      currentThemePage = newPage;
 
-      for (var p = 1; p <= AppState.totalThemePages; p++) {
+      for (var p = 1; p <= totalThemePages; p++) {
         var pageEl = document.getElementById("themePage" + p);
         if (pageEl) {
-          if (p === AppState.themePage) pageEl.classList.add("active");
+          if (p === currentThemePage) pageEl.classList.add("active");
           else pageEl.classList.remove("active");
         }
       }
 
-      document.getElementById("btnThemePrev").disabled = (AppState.themePage === 1);
-      document.getElementById("btnThemeNext").disabled = (AppState.themePage === AppState.totalThemePages);
+      document.getElementById("btnThemePrev").disabled = (currentThemePage === 1);
+      document.getElementById("btnThemeNext").disabled = (currentThemePage === totalThemePages);
 
       var titles = [
         "Page 1 of 3: Classic Studio",
         "Page 2 of 3: Atmospheric & Deep",
         "Page 3 of 3: ✨ Live Animated Effects (15 Modes)"
       ];
-      document.getElementById("themePageIndicator").textContent = titles[AppState.themePage - 1];
+      document.getElementById("themePageIndicator").textContent = titles[currentThemePage - 1];
     };
 
     window.showToast = function(title, message, type) {
@@ -620,21 +618,21 @@
       document.getElementById("userSearchModal").classList.remove("open");
     };
 
-    // Bug #10 Fixed: Optimized dual-lookup logic
-    window.executeUserSearch = function() {
+    window.executeUserSearch = function(btn) {
       var query = document.getElementById("searchUserIdInput").value.trim().toLowerCase().replace(/^@/, '');
       if (!query) { showToast("Error", "Enter UserID to search.", "error"); return; }
       
       var resBox = document.getElementById("searchResultContainer");
       resBox.innerHTML = "<p style='color:var(--text-muted); font-size:0.85rem;'>Looking up network...</p>";
 
+      btn.disabled = true;
       db.collection("users").where("userId", "==", query).get().then(function(snapshot) {
         if (snapshot.empty) {
           resBox.innerHTML = "<div style='text-align:center; padding:15px;'><p style='color:var(--danger); font-weight:800;'>No creator found with @" + escapeHtml(query) + "</p></div>";
           return;
         }
         var u = snapshot.docs[0].data();
-        var avatar = u.photoURL ? '<img src="' + u.photoURL + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' : (u.displayName || "U").substring(0,2).toUpperCase();
+        var avatar = u.photoURL ? '<img src="' + escapeHtml(u.photoURL) + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' : escapeHtml((u.displayName || "U").substring(0,2).toUpperCase());
 
         db.collection("shops").where("ownerHandle", "==", query).get().then(function(shopSnap) {
           var shopInfo = "<p style='font-size:0.8rem; color:var(--text-muted); margin-top:4px;'>Status: Regular Creator</p>";
@@ -653,11 +651,11 @@
               '</div>' +
             '</div>';
         });
-      });
+      }).finally(function(){ btn.disabled = false; });
     };
 
     window.openOrderDetailsModal = function(docId) {
-      var data = AppState.ordersMap[docId];
+      var data = ALL_ORDERS_MAP[docId];
       if (!data) return;
       document.getElementById("modalDetailOrderId").textContent = "#" + data.orderId;
       document.getElementById("modalDetailClient").textContent = data.clientName + " (" + data.clientEmail + ")";
@@ -691,7 +689,7 @@
     };
 
     window.openProgressModal = function(docId, orderId, currentPercent) {
-      AppState.activeModals.progressOrder = docId;
+      activeProgressOrderId = docId;
       document.getElementById("progressModalOrderId").textContent = orderId;
       document.getElementById("progressPercentageSelect").value = currentPercent || 15;
       document.getElementById("progressNoteInput").value = "";
@@ -700,19 +698,16 @@
 
     window.closeProgressModal = function() {
       document.getElementById("editorProgressModal").classList.remove("open");
-      AppState.activeModals.progressOrder = null;
+      activeProgressOrderId = null;
     };
 
-    // Bug #2 Fixed: Prevent multiple submissions
     window.submitProgressUpdate = function(btn) {
-      var docId = AppState.activeModals.progressOrder;
-      if (!docId) return;
-      
+      if (!activeProgressOrderId) return;
       var percent = parseInt(document.getElementById("progressPercentageSelect").value, 10);
       var note = document.getElementById("progressNoteInput").value.trim() || "Work in progress";
 
       btn.disabled = true; btn.innerHTML = "Saving...";
-      db.collection("orders").doc(docId).update({
+      db.collection("orders").doc(activeProgressOrderId).update({
         workProgress: percent,
         workProgressNote: note,
         lastProgressUpdate: firebase.firestore.FieldValue.serverTimestamp()
@@ -725,24 +720,23 @@
     };
 
     window.openRejectModal = function(docId) {
-      AppState.activeModals.rejectOrder = docId;
+      activeRejectOrderId = docId;
       document.getElementById("rejectReasonInput").value = "";
       document.getElementById("rejectReasonModal").classList.add("open");
     };
 
     window.closeRejectModal = function() {
       document.getElementById("rejectReasonModal").classList.remove("open");
-      AppState.activeModals.rejectOrder = null;
+      activeRejectOrderId = null;
     };
 
     window.submitOrderRejection = function(btn) {
       var reason = document.getElementById("rejectReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejection.", "error"); return; }
-      var docId = AppState.activeModals.rejectOrder;
-      if (!docId) return;
+      if (!activeRejectOrderId) return;
 
       btn.disabled = true; btn.innerHTML = "Deleting...";
-      var docRef = db.collection("orders").doc(docId);
+      var docRef = db.collection("orders").doc(activeRejectOrderId);
       docRef.get().then(function(docSnap) {
         if (!docSnap.exists) { window.closeRejectModal(); return; }
         var orderData = docSnap.data();
@@ -760,7 +754,7 @@
         }).then(function() {
           return docRef.delete();
         }).then(function() {
-          delete AppState.ordersMap[docId];
+          delete ALL_ORDERS_MAP[activeRejectOrderId];
           showToast("Order Rejected", "Client notified and order deleted.", "info");
           window.closeRejectModal();
         }).catch(function(err) { showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled=false; btn.innerHTML="Decline & Delete Order"; });
@@ -779,7 +773,7 @@
     };
 
     window.openProofSubmitModal = function(docId, orderId) {
-      AppState.activeModals.proofOrder = docId;
+      activeProofOrderId = docId;
       document.getElementById("proofModalOrderId").textContent = orderId;
       document.getElementById("paymentProofUrl").value = "";
       document.getElementById("clientProofModal").classList.add("open");
@@ -787,17 +781,16 @@
 
     window.closeProofSubmitModal = function() {
       document.getElementById("clientProofModal").classList.remove("open");
-      AppState.activeModals.proofOrder = null;
+      activeProofOrderId = null;
     };
 
     window.submitPaymentProof = function(btn) {
       var proofLink = document.getElementById("paymentProofUrl").value.trim();
       if (!proofLink) { showToast("Proof Required", "Enter screenshot URL, Drive link, or UPI Ref.", "error"); return; }
-      var docId = AppState.activeModals.proofOrder;
-      if (!docId) return;
+      if (!activeProofOrderId) return;
 
       btn.disabled = true; btn.innerHTML = "Submitting...";
-      var docRef = db.collection("orders").doc(docId);
+      var docRef = db.collection("orders").doc(activeProofOrderId);
       docRef.get().then(function(docSnap) {
         if (!docSnap.exists) return;
         var orderData = docSnap.data();
@@ -922,24 +915,23 @@
     };
 
     window.openRejectShopModal = function(appId) {
-      AppState.activeModals.rejectApp = appId;
+      activeRejectAppId = appId;
       document.getElementById("rejectShopReasonInput").value = "";
       document.getElementById("rejectShopModal").classList.add("open");
     };
 
     window.closeRejectShopModal = function() {
       document.getElementById("rejectShopModal").classList.remove("open");
-      AppState.activeModals.rejectApp = null;
+      activeRejectAppId = null;
     };
 
     window.submitShopRejection = function(btn) {
       var reason = document.getElementById("rejectShopReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Specify a reason for rejecting shop.", "error"); return; }
-      var appId = AppState.activeModals.rejectApp;
-      if (!appId) return;
+      if (!activeRejectAppId) return;
 
       btn.disabled = true; btn.innerHTML = "Declining...";
-      var appRef = db.collection("shop_applications").doc(appId);
+      var appRef = db.collection("shop_applications").doc(activeRejectAppId);
       appRef.get().then(function(docSnap) {
         if (!docSnap.exists) { window.closeRejectShopModal(); return; }
         var data = docSnap.data();
@@ -961,20 +953,20 @@
     };
 
     window.openDeleteShopModal = function(shopId, shopName, ownerEmail) {
-      AppState.activeModals.deleteShop = { shopId: shopId, shopName: shopName, ownerEmail: ownerEmail };
+      activeDeleteShopData = { shopId: shopId, shopName: shopName, ownerEmail: ownerEmail };
       document.getElementById("deleteShopReasonInput").value = "";
       document.getElementById("deleteShopModal").classList.add("open");
     };
 
     window.closeDeleteShopModal = function() {
       document.getElementById("deleteShopModal").classList.remove("open");
-      AppState.activeModals.deleteShop = null;
+      activeDeleteShopData = null;
     };
 
     window.confirmAdminDeleteShop = function(btn) {
       var reason = document.getElementById("deleteShopReasonInput").value.trim();
       if (!reason) { showToast("Reason Required", "Provide a reason for deleting this shop.", "error"); return; }
-      var target = AppState.activeModals.deleteShop;
+      var target = activeDeleteShopData;
       if (!target) return;
 
       btn.disabled = true; btn.innerHTML = "Terminating...";
@@ -1000,26 +992,21 @@
     // ==========================================
     window.loginWithGoogle = function() {
       auth.signInWithPopup(provider).then(function(result) {
-        AppState.currentUser = result.user;
-        showToast("Signed In", "Welcome back, " + AppState.currentUser.displayName + "!", "success");
-        syncUserProfile(AppState.currentUser);
+        showToast("Signed In", "Welcome back, " + result.user.displayName + "!", "success");
       }).catch(function(error) { showToast("Login Failed", error.message, "error"); });
     };
 
     window.triggerLogout = function() {
       auth.signOut().then(function() {
-        AppState.currentUser = null; AppState.currentHandle = "";
-        clearAllListeners(); // Bug #8 Kill listeners
+        currentUser = null; currentUserIdHandle = "";
+        if(userShopsUnsubscribe) userShopsUnsubscribe();
+        if(ordersUnsubscribe) ordersUnsubscribe();
+        if(incomingOrdersUnsubscribe) incomingOrdersUnsubscribe();
+        if(pendingAppsUnsubscribe) pendingAppsUnsubscribe();
         showToast("Logged Out", "Signed out successfully.", "info");
         resetUserInterface();
       });
     };
-
-    // Bug #8 Fixed: Centralized Listener Cleanup
-    function clearAllListeners() {
-      AppState.listeners.forEach(function(unsub) { if (typeof unsub === 'function') unsub(); });
-      AppState.listeners = [];
-    }
 
     function syncUserProfile(user) {
       if (!user) return;
@@ -1027,11 +1014,11 @@
       userRef.get().then(function(doc) {
         if (doc.exists) {
           var userData = doc.data();
-          AppState.currentHandle = userData.userId || user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
-          updateUserInterface(user, userData.displayName || user.displayName, AppState.currentHandle);
+          currentUserIdHandle = userData.userId || user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
+          updateUserInterface(user, userData.displayName || user.displayName, currentUserIdHandle);
         } else {
           var baseHandle = user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
-          AppState.currentHandle = baseHandle;
+          currentUserIdHandle = baseHandle;
           userRef.set({
             userId: baseHandle, displayName: user.displayName || baseHandle,
             email: user.email, photoURL: user.photoURL || "", createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1039,10 +1026,16 @@
         }
       });
       
-      clearAllListeners();
+      if(userShopsUnsubscribe) userShopsUnsubscribe();
       listenToUserCreatedShops(user.uid);
+
+      if(ordersUnsubscribe) ordersUnsubscribe();
       listenToPrivateOrders(user.uid);
+
+      if(incomingOrdersUnsubscribe) incomingOrdersUnsubscribe();
       listenToEditorIncomingOrders();
+
+      if(pendingAppsUnsubscribe) pendingAppsUnsubscribe();
       listenToPendingShopApplications();
     }
 
@@ -1091,31 +1084,28 @@
     }
 
     auth.onAuthStateChanged(function(user) {
-      if (user) { AppState.currentUser = user; syncUserProfile(user); }
+      if (user) { currentUser = user; syncUserProfile(user); }
       else { resetUserInterface(); }
     });
 
     window.saveProfileInfo = function(btn) {
-      if (!AppState.currentUser) { showToast("Access Denied", "Sign in first.", "error"); return; }
+      if (!currentUser) { showToast("Access Denied", "Sign in first.", "error"); return; }
       var newDisplayName = document.getElementById("inputDisplayName").value.trim();
       var rawHandle = document.getElementById("inputUserId").value.trim().toLowerCase().replace(/^@/, '');
       if (!newDisplayName || !rawHandle) { showToast("Error", "All fields required.", "error"); return; }
 
       btn.disabled = true; btn.innerHTML = "Saving...";
-      db.collection("users").doc(AppState.currentUser.uid).set({
-        userId: rawHandle, displayName: newDisplayName, email: AppState.currentUser.email, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      db.collection("users").doc(currentUser.uid).set({
+        userId: rawHandle, displayName: newDisplayName, email: currentUser.email, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true }).then(function() {
-        AppState.currentHandle = rawHandle;
-        updateUserInterface(AppState.currentUser, newDisplayName, rawHandle);
+        currentUserIdHandle = rawHandle;
+        updateUserInterface(currentUser, newDisplayName, rawHandle);
         showToast("Saved", "Profile updated successfully.", "success");
       }).finally(function(){ btn.disabled = false; btn.innerHTML = "Save Profile"; });
     };
 
-    // ==========================================
-    // SHOP CREATION & MANAGEMENT LOGIC
-    // ==========================================
     function listenToUserCreatedShops(uid) {
-      var unsub = db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
+      userShopsUnsubscribe = db.collection("shops").where("ownerUid", "==", uid).onSnapshot(function(snapshot) {
         var listContainer = document.getElementById("myShopsList");
         var countBadge = document.getElementById("myShopsCountBadge");
         countBadge.textContent = snapshot.size + " Live";
@@ -1134,17 +1124,16 @@
           );
         });
       });
-      AppState.listeners.push(unsub);
     }
 
     window.openEditShopModal = function(shopId, name, logoUrl, b, s, p) {
-      AppState.activeModals.editShop = shopId;
+      activeEditingShopId = shopId;
       document.getElementById("editShopNameInput").value = name;
       document.getElementById("editShopLogoInput").value = logoUrl || "";
       document.getElementById("editPriceBasic").value = b;
       document.getElementById("editPriceStd").value = s;
       document.getElementById("editPricePrem").value = p;
-      AppState.tempUploadBase64 = logoUrl || "";
+      uploadedLogoBase64 = logoUrl || "";
       
       var previewImg = document.getElementById("editShopLogoPreviewImg");
       var previewWrap = document.getElementById("editShopLogoPreviewWrap");
@@ -1161,15 +1150,14 @@
 
     window.closeEditShopModal = function() {
       document.getElementById("editShopModal").classList.remove("open");
-      AppState.activeModals.editShop = null;
-      AppState.tempUploadBase64 = "";
+      activeEditingShopId = null;
+      uploadedLogoBase64 = "";
     };
 
     window.submitShopEdit = function(btn) {
-      var shopId = AppState.activeModals.editShop;
-      if (!shopId) return;
+      if (!activeEditingShopId) return;
       var newName = document.getElementById("editShopNameInput").value.trim();
-      var newLogo = AppState.tempUploadBase64 || document.getElementById("editShopLogoInput").value.trim();
+      var newLogo = uploadedLogoBase64 || document.getElementById("editShopLogoInput").value.trim();
       var b = parseInt(document.getElementById("editPriceBasic").value, 10) || 25;
       var s = parseInt(document.getElementById("editPriceStd").value, 10) || 40;
       var p = parseInt(document.getElementById("editPricePrem").value, 10) || 65;
@@ -1177,7 +1165,7 @@
       if (!newName) { showToast("Error", "Shop name cannot be blank.", "error"); return; }
 
       btn.disabled = true; btn.innerHTML = "Saving...";
-      db.collection("shops").doc(shopId).update({
+      db.collection("shops").doc(activeEditingShopId).update({
         name: newName, logoUrl: newLogo, rates: { low: b, medium: s, high: p }, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(function() {
         showToast("Shop Updated", "Changes saved successfully.", "success");
@@ -1191,11 +1179,10 @@
       }
     };
 
-    // Bug #9 Fixed: Prevent complete DOM trashing on Snapshot by building HTML cleanly
     db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var grid = document.getElementById("shopEditorGrid");
       var emptyBox = document.getElementById("shopEmptyBox");
-      AppState.editorsMap = {};
+      EDITORS_DATA = {};
       
       if (snapshot.empty) { 
         if (emptyBox) emptyBox.style.display = "flex"; 
@@ -1209,7 +1196,7 @@
         var finalHTML = "";
         snapshot.forEach(function(doc) {
           var data = doc.data();
-          AppState.editorsMap[doc.id] = data;
+          EDITORS_DATA[doc.id] = data;
 
           var cat = data.category || "Editor";
           var badgeClass = "format-badge-long";
@@ -1221,7 +1208,7 @@
           var avatarDisplay = data.logoUrl ? '<img src="' + escapeHtml(data.logoUrl) + '" onerror="this.style.display=\'none\'">' : escapeHtml((data.name || "ED").substring(0,2).toUpperCase());
 
           var adminDeleteBtn = "";
-          if (AppState.currentUser && AppState.currentUser.email === CONFIG.superAdmin) {
+          if (currentUser && currentUser.email === CONFIG.superAdmin) {
             adminDeleteBtn = '<button class="btn-delete-shop" onclick="window.openDeleteShopModal(\'' + doc.id + '\', \'' + escapeHtml(data.name) + '\', \'' + escapeHtml(data.ownerEmail) + '\')">Admin Delete</button>';
           }
           
@@ -1253,12 +1240,12 @@
     });
 
     function listenToPendingShopApplications() {
-      var unsub = db.collection("shop_applications").onSnapshot(function(snapshot) {
+      pendingAppsUnsubscribe = db.collection("shop_applications").onSnapshot(function(snapshot) {
         var cardBox = document.getElementById("adminPendingShopsCard");
         var listContainer = document.getElementById("adminPendingShopsList");
         var viewContainer = document.getElementById("adminReviewShopsList");
         
-        var isSuperAdmin = AppState.currentUser && AppState.currentUser.email === CONFIG.superAdmin;
+        var isSuperAdmin = currentUser && currentUser.email === CONFIG.superAdmin;
 
         if (cardBox && listContainer) {
           if (!isSuperAdmin || snapshot.empty) { cardBox.style.display = "none"; }
@@ -1319,11 +1306,10 @@
           }
         }
       });
-      AppState.listeners.push(unsub);
     }
 
     function listenToPrivateOrders(uid) {
-      var unsub = db.collection("orders").where("clientUid", "==", uid).onSnapshot(function(snapshot) {
+      ordersUnsubscribe = db.collection("orders").where("clientUid", "==", uid).onSnapshot(function(snapshot) {
         var list = document.getElementById("activeOrdersList");
         var emptyBox = document.getElementById("placedEmptyBox");
         if (snapshot.empty) { if (emptyBox) emptyBox.style.display = "flex"; if (list) list.style.display = "none"; return; }
@@ -1390,11 +1376,10 @@
           list.innerHTML = ordersHTML;
         }
       });
-      AppState.listeners.push(unsub);
     }
 
     function listenToEditorIncomingOrders() {
-      var unsub = db.collection("orders").onSnapshot(function(snapshot) {
+      incomingOrdersUnsubscribe = db.collection("orders").onSnapshot(function(snapshot) {
         var container = document.getElementById("incomingOrdersList");
         if (!container) return;
         var count = 0;
@@ -1403,8 +1388,8 @@
           var data = doc.data();
           ALL_ORDERS_MAP[doc.id] = data;
 
-          var isSuperAdmin = AppState.currentUser && AppState.currentUser.email === CONFIG.superAdmin;
-          var isShopOwner = AppState.currentUser && data.editorUid === AppState.currentUser.uid;
+          var isSuperAdmin = currentUser && currentUser.email === CONFIG.superAdmin;
+          var isShopOwner = currentUser && data.editorUid === currentUser.uid;
 
           if (isSuperAdmin || isShopOwner) {
             count++;
@@ -1461,7 +1446,6 @@
           container.innerHTML = incHTML;
         }
       });
-      AppState.listeners.push(unsub);
     }
 
     // ==========================================
@@ -1503,18 +1487,17 @@
       window.scrollTo(0, 0);
     };
 
-    // Bug #3 Fixed: Terminal Load Failure Check
     window.openHireTerminal = function(editorKey) {
-      if (!AppState.currentUser) { showToast("Authentication Required", "Sign in to hire creators.", "error"); window.switchTab('viewProfile'); return; }
-      var editor = AppState.editorsMap[editorKey];
+      if (!currentUser) { showToast("Authentication Required", "Sign in to hire creators.", "error"); window.switchTab('viewProfile'); return; }
+      var editor = EDITORS_DATA[editorKey];
       if (!editor) { showToast("Error", "Editor data unavailable. Refresh page.", "error"); return; }
       
-      AppState.hireConfig.editorKey = editorKey; 
-      AppState.hireConfig.mode = "medium"; 
-      AppState.hireConfig.duration = (editor.category === "Thumbnail Designer" ? 1 : 20);
+      currentConfig.editorKey = editorKey; 
+      currentConfig.mode = "medium"; 
+      currentConfig.duration = (editor.category === "Thumbnail Designer" ? 1 : 20);
       
       document.getElementById("configEditorTitle").textContent = "Hire " + escapeHtml(editor.name);
-      document.getElementById("videoDurationInput").value = AppState.hireConfig.duration;
+      document.getElementById("videoDurationInput").value = currentConfig.duration;
 
       var thumbRatioBar = document.getElementById("thumbnailRatioSwitchBar");
       var screenBox = document.getElementById("previewScreenBox");
@@ -1535,7 +1518,7 @@
     };
 
     window.setCanvasRatio = function(ratioType) {
-      AppState.hireConfig.ratio = ratioType;
+      currentConfig.ratio = ratioType;
       var box = document.getElementById("previewScreenBox");
       box.className = "screen-box ratio-" + ratioType;
 
@@ -1551,7 +1534,7 @@
     };
 
     window.selectMode = function(modeName) {
-      AppState.hireConfig.mode = modeName;
+      currentConfig.mode = modeName;
       ["low", "medium", "high"].forEach(function(m) {
         var btn = document.getElementById("modeBtn" + m.charAt(0).toUpperCase() + m.slice(1));
         if (btn) { if (m === modeName) btn.classList.add("active"); else btn.classList.remove("active"); }
@@ -1560,13 +1543,13 @@
     };
 
     window.calculateOrderPrice = function() {
-      var editor = AppState.editorsMap[AppState.hireConfig.editorKey];
+      var editor = EDITORS_DATA[currentConfig.editorKey];
       if (!editor) return;
       var value = parseInt(document.getElementById("videoDurationInput").value, 10) || 1;
-      AppState.hireConfig.duration = value;
+      currentConfig.duration = value;
 
       var timerDisplay = document.getElementById("screenTimeDisplay");
-      var rate = editor.rates[AppState.hireConfig.mode];
+      var rate = editor.rates[currentConfig.mode];
       var totalPrice = 0;
 
       if (editor.category === "Thumbnail Designer") {
@@ -1581,32 +1564,30 @@
         document.getElementById("summaryBlocks").textContent = (value / 10).toFixed(1) + " units";
       }
 
-      AppState.hireConfig.price = totalPrice;
+      currentConfig.price = totalPrice;
       document.getElementById("summaryRate").textContent = "₹" + rate;
       document.getElementById("summaryTotal").textContent = "₹" + totalPrice;
     };
 
-    // Bug #1 & #2 Fixed: Verification of Price & Double-Click Lock
     window.submitConfiguredOrder = function(btn) {
-      if (!AppState.currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab('viewProfile'); return; }
-      var editor = AppState.editorsMap[AppState.hireConfig.editorKey];
+      if (!currentUser) { showToast("Sign In", "Please sign in first.", "error"); window.switchTab('viewProfile'); return; }
+      var editor = EDITORS_DATA[currentConfig.editorKey];
       var footageUrl = document.getElementById("orderFootageUrl").value.trim();
       var instructions = document.getElementById("orderInstructions").value.trim();
       if (!footageUrl) { showToast("Error", "Provide asset link.", "error"); return; }
       if (!editor) { showToast("Error", "Invalid Editor Reference.", "error"); return; }
 
-      // Server-side imitation check
       window.calculateOrderPrice();
 
       btn.disabled = true; btn.innerHTML = "Processing...";
       var orderIdCode = "RX-" + Math.floor(1000 + Math.random() * 9000);
       var orderData = {
-        orderId: orderIdCode, editorId: AppState.hireConfig.editorKey, editorName: editor.name,
+        orderId: orderIdCode, editorId: currentConfig.editorKey, editorName: editor.name,
         editorUid: editor.ownerUid, editorEmail: editor.ownerEmail || "", category: editor.category,
-        modeName: editor.modeNames[AppState.hireConfig.mode], duration: AppState.hireConfig.duration, 
-        price: AppState.hireConfig.price, canvasRatio: (editor.category === "Thumbnail Designer" ? AppState.hireConfig.ratio : "standard"),
-        footageLink: footageUrl, instructions: instructions, clientName: AppState.currentUser.displayName, 
-        clientEmail: AppState.currentUser.email, clientUid: AppState.currentUser.uid, 
+        modeName: editor.modeNames[currentConfig.mode], duration: currentConfig.duration, 
+        price: currentConfig.price, canvasRatio: (editor.category === "Thumbnail Designer" ? currentConfig.ratio : "standard"),
+        footageLink: footageUrl, instructions: instructions, clientName: currentUser.displayName, 
+        clientEmail: currentUser.email, clientUid: currentUser.uid, 
         status: "Wait for editor response", workProgress: 0, workProgressNote: "Waiting for creator acceptance",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
@@ -1616,9 +1597,9 @@
           to_email: editor.ownerEmail || CONFIG.superAdmin, recipient_name: editor.name,
           mail_title: "NEW ORDER COMMISSION RECEIVED",
           mail_message: "A new client has requested a commission on Rex Edit Hub. Review details in your dashboard.",
-          order_id: orderIdCode, client_name: AppState.currentUser.displayName, client_email: AppState.currentUser.email,
-          editor_name: editor.name, category: editor.category, mode_name: editor.modeNames[AppState.hireConfig.mode],
-          duration: AppState.hireConfig.duration, price: AppState.hireConfig.price, footage_link: footageUrl,
+          order_id: orderIdCode, client_name: currentUser.displayName, client_email: currentUser.email,
+          editor_name: editor.name, category: editor.category, mode_name: editor.modeNames[currentConfig.mode],
+          duration: currentConfig.duration, price: currentConfig.price, footage_link: footageUrl,
           instructions: instructions || "None", primary_action_text: "Open Dashboard",
           primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
           secondary_action_text: "Decline Order", secondary_action_url: "https://msgamermax1.github.io/RexEditHub/"
@@ -1629,7 +1610,7 @@
     };
 
     window.startApplyForEarn = function() {
-      if (!AppState.currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab('viewProfile'); return; }
+      if (!currentUser) { showToast("Sign In", "Sign in with Google first.", "info"); window.switchTab('viewProfile'); return; }
       window.switchTab('viewRegisterStep1');
     };
 
@@ -1638,15 +1619,15 @@
       var link = document.getElementById("regPortfolioLink").value.trim();
       if (!link) { showToast("Error", "Provide portfolio link.", "error"); return; }
       
-      AppState.tempRegData.role = role; 
-      AppState.tempRegData.portfolioLink = link;
+      tempRegistrationData.role = role; 
+      tempRegistrationData.portfolioLink = link;
       
       btn.disabled = true; btn.innerHTML = "Validating...";
       emailjs.send(CONFIG.emailjs.template_id, CONFIG.emailjs.template_id, {
         to_email: CONFIG.superAdmin, recipient_name: "Super Admin",
         mail_title: "NEW CREATOR / EDITOR APPLICATION",
-        mail_message: "A creator has submitted their application on Rex Edit Hub!\n\nCandidate: " + AppState.currentUser.displayName + " (" + AppState.currentUser.email + ")\nApplied Specialty: " + role + "\nPortfolio: " + link + "\n\nReview the submission in your dashboard.",
-        order_id: "APP-" + Math.floor(1000 + Math.random() * 9000), client_name: AppState.currentUser.displayName, client_email: AppState.currentUser.email,
+        mail_message: "A creator has submitted their application on Rex Edit Hub!\n\nCandidate: " + currentUser.displayName + " (" + currentUser.email + ")\nApplied Specialty: " + role + "\nPortfolio: " + link + "\n\nReview the submission in your dashboard.",
+        order_id: "APP-" + Math.floor(1000 + Math.random() * 9000), client_name: currentUser.displayName, client_email: currentUser.email,
         editor_name: "Pending Verification", category: role, mode_name: "Application", duration: "N/A", price: "Review",
         footage_link: link, instructions: "Portfolio link provided for application review.",
         primary_action_text: "Open Admin Hub", primary_action_url: "https://msgamermax1.github.io/RexEditHub/",
@@ -1660,13 +1641,13 @@
 
     window.completeEditorRegistration = function(btn) {
       var shopName = document.getElementById("regShopName").value.trim();
-      var logoUrl = AppState.tempUploadBase64 || document.getElementById("regShopLogoHiddenInput").value.trim();
+      var logoUrl = uploadedLogoBase64 || document.getElementById("regShopLogoHiddenInput").value.trim();
       var pBasic = parseInt(document.getElementById("regPriceBasic").value, 10) || 25;
       var pStd = parseInt(document.getElementById("regPriceStd").value, 10) || 40;
       var pPrem = parseInt(document.getElementById("regPricePrem").value, 10) || 65;
 
       if (!shopName) { showToast("Error", "Enter your brand shop name.", "error"); return; }
-      var role = AppState.tempRegData.role;
+      var role = tempRegistrationData.role;
 
       var screenClass = "ratio-16-9"; var ratioText = "16:9 Standard"; var unitShort = "/ 1m"; var maxUnits = 1800;
       if (role.includes("Short-Form") || role === "Motion Graphics (Short-Form)") { screenClass = "ratio-9-16"; ratioText = "9:16 Vertical"; unitShort = "/ 10s"; maxUnits = 180; } 
@@ -1675,20 +1656,20 @@
 
       btn.disabled = true; btn.innerHTML = "Uploading Shop Data...";
       var applicationData = {
-        name: shopName, category: role, logoUrl: logoUrl, portfolioLink: AppState.tempRegData.portfolioLink,
+        name: shopName, category: role, logoUrl: logoUrl, portfolioLink: tempRegistrationData.portfolioLink,
         ratioText: ratioText, screenClass: screenClass, dimText: "High Definition", maxSeconds: maxUnits, unitShort: unitShort,
         rates: { low: pBasic, medium: pStd, high: pPrem }, 
-        ownerUid: AppState.currentUser.uid, ownerEmail: AppState.currentUser.email, ownerHandle: AppState.currentHandle || "creator",
+        ownerUid: currentUser.uid, ownerEmail: currentUser.email, ownerHandle: currentUserIdHandle || "creator",
         status: "Pending Admin Approval", createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       db.collection("shop_applications").add(applicationData).then(function() {
-        showToast("Application Submitted", "Sent to Super Admin for verification. You will be notified once live!", "success"); 
+        showToast("Application Submitted", "Sent to Admin for verification. You will be notified!", "success"); 
         window.switchTab('viewProfile');
       }).catch(function(err){ showToast("Error", err.message, "error"); }).finally(function(){ btn.disabled=false; btn.innerHTML = "Submit for Admin Verification &rarr;"; });
     };
 
-    /* --- 15 Live Animated FX Engine (Bug #11 Perfect Cancellation Logic) --- */
+    /* --- 15 Live Animated FX Engine --- */
     var liveCanvasAnimId = null;
     var liveParticles = [];
     var animatedThemeKeys = ["snow", "starfield", "cyberrain", "bubbles", "matrix", "embers", "plasma", "chroma", "prism", "auroraflow", "golddust", "storm", "petals", "warp", "flares"];
@@ -1702,10 +1683,15 @@
 
       for (var i = 0; i < count; i++) {
         liveParticles.push({
-          x: Math.random() * w, y: Math.random() * h,
-          r: Math.random() * 3 + 1, vx: (Math.random() - 0.5) * 1.5, vy: Math.random() * 2 + 0.8,
-          alpha: Math.random() * 0.7 + 0.3, colorHue: Math.floor(Math.random() * 360),
-          rot: Math.random() * 360, char: String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 3 + 1,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: Math.random() * 2 + 0.8,
+          alpha: Math.random() * 0.7 + 0.3,
+          colorHue: Math.floor(Math.random() * 360),
+          rot: Math.random() * 360,
+          char: String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
         });
       }
     }
@@ -1726,34 +1712,169 @@
 
       for (var i = 0; i < liveParticles.length; i++) {
         var p = liveParticles[i];
-        if (mode === "snow") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 0.5, 0, Math.PI * 2); ctx.fillStyle = "rgba(147, 197, 253, " + p.alpha + ")"; ctx.fill(); p.y += p.vy * 0.8; p.x += Math.sin(p.y * 0.02) * 0.4; } 
-        else if (mode === "starfield") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 0.8, 0, Math.PI * 2); ctx.fillStyle = "rgba(199, 210, 254, " + p.alpha + ")"; ctx.fill(); p.y -= p.vy * 0.3; p.alpha = 0.3 + Math.abs(Math.sin(Date.now() * 0.002 + i)); }
-        else if (mode === "cyberrain") { ctx.fillStyle = "#00f0ff"; ctx.fillRect(p.x, p.y, 1.6, p.r * 7); p.y += p.vy * 4; }
-        else if (mode === "bubbles") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2); ctx.strokeStyle = "rgba(56, 189, 248, " + p.alpha + ")"; ctx.lineWidth = 1.4; ctx.stroke(); p.y -= p.vy * 0.9; p.x += Math.sin(p.y * 0.03) * 0.6; }
-        else if (mode === "matrix") { ctx.font = "14px monospace"; ctx.fillStyle = "#22c55e"; ctx.fillText(p.char, p.x, p.y); p.y += p.vy * 3.5; }
-        else if (mode === "embers") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 1.2, 0, Math.PI * 2); ctx.fillStyle = "rgba(249, 115, 22, " + p.alpha + ")"; ctx.shadowBlur = 8; ctx.shadowColor = "#f97316"; ctx.fill(); ctx.shadowBlur = 0; p.y -= p.vy * 1.1; p.x += Math.sin(p.y * 0.04) * 0.8; }
-        else if (mode === "plasma") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2); ctx.fillStyle = "rgba(217, 70, 239, " + (p.alpha * 0.5) + ")"; ctx.fill(); p.x += Math.cos(p.y * 0.01) * 1.5; p.y += Math.sin(p.x * 0.01) * 1.5; }
-        else if (mode === "chroma") { p.colorHue = (p.colorHue + 1.2) % 360; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2); ctx.fillStyle = "hsla(" + p.colorHue + ", 100%, 65%, " + p.alpha + ")"; ctx.fill(); p.x += p.vx * 1.5; p.y += Math.sin(p.x * 0.02) * 1.5; }
-        else if (mode === "prism") { var prismColors = ["#00f0ff", "#f43f5e", "#facc15", "#d946ef"]; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 1.8, 0, Math.PI * 2); ctx.fillStyle = prismColors[i % 4]; ctx.shadowBlur = 10; ctx.shadowColor = prismColors[i % 4]; ctx.fill(); ctx.shadowBlur = 0; p.x += p.vx * 2; p.y -= p.vy * 1.5; }
-        else if (mode === "auroraflow") { var auroraHues = ["#2dd4bf", "#a855f7", "#38bdf8"]; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2); ctx.fillStyle = auroraHues[i % 3]; ctx.globalAlpha = p.alpha * 0.45; ctx.fill(); ctx.globalAlpha = 1.0; p.x += Math.sin(p.y * 0.015) * 2; p.y += p.vy * 0.5; }
-        else if (mode === "golddust") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 1.4, 0, Math.PI * 2); ctx.fillStyle = "rgba(251, 191, 36, " + p.alpha + ")"; ctx.shadowBlur = 6; ctx.shadowColor = "#fbbf24"; ctx.fill(); ctx.shadowBlur = 0; p.y -= p.vy * 0.5; p.x += Math.sin(p.y * 0.03) * 0.8; }
-        else if (mode === "storm") { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + p.vx * 3, p.y + p.vy * 5); ctx.strokeStyle = "rgba(96, 165, 250, " + p.alpha + ")"; ctx.lineWidth = 1.8; ctx.stroke(); p.x += p.vx * 2; p.y += p.vy * 3.5; }
-        else if (mode === "petals") { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.beginPath(); ctx.ellipse(0, 0, p.r * 2, p.r, 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(244, 114, 182, " + (p.alpha * 0.7) + ")"; ctx.fill(); ctx.restore(); p.rot += 0.02; p.y += p.vy * 0.7; p.x += Math.sin(p.y * 0.02) * 1.2; }
-        else if (mode === "warp") { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y + p.vy * 8); ctx.strokeStyle = "rgba(129, 140, 248, " + p.alpha + ")"; ctx.lineWidth = 1.2; ctx.stroke(); p.y += p.vy * 6; }
-        else if (mode === "flares") { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.4, 0, Math.PI * 2); ctx.fillStyle = "rgba(192, 132, 252, " + (p.alpha * 0.4) + ")"; ctx.shadowBlur = 12; ctx.shadowColor = "#c084fc"; ctx.fill(); ctx.shadowBlur = 0; p.x += Math.cos(p.y * 0.02) * 1.4; p.y -= p.vy * 0.7; }
+
+        if (mode === "snow") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r + 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(147, 197, 253, " + p.alpha + ")";
+          ctx.fill();
+          p.y += p.vy * 0.8;
+          p.x += Math.sin(p.y * 0.02) * 0.4;
+        } 
+        else if (mode === "starfield") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 0.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(199, 210, 254, " + p.alpha + ")";
+          ctx.fill();
+          p.y -= p.vy * 0.3;
+          p.alpha = 0.3 + Math.abs(Math.sin(Date.now() * 0.002 + i));
+        }
+        else if (mode === "cyberrain") {
+          ctx.fillStyle = "#00f0ff";
+          ctx.fillRect(p.x, p.y, 1.6, p.r * 7);
+          p.y += p.vy * 4;
+        }
+        else if (mode === "bubbles") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(56, 189, 248, " + p.alpha + ")";
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+          p.y -= p.vy * 0.9;
+          p.x += Math.sin(p.y * 0.03) * 0.6;
+        }
+        else if (mode === "matrix") {
+          ctx.font = "14px monospace";
+          ctx.fillStyle = "#22c55e";
+          ctx.fillText(p.char, p.x, p.y);
+          p.y += p.vy * 3.5;
+        }
+        else if (mode === "embers") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(249, 115, 22, " + p.alpha + ")";
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = "#f97316";
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          p.y -= p.vy * 1.1;
+          p.x += Math.sin(p.y * 0.04) * 0.8;
+        }
+        else if (mode === "plasma") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(217, 70, 239, " + (p.alpha * 0.5) + ")";
+          ctx.fill();
+          p.x += Math.cos(p.y * 0.01) * 1.5;
+          p.y += Math.sin(p.x * 0.01) * 1.5;
+        }
+        else if (mode === "chroma") {
+          p.colorHue = (p.colorHue + 1.2) % 360;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = "hsla(" + p.colorHue + ", 100%, 65%, " + p.alpha + ")";
+          ctx.fill();
+          p.x += p.vx * 1.5;
+          p.y += Math.sin(p.x * 0.02) * 1.5;
+        }
+        else if (mode === "prism") {
+          var prismColors = ["#00f0ff", "#f43f5e", "#facc15", "#d946ef"];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = prismColors[i % 4];
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = prismColors[i % 4];
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          p.x += p.vx * 2;
+          p.y -= p.vy * 1.5;
+        }
+        else if (mode === "auroraflow") {
+          var auroraHues = ["#2dd4bf", "#a855f7", "#38bdf8"];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2);
+          ctx.fillStyle = auroraHues[i % 3];
+          ctx.globalAlpha = p.alpha * 0.45;
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+          p.x += Math.sin(p.y * 0.015) * 2;
+          p.y += p.vy * 0.5;
+        }
+        else if (mode === "golddust") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 1.4, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(251, 191, 36, " + p.alpha + ")";
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = "#fbbf24";
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          p.y -= p.vy * 0.5;
+          p.x += Math.sin(p.y * 0.03) * 0.8;
+        }
+        else if (mode === "storm") {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + p.vx * 3, p.y + p.vy * 5);
+          ctx.strokeStyle = "rgba(96, 165, 250, " + p.alpha + ")";
+          ctx.lineWidth = 1.8;
+          ctx.stroke();
+          p.x += p.vx * 2;
+          p.y += p.vy * 3.5;
+        }
+        else if (mode === "petals") {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.r * 2, p.r, 0, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(244, 114, 182, " + (p.alpha * 0.7) + ")";
+          ctx.fill();
+          ctx.restore();
+          p.rot += 0.02;
+          p.y += p.vy * 0.7;
+          p.x += Math.sin(p.y * 0.02) * 1.2;
+        }
+        else if (mode === "warp") {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x, p.y + p.vy * 8);
+          ctx.strokeStyle = "rgba(129, 140, 248, " + p.alpha + ")";
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+          p.y += p.vy * 6;
+        }
+        else if (mode === "flares") {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.4, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(192, 132, 252, " + (p.alpha * 0.4) + ")";
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = "#c084fc";
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          p.x += Math.cos(p.y * 0.02) * 1.4;
+          p.y -= p.vy * 0.7;
+        }
 
         if (p.y > h + 15) { p.y = -15; p.x = Math.random() * w; }
         if (p.y < -15) { p.y = h + 15; p.x = Math.random() * w; }
         if (p.x > w + 15) { p.x = -15; }
         if (p.x < -15) { p.x = w + 15; }
       }
-      liveCanvasAnimId = requestAnimationFrame(function() { renderActiveFx(mode); });
+
+      liveCanvasAnimId = requestAnimationFrame(function() {
+        renderActiveFx(mode);
+      });
     }
 
     function bindVisualAnimationEngine(themeName) {
       var canvas = document.getElementById('liveCanvas');
       if (!canvas) return;
-      if (liveCanvasAnimId) { cancelAnimationFrame(liveCanvasAnimId); liveCanvasAnimId = null; }
+
+      if (liveCanvasAnimId) {
+        cancelAnimationFrame(liveCanvasAnimId);
+        liveCanvasAnimId = null;
+      }
+
       if (animatedThemeKeys.indexOf(themeName) !== -1) {
         canvas.style.display = "block";
         canvas.width = window.innerWidth;
@@ -1770,9 +1891,13 @@
     window.addEventListener('DOMContentLoaded', function() {
       var initialTheme = localStorage.getItem('rex_theme') || 'default';
       bindVisualAnimationEngine(initialTheme);
+
       window.addEventListener('resize', function() {
         var canvas = document.getElementById('liveCanvas');
-        if (canvas) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        if (canvas) {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
       });
     });
   </script>
@@ -1799,7 +1924,7 @@
       <p class="rex-modal-text">Find any creator profile on the network using their unique handle.</p>
       <div style="display:flex; gap:8px; margin-bottom:1.2rem;">
         <input type="text" id="searchUserIdInput" class="form-input-field" placeholder="e.g. maxgamer or @creator" style="margin:0;">
-        <button class="btn-action-primary" onclick="window.executeUserSearch()" type="button" style="width:auto;">Lookup</button>
+        <button class="btn-action-primary" onclick="window.executeUserSearch(this)" type="button" style="width:auto;">Lookup</button>
       </div>
       <div id="searchResultContainer" style="margin-bottom:1.2rem;"></div>
       <div class="rex-modal-actions">
