@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rex Edit Hub | Ultra-Premium Escrow</title>
+    <title>Rex Edit Hub | Ultra-Premium Escrow Marketplace</title>
     
     <!-- Website Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
@@ -13,80 +13,137 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Phosphor Icons -->
+    <!-- Phosphor Icons (Sleek UI Icons) -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Firebase v9 Compat CDNs -->
+    <!-- Firebase v9 Compat CDNs (Strictly required as per blueprint) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     
-    <!-- EmailJS -->
+    <!-- EmailJS for Transactional Alerts -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
         /* =========================================================
-           1. CORE VARIABLES & THEMES (INCL. NEW LIGHT THEMES)
+           1. CORE VARIABLES & FULLY EXPANDED THEME ENGINE
            ========================================================= */
         :root {
-            /* Dark Default */
+            /* Base Theme: Dark Default */
             --bg-color: #0f172a;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.5);
-            --glass-bg: rgba(30, 41, 59, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.12);
             --sidebar-width: 280px;
             --bezier: cubic-bezier(0.4, 0, 0.2, 1);
-            --input-bg: rgba(0, 0, 0, 0.3);
+            --input-bg: rgba(0, 0, 0, 0.4);
         }
 
-        /* Light Themes */
+        /* --- LIGHT THEMES --- */
         [data-theme="light-ice"] { 
-            --bg-color: #f0f9ff; --text-main: #0f172a; --text-muted: #475569; 
-            --accent: #0284c7; --accent-glow: rgba(2, 132, 199, 0.4); 
-            --glass-bg: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.1); --input-bg: rgba(255, 255, 255, 0.5); 
-        }
-        [data-theme="light-mint"] { 
-            --bg-color: #f0fdf4; --text-main: #064e3b; --text-muted: #065f46; 
-            --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.4); 
-            --glass-bg: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.1); --input-bg: rgba(255, 255, 255, 0.5); 
-        }
-        [data-theme="light-rose"] { 
-            --bg-color: #fff1f2; --text-main: #4c0519; --text-muted: #881337; 
-            --accent: #e11d48; --accent-glow: rgba(225, 29, 72, 0.4); 
-            --glass-bg: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.1); --input-bg: rgba(255, 255, 255, 0.5); 
+            --bg-color: #f0f9ff; 
+            --text-main: #0f172a; 
+            --text-muted: #475569; 
+            --accent: #0284c7; 
+            --accent-glow: rgba(2, 132, 199, 0.4); 
+            --glass-bg: rgba(255, 255, 255, 0.85); 
+            --glass-border: rgba(0, 0, 0, 0.15); 
+            --input-bg: rgba(255, 255, 255, 0.7); 
         }
 
-        /* Dark Themes */
-        [data-theme="indigo"] { --bg-color: #1e1b4b; --accent: #6366f1; --accent-glow: rgba(99, 102, 241, 0.5); }
-        [data-theme="neon"] { --bg-color: #020617; --accent: #22c55e; --accent-glow: rgba(34, 197, 94, 0.5); }
-        [data-theme="midnight"] { --bg-color: #09090b; --accent: #a855f7; --accent-glow: rgba(168, 85, 247, 0.5); }
-        [data-theme="sunset"] { --bg-color: #2c1004; --accent: #f97316; --accent-glow: rgba(249, 115, 22, 0.5); }
+        [data-theme="light-mint"] { 
+            --bg-color: #f0fdf4; 
+            --text-main: #064e3b; 
+            --text-muted: #065f46; 
+            --accent: #10b981; 
+            --accent-glow: rgba(16, 185, 129, 0.4); 
+            --glass-bg: rgba(255, 255, 255, 0.85); 
+            --glass-border: rgba(0, 0, 0, 0.15); 
+            --input-bg: rgba(255, 255, 255, 0.7); 
+        }
+
+        [data-theme="light-rose"] { 
+            --bg-color: #fff1f2; 
+            --text-main: #4c0519; 
+            --text-muted: #881337; 
+            --accent: #e11d48; 
+            --accent-glow: rgba(225, 29, 72, 0.4); 
+            --glass-bg: rgba(255, 255, 255, 0.85); 
+            --glass-border: rgba(0, 0, 0, 0.15); 
+            --input-bg: rgba(255, 255, 255, 0.7); 
+        }
+
+        /* --- DARK THEMES --- */
+        [data-theme="indigo"] { 
+            --bg-color: #1e1b4b; 
+            --accent: #6366f1; 
+            --accent-glow: rgba(99, 102, 241, 0.5); 
+        }
+
+        [data-theme="neon"] { 
+            --bg-color: #020617; 
+            --accent: #22c55e; 
+            --accent-glow: rgba(34, 197, 94, 0.5); 
+        }
+
+        [data-theme="midnight"] { 
+            --bg-color: #09090b; 
+            --accent: #a855f7; 
+            --accent-glow: rgba(168, 85, 247, 0.5); 
+        }
+
+        [data-theme="sunset"] { 
+            --bg-color: #2c1004; 
+            --accent: #f97316; 
+            --accent-glow: rgba(249, 115, 22, 0.5); 
+        }
 
         /* =========================================================
-           2. GLOBAL RESET & FIXED GLASSMORPHISM
+           2. GLOBAL RESET & CUSTOM SCROLLBARS
            ========================================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
         
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-            transition: background-color 0.5s var(--bezier), color 0.3s ease;
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            transition: background-color 0.4s var(--bezier), color 0.3s ease; 
         }
 
-        /* FIXED CANVAS: Pushed back, doesn't affect buttons */
-        #bgCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: -10;
-            pointer-events: none;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
         }
 
-        /* Upgraded Glass Utility for Better Button Contrast */
+        /* The HTML5 Canvas Background Engine */
+        #bgCanvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            z-index: -10; 
+            pointer-events: none; 
+        }
+
+        /* =========================================================
+           3. HEAVY GLASSMORPHISM UTILITIES
+           ========================================================= */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(24px);
@@ -103,89 +160,176 @@
             transform: translateY(-4px);
         }
 
-        /* Premium Buttons */
-        .btn {
-            background: var(--glass-bg);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border);
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
+        /* =========================================================
+           4. TYPOGRAPHY & BUTTONS
+           ========================================================= */
+        h1, h2, h3, h4 {
             font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .btn {
+            background: var(--glass-bg); 
+            color: var(--text-main); 
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700; 
             font-size: 0.95rem;
-            transition: all 0.3s var(--bezier);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            position: relative;
+            transition: all 0.3s var(--bezier); 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
             z-index: 2;
         }
-        
-        .btn:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
-            transform: translateY(-2px);
-            background: var(--accent);
-            color: #fff;
-        }
 
-        .btn-primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-
-        /* Inputs */
-        input, select, textarea {
-            width: 100%;
-            background: var(--input-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
-            padding: 14px 18px;
-            border-radius: 12px;
-            outline: none;
-            transition: all 0.3s var(--bezier);
-            font-size: 0.95rem;
-        }
-        
-        input:focus, select:focus, textarea:focus { 
+        .btn:hover { 
             border-color: var(--accent); 
-            box-shadow: 0 0 15px var(--accent-glow);
+            box-shadow: 0 0 15px var(--accent-glow); 
+            background: var(--accent); 
+            color: #fff; 
+            transform: translateY(-2px); 
         }
 
-        label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
-        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; }
-        .file-upload-wrapper input[type="file"] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; }
+        .btn-primary { 
+            background: var(--accent); 
+            border-color: var(--accent); 
+            color: #fff; 
+            box-shadow: 0 4px 15px var(--accent-glow); 
+        }
+
+        .btn-danger { 
+            background: #ef4444; 
+            border-color: #ef4444; 
+            color: #fff; 
+        }
+
+        .btn-danger:hover { 
+            background: #dc2626; 
+            box-shadow: 0 4px 15px rgba(239,68,68,0.5); 
+        }
 
         /* =========================================================
-           3. LAYOUT & NAVIGATION
+           5. FORMS & INPUTS
            ========================================================= */
-        .app-container { display: flex; min-height: 100vh; }
+        input, select, textarea {
+            width: 100%; 
+            background: var(--input-bg); 
+            border: 1px solid var(--glass-border); 
+            color: var(--text-main);
+            padding: 14px 18px; 
+            border-radius: 12px; 
+            outline: none; 
+            transition: all 0.3s var(--bezier); 
+            font-size: 0.95rem;
+        }
+
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 15px var(--accent-glow); 
+            background: rgba(0,0,0,0.6);
+        }
+
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            color: var(--text-main); 
+        }
+
+        .file-upload-wrapper { 
+            position: relative; 
+            overflow: hidden; 
+            display: inline-block; 
+        }
+        
+        .file-upload-wrapper input[type="file"] { 
+            font-size: 100px; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+            opacity: 0; 
+            cursor: pointer; 
+            height: 100%; 
+        }
+
+        /* =========================================================
+           6. LAYOUT, NAVIGATION & ANIMATIONS
+           ========================================================= */
+        .app-container { 
+            display: flex; 
+            min-height: 100vh; 
+        }
 
         .sidebar {
-            width: var(--sidebar-width); height: 100vh; position: fixed;
-            left: -320px; top: 0; z-index: 1000;
-            transition: left 0.4s var(--bezier);
-            display: flex; flex-direction: column; padding: 30px 24px;
-            background: var(--glass-bg); backdrop-filter: blur(30px);
-            border-right: 1px solid var(--glass-border); border-radius: 0;
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            position: fixed; 
+            left: -320px; 
+            top: 0; 
+            z-index: 1000;
+            transition: left 0.4s var(--bezier); 
+            display: flex; 
+            flex-direction: column; 
+            padding: 30px 24px;
+            background: var(--glass-bg); 
+            backdrop-filter: blur(30px); 
+            -webkit-backdrop-filter: blur(30px);
+            border-right: 1px solid var(--glass-border);
         }
 
-        .sidebar.open { left: 0; }
-        .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; display: none; opacity: 0; transition: opacity 0.3s; }
+        .sidebar.open { 
+            left: 0; 
+        }
+
+        .menu-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.6); 
+            z-index: 999; 
+            display: none; 
+            opacity: 0; 
+            transition: opacity 0.3s; 
+        }
         
         .nav-item {
-            padding: 14px 18px; margin-bottom: 8px; border-radius: 12px;
-            cursor: pointer; display: flex; align-items: center; gap: 14px;
-            font-weight: 600; color: var(--text-main); transition: all 0.3s var(--bezier);
+            padding: 14px 18px; 
+            margin-bottom: 8px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 14px;
+            font-weight: 600; 
+            color: var(--text-main); 
+            transition: all 0.3s var(--bezier);
         }
-        
-        .nav-item:hover, .nav-item.active { background: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow); transform: translateX(5px); }
 
-        .main-content { flex: 1; padding: 40px; margin-left: 0; width: 100%; transition: margin-left 0.4s var(--bezier); }
-        .mobile-header { display: flex; padding: 20px; align-items: center; gap: 15px; z-index: 100; }
+        .nav-item:hover, .nav-item.active { 
+            background: var(--accent); 
+            color: #fff; 
+            box-shadow: 0 0 15px var(--accent-glow); 
+            transform: translateX(5px); 
+        }
+
+        .main-content { 
+            flex: 1; 
+            padding: 40px; 
+            margin-left: 0; 
+            width: 100%; 
+            transition: margin-left 0.4s var(--bezier); 
+        }
+
+        .mobile-header { 
+            display: flex; 
+            padding: 20px; 
+            align-items: center; 
+            gap: 15px; 
+            z-index: 100; 
+        }
 
         @media (min-width: 1024px) {
             .sidebar { left: 0; }
@@ -193,65 +337,177 @@
             .mobile-header { display: none; }
         }
 
-        .view { display: none; animation: scaleIn 0.5s var(--bezier) forwards; }
-        .view.active { display: block; }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        /* View Switching Logic */
+        .view { 
+            display: none; 
+            animation: scaleIn 0.4s var(--bezier) forwards; 
+        }
+        
+        .view.active { 
+            display: block; 
+        }
+        
+        @keyframes scaleIn { 
+            from { opacity: 0; transform: scale(0.98) translateY(10px); } 
+            to { opacity: 1; transform: scale(1) translateY(0); } 
+        }
 
-        /* Status Badges */
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; }
-        .status-pending { background: rgba(249, 115, 22, 0.2); color: #f97316; }
-        .status-progress { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-        .status-completed { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        /* =========================================================
+           7. BADGES, MODALS & PROGRESS BARS
+           ========================================================= */
+        .badge { 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            display: inline-block; 
+        }
+        .status-wait { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.4); }
+        .status-pending { background: rgba(249, 115, 22, 0.2); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.4); }
+        .status-progress { background: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.4); }
+        .status-completed { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); }
         
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
-        .modal-content { width: 90%; max-width: 550px; padding: 40px; transform: scale(0.9); transition: all 0.4s var(--bezier); position: relative; }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .close-modal { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main); }
+        .modal-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.8); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 0; 
+            transition: opacity 0.3s; 
+        }
+
+        .modal-content { 
+            width: 90%; 
+            max-width: 550px; 
+            padding: 40px; 
+            transform: scale(0.9); 
+            transition: all 0.4s var(--bezier); 
+            position: relative; 
+        }
+
+        .modal-overlay.active { 
+            display: flex; 
+            opacity: 1; 
+        }
+
+        .modal-overlay.active .modal-content { 
+            transform: scale(1); 
+        }
+
+        .close-modal { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: none; 
+            border: none; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            color: var(--text-main); 
+            transition: color 0.2s;
+        }
         
-        #toast-container { position: fixed; top: 30px; right: 30px; z-index: 3000; display: flex; flex-direction: column; gap: 15px; }
-        .toast { padding: 16px 24px; border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 12px; animation: slideInRight 0.4s var(--bezier) forwards; }
-        @keyframes slideInRight { from { transform: translateX(120%); } to { transform: translateX(0); } }
+        .close-modal:hover {
+            color: #ef4444;
+        }
+
+        #toast-container { 
+            position: fixed; 
+            top: 30px; 
+            right: 30px; 
+            z-index: 3000; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+
+        .toast { 
+            padding: 16px 24px; 
+            border-left: 4px solid var(--accent); 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
+    <!-- The HTML5 Animated Background Canvas -->
     <canvas id="bgCanvas"></canvas>
 
+    <!-- Mobile Header Navigation -->
     <div class="mobile-header glass">
-        <button class="btn" onclick="toggleSidebar()" style="padding: 8px 12px;"><i class="ph ph-list" style="font-size: 1.5rem;"></i></button>
+        <button class="btn" onclick="toggleSidebar()" style="padding: 8px 12px;">
+            <i class="ph ph-list" style="font-size: 1.5rem;"></i>
+        </button>
         <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="logo.png" style="height: 30px; width: 30px; object-fit: contain;">
+            <img src="logo.png" alt="Rex Edit Hub Logo" style="height: 30px; width: 30px; object-fit: contain;">
             <h2 style="font-size: 1.2rem;">Rex Edit Hub</h2>
         </div>
     </div>
 
+    <!-- Clickable Overlay to close sidebar on mobile -->
     <div class="menu-overlay" onclick="toggleSidebar()"></div>
 
     <div class="app-container">
-        <!-- SIDEBAR WITH LOGO -->
+        <!-- =========================================================
+             SIDEBAR COMPONENT (FULLY EXPANDED)
+             ========================================================= -->
         <nav class="sidebar" id="sidebar">
             <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 40px;">
-                <img src="logo.png" style="height: 40px; width: 40px; object-fit: contain;">
+                <img src="logo.png" alt="Rex Edit Hub Logo" style="height: 40px; width: 40px; object-fit: contain;">
                 <h2 style="font-size: 1.4rem;">Rex Edit Hub</h2>
             </div>
             
-            <div class="nav-item active" onclick="switchView('viewShop')"><i class="ph ph-storefront" style="font-size: 1.3rem;"></i> Marketplace</div>
-            <div class="nav-item" onclick="switchView('viewSearchUser')"><i class="ph ph-magnifying-glass" style="font-size: 1.3rem;"></i> Search User</div>
-            <div class="nav-item" onclick="switchView('viewProfile')"><i class="ph ph-user-circle" style="font-size: 1.3rem;"></i> My Profile</div>
-            <div class="nav-item" onclick="switchView('viewOrders')"><i class="ph ph-receipt" style="font-size: 1.3rem;"></i> Your Orders</div>
-            <div class="nav-item" onclick="switchView('viewRegisterStep1')"><i class="ph ph-rocket" style="font-size: 1.3rem;"></i> Apply to Earn</div>
+            <div class="nav-item active" onclick="switchView('viewShop')">
+                <i class="ph ph-storefront" style="font-size: 1.3rem;"></i> 
+                <span>Marketplace</span>
+            </div>
+            
+            <div class="nav-item" onclick="switchView('viewSearchUser')">
+                <i class="ph ph-magnifying-glass" style="font-size: 1.3rem;"></i> 
+                <span>Search User</span>
+            </div>
+            
+            <div class="nav-item" onclick="switchView('viewProfile')">
+                <i class="ph ph-user-circle" style="font-size: 1.3rem;"></i> 
+                <span>My Profile</span>
+            </div>
+            
+            <div class="nav-item" onclick="switchView('viewOrders')">
+                <i class="ph ph-receipt" style="font-size: 1.3rem;"></i> 
+                <span>Your Orders</span>
+            </div>
+            
+            <div class="nav-item" onclick="switchView('viewRegisterStep1')">
+                <i class="ph ph-rocket" style="font-size: 1.3rem;"></i> 
+                <span>Apply to Earn</span>
+            </div>
             
             <div id="adminNav" style="display: none;">
-                <div class="nav-item" onclick="switchView('viewAdmin')"><i class="ph ph-shield-check" style="font-size: 1.3rem;"></i> Admin Panel</div>
+                <div class="nav-item" onclick="switchView('viewAdmin')">
+                    <i class="ph ph-shield-check" style="font-size: 1.3rem;"></i> 
+                    <span>Admin Panel</span>
+                </div>
             </div>
             
             <div style="margin-top: auto; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                <div class="nav-item" id="authBtn" onclick="handleAuth()"><i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> Login / Register</div>
+                <div class="nav-item" id="authBtn" onclick="handleAuth()">
+                    <i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> 
+                    <span>Login / Register</span>
+                </div>
             </div>
         </nav>
 
+        <!-- MAIN CONTENT AREA STARTS -->
         <main class="main-content">
-            <!-- View 1: Marketplace (Default) -->
+            <!-- =========================================================
+                 VIEW 1: PREMIUM MARKETPLACE
+                 ========================================================= -->
             <section id="viewShop" class="view active">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 30px;">
                     <h1>Premium Marketplace</h1>
@@ -260,48 +516,73 @@
                         <input type="text" id="marketSearch" placeholder="Search creators, @handles, categories..." style="padding-left: 45px;" onkeyup="filterShops()">
                     </div>
                 </div>
-                <div id="shopGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;">
+                
+                <div id="shopGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px;">
+                    <!-- Default Loading State -->
                     <div style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 50px;">
-                        <i class="ph ph-spinner-gap ph-spin" style="font-size: 3rem; color: var(--accent);"></i><br><br>Loading Premium Creators...
+                        <i class="ph ph-spinner-gap ph-spin" style="font-size: 3rem; color: var(--accent);"></i>
+                        <br><br>
+                        Loading Premium Creators...
                     </div>
                 </div>
             </section>
 
-            <!-- View 2: Search User -->
+            <!-- =========================================================
+                 VIEW 2: SEARCH NETWORK
+                 ========================================================= -->
             <section id="viewSearchUser" class="view">
                 <h1>Network Search</h1>
                 <p style="margin-bottom: 25px;">Find any creator or client by their exact @handle.</p>
+                
                 <div class="glass" style="padding: 30px; display: flex; gap: 15px; max-width: 600px;">
                     <input type="text" id="searchInput" placeholder="e.g., @rex_editor" style="flex: 1;">
-                    <button class="btn btn-primary" onclick="searchUser()"><i class="ph ph-magnifying-glass"></i> Search</button>
+                    <button class="btn btn-primary" onclick="searchUser()">
+                        <i class="ph ph-magnifying-glass"></i> Search
+                    </button>
                 </div>
-                <div id="searchResult" style="margin-top: 30px; max-width: 600px;"></div>
+                
+                <div id="searchResult" style="margin-top: 30px; max-width: 600px;">
+                    <!-- Results will be injected here -->
+                </div>
             </section>
 
-            <!-- View 3: My Profile -->
+            <!-- =========================================================
+                 VIEW 3: MY PROFILE (COMMAND CENTER)
+                 ========================================================= -->
             <section id="viewProfile" class="view">
                 <h1>Command Center</h1>
-                <div class="glass" style="padding: 30px; max-width: 600px; margin-top: 30px;">
-                    <h3 style="margin-bottom: 20px;">My Profile</h3>
-                    <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 25px;">
-                        <div class="file-upload-wrapper" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); position: relative; flex-shrink: 0; cursor: pointer;">
-                            <img id="profileAvatar" src="https://via.placeholder.com/150" style="width: 100%; height: 100%; object-fit: cover;">
+                
+                <div class="glass" style="padding: 40px; max-width: 600px; margin-top: 30px;">
+                    <h3 style="margin-bottom: 25px;">My Profile Settings</h3>
+                    
+                    <div style="display: flex; gap: 25px; align-items: center; margin-bottom: 30px;">
+                        
+                        <!-- Custom Avatar Upload Wrapper -->
+                        <div class="file-upload-wrapper" style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid var(--accent); position: relative; flex-shrink: 0; cursor: pointer;">
+                            <img id="profileAvatar" src="https://via.placeholder.com/150" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
                             <input type="file" id="avatarUpload" accept="image/*" onchange="compressAndUploadAvatar(event)">
-                            <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.7); color: #fff; text-align: center; padding: 4px 0; font-size: 0.8rem; pointer-events: none;"><i class="ph ph-camera"></i></div>
+                            <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.7); color: #fff; text-align: center; padding: 4px 0; font-size: 0.8rem; pointer-events: none;">
+                                <i class="ph ph-camera"></i>
+                            </div>
                         </div>
+                        
+                        <!-- Name and Editable Handle -->
                         <div style="flex: 1;">
                             <label>Display Name</label>
-                            <input type="text" id="profileName" placeholder="Your Name" style="margin-bottom: 12px;">
+                            <input type="text" id="profileName" placeholder="Your Name" style="margin-bottom: 15px;">
                             
-                            <!-- FIXED: Now Editable -->
                             <label>Unique @Handle</label>
                             <input type="text" id="profileHandle" placeholder="@handle (Edit to change)">
                         </div>
                     </div>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="saveProfile()"><i class="ph ph-floppy-disk"></i> Save Profile</button>
                     
-                    <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 30px 0;">
+                    <button class="btn btn-primary" style="width: 100%;" onclick="saveProfile()">
+                        <i class="ph ph-floppy-disk"></i> Save Profile Data
+                    </button>
                     
+                    <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 35px 0;">
+                    
+                    <!-- Theme Selector Engine -->
                     <h4 style="margin-bottom: 15px;">Interface Theme Engine</h4>
                     <select id="themeSelector" onchange="changeTheme(this.value)">
                         <optgroup label="Dark UI Themes">
@@ -311,14 +592,12 @@
                             <option value="midnight">Midnight</option>
                             <option value="sunset">Sunset</option>
                         </optgroup>
-                        <!-- FIXED: New Light Themes Added -->
                         <optgroup label="Light UI Themes">
                             <option value="light-ice">Ice Blue</option>
                             <option value="light-mint">Mint Green</option>
                             <option value="light-rose">Rose Red</option>
                         </optgroup>
-                        <!-- FIXED: Renamed Animated Backgrounds -->
-                        <optgroup label="Animated Backgrounds (Page 1 & Area)">
+                        <optgroup label="Animated Backgrounds">
                             <option value="anim_matrix">Matrix Digital Rain</option>
                             <option value="anim_snow">Cyber Snow</option>
                         </optgroup>
@@ -326,22 +605,41 @@
                 </div>
             </section>
 
-            <!-- FIXED: View 3.5: SEPARATED "YOUR ORDERS" SECTION -->
+            <!-- =========================================================
+                 VIEW 4: YOUR ORDERS (SPLIT VIEW FOR ANTI-CLASH)
+                 ========================================================= -->
             <section id="viewOrders" class="view">
-                <h1>Your Orders</h1>
-                <p style="margin-bottom: 25px;">Track your Escrow contracts, payments, and work progress.</p>
-                <div class="glass" style="padding: 30px;">
-                    <h3 style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                        Active Contracts
-                        <i class="ph ph-arrows-clockwise" style="cursor: pointer; color: var(--accent);" onclick="loadMyOrders()" title="Refresh"></i>
-                    </h3>
-                    <div id="userOrdersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 600px; overflow-y: auto; padding-right: 5px;">
-                        <p style="color: var(--text-muted);">Please login to view active orders.</p>
+                <h1>Escrow Contracts</h1>
+                <p style="margin-bottom: 30px;">Track your secure transactions in real-time.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+                    
+                    <!-- Client Orders List (Purchases) -->
+                    <div class="glass" style="padding: 30px;">
+                        <h3 style="margin-bottom: 20px; color: var(--accent); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                            Orders I Placed (Buying)
+                        </h3>
+                        <div id="clientOrdersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 600px; overflow-y: auto; padding-right: 5px;">
+                            <p style="color: var(--text-muted);">No active purchases found.</p>
+                        </div>
                     </div>
+
+                    <!-- Editor Orders List (Sales) -->
+                    <div class="glass" style="padding: 30px;">
+                        <h3 style="margin-bottom: 20px; color: #22c55e; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                            Orders Received (Selling)
+                        </h3>
+                        <div id="editorOrdersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 600px; overflow-y: auto; padding-right: 5px;">
+                            <p style="color: var(--text-muted);">No incoming orders found.</p>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
-            <!-- View 4: Apply to Earn (Step 1) -->
+            <!-- =========================================================
+                 VIEW 5: APPLY TO EARN (STEP 1)
+                 ========================================================= -->
             <section id="viewRegisterStep1" class="view">
                 <h1>Launch Your Shop</h1>
                 <div class="glass" style="padding: 40px; max-width: 600px; margin: 30px auto 0;">
@@ -365,17 +663,23 @@
                     <label>Shop Logo (Auto-compressed to max 400px)</label>
                     <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
                         <div class="file-upload-wrapper" style="width: 100px; height: 100px; border-radius: 12px; border: 2px dashed var(--accent); position: relative; cursor: pointer;">
-                            <img id="shopLogoPreview" src="https://via.placeholder.com/150" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img id="shopLogoPreview" src="https://via.placeholder.com/150" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;">
                             <input type="file" id="shopLogoUpload" accept="image/*" onchange="compressShopLogo(event)">
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Click the box to upload your logo.<br>Make sure it represents your brand well.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">
+                            Click the box to upload your logo.<br>Make sure it represents your brand well.
+                        </p>
                     </div>
 
-                    <button class="btn btn-primary" style="width: 100%;" onclick="switchView('viewRegisterStep2')">Next Step <i class="ph ph-arrow-right"></i></button>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="switchView('viewRegisterStep2')">
+                        Next Step <i class="ph ph-arrow-right"></i>
+                    </button>
                 </div>
             </section>
 
-            <!-- View 5: Apply to Earn (Step 2) -->
+            <!-- =========================================================
+                 VIEW 6: APPLY TO EARN (STEP 2)
+                 ========================================================= -->
             <section id="viewRegisterStep2" class="view">
                 <h1>Launch Your Shop</h1>
                 <div class="glass" style="padding: 40px; max-width: 600px; margin: 30px auto 0;">
@@ -397,13 +701,19 @@
                     </div>
                     
                     <div style="display: flex; gap: 15px;">
-                        <button class="btn" style="flex: 1;" onclick="switchView('viewRegisterStep1')"><i class="ph ph-arrow-left"></i> Back</button>
-                        <button class="btn btn-primary" style="flex: 2;" onclick="submitShopApplication()"><i class="ph ph-paper-plane-tilt"></i> Submit for Approval</button>
+                        <button class="btn" style="flex: 1;" onclick="switchView('viewRegisterStep1')">
+                            <i class="ph ph-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" style="flex: 2;" onclick="submitShopApplication()">
+                            <i class="ph ph-paper-plane-tilt"></i> Submit for Approval
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <!-- View 6: Hire Terminal -->
+            <!-- =========================================================
+                 VIEW 7: HIRE TERMINAL (ESCROW SETUP)
+                 ========================================================= -->
             <section id="viewOrderConfig" class="view">
                 <h1>Escrow Terminal</h1>
                 <p style="margin-bottom: 30px;">Configure your commission securely. Funds are held in escrow.</p>
@@ -440,15 +750,19 @@
                         <label>Detailed Instructions for Editor</label>
                         <textarea id="orderInstructions" rows="4" placeholder="Music style, pacing, cuts to make, reference videos..." style="margin-bottom: 25px;"></textarea>
                         
-                        <button class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="placeOrder()"><i class="ph ph-lock-key"></i> Create Secure Escrow Contract</button>
+                        <button class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="placeOrder()">
+                            <i class="ph ph-lock-key"></i> Lock in Escrow & Order
+                        </button>
                     </div>
 
                     <!-- Visual Preview Side -->
                     <div class="glass" style="padding: 30px; display: flex; flex-direction: column; align-items: center; position: sticky; top: 30px;">
                         <h4 style="margin-bottom: 20px;">Aspect Ratio Preview</h4>
+                        
                         <div id="ratioPreview" style="width: 240px; height: 135px; border: 2px dashed var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: all 0.4s var(--bezier);">
                             <span id="ratioText" style="font-weight: 700;">16:9</span>
                         </div>
+                        
                         <select id="orderRatio" style="margin-top: 25px; width: 100%; max-width: 240px;" onchange="updateRatioPreview(this.value)">
                             <option value="16:9">16:9 (Landscape / YouTube)</option>
                             <option value="9:16">9:16 (Vertical / Shorts)</option>
@@ -458,66 +772,107 @@
                 </div>
             </section>
 
-            <!-- View 7: Super Admin Panel -->
+            <!-- =========================================================
+                 VIEW 8: SUPER ADMIN PANEL
+                 ========================================================= -->
             <section id="viewAdmin" class="view">
                 <h1>Super Admin Dashboard</h1>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 30px; align-items: start;">
+                    
                     <div class="glass" style="padding: 30px;">
                         <h3 style="margin-bottom: 20px; color: #f97316;">Pending Shop Approvals</h3>
-                        <div id="adminAppsList" style="display: flex; flex-direction: column; gap: 15px; max-height: 400px; overflow-y: auto;"></div>
+                        <div id="adminAppsList" style="display: flex; flex-direction: column; gap: 15px; max-height: 500px; overflow-y: auto;">
+                            <!-- Admin Approvals will be injected here -->
+                        </div>
                     </div>
+                    
                     <div class="glass" style="padding: 30px;">
                         <h3 style="margin-bottom: 20px; color: #3b82f6;">Escrow Payments & Verifications</h3>
-                        <div id="adminOrdersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 400px; overflow-y: auto;"></div>
+                        <div id="adminOrdersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 500px; overflow-y: auto;">
+                            <!-- Admin Orders will be injected here -->
+                        </div>
                     </div>
+                    
                 </div>
             </section>
 
         </main>
-    </div> <!-- END APP CONTAINER -->
+    </div> 
+    <!-- END OF APP CONTAINER -->
 
     <!-- =========================================================
-         MODALS & OVERLAYS
+         MODALS & OVERLAYS (STRICT ESCROW WORKFLOW)
          ========================================================= -->
+
+    <!-- [STEP 2] Editor: Accept or Reject New Order -->
+    <div class="modal-overlay" id="acceptOrderModal">
+        <div class="glass modal-content" style="text-align: center;">
+            <button class="close-modal" onclick="closeModal('acceptOrderModal')"><i class="ph ph-x"></i></button>
+            <h2 style="margin-bottom: 15px;">New Commission Request!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">
+                Review the project details carefully. Accepting this locks the order and requests Escrow payment from the client.
+            </p>
+            
+            <div id="acceptOrderDetails" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; font-size: 0.9rem;">
+                <!-- Order details injected by JavaScript -->
+            </div>
+            
+            <div style="display: flex; gap: 15px;">
+                <button class="btn btn-danger" style="flex: 1;" onclick="editorRejectOrder()">Reject</button>
+                <button class="btn btn-primary" style="flex: 2;" onclick="editorAcceptOrder()">Accept & Lock Order</button>
+            </div>
+        </div>
+    </div>
          
-    <!-- Editor: Work Progress Slider Modal -->
+    <!-- [STEP 6] Editor: Work Progress Slider Modal -->
     <div class="modal-overlay" id="progressModal">
         <div class="glass modal-content">
             <button class="close-modal" onclick="closeModal('progressModal')"><i class="ph ph-x"></i></button>
             <h2 style="margin-bottom: 20px;">Update Work Progress</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Adjust the slider to update the client on your completion status. Reaching 100% marks the order as Completed.</p>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">
+                Adjust the slider to update the client. Reaching 100% marks the project as Completed.
+            </p>
+            
             <input type="range" id="progressSlider" min="15" max="100" value="15" style="width: 100%; margin-bottom: 15px; cursor: pointer;">
             <h1 style="text-align: center; color: var(--accent); margin-bottom: 25px;"><span id="progressText">15</span>%</h1>
+            
             <button class="btn btn-primary" style="width: 100%;" onclick="saveWorkProgress()">Sync Progress to Client</button>
         </div>
     </div>
 
-    <!-- Client: Payment QR Modal -->
+    <!-- [STEP 3/4] Client: Escrow Payment & UTR Proof Modal -->
     <div class="modal-overlay" id="paymentModal">
         <div class="glass modal-content" style="text-align: center;">
             <button class="close-modal" onclick="closeModal('paymentModal')"><i class="ph ph-x"></i></button>
             <h2 style="margin-bottom: 10px;">Fund Escrow Contract</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Scan to pay via official platform UPI. Funds are held securely until completion.</p>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">
+                Scan to pay via official platform UPI. Funds are held securely until completion.
+            </p>
             
             <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
-                <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=msgamer123098@okaxis&pn=RexEditHub" style="width: 200px; height: 200px;">
+                <!-- Static platform QR. Adjust UPI as needed -->
+                <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=msgamer123098@okaxis&pn=RexEditHub" alt="Payment QR" style="width: 200px; height: 200px;">
                 <h3 style="color: #000; margin-top: 10px;">msgamer123098@okaxis</h3>
             </div>
             
-            <label style="text-align: left;">Payment Proof (UTR Number or Google Drive Receipt)</label>
-            <input type="text" id="paymentProofInput" placeholder="Enter UTR or Link here..." style="margin-bottom: 20px;">
-            <button class="btn btn-primary" style="width: 100%; padding: 15px;" onclick="submitPaymentProof()">Submit Proof to Escrow Admin</button>
+            <label style="text-align: left;">Payment Proof (UTR Number / Drive Link)</label>
+            <input type="text" id="paymentProofInput" placeholder="Enter UTR here to unlock Editor's work..." style="margin-bottom: 20px;">
+            
+            <button class="btn btn-primary" style="width: 100%; padding: 15px;" onclick="submitPaymentProof()">
+                Submit Proof to Escrow Admin
+            </button>
         </div>
     </div>
 
     <!-- Toast Notifications Container -->
     <div id="toast-container"></div>
-
     <!-- =========================================================
-         JAVASCRIPT SETUP
+         JAVASCRIPT LOGIC (CORE APPLICATION ENGINE)
          ========================================================= -->
     <script>
-        // API CREDENTIALS
+        /* =========================================================
+           1. API CREDENTIALS & INITIALIZATION
+           ========================================================= */
         const firebaseConfig = {
             apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
             authDomain: "rex-edit-hub.firebaseapp.com",
@@ -528,106 +883,140 @@
             measurementId: "G-CTW92DRSD0"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+
+        // Initialize EmailJS
         emailjs.init("kJYbkGdmk4nBp-KDl");
 
+        // Global Constants
         const ADMIN_EMAIL = "msgamer123098@gmail.com";
         const EMAILJS_SERVICE = "service_ii7zzqx";
         const EMAILJS_TEMPLATE = "template_ob1ef5u";
 
+        // Global State Variables
         let currentUser = null;
         let currentUserData = null;
         let globalUnsubscribes = [];
         let activeHireShop = null; 
         let activeOrderForModal = null;
+
         /* =========================================================
-           UI CONTROLLERS & TOAST NOTIFICATIONS
+           2. UI CONTROLLERS & NOTIFICATIONS
            ========================================================= */
-        function showToast(message, type="info") {
+        function showToast(message, type = "info") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = 'glass toast';
             
             let icon = 'ph-info';
             let color = 'var(--accent)';
-            if(type === 'error') { icon = 'ph-warning-circle'; color = '#ef4444'; toast.style.borderLeftColor = color; }
-            if(type === 'success') { icon = 'ph-check-circle'; color = '#22c55e'; toast.style.borderLeftColor = color; }
             
-            toast.innerHTML = `<i class="ph ${icon}" style="font-size: 1.2rem; color: ${color};"></i> <span style="font-weight: 600;">${message}</span>`;
+            if (type === 'error') { 
+                icon = 'ph-warning-circle'; 
+                color = '#ef4444'; 
+                toast.style.borderLeftColor = color; 
+            }
+            if (type === 'success') { 
+                icon = 'ph-check-circle'; 
+                color = '#22c55e'; 
+                toast.style.borderLeftColor = color; 
+            }
+            
+            toast.innerHTML = `
+                <i class="ph ${icon}" style="font-size: 1.2rem; color: ${color};"></i> 
+                <span style="font-weight: 600;">${message}</span>
+            `;
+            
             container.appendChild(toast);
             
             setTimeout(() => { 
                 toast.style.opacity = '0'; 
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => toast.remove(), 300);
+                toast.style.transform = 'translateX(100%)'; 
+                setTimeout(() => toast.remove(), 300); 
             }, 4000);
         }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.menu-overlay');
+            
             sidebar.classList.toggle('open');
-            if(sidebar.classList.contains('open')) {
-                overlay.style.display = 'block';
-                setTimeout(() => overlay.style.opacity = '1', 10);
-            } else {
-                overlay.style.opacity = '0';
-                setTimeout(() => overlay.style.display = 'none', 300);
+            
+            if (sidebar.classList.contains('open')) { 
+                overlay.style.display = 'block'; 
+                setTimeout(() => overlay.style.opacity = '1', 10); 
+            } else { 
+                overlay.style.opacity = '0'; 
+                setTimeout(() => overlay.style.display = 'none', 300); 
             }
         }
 
         function switchView(viewId) {
+            // Hide all views
             document.querySelectorAll('.view').forEach(v => {
                 v.classList.remove('active');
             });
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             
+            // Remove active state from nav items
+            document.querySelectorAll('.nav-item').forEach(n => {
+                n.classList.remove('active');
+            });
+            
+            // Show targeted view
             document.getElementById(viewId).classList.add('active');
             
-            // Highlight active sidebar item
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(n => {
-                if(n.getAttribute('onclick') && n.getAttribute('onclick').includes(viewId)) {
+            // Highlight current nav item
+            document.querySelectorAll('.nav-item').forEach(n => { 
+                if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(viewId)) {
                     n.classList.add('active');
                 }
             });
-
-            if(window.innerWidth < 1024) toggleSidebar();
+            
+            // Close mobile menu if open
+            if (window.innerWidth < 1024) {
+                toggleSidebar();
+            }
         }
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('active');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        function closeModal(modalId) { 
+            const modal = document.getElementById(modalId); 
+            modal.classList.remove('active'); 
+            setTimeout(() => { 
+                modal.style.display = 'none'; 
+            }, 300); 
         }
 
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = 'flex';
-            setTimeout(() => { modal.classList.add('active'); }, 10);
+        function openModal(modalId) { 
+            const modal = document.getElementById(modalId); 
+            modal.style.display = 'flex'; 
+            setTimeout(() => { 
+                modal.classList.add('active'); 
+            }, 10); 
         }
 
-        function clearListeners() {
-            globalUnsubscribes.forEach(unsub => unsub());
-            globalUnsubscribes = [];
+        function clearListeners() { 
+            globalUnsubscribes.forEach(unsub => unsub()); 
+            globalUnsubscribes = []; 
         }
 
         /* =========================================================
-           CANVAS THEME ENGINE (FIXED Z-INDEX & PERFORMANCE)
+           3. CANVAS THEME ENGINE
            ========================================================= */
         let animId;
+        
         function changeTheme(themeVal) {
             localStorage.setItem('rex_theme', themeVal);
             cancelAnimationFrame(animId);
+            
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Handle Animated vs Static
-            if(themeVal.startsWith('anim_')) {
-                document.documentElement.setAttribute('data-theme', 'dark'); // Fallback UI for animations
+            if (themeVal.startsWith('anim_')) {
+                document.documentElement.setAttribute('data-theme', 'dark'); 
                 startCanvasAnimation(themeVal.replace('anim_', ''));
             } else {
                 document.documentElement.setAttribute('data-theme', themeVal);
@@ -638,58 +1027,71 @@
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
             
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+            function resizeCanvas() { 
+                canvas.width = window.innerWidth; 
+                canvas.height = window.innerHeight; 
             }
-            resizeCanvas();
+            
+            resizeCanvas(); 
             window.addEventListener('resize', resizeCanvas);
 
-            if(type === 'matrix') {
+            if (type === 'matrix') {
                 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*'.split('');
-                const fontSize = 14;
-                const columns = canvas.width / fontSize;
+                const fontSize = 14; 
+                const columns = canvas.width / fontSize; 
                 const drops = Array(Math.floor(columns)).fill(1);
                 
                 function drawMatrix() {
-                    ctx.fillStyle = 'rgba(15, 23, 42, 0.1)'; // Fade effect
+                    ctx.fillStyle = 'rgba(15, 23, 42, 0.1)'; 
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = '#3b82f6';
+                    ctx.fillStyle = '#3b82f6'; 
                     ctx.font = fontSize + 'px monospace';
-                    for(let i = 0; i < drops.length; i++) {
+                    
+                    for (let i = 0; i < drops.length; i++) {
                         const text = chars[Math.floor(Math.random() * chars.length)];
                         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                        
+                        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        }
                         drops[i]++;
                     }
                     animId = requestAnimationFrame(drawMatrix);
                 }
                 drawMatrix();
             } else if (type === 'snow') {
-                const particles = Array.from({length: 120}, () => ({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 2 + 1,
-                    d: Math.random() * 100
+                const particles = Array.from({length: 120}, () => ({ 
+                    x: Math.random() * canvas.width, 
+                    y: Math.random() * canvas.height, 
+                    r: Math.random() * 2 + 1, 
+                    d: Math.random() * 100 
                 }));
+                
                 let angle = 0;
+                
                 function drawSnow() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.6)"; 
                     ctx.beginPath();
-                    for(let i = 0; i < particles.length; i++) {
-                        let p = particles[i];
-                        ctx.moveTo(p.x, p.y);
-                        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+                    
+                    for (let i = 0; i < particles.length; i++) { 
+                        let p = particles[i]; 
+                        ctx.moveTo(p.x, p.y); 
+                        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true); 
                     }
-                    ctx.fill();
+                    
+                    ctx.fill(); 
                     angle += 0.01;
-                    for(let i = 0; i < particles.length; i++) {
-                        let p = particles[i];
-                        p.y += Math.cos(angle + p.d) + 1 + p.r/2;
+                    
+                    for (let i = 0; i < particles.length; i++) {
+                        let p = particles[i]; 
+                        p.y += Math.cos(angle + p.d) + 1 + p.r/2; 
                         p.x += Math.sin(angle) * 1.5;
-                        if(p.x > canvas.width + 5 || p.x < -5 || p.y > canvas.height) {
-                            if(i%3 > 0) { particles[i] = {x: Math.random() * canvas.width, y: -10, r: p.r, d: p.d}; }
+                        
+                        if (p.x > canvas.width + 5 || p.x < -5 || p.y > canvas.height) { 
+                            if (i % 3 > 0) {
+                                particles[i] = { x: Math.random() * canvas.width, y: -10, r: p.r, d: p.d }; 
+                            }
                         }
                     }
                     animId = requestAnimationFrame(drawSnow);
@@ -706,7 +1108,7 @@
         });
 
         /* =========================================================
-           AUTHENTICATION, PROFILE & EDITABLE HANDLE
+           4. AUTHENTICATION & EDITABLE PROFILE
            ========================================================= */
         const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -714,28 +1116,38 @@
             if (currentUser) {
                 auth.signOut().then(() => {
                     showToast("Logged out successfully", "success");
-                    document.getElementById('authBtn').innerHTML = `<i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> Login / Register`;
-                    currentUser = null;
+                    document.getElementById('authBtn').innerHTML = `
+                        <i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> 
+                        <span>Login / Register</span>
+                    `;
+                    currentUser = null; 
                     currentUserData = null;
+                    
+                    // Reset UI
                     document.getElementById('adminNav').style.display = 'none';
-                    document.getElementById('profileName').value = "";
+                    document.getElementById('profileName').value = ""; 
                     document.getElementById('profileHandle').value = "";
                     document.getElementById('profileAvatar').src = "https://via.placeholder.com/150";
-                    document.getElementById('userOrdersList').innerHTML = '<p style="color: var(--text-muted);">Please login to view active orders.</p>';
-                    clearListeners();
+                    document.getElementById('clientOrdersList').innerHTML = '<p style="color: var(--text-muted);">Please login.</p>';
+                    document.getElementById('editorOrdersList').innerHTML = '<p style="color: var(--text-muted);">Please login.</p>';
+                    
+                    clearListeners(); 
                     switchView('viewShop');
                 });
             } else {
-                auth.signInWithPopup(provider).then((result) => {
-                    checkAndCreateProfile(result.user);
-                }).catch((error) => showToast(error.message, "error"));
+                auth.signInWithPopup(provider)
+                    .then((result) => checkAndCreateProfile(result.user))
+                    .catch(err => showToast(err.message, "error"));
             }
         }
 
         auth.onAuthStateChanged((user) => {
             if (user) {
-                currentUser = user;
-                document.getElementById('authBtn').innerHTML = `<i class="ph ph-sign-out" style="font-size: 1.3rem;"></i> Logout`;
+                currentUser = user; 
+                document.getElementById('authBtn').innerHTML = `
+                    <i class="ph ph-sign-out" style="font-size: 1.3rem;"></i> 
+                    <span>Logout</span>
+                `;
                 loadUserProfile(user.uid);
             }
         });
@@ -743,13 +1155,16 @@
         async function checkAndCreateProfile(user) {
             const docRef = db.collection('users').doc(user.uid);
             const docSnap = await docRef.get();
+            
             if (!docSnap.exists) {
                 const handle = '@user' + Math.floor(Math.random() * 99999);
-                await docRef.set({
-                    uid: user.uid, email: user.email,
-                    displayName: user.displayName, userId: handle,
-                    photoURL: user.photoURL || "https://via.placeholder.com/150",
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                await docRef.set({ 
+                    uid: user.uid, 
+                    email: user.email, 
+                    displayName: user.displayName, 
+                    userId: handle, 
+                    photoURL: user.photoURL || "https://via.placeholder.com/150", 
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp() 
                 });
             }
             loadUserProfile(user.uid);
@@ -757,126 +1172,155 @@
 
         function loadUserProfile(uid) {
             const unsub = db.collection('users').doc(uid).onSnapshot((doc) => {
-                if(doc.exists) {
+                if (doc.exists) {
                     currentUserData = doc.data();
                     document.getElementById('profileName').value = currentUserData.displayName;
                     document.getElementById('profileHandle').value = currentUserData.userId;
                     document.getElementById('profileAvatar').src = currentUserData.photoURL;
                     
-                    if(currentUserData.email === ADMIN_EMAIL) {
-                        document.getElementById('adminNav').style.display = 'block';
-                        loadAdminDashboard();
+                    if (currentUserData.email === ADMIN_EMAIL) { 
+                        document.getElementById('adminNav').style.display = 'block'; 
+                        loadAdminDashboard(); 
                     }
+                    
                     loadMyOrders();
                 }
             });
             globalUnsubscribes.push(unsub);
         }
 
-        // FIXED: Editable Handle Save Logic
         function saveProfile() {
-            if(!currentUser) return showToast("Please login first", "error");
+            if (!currentUser) return showToast("Please login first", "error");
+            
             const newName = document.getElementById('profileName').value.trim();
             let newHandle = document.getElementById('profileHandle').value.trim();
             
-            if(!newName || !newHandle) return showToast("Name and Handle cannot be empty", "error");
-            if(!newHandle.startsWith('@')) newHandle = '@' + newHandle;
-
-            db.collection('users').doc(currentUser.uid).update({
-                displayName: newName,
-                userId: newHandle
-            }).then(() => showToast("Profile and Handle updated!", "success"))
-              .catch(err => showToast(err.message, "error"));
+            if (!newName || !newHandle) {
+                return showToast("Name and Handle cannot be empty", "error");
+            }
+            if (!newHandle.startsWith('@')) {
+                newHandle = '@' + newHandle;
+            }
+            
+            db.collection('users').doc(currentUser.uid).update({ 
+                displayName: newName, 
+                userId: newHandle 
+            })
+            .then(() => showToast("Profile and Handle updated!", "success"))
+            .catch(err => showToast(err.message, "error"));
         }
 
         /* =========================================================
-           IMAGE COMPRESSION LOGIC (CANVAS)
+           5. IMAGE COMPRESSION (CANVAS LOGIC)
            ========================================================= */
         function compressImage(file, maxWidth, callback) {
-            const reader = new FileReader();
+            const reader = new FileReader(); 
             reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                const img = new Image();
-                img.src = event.target.result;
+            
+            reader.onload = (e) => {
+                const img = new Image(); 
+                img.src = e.target.result;
+                
                 img.onload = () => {
-                    const canvas = document.createElement('canvas');
+                    const canvas = document.createElement('canvas'); 
                     const ratio = maxWidth / img.width;
-                    canvas.width = maxWidth;
+                    canvas.width = maxWidth; 
                     canvas.height = img.height * ratio;
-                    const ctx = canvas.getContext('2d');
+                    
+                    const ctx = canvas.getContext('2d'); 
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    callback(canvas.toDataURL('image/jpeg', 0.85)); // 85% Quality
+                    
+                    callback(canvas.toDataURL('image/jpeg', 0.85));
                 };
             };
         }
 
-        function compressAndUploadAvatar(event) {
-            const file = event.target.files[0];
-            if(!file || !currentUser) return;
-            compressImage(file, 400, (base64) => {
-                db.collection('users').doc(currentUser.uid).update({ photoURL: base64 })
-                .then(() => showToast("Avatar updated securely!", "success"));
-            });
+        function compressAndUploadAvatar(e) { 
+            const file = e.target.files[0]; 
+            if (file && currentUser) {
+                compressImage(file, 400, (base64) => { 
+                    db.collection('users').doc(currentUser.uid).update({ 
+                        photoURL: base64 
+                    }).then(() => showToast("Avatar updated securely!", "success")); 
+                }); 
+            }
         }
-
+        
         let tempShopLogo = "https://via.placeholder.com/150";
-        function compressShopLogo(event) {
-            const file = event.target.files[0];
-            if(!file) return;
-            compressImage(file, 400, (base64) => {
-                tempShopLogo = base64;
-                document.getElementById('shopLogoPreview').src = base64;
-            });
+        
+        function compressShopLogo(e) { 
+            const file = e.target.files[0]; 
+            if (file) {
+                compressImage(file, 400, (base64) => { 
+                    tempShopLogo = base64; 
+                    document.getElementById('shopLogoPreview').src = base64; 
+                }); 
+            }
         }
 
         /* =========================================================
-           SHOP APPLICATIONS & PREMIUM MARKETPLACE
+           6. SHOP APPLICATIONS & MARKETPLACE LOGIC
            ========================================================= */
         function submitShopApplication() {
-            if(!currentUser) return showToast("Login required to apply.", "error");
+            if (!currentUser) return showToast("Login required.", "error");
             
-            const name = document.getElementById('shopName').value.trim();
+            const name = document.getElementById('shopName').value.trim(); 
             const portfolio = document.getElementById('shopPortfolio').value.trim();
-            const rates = {
-                low: parseInt(document.getElementById('rateLow').value),
-                medium: parseInt(document.getElementById('rateMedium').value),
-                high: parseInt(document.getElementById('rateHigh').value)
+            const rates = { 
+                low: parseInt(document.getElementById('rateLow').value), 
+                medium: parseInt(document.getElementById('rateMedium').value), 
+                high: parseInt(document.getElementById('rateHigh').value) 
             };
+            
+            if (!name || !portfolio || !rates.low) {
+                return showToast("Fill all required fields.", "error");
+            }
 
-            if(!name || !portfolio || !rates.low) return showToast("Fill all required fields.", "error");
-
-            db.collection('shop_applications').add({
-                name: name,
-                category: document.getElementById('shopCategory').value,
-                portfolioLink: portfolio,
-                logoUrl: tempShopLogo, rates: rates,
-                applicantUid: currentUser.uid, applicantHandle: currentUserData.userId,
-                applicantEmail: currentUser.email, status: "Pending"
-            }).then(() => {
-                showToast("Application Sent to Admin!", "success");
-                emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: ADMIN_EMAIL, message: `New Shop App from ${currentUserData.userId}` });
-                switchView('viewShop');
+            db.collection('shop_applications').add({ 
+                name: name, 
+                category: document.getElementById('shopCategory').value, 
+                portfolioLink: portfolio, 
+                logoUrl: tempShopLogo, 
+                rates: rates, 
+                applicantUid: currentUser.uid, 
+                applicantHandle: currentUserData.userId, 
+                applicantEmail: currentUser.email, 
+                status: "Pending" 
+            }).then(() => { 
+                showToast("Application Sent for Approval!", "success");
+                
+                // Notify Super Admin
+                emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { 
+                    to_email: ADMIN_EMAIL, 
+                    message: `New Shop Application from ${currentUserData.userId}!` 
+                });
+                
+                switchView('viewShop'); 
             });
         }
 
         function loadMarketplace() {
             db.collection('shops').onSnapshot(snap => {
-                const grid = document.getElementById('shopGrid');
+                const grid = document.getElementById('shopGrid'); 
                 grid.innerHTML = '';
-                if(snap.empty) {
+                
+                if (snap.empty) {
                     grid.innerHTML = `<div style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 50px;">No premium creators found yet.</div>`;
                 }
+                
                 snap.forEach(doc => {
-                    const shop = doc.data();
+                    const shop = doc.data(); 
                     shop.id = doc.id;
+                    
                     grid.innerHTML += `
                         <div class="glass glass-card" style="padding: 30px; display: flex; flex-direction: column; align-items: center; text-align: center;" data-name="${shop.name.toLowerCase()}" data-handle="${shop.ownerHandle.toLowerCase()}" data-category="${shop.category.toLowerCase()}">
-                            <img src="${shop.logoUrl}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); margin-bottom: 20px; box-shadow: 0 0 15px var(--accent-glow);">
+                            <img src="${shop.logoUrl}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); margin-bottom: 20px;">
+                            
                             <h2 style="margin-bottom: 5px; font-size: 1.4rem;">${shop.name}</h2>
                             <p style="color: var(--accent); font-size: 0.95rem; margin-bottom: 20px; font-weight: 700;">${shop.category} • ${shop.ownerHandle}</p>
-                            <div style="display: flex; gap: 10px; width: 100%; justify-content: center; margin-bottom: 25px;">
-                                <span class="badge" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">Starting at ₹${shop.rates.low}</span>
-                            </div>
+                            
+                            <span class="badge" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); margin-bottom: 25px;">Starting at ₹${shop.rates.low}</span>
+                            
                             <div style="display: flex; gap: 10px; width: 100%;">
                                 <a href="${shop.portfolioLink}" target="_blank" class="btn" style="flex: 1;"><i class="ph ph-play"></i> Portfolio</a>
                                 <button class="btn btn-primary" style="flex: 1;" onclick='openHireTerminal(${JSON.stringify(shop)})'>Hire Pro</button>
@@ -895,20 +1339,22 @@
             });
         }
 
-        // FIXED: Search User Logic
         function searchUser() {
             let q = document.getElementById('searchInput').value.trim();
-            if(!q) return showToast("Enter a handle to search.", "error");
-            if(!q.startsWith('@')) q = '@' + q; // auto format
+            
+            if (!q) return showToast("Enter a handle to search.", "error"); 
+            if (!q.startsWith('@')) q = '@' + q;
             
             db.collection('users').where('userId', '==', q).get().then(snap => {
                 const res = document.getElementById('searchResult');
-                if(snap.empty) { 
-                    res.innerHTML = `<div class="glass" style="padding: 20px; text-align: center; color: var(--text-muted);">User ${q} not found in the network.</div>`; 
+                
+                if (snap.empty) { 
+                    res.innerHTML = `<div class="glass" style="padding: 20px;">User ${q} not found in the network.</div>`; 
                     return; 
                 }
-                snap.forEach(doc => {
-                    const u = doc.data();
+                
+                snap.forEach(doc => { 
+                    const u = doc.data(); 
                     res.innerHTML = `
                         <div class="glass" style="padding: 20px; display:flex; align-items:center; gap:20px; border-left: 4px solid var(--accent);">
                             <img src="${u.photoURL}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border: 2px solid var(--accent);">
@@ -916,104 +1362,232 @@
                                 <h3 style="margin-bottom: 5px;">${u.displayName}</h3>
                                 <p style="color: var(--accent); font-weight: 600;">${u.userId}</p>
                             </div>
-                        </div>`;
+                        </div>
+                    `; 
                 });
             });
         }
 
         /* =========================================================
-           ESCROW TERMINAL & WORKFLOW
+           7. ANTI-FRAUD HIRE TERMINAL & 6-STEP STATE MACHINE
            ========================================================= */
         function openHireTerminal(shop) {
-            if(!currentUser) return showToast("Login required to hire.", "error");
+            if (!currentUser) return showToast("Login required to hire creators.", "error");
+            
+            // ANTI-FRAUD SYSTEM: Block Self-Hire
+            if (shop.ownerUid === currentUser.uid) {
+                return showToast("Fraud Prevention: You cannot hire your own shop.", "error");
+            }
+            
             activeHireShop = shop;
             document.getElementById('hireShopName').innerText = `Hiring: ${shop.name}`;
-            document.getElementById('prLow').innerText = shop.rates.low;
-            document.getElementById('prMed').innerText = shop.rates.medium;
+            document.getElementById('prLow').innerText = shop.rates.low; 
+            document.getElementById('prMed').innerText = shop.rates.medium; 
             document.getElementById('prHigh').innerText = shop.rates.high;
-            calculateTotal();
+            
+            calculateTotal(); 
             switchView('viewOrderConfig');
         }
 
-        function updateRatioPreview(val) {
-            const box = document.getElementById('ratioPreview');
-            document.getElementById('ratioText').innerText = val;
-            if(val === '16:9') { box.style.width = '240px'; box.style.height = '135px'; }
-            if(val === '9:16') { box.style.width = '135px'; box.style.height = '240px'; }
-            if(val === '1:1') { box.style.width = '200px'; box.style.height = '200px'; }
-        }
-
         function calculateTotal() {
-            if(!activeHireShop) return;
+            if (!activeHireShop) return;
             const tier = document.getElementById('orderTier').value;
-            const qty = document.getElementById('orderDuration').value || 1;
-            const total = activeHireShop.rates[tier] * qty;
-            document.getElementById('orderTotal').innerText = total;
+            const duration = document.getElementById('orderDuration').value || 1;
+            document.getElementById('orderTotal').innerText = activeHireShop.rates[tier] * duration;
         }
 
+        function updateRatioPreview(val) {
+            const box = document.getElementById('ratioPreview'); 
+            document.getElementById('ratioText').innerText = val;
+            
+            if (val === '16:9') { box.style.width = '240px'; box.style.height = '135px'; }
+            if (val === '9:16') { box.style.width = '135px'; box.style.height = '240px'; }
+            if (val === '1:1')  { box.style.width = '200px'; box.style.height = '200px'; }
+        }
+
+        // --- THE 6-STEP ESCROW WORKFLOW ACTIONS ---
+
+        // STEP 1: CREATE ORDER (Wait for Editor Response)
         function placeOrder() {
-            const tier = document.getElementById('orderTier').value;
             const total = parseInt(document.getElementById('orderTotal').innerText);
-            const footage = document.getElementById('orderFootage').value;
+            const footage = document.getElementById('orderFootage').value; 
             const req = document.getElementById('orderInstructions').value;
             
-            if(!footage || !req) return showToast("Provide footage link and instructions.", "error");
+            if (!footage || !req) {
+                return showToast("Please provide the footage link and instructions.", "error");
+            }
 
             const orderId = 'RX-' + Math.floor(1000 + Math.random() * 9000);
             
             db.collection('orders').doc(orderId).set({
-                orderId: orderId, shopId: activeHireShop.id,
-                clientUid: currentUser.uid, clientHandle: currentUserData.userId,
-                editorUid: activeHireShop.ownerUid, editorEmail: activeHireShop.ownerEmail,
-                price: total, tier: tier, ratio: document.getElementById('orderRatio').value,
-                footageLink: footage, instructions: req,
-                status: "Pending Admin Approval", workProgress: 0,
+                orderId: orderId, 
+                shopId: activeHireShop.id,
+                clientUid: currentUser.uid, 
+                clientHandle: currentUserData.userId,
+                editorUid: activeHireShop.ownerUid, 
+                editorEmail: activeHireShop.ownerEmail,
+                price: total, 
+                tier: document.getElementById('orderTier').value, 
+                ratio: document.getElementById('orderRatio').value,
+                footageLink: footage, 
+                instructions: req,
+                status: "Wait for editor response", 
+                workProgress: 0,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
-                showToast("Order Created! Secure Escrow Locked.", "success");
-                emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: activeHireShop.ownerEmail, message: `New Order ${orderId} received from ${currentUserData.userId}!` });
-                switchView('viewOrders'); // Redirect to new Orders page
+                showToast("Order Placed! Waiting for editor to accept.", "success");
+                
+                // Email Editor
+                emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { 
+                    to_email: activeHireShop.ownerEmail, 
+                    message: `New Escrow Request ${orderId} received from ${currentUserData.userId}!` 
+                });
+                
+                switchView('viewOrders');
             });
         }
 
-        // FIXED: Load Orders to the new viewOrders Section
-        function loadMyOrders() {
-            if(!currentUser) return;
-            const list = document.getElementById('userOrdersList');
-            list.innerHTML = ''; // clear loading text
-            
-            db.collection('orders').where('clientUid', '==', currentUser.uid).onSnapshot(snap => renderOrders(snap, list, 'client'));
-            db.collection('orders').where('editorUid', '==', currentUser.uid).onSnapshot(snap => renderOrders(snap, list, 'editor'));
+        // STEP 2: EDITOR ACCEPTS (Send to Admin)
+        function openAcceptModal(id, orderData) {
+            activeOrderForModal = id;
+            document.getElementById('acceptOrderDetails').innerHTML = `
+                <strong>Order ID:</strong> ${orderData.orderId}<br><br>
+                <strong>Client:</strong> ${orderData.clientHandle}<br>
+                <strong>Amount:</strong> ₹${orderData.price}<br>
+                <strong>Instructions:</strong> ${orderData.instructions}<br>
+            `;
+            openModal('acceptOrderModal');
         }
 
-        function renderOrders(snap, container, role) {
-            snap.forEach(doc => {
-                const order = doc.data();
-                
-                let badgeClass = 'status-pending';
-                if(order.status.includes('WIP') || order.status.includes('Verified')) badgeClass = 'status-progress';
-                if(order.status.includes('Completed')) badgeClass = 'status-completed';
+        function editorAcceptOrder() {
+            db.collection('orders').doc(activeOrderForModal).update({ 
+                status: "Pending Admin Approval (Locked)" 
+            }).then(() => { 
+                showToast("Order Accepted. Sent to Admin queue.", "success"); 
+                closeModal('acceptOrderModal'); 
+            });
+        }
 
-                let actionBtn = '';
-                if(role === 'client' && order.status.includes('Awaiting Escrow')) {
-                    actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openPaymentModal('${doc.id}')">Pay Escrow</button>`;
-                }
-                if(role === 'editor' && (order.status.includes('WIP') || order.status.includes('Verified'))) {
-                    actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openProgressModal('${doc.id}', ${order.workProgress})">Update Progress</button>`;
-                }
+        function editorRejectOrder() {
+            db.collection('orders').doc(activeOrderForModal).update({ 
+                status: "Rejected by Editor" 
+            }).then(() => { 
+                showToast("Order Rejected.", "error"); 
+                closeModal('acceptOrderModal'); 
+            });
+        }
 
-                // Check if card exists to update instead of duplicate
-                const existing = document.getElementById('orderCard_'+doc.id);
-                const cardHtml = `
-                    <div id="orderCard_${doc.id}" class="glass" style="padding: 25px; border-left: 4px solid var(--accent); margin-bottom: 15px;">
-                        <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 15px;">
-                            <div>
-                                <h3 style="margin-bottom: 8px;">Order ${order.orderId}</h3>
-                                <span class="badge ${badgeClass}">${order.status}</span>
-                                <p style="font-size: 0.95rem; margin-top: 15px; color: var(--text-main);"><strong style="color: #22c55e;">Amount: ₹${order.price}</strong> | ${order.tier.toUpperCase()} Tier | Ratio: ${order.ratio}</p>
-                            </div>
-                            <div>${actionBtn}</div>
+        // STEP 4: CLIENT SUBMITS PAYMENT PROOF
+        function openPaymentModal(id) { 
+            activeOrderForModal = id; 
+            openModal('paymentModal'); 
+        }
+        
+        function submitPaymentProof() {
+            const proof = document.getElementById('paymentProofInput').value.trim();
+            if (!proof) {
+                return showToast("Please enter UTR or Proof Link.", "error");
+            }
+            db.collection('orders').doc(activeOrderForModal).update({ 
+                status: "Payment Under Review (Proof Submitted)", 
+                paymentProof: proof 
+            }).then(() => { 
+                showToast("Proof submitted! Admin will verify shortly.", "success"); 
+                closeModal('paymentModal'); 
+            });
+        }
+
+        // STEP 6: EDITOR UPDATES PROGRESS
+        function openProgressModal(id, current) { 
+            activeOrderForModal = id; 
+            document.getElementById('progressSlider').value = current; 
+            document.getElementById('progressText').innerText = current; 
+            openModal('progressModal'); 
+        }
+        
+        document.getElementById('progressSlider').addEventListener('input', (e) => {
+            document.getElementById('progressText').innerText = e.target.value;
+        });
+        
+        function saveWorkProgress() {
+            const val = document.getElementById('progressSlider').value;
+            let stat = (val == 100) ? "Completed" : "Payment Verified (Work In Progress)";
+            
+            db.collection('orders').doc(activeOrderForModal).update({ 
+                workProgress: parseInt(val), 
+                status: stat 
+            }).then(() => { 
+                showToast("Progress Sync Complete!", "success"); 
+                closeModal('progressModal'); 
+            });
+        }
+
+        /* =========================================================
+           8. SPLIT DASHBOARDS (CLIENT VS EDITOR RENDERING)
+           ========================================================= */
+        function loadMyOrders() {
+            if (!currentUser) return;
+            
+            const clientList = document.getElementById('clientOrdersList'); 
+            const editorList = document.getElementById('editorOrdersList'); 
+            
+            clientList.innerHTML = '';
+            editorList.innerHTML = '';
+            
+            // Render Client Orders (Buying)
+            db.collection('orders').where('clientUid', '==', currentUser.uid).onSnapshot(snap => {
+                if (snap.empty && clientList.innerHTML === '') {
+                    clientList.innerHTML = '<p style="color: var(--text-muted);">No active purchases found.</p>';
+                }
+                snap.forEach(doc => renderOrderCard(doc.id, doc.data(), clientList, 'client'));
+            });
+            
+            // Render Editor Orders (Selling)
+            db.collection('orders').where('editorUid', '==', currentUser.uid).onSnapshot(snap => {
+                if (snap.empty && editorList.innerHTML === '') {
+                    editorList.innerHTML = '<p style="color: var(--text-muted);">No incoming orders found.</p>';
+                }
+                snap.forEach(doc => renderOrderCard(doc.id, doc.data(), editorList, 'editor'));
+            });
+        }
+
+        function renderOrderCard(docId, order, container, role) {
+            let badgeClass = 'status-pending';
+            
+            if (order.status === 'Wait for editor response') badgeClass = 'status-wait';
+            if (order.status.includes('WIP') || order.status.includes('Verified')) badgeClass = 'status-progress';
+            if (order.status === 'Completed') badgeClass = 'status-completed';
+
+            let actionBtn = '';
+            
+            // Contextual Buttons based on Role & State
+            if (role === 'editor' && order.status === 'Wait for editor response') {
+                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick='openAcceptModal("${docId}", ${JSON.stringify(order)})'>Review Request</button>`;
+            }
+            if (role === 'editor' && (order.status.includes('WIP') || order.status.includes('Verified'))) {
+                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openProgressModal('${docId}', ${order.workProgress})">Update Progress</button>`;
+            }
+            if (role === 'client' && order.status === 'In Progress (QR Sent - Escrow Awaiting)') {
+                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openPaymentModal('${docId}')">Pay Escrow</button>`;
+            }
+
+            const existingCard = document.getElementById(`orderCard_${docId}_${role}`);
+            
+            const cardHtml = `
+                <div id="orderCard_${docId}_${role}" class="glass" style="padding: 25px; border-left: 4px solid var(--accent); margin-bottom: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 15px;">
+                        <div>
+                            <h3 style="margin-bottom: 8px;">Order ${order.orderId}</h3>
+                            <span class="badge ${badgeClass}">${order.status}</span>
+                            <p style="font-size: 0.95rem; margin-top: 15px; color: var(--text-main);">
+                                <strong style="color: #22c55e;">Amount: ₹${order.price}</strong> | ${order.tier.toUpperCase()} Tier
+                            </p>
+                            ${role === 'editor' ? `<p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Client Asset: <a href="${order.footageLink}" target="_blank" style="color:var(--accent);">View Link</a></p>` : ''}
                         </div>
+                        <div>${actionBtn}</div>
+                    </div>
+                    
+                    ${order.status.includes('Wait') || order.status.includes('Locked') || order.status.includes('Rejected') ? '' : `
                         <div style="margin-top: 20px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem;">
                                 <span>Project Completion</span>
@@ -1023,89 +1597,66 @@
                                 <div style="height: 100%; width: ${order.workProgress}%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); transition: width 0.5s ease;"></div>
                             </div>
                         </div>
-                    </div>
-                `;
-                
-                if(existing) {
-                    existing.outerHTML = cardHtml;
-                } else {
-                    container.innerHTML = cardHtml + container.innerHTML;
-                }
-            });
-        }
-
-        // Modals & Proof Submission
-        function openPaymentModal(id) { activeOrderForModal = id; openModal('paymentModal'); }
-        
-        function submitPaymentProof() {
-            const proof = document.getElementById('paymentProofInput').value.trim();
-            if(!proof) return showToast("Enter payment proof UTR.", "error");
-            db.collection('orders').doc(activeOrderForModal).update({
-                status: "Proof Submitted (Under Review)", paymentProof: proof
-            }).then(() => { showToast("Proof submitted! Admin will verify.", "success"); closeModal('paymentModal'); });
-        }
-
-        function openProgressModal(id, current) {
-            activeOrderForModal = id;
-            document.getElementById('progressSlider').value = current;
-            document.getElementById('progressText').innerText = current;
-            openModal('progressModal');
-        }
-        
-        document.getElementById('progressSlider').addEventListener('input', (e) => {
-            document.getElementById('progressText').innerText = e.target.value;
-        });
-        
-        function saveWorkProgress() {
-            const val = document.getElementById('progressSlider').value;
-            let stat = val == 100 ? "Completed" : "Payment Verified (WIP)";
-            db.collection('orders').doc(activeOrderForModal).update({
-                workProgress: parseInt(val), status: stat
-            }).then(() => { showToast("Progress Updated to Client!", "success"); closeModal('progressModal'); });
+                    `}
+                </div>
+            `;
+            
+            if (existingCard) {
+                existingCard.outerHTML = cardHtml; 
+            } else {
+                container.innerHTML = cardHtml + container.innerHTML;
+            }
         }
 
         /* =========================================================
-           SUPER ADMIN DASHBOARD
+           9. SUPER ADMIN QUEUE & VERIFICATIONS
            ========================================================= */
         function loadAdminDashboard() {
-            // Applications
+            // Render Shop Approvals
             db.collection('shop_applications').where('status', '==', 'Pending').onSnapshot(snap => {
-                const list = document.getElementById('adminAppsList');
+                const list = document.getElementById('adminAppsList'); 
                 list.innerHTML = '';
+                
                 snap.forEach(doc => {
                     const app = doc.data();
                     list.innerHTML += `
                         <div class="glass" style="padding: 20px; margin-bottom: 15px;">
                             <h4 style="margin-bottom: 5px;">${app.name}</h4>
-                            <p style="font-size: 0.9rem; margin-bottom: 15px;">By: ${app.applicantHandle}</p>
+                            <p style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-muted);">Creator: ${app.applicantHandle}</p>
                             <div style="display: flex; gap: 10px;">
                                 <a href="${app.portfolioLink}" target="_blank" class="btn" style="flex: 1;"><i class="ph ph-link"></i> Portfolio</a>
-                                <button class="btn btn-primary" style="flex: 1;" onclick="approveShop('${doc.id}')"><i class="ph ph-check"></i> Approve</button>
+                                <button class="btn btn-primary" style="flex: 1;" onclick="approveShop('${doc.id}')">Approve Shop</button>
                             </div>
                         </div>
                     `;
                 });
             });
 
-            // Orders Verification
+            // Render Orders Verification (Steps 3 & 5)
             db.collection('orders').onSnapshot(snap => {
-                const list = document.getElementById('adminOrdersList');
+                const list = document.getElementById('adminOrdersList'); 
                 list.innerHTML = '';
+                
                 snap.forEach(doc => {
-                    const order = doc.data();
-                    let btn = '';
-                    if(order.status === 'Pending Admin Approval') {
-                        btn = `<button class="btn btn-primary" style="margin-top: 10px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'Awaiting Escrow Payment')">Approve & Ask Payment</button>`;
+                    const order = doc.data(); 
+                    let adminBtn = '';
+                    
+                    // [STEP 3] Admin Sends QR to Client
+                    if (order.status === 'Pending Admin Approval (Locked)') {
+                        adminBtn = `<button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'In Progress (QR Sent - Escrow Awaiting)')">Approve Order & Send Escrow Prompt</button>`;
                     }
-                    if(order.status.includes('Proof Submitted')) {
-                        btn = `<button class="btn btn-primary" style="margin-top: 10px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'Payment Verified (WIP)', 15)">Verify UTR: ${order.paymentProof}</button>`;
+                    
+                    // [STEP 5] Admin Verifies UTR
+                    if (order.status === 'Payment Under Review (Proof Submitted)') {
+                        adminBtn = `<button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'Payment Verified (Work In Progress)', 15)">Verify UTR: ${order.paymentProof}</button>`;
                     }
-                    if(btn !== '') {
+                    
+                    if (adminBtn !== '') {
                         list.innerHTML += `
                             <div class="glass" style="padding: 20px; border-left: 3px solid #f97316; margin-bottom: 15px;">
-                                <strong>Order: ${order.orderId}</strong><br>
-                                <span style="font-size: 0.85rem; color: var(--text-muted);">${order.status}</span><br>
-                                ${btn}
+                                <h4 style="margin-bottom: 5px;">Order ID: ${order.orderId}</h4>
+                                <span style="font-size: 0.85rem; color: var(--accent); font-weight: 600;">Status: ${order.status}</span>
+                                ${adminBtn}
                             </div>
                         `;
                     }
@@ -1114,22 +1665,33 @@
         }
 
         async function approveShop(appId) {
-            const appSnap = await db.collection('shop_applications').doc(appId).get();
+            const appSnap = await db.collection('shop_applications').doc(appId).get(); 
             const app = appSnap.data();
-            app.ownerUid = app.applicantUid;
-            app.ownerHandle = app.applicantHandle;
-            app.ownerEmail = app.applicantEmail;
-            delete app.applicantUid; delete app.applicantHandle; delete app.applicantEmail;
             
-            await db.collection('shops').add(app);
-            await db.collection('shop_applications').doc(appId).update({status: "Approved"});
-            showToast("Shop Approved & Live in Marketplace!", "success");
+            // Promote application fields to verified shop
+            app.ownerUid = app.applicantUid; 
+            app.ownerHandle = app.applicantHandle; 
+            app.ownerEmail = app.applicantEmail;
+            
+            delete app.applicantUid; 
+            delete app.applicantHandle; 
+            delete app.applicantEmail;
+            
+            await db.collection('shops').add(app); 
+            await db.collection('shop_applications').doc(appId).update({ status: "Approved" }); 
+            
+            showToast("Shop successfully approved and moved to Marketplace!", "success");
         }
 
-        function adminUpdateOrder(id, status, progress=null) {
-            let updateObj = { status: status };
-            if(progress !== null) updateObj.workProgress = progress;
-            db.collection('orders').doc(id).update(updateObj).then(() => showToast("Order Updated", "success"));
+        function adminUpdateOrder(id, status, progress = null) {
+            let updateObj = { status: status }; 
+            
+            if (progress !== null) {
+                updateObj.workProgress = progress;
+            }
+            
+            db.collection('orders').doc(id).update(updateObj)
+                .then(() => showToast("Order Workflow Updated Securely", "success"));
         }
 
     </script>
