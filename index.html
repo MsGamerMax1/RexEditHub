@@ -155,7 +155,7 @@
       --glow-1: rgba(56, 189, 248, 0.25); --glow-2: rgba(125, 211, 252, 0.2);
     }
 
-    /* ANIMATED THEMES (Page 3: 15 FX Modes) */
+    /* ANIMATED THEMES (Page 3) */
     [data-theme="snow"] { --bg-base: #f1f7fc; --bg-card: rgba(255, 255, 255, 0.92); --border-subtle: #dbeafe; --border-strong: #93c5fd; --primary: #0284c7; --primary-hover: #0369a1; --primary-light: #f0f9ff; --text-main: #0f2744; --text-muted: #537599; --text-subtle: #94a3b8; --brand-grad: linear-gradient(135deg, #0369a1 20%, #38bdf8 100%); --success: #0d9488; --glow-1: rgba(186, 230, 253, 0.5); --glow-2: rgba(224, 242, 254, 0.6); }
     [data-theme="starfield"] { --bg-base: #03030c; --bg-card: rgba(11, 12, 33, 0.92); --border-subtle: #1e1e4a; --border-strong: #818cf8; --primary: #a5b4fc; --primary-hover: #818cf8; --primary-light: rgba(129, 140, 248, 0.15); --text-main: #ffffff; --text-muted: #c7d2fe; --text-subtle: #6366f1; --brand-grad: linear-gradient(135deg, #ffffff 10%, #818cf8 100%); --success: #34d399; --glow-1: rgba(99, 102, 241, 0.35); --glow-2: rgba(165, 180, 252, 0.25); }
     [data-theme="cyberrain"] { --bg-base: #04090c; --bg-card: rgba(8, 20, 26, 0.92); --border-subtle: #133444; --border-strong: #00f0ff; --primary: #00f0ff; --primary-hover: #0284c7; --primary-light: rgba(0, 240, 255, 0.12); --text-main: #e0f7fa; --text-muted: #80deea; --text-subtle: #00838f; --brand-grad: linear-gradient(135deg, #ffffff 20%, #00f0ff 100%); --success: #00e676; --glow-1: rgba(0, 240, 255, 0.35); --glow-2: rgba(2, 132, 199, 0.25); }
@@ -173,7 +173,7 @@
     [data-theme="flares"] { --bg-base: #0a030f; --bg-card: rgba(22, 9, 33, 0.92); --border-subtle: #3d1459; --border-strong: #c084fc; --primary: #c084fc; --primary-hover: #a855f7; --primary-light: rgba(192, 132, 252, 0.15); --text-main: #faf5ff; --text-muted: #e9d5ff; --text-subtle: #9333ea; --brand-grad: linear-gradient(135deg, #ffffff 20%, #c084fc 100%); --success: #2dd4bf; --glow-1: rgba(192, 132, 252, 0.35); --glow-2: rgba(168, 85, 247, 0.25); }
 
     /* ==========================================================
-       GLOBAL CORE STYLING
+       GLOBAL CORE STYLING & CLEAN UI COMPONENTS
        ========================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; transition: background-color 0.35s ease, color 0.35s ease; }
@@ -203,47 +203,55 @@
     .nav-left { display: flex; align-items: center; gap: 1.15rem; }
     .three-dot-btn { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-main); border-radius: 12px; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
     .three-dot-btn:hover { border-color: var(--primary); transform: scale(1.04); }
+    
     .brand-wrap { display: flex; align-items: center; gap: 12px; user-select: none; }
     .header-logo-img { height: 40px; width: auto; max-width: 65px; object-fit: contain; display: block; filter: drop-shadow(var(--logo-shadow)); }
     .brand-stack { display: flex; flex-direction: column; }
-    .brand-title { font-size: 1.55rem; font-weight: 900; background: var(--brand-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.05; letter-spacing: -0.01em; }
+    .brand-title { font-size: 1.55rem; font-weight: 900; background: var(--brand-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.05; letter-spacing: -0.01em; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1)); }
     .brand-section-subtitle { font-size: 0.72rem; font-weight: 800; color: var(--primary); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; display: flex; align-items: center; gap: 5px; }
     .brand-section-subtitle::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
     
     .header-user-status { display: flex; align-items: center; gap: 8px; }
-    .btn-header-search { background: var(--bg-base); border: 1px solid var(--border-strong); padding: 8px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 800; cursor: pointer; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+    .btn-header-search { background: var(--bg-base); border: 1px solid var(--border-strong); padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
     .btn-header-search:hover { border-color: var(--primary); color: var(--primary); }
-    .btn-header-login { background: var(--primary); color: #fff; border: none; padding: 9px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35); transition: all 0.2s ease; }
+    .btn-header-login { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); transition: all 0.2s ease; }
     .btn-header-login:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(4px); z-index: 9998; display: none; }
     .sidebar-overlay.open { display: block !important; }
-    .sidebar { position: fixed; top: 0; left: -330px; width: 290px; max-width: 85vw; height: 100vh; background: var(--bg-card); border-right: 1px solid var(--border-subtle); z-index: 9999; transition: left 0.28s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; padding: 1.25rem 1rem; box-shadow: 15px 0 35px rgba(0, 0, 0, 0.2); overflow-y: auto; }
+    .sidebar { position: fixed; top: 0; left: -330px; width: 290px; max-width: 85vw; height: 100vh; background: var(--bg-card); border-right: 1px solid var(--border-subtle); z-index: 9999; transition: left 0.28s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; padding: 1.25rem 1rem; box-shadow: 15px 0 35px rgba(0, 0, 0, 0.2); overflow-y: auto; backdrop-filter: blur(20px); }
     .sidebar.open { left: 0 !important; }
     .sidebar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--border-subtle); }
-    .sidebar-label { font-size: 0.76rem; font-weight: 800; color: var(--text-subtle); text-transform: uppercase; }
-    .sidebar-close-btn { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; width: 34px; height: 34px; border-radius: 8px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
+    .sidebar-label { font-size: 0.76rem; font-weight: 800; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; }
+    .sidebar-close-btn { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; width: 34px; height: 34px; border-radius: 8px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
     .sidebar-close-btn:hover { color: var(--danger); border-color: var(--danger); }
-    .sidebar-mini-profile { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 12px; margin-bottom: 1.25rem; cursor: pointer; }
-    .sidebar-avatar-box { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; color: #fff; overflow: hidden; font-weight: 800; }
+    
+    .sidebar-mini-profile { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 12px; margin-bottom: 1.25rem; cursor: pointer; transition: all 0.2s ease; }
+    .sidebar-mini-profile:hover { border-color: var(--primary); }
+    .sidebar-avatar-box { width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; color: #fff; overflow: hidden; font-weight: 800; }
     .sidebar-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
     .sidebar-mini-name { font-size: 0.9rem; font-weight: 800; color: var(--text-main); }
     .sidebar-mini-tag { font-size: 0.74rem; color: var(--primary); font-weight: 700; }
+    
     .nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-    .nav-link-btn { width: 100%; display: flex; align-items: center; gap: 14px; padding: 13px 15px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: var(--text-muted); font-size: 0.94rem; font-weight: 700; cursor: pointer; text-align: left; }
-    .nav-link-btn.active { background: var(--primary-light); border-color: rgba(79, 70, 229, 0.2); color: var(--primary); }
+    .nav-link-btn { width: 100%; display: flex; align-items: center; gap: 14px; padding: 13px 15px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: var(--text-muted); font-size: 0.94rem; font-weight: 700; cursor: pointer; text-align: left; transition: all 0.2s ease; }
+    .nav-link-btn:hover { background: var(--bg-base); color: var(--text-main); transform: translateX(3px); }
+    .nav-link-btn.active { background: var(--primary-light); border-color: rgba(79, 70, 229, 0.25); color: var(--primary); box-shadow: var(--shadow-sm); }
 
     .main-container { position: relative; z-index: 10; flex: 1; width: 100%; max-width: 1050px; margin: 0 auto; padding: 2.2rem 1.25rem 4rem; }
     .section-header { margin-bottom: 2rem; }
-    .section-header h1 { font-size: 2.1rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.02em; }
+    .section-header h1 { font-size: 2rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.02em; }
     .section-header p { color: var(--text-muted); font-size: 1rem; margin-top: 4px; }
-    .info-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); margin-bottom: 1.5rem; }
+    
+    .info-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); margin-bottom: 1.5rem; transition: transform 0.2s ease; }
 
     .editor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
-    .editor-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 1.65rem; display: flex; flex-direction: column; gap: 1.25rem; position: relative; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); transition: transform 0.2s ease; }
-    .editor-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+    .editor-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 1.65rem; display: flex; flex-direction: column; gap: 1.25rem; position: relative; box-shadow: var(--shadow-card); backdrop-filter: blur(14px); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .editor-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -12px rgba(0,0,0,0.15); border-color: var(--border-strong); }
     
-    .demo-tag { position: absolute; top: 18px; right: 18px; font-size: 0.72rem; font-weight: 800; padding: 4px 9px; border-radius: 8px; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* SPECIALTY BADGE POSITION FIXED (Inside Flow, No Overlap) */
+    .inline-badge-wrap { margin-bottom: 0.5rem; }
+    .demo-tag { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; letter-spacing: 0.03em; display: inline-block; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .format-badge-short { background: var(--warning-light); border: 1px solid var(--warning); color: var(--warning); }
     .format-badge-long { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); }
     .format-badge-thumb { background: #fdf2f8; border: 1px solid #ec4899; color: #ec4899; }
@@ -251,40 +259,40 @@
     .format-badge-motion { background: #f3e8ff; border: 1px solid #9333ea; color: #9333ea; }
 
     .editor-header { display: flex; align-items: center; gap: 14px; }
-    .editor-avatar { width: 58px; height: 58px; border-radius: 16px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: 800; color: #ffffff; overflow: hidden; flex-shrink: 0; }
+    .editor-avatar { width: 58px; height: 58px; border-radius: 16px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: 800; color: #ffffff; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.1); flex-shrink: 0; }
     .editor-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .editor-info-stack { display: flex; flex-direction: column; padding-right: 90px; }
-    .editor-info-stack h3 { font-size: 1.1rem; font-weight: 900; color: var(--text-main); line-height: 1.2; }
-    .editor-status { font-size: 0.8rem; color: var(--success); font-weight: 700; margin-top: 2px; }
+    .editor-info-stack { display: flex; flex-direction: column; overflow: hidden; }
+    .editor-info-stack h3 { font-size: 1.15rem; font-weight: 900; color: var(--text-main); line-height: 1.2; display: flex; align-items: center; gap: 5px; }
+    .editor-status { font-size: 0.8rem; color: var(--success); font-weight: 800; margin-top: 3px; display: flex; align-items: center; gap: 4px; }
     
     .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 1.15rem; gap: 10px; flex-wrap: wrap; }
     .price-label { font-size: 0.72rem; color: var(--text-subtle); text-transform: uppercase; font-weight: 800; display: block; letter-spacing: 0.05em; }
-    .price-value { font-size: 1.4rem; font-weight: 900; color: var(--text-main); }
+    .price-value { font-size: 1.35rem; font-weight: 900; color: var(--text-main); }
     
-    /* BUTTON STYLING FIX */
-    .btn-hire-redirect { background: var(--primary); color: #ffffff; border: none; padding: 11px 22px; border-radius: 10px; font-size: 0.92rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28); display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; }
-    .btn-hire-redirect:hover { background: var(--primary-hover); transform: translateY(-2px); }
-
-    .btn-action-primary { background: var(--primary); color: #ffffff; border: none; padding: 11px 22px; border-radius: 10px; font-size: 0.92rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28); display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; }
+    /* UNIVERSAL HIGH-QUALITY BUTTONS */
+    .btn-hire-redirect { background: var(--primary); color: #ffffff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+    .btn-hire-redirect:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4); }
+    
+    .btn-action-primary { background: var(--primary); color: #ffffff; border: none; padding: 11px 22px; border-radius: 10px; font-size: 0.92rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; width: 100%; }
     .btn-action-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
-    .btn-delete-shop { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); font-weight: 800; font-size: 0.8rem; padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-delete-shop { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); font-weight: 800; font-size: 0.8rem; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
     .btn-delete-shop:hover { background: var(--danger); color: #fff; }
 
-    .btn-action-accept { background: var(--success); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); }
+    .btn-action-accept { background: var(--success); color: #fff; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); }
     .btn-action-accept:hover { filter: brightness(1.1); transform: translateY(-1px); }
     
-    .btn-action-reject { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
+    .btn-action-reject { background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
     .btn-action-reject:hover { background: var(--danger); color: #fff; }
 
-    .btn-action-admin-approve { background: var(--primary); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
+    .btn-action-admin-approve { background: var(--primary); color: #fff; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
     .btn-action-admin-approve:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-    .btn-action-pay, .btn-action-verify-proof { background: var(--success); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); transition: all 0.2s ease; }
-    .btn-action-proof { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
-    .btn-action-progress { background: #8b5cf6; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25); }
+    .btn-action-pay, .btn-action-verify-proof { background: var(--success); color: #fff; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); transition: all 0.2s ease; }
+    .btn-action-proof { background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
+    .btn-action-progress { background: #8b5cf6; color: #fff; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25); }
 
-    .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 8px 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-back { background: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-muted); font-weight: 800; font-size: 0.85rem; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
     .btn-back:hover { color: var(--text-main); border-color: var(--border-strong); }
 
     .config-layout { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
@@ -302,32 +310,34 @@
     .screen-tag-label { font-size: 0.75rem; font-weight: 800; color: #94a3b8; margin-top: 6px; z-index: 2; }
 
     .thumbnail-ratio-bar { display: flex; gap: 6px; margin-top: 14px; width: 100%; justify-content: center; }
-    .btn-ratio-switch { background: var(--bg-base); border: 1px solid var(--border-subtle); font-size: 0.72rem; font-weight: 800; padding: 6px 10px; border-radius: 8px; cursor: pointer; color: var(--text-main); transition: all 0.2s ease; }
+    .btn-ratio-switch { background: var(--bg-base); border: 1px solid var(--border-subtle); font-size: 0.74rem; font-weight: 800; padding: 6px 10px; border-radius: 8px; cursor: pointer; color: var(--text-main); transition: all 0.2s ease; }
     .btn-ratio-switch.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     .config-group { margin-bottom: 1.4rem; }
-    .config-label { display: block; font-size: 0.84rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.03em; }
+    .config-label { display: block; font-size: 0.84rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
     .mode-selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .mode-btn { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: all 0.2s ease; }
     .mode-btn .mode-name { font-size: 0.95rem; font-weight: 800; color: var(--text-main); }
+    .mode-btn:hover { border-color: var(--border-strong); }
     .mode-btn.active { background: var(--primary-light); border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
     
-    .calculation-summary-box { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.4rem; }
-    .summary-line { display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px; }
-    .summary-divider { height: 1px; background: var(--border-subtle); margin: 10px 0; }
-    .summary-total-line { display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; font-weight: 800; color: var(--text-main); }
-    .total-calculated-price { font-size: 1.7rem; font-weight: 900; color: var(--primary); }
+    .calculation-summary-box { background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.35rem; margin-bottom: 1.5rem; }
+    .summary-line { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
+    .summary-divider { height: 1px; background: var(--border-subtle); margin: 12px 0; }
+    .summary-total-line { display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
+    .total-calculated-price { font-size: 1.8rem; font-weight: 900; color: var(--primary); }
 
-    .running-order-item { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); }
-    .order-badge-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; width: fit-content; }
+    .running-order-item { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 1.35rem; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); }
+    .order-badge-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; width: fit-content; letter-spacing: 0.03em; }
     .status-running { background: var(--warning-light); color: var(--warning); border: 1px solid var(--warning); }
     .status-accepted { background: var(--success-light); color: var(--success); border: 1px solid var(--success); }
     .status-rejected { background: var(--danger-light); color: var(--danger); border: 1px solid var(--danger); }
     
     .order-actions-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; }
-    .order-link-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--primary); text-decoration: none; font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 9px; cursor: pointer; transition: all 0.2s ease; }
+    .order-link-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-base); border: 1px solid var(--border-strong); color: var(--primary); text-decoration: none; font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
     .order-link-btn:hover { background: var(--primary-light); }
-    .btn-action-view-details { background: var(--bg-base); border: 1px solid var(--primary); color: var(--primary); font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 9px; cursor: pointer; transition: all 0.2s ease; }
+    
+    .btn-action-view-details { background: var(--bg-base); border: 1px solid var(--primary); color: var(--primary); font-size: 0.82rem; font-weight: 800; padding: 7px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
     .btn-action-view-details:hover { background: var(--primary); color: #fff; }
     
     .editor-action-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
@@ -336,21 +346,26 @@
     .order-progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #10b981); border-radius: 99px; transition: width 0.3s ease; }
 
     .empty-state-box { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3.5rem 1.5rem; }
-    .empty-title { font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.45rem; }
-    .empty-desc { color: var(--text-muted); font-size: 0.94rem; max-width: 420px; line-height: 1.55; margin-bottom: 1.6rem; }
+    .empty-title { font-size: 1.4rem; font-weight: 900; color: var(--text-main); margin-bottom: 0.5rem; }
+    .empty-desc { color: var(--text-muted); font-size: 0.95rem; max-width: 420px; line-height: 1.6; margin-bottom: 1.6rem; }
 
-    .profile-card-large { display: flex; align-items: center; gap: 20px; padding: 1.75rem; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 18px; margin-bottom: 1.75rem; }
-    .profile-avatar-large { width: 80px; height: 80px; border-radius: 18px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 1.6rem; font-weight: 900; color: #fff; }
-    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-card-large { display: flex; align-items: center; gap: 20px; padding: 1.8rem; background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: 18px; margin-bottom: 1.75rem; }
+    .profile-avatar-large { width: 80px; height: 80px; border-radius: 18px; background: linear-gradient(135deg, var(--primary), #06b6d4); display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 1.6rem; font-weight: 900; color: #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
 
-    /* PREMIUM FILE UPLOAD STYLING */
+    /* ==========================================
+       CUSTOM PREMIUM FILE UPLOAD UI (100% FIXED)
+       ========================================== */
     .form-input-field { width: 100%; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.95rem; color: var(--text-main); outline: none; transition: all 0.2s ease; }
     .form-input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
     
-    input[type="file"].form-input-field { padding: 8px; color: var(--text-muted); font-weight: 600; cursor: pointer; }
-    input[type="file"]::file-selector-button { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; margin-right: 12px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
-    input[type="file"]::file-selector-button:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    /* HIDDEN NATIVE FILE INPUTS */
+    input[type="file"].hidden-file-input { display: none; }
     
+    /* CUSTOM FILE UPLOAD BUTTONS */
+    .custom-file-upload-btn { background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); display: inline-flex; align-items: center; gap: 6px; }
+    .custom-file-upload-btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .file-name-display { font-size: 0.8rem; color: var(--text-muted); margin-left: 10px; font-weight: 600; }
+
     .form-textarea-field { width: 100%; min-height: 85px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--bg-base); margin: 6px 0 14px 0; font-size: 0.92rem; color: var(--text-main); outline: none; resize: vertical; transition: all 0.2s ease; }
     .form-textarea-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
 
@@ -458,16 +473,18 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    // Local File Reader to Base64 (Permanently saves logo & avatar)
+    // 100% FIXED LOCAL FILE READER WITH LIVE DOM INJECTION
     window.handleLogoFileSelect = function(event, targetType) {
       var file = event.target.files[0];
       if (!file) return;
+      
       var reader = new FileReader();
       reader.onload = function(e) {
         if (targetType === 'shop') {
           uploadedLogoBase64 = e.target.result;
           var previewImg = document.getElementById("shopLogoPreviewImg");
           var previewWrap = document.getElementById("shopLogoPreviewWrap");
+          document.getElementById("shopFileNameDisplay").textContent = file.name;
           if (previewImg && previewWrap) {
             previewImg.src = uploadedLogoBase64;
             previewWrap.style.display = "flex";
@@ -475,16 +492,28 @@
           showToast("Logo Attached", "Shop logo loaded successfully.", "success");
         } else if (targetType === 'editShop') {
           uploadedLogoBase64 = e.target.result;
-          var editInput = document.getElementById("editShopLogoInput");
-          if (editInput) editInput.value = uploadedLogoBase64;
+          document.getElementById("editShopFileNameDisplay").textContent = file.name;
+          var editPreviewImg = document.getElementById("editShopLogoPreviewImg");
+          var editPreviewWrap = document.getElementById("editShopLogoPreviewWrap");
+          if (editPreviewImg && editPreviewWrap) {
+            editPreviewImg.src = uploadedLogoBase64;
+            editPreviewWrap.style.display = "flex";
+          }
           showToast("Logo Attached", "New logo loaded for editing.", "success");
         } else if (targetType === 'avatar') {
           var avatarBase64 = e.target.result;
+          document.getElementById("avatarFileNameDisplay").textContent = file.name;
+          
+          // INSTANT LIVE DOM INJECTION FOR AVATARS
+          var av1 = document.getElementById("profileLargeAvatarContainer");
+          var av2 = document.getElementById("sidebarAvatarContainer");
+          if(av1) av1.innerHTML = '<img src="' + avatarBase64 + '" style="width:100%;height:100%;object-fit:cover;">';
+          if(av2) av2.innerHTML = '<img src="' + avatarBase64 + '" style="width:100%;height:100%;object-fit:cover;">';
+
           if (currentUser) {
             db.collection("users").doc(currentUser.uid).update({ photoURL: avatarBase64 }).then(function() {
               currentUser.photoURL = avatarBase64;
-              updateUserInterface(currentUser, currentUser.displayName, currentUserIdHandle);
-              showToast("Avatar Updated", "Profile picture updated.", "success");
+              showToast("Avatar Updated", "Profile picture synchronized.", "success");
             });
           }
         }
@@ -500,7 +529,6 @@
         if (btn.getAttribute('data-theme-target') === themeName) btn.classList.add('active');
         else btn.classList.remove('active');
       });
-      
       bindVisualAnimationEngine(themeName);
       showToast("Theme Applied", "Switched to " + themeName.toUpperCase() + ".", "info");
     };
@@ -1131,11 +1159,22 @@
     window.openEditShopModal = function(shopId, name, logoUrl, b, s, p) {
       activeEditingShopId = shopId;
       document.getElementById("editShopNameInput").value = name;
-      document.getElementById("editShopLogoInput").value = logoUrl;
+      document.getElementById("editShopLogoInput").value = logoUrl || "";
       document.getElementById("editPriceBasic").value = b;
       document.getElementById("editPriceStd").value = s;
       document.getElementById("editPricePrem").value = p;
-      uploadedLogoBase64 = "";
+      uploadedLogoBase64 = logoUrl || "";
+      
+      var previewImg = document.getElementById("editShopLogoPreviewImg");
+      var previewWrap = document.getElementById("editShopLogoPreviewWrap");
+      if (logoUrl) {
+         previewImg.src = logoUrl;
+         previewWrap.style.display = "flex";
+      } else {
+         previewWrap.style.display = "none";
+      }
+      
+      document.getElementById("editShopFileNameDisplay").textContent = "No new file selected";
       document.getElementById("editShopModal").classList.add("open");
     };
 
@@ -1170,6 +1209,7 @@
       db.collection("shops").doc(shopId).delete().then(function() { showToast("Deleted", shopName + " removed.", "success"); });
     };
 
+    // FIXED HIRE TERMINAL FUNCTIONALITY (Safeguarded against old/broken docs)
     db.collection("shops").orderBy("createdAt", "desc").onSnapshot(function(snapshot) {
       var grid = document.getElementById("shopEditorGrid");
       var emptyBox = document.getElementById("shopEmptyBox");
@@ -1183,11 +1223,12 @@
           var data = doc.data();
           EDITORS_DATA[doc.id] = data;
 
+          var cat = data.category || "Editor";
           var badgeClass = "format-badge-long";
-          if (data.category.includes("Short")) badgeClass = "format-badge-short";
-          else if (data.category.includes("Thumbnail")) badgeClass = "format-badge-thumb";
-          else if (data.category.includes("Researcher")) badgeClass = "format-badge-research";
-          else if (data.category.includes("Motion")) badgeClass = "format-badge-motion";
+          if (cat.includes("Short")) badgeClass = "format-badge-short";
+          else if (cat.includes("Thumbnail")) badgeClass = "format-badge-thumb";
+          else if (cat.includes("Researcher")) badgeClass = "format-badge-research";
+          else if (cat.includes("Motion")) badgeClass = "format-badge-motion";
 
           var avatarDisplay = data.logoUrl ? '<img src="' + escapeHtml(data.logoUrl) + '">' : escapeHtml((data.name || "ED").substring(0,2).toUpperCase());
 
@@ -1195,10 +1236,13 @@
           if (currentUser && currentUser.email === SUPER_ADMIN_EMAIL) {
             adminDeleteBtn = '<button class="btn-delete-shop" onclick="window.openDeleteShopModal(\'' + doc.id + '\', \'' + escapeHtml(data.name) + '\', \'' + escapeHtml(data.ownerEmail) + '\')">Admin Delete</button>';
           }
+          
+          var startingPrice = data.rates ? data.rates.low : 25;
+          var unitDisp = data.unitShort || "unit";
 
           var cardHtml = 
             '<article class="editor-card">' +
-              '<span class="demo-tag ' + badgeClass + '">' + escapeHtml(data.category) + '</span>' +
+              '<div class="inline-badge-wrap"><span class="demo-tag inline-badge ' + badgeClass + '">' + escapeHtml(cat) + '</span></div>' +
               '<div class="editor-header">' +
                 '<div class="editor-avatar">' + avatarDisplay + '</div>' +
                 '<div class="editor-info-stack">' +
@@ -1208,7 +1252,7 @@
               '</div>' +
               '<p style="font-size:0.85rem; color:var(--text-muted);">Verified creator by <strong>@' + escapeHtml(data.ownerHandle || "creator") + '</strong>.</p>' +
               '<div class="card-footer">' +
-                '<div><span class="price-label">Starts at</span><span class="price-value">₹' + data.rates.low + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(data.unitShort) + '</small></span></div>' +
+                '<div><span class="price-label">Starts at</span><span class="price-value">₹' + startingPrice + ' <small style="font-size:0.75rem; color:var(--text-muted);">' + escapeHtml(unitDisp) + '</small></span></div>' +
                 '<div style="display:flex; gap:6px; align-items:center;">' +
                   adminDeleteBtn +
                   '<button class="btn-hire-redirect" onclick="window.openHireTerminal(\'' + doc.id + '\')">Hire &rarr;</button>' +
@@ -1244,15 +1288,15 @@
                       logoDisplay +
                       '<div><strong style="color:var(--text-main); font-size:1.1rem;">' + escapeHtml(app.name) + '</strong><span style="display:block; font-size:0.8rem; color:var(--primary); font-weight:700;">' + escapeHtml(app.category) + ' &bull; by @' + escapeHtml(app.ownerHandle) + '</span></div>' +
                     '</div>' +
-                    '<span style="background:var(--warning-light); color:var(--warning); font-size:0.75rem; font-weight:800; padding:4px 8px; border-radius:6px;">Pending Approval</span>' +
+                    '<span style="background:var(--warning-light); color:var(--warning); font-size:0.75rem; font-weight:800; padding:4px 8px; border-radius:6px;">Pending</span>' +
                   '</div>' +
                   '<div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-muted);">' +
-                    '<span>Tiers: Basic ₹' + app.rates.low + ' | Std ₹' + app.rates.medium + ' | Prem ₹' + app.rates.high + '</span>' +
-                    '<a href="' + escapeHtml(app.portfolioLink) + '" target="_blank" style="color:var(--primary); font-weight:800;">View Portfolio Proof &rarr;</a>' +
+                    '<span>Basic ₹' + app.rates.low + ' | Std ₹' + app.rates.medium + ' | Prem ₹' + app.rates.high + '</span>' +
+                    '<a href="' + escapeHtml(app.portfolioLink) + '" target="_blank" style="color:var(--primary); font-weight:800;">View Proof &rarr;</a>' +
                   '</div>' +
                   '<div style="display:flex; gap:10px; margin-top:6px;">' +
-                    '<button class="btn-action-accept" onclick="window.adminApproveShopApplication(\'' + doc.id + '\')">Approve & Launch Live &rarr;</button>' +
-                    '<button class="btn-action-reject" onclick="window.openRejectShopModal(\'' + doc.id + '\')">Reject Application</button>' +
+                    '<button class="btn-action-accept" onclick="window.adminApproveShopApplication(\'' + doc.id + '\')">Approve & Launch</button>' +
+                    '<button class="btn-action-reject" onclick="window.openRejectShopModal(\'' + doc.id + '\')">Reject</button>' +
                   '</div>' +
                 '</div>'
               );
@@ -1606,8 +1650,17 @@
       <input type="text" id="editShopNameInput" class="form-input-field">
 
       <label class="config-label">Upload New Logo File</label>
-      <input type="file" accept="image/*" class="form-input-field" onchange="window.handleLogoFileSelect(event, 'editShop')">
-      <input type="text" id="editShopLogoInput" class="form-input-field" placeholder="Or paste image URL here">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <input type="file" id="editShopLogoHiddenInput" accept="image/*" class="hidden-file-input" onchange="window.handleLogoFileSelect(event, 'editShop')">
+        <button class="custom-file-upload-btn" onclick="document.getElementById('editShopLogoHiddenInput').click()">Choose File</button>
+        <span class="file-name-display" id="editShopFileNameDisplay">No new file selected</span>
+      </div>
+      <input type="text" id="editShopLogoInput" class="form-input-field" placeholder="Or paste image URL here" style="display:none;">
+      
+      <div id="editShopLogoPreviewWrap" style="display:none; align-items:center; gap:10px; margin-bottom:12px;">
+        <img id="editShopLogoPreviewImg" src="" style="width:40px; height:40px; border-radius:10px; object-fit:cover;">
+        <span style="font-size:0.8rem; color:var(--success); font-weight:800;">New Logo Loaded!</span>
+      </div>
 
       <label class="config-label" style="margin-top:0.8rem;">Update Pricing Tiers (₹)</label>
       <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:1.2rem;">
@@ -1618,7 +1671,7 @@
 
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeEditShopModal()" type="button">Cancel</button>
-        <button class="btn-action-primary" onclick="window.submitShopEdit()" type="button">Save Changes</button>
+        <button class="btn-action-primary" onclick="window.submitShopEdit()" type="button" style="width:auto;">Save Changes</button>
       </div>
     </div>
   </div>
@@ -1693,7 +1746,7 @@
 
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeProgressModal()" type="button">Cancel</button>
-        <button class="btn-action-primary" onclick="window.submitProgressUpdate()" type="button">Publish Progress &rarr;</button>
+        <button class="btn-action-primary" onclick="window.submitProgressUpdate()" type="button" style="width:auto;">Publish Progress &rarr;</button>
       </div>
     </div>
   </div>
@@ -1733,7 +1786,7 @@
       <input type="text" id="paymentProofUrl" class="form-input-field" placeholder="e.g. UPI Ref: 42109823412 or Drive Link">
       <div class="rex-modal-actions">
         <button class="rex-btn-cancel" onclick="window.closeProofSubmitModal()" type="button">Cancel</button>
-        <button class="btn-action-primary" onclick="window.submitPaymentProof()" type="button">Confirm Submission</button>
+        <button class="btn-action-primary" onclick="window.submitPaymentProof()" type="button" style="width:auto;">Confirm Submission</button>
       </div>
     </div>
   </div>
@@ -1865,7 +1918,11 @@
         </div>
 
         <label class="config-label">Upload Profile Picture</label>
-        <input type="file" accept="image/*" class="form-input-field" onchange="window.handleLogoFileSelect(event, 'avatar')">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:1.5rem;">
+          <input type="file" id="profileAvatarHiddenInput" accept="image/*" class="hidden-file-input" onchange="window.handleLogoFileSelect(event, 'avatar')">
+          <button class="custom-file-upload-btn" onclick="document.getElementById('profileAvatarHiddenInput').click()">Choose Image File</button>
+          <span class="file-name-display" id="avatarFileNameDisplay">No file selected</span>
+        </div>
 
         <!-- 30 Themes Library -->
         <div class="theme-selector-section">
@@ -1932,7 +1989,7 @@
         <input type="text" id="inputUserId" class="form-input-field">
         <label class="config-label">Display Name</label>
         <input type="text" id="inputDisplayName" class="form-input-field">
-        <button class="btn-save-profile" onclick="window.saveProfileInfo()">Save Profile</button>
+        <button class="btn-save-profile" onclick="window.saveProfileInfo()" style="width:100%;">Save Profile</button>
         <button class="btn-logout" id="logoutBtn" onclick="window.triggerLogout()">Sign Out</button>
         
         <div class="my-shops-container" style="margin-top:2rem;">
@@ -1977,7 +2034,7 @@
         </select>
         <label class="config-label">Portfolio / Work Drive Link *</label>
         <input type="url" id="regPortfolioLink" class="form-input-field" placeholder="https://drive.google.com/... or Behance/YouTube">
-        <button class="btn-action-primary" onclick="window.submitStep1Request()" style="width:100%; justify-content:center;">Continue to Shop Details & Pricing &rarr;</button>
+        <button class="btn-action-primary" onclick="window.submitStep1Request()">Continue to Shop Details & Pricing &rarr;</button>
       </div>
     </section>
 
@@ -1991,8 +2048,13 @@
         <label class="config-label">Brand / Shop Name *</label>
         <input type="text" id="regShopName" class="form-input-field" placeholder="e.g. Apex Visuals / Neon Studio">
         
-        <label class="config-label">Upload Shop Logo (Choose File)</label>
-        <input type="file" accept="image/*" class="form-input-field" onchange="window.handleLogoFileSelect(event, 'shop')">
+        <label class="config-label">Upload Shop Logo File</label>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <input type="file" id="regShopLogoHiddenInput" accept="image/*" class="hidden-file-input" onchange="window.handleLogoFileSelect(event, 'shop')">
+          <button class="custom-file-upload-btn" onclick="document.getElementById('regShopLogoHiddenInput').click()">Choose Image File</button>
+          <span class="file-name-display" id="shopFileNameDisplay">No file selected</span>
+        </div>
+        
         <div id="shopLogoPreviewWrap" style="display:none; align-items:center; gap:10px; margin-bottom:12px;">
           <img id="shopLogoPreviewImg" src="" style="width:40px; height:40px; border-radius:10px; object-fit:cover;">
           <span style="font-size:0.8rem; color:var(--success); font-weight:800;">Logo attached successfully!</span>
@@ -2014,7 +2076,7 @@
           </div>
         </div>
 
-        <button class="btn-action-primary" onclick="window.completeEditorRegistration()" style="width:100%; justify-content:center;">Submit for Admin Verification &rarr;</button>
+        <button class="btn-action-primary" onclick="window.completeEditorRegistration()">Submit for Admin Verification &rarr;</button>
       </div>
     </section>
 
@@ -2062,7 +2124,7 @@
             <div class="summary-divider"></div>
             <div class="summary-total-line"><span>Total:</span><span class="total-calculated-price" id="summaryTotal">₹0</span></div>
           </div>
-          <button class="btn-action-primary" onclick="window.submitConfiguredOrder()" style="width:100%; justify-content:center;">Send Request &rarr;</button>
+          <button class="btn-action-primary" onclick="window.submitConfiguredOrder()">Send Request &rarr;</button>
         </div>
       </div>
     </section>
