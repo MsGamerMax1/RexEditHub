@@ -16,7 +16,7 @@
     <!-- Phosphor Icons (Sleek UI Icons) -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Firebase v9 Compat CDNs (Strictly required as per blueprint) -->
+    <!-- Firebase v9 Compat CDNs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -29,7 +29,6 @@
            1. CORE VARIABLES & FULLY EXPANDED THEME ENGINE
            ========================================================= */
         :root {
-            /* Base Theme: Dark Default */
             --bg-color: #0f172a;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -43,73 +42,20 @@
         }
 
         /* --- LIGHT THEMES --- */
-        [data-theme="light-ice"] { 
-            --bg-color: #f0f9ff; 
-            --text-main: #0f172a; 
-            --text-muted: #475569; 
-            --accent: #0284c7; 
-            --accent-glow: rgba(2, 132, 199, 0.4); 
-            --glass-bg: rgba(255, 255, 255, 0.85); 
-            --glass-border: rgba(0, 0, 0, 0.15); 
-            --input-bg: rgba(255, 255, 255, 0.7); 
-        }
-
-        [data-theme="light-mint"] { 
-            --bg-color: #f0fdf4; 
-            --text-main: #064e3b; 
-            --text-muted: #065f46; 
-            --accent: #10b981; 
-            --accent-glow: rgba(16, 185, 129, 0.4); 
-            --glass-bg: rgba(255, 255, 255, 0.85); 
-            --glass-border: rgba(0, 0, 0, 0.15); 
-            --input-bg: rgba(255, 255, 255, 0.7); 
-        }
-
-        [data-theme="light-rose"] { 
-            --bg-color: #fff1f2; 
-            --text-main: #4c0519; 
-            --text-muted: #881337; 
-            --accent: #e11d48; 
-            --accent-glow: rgba(225, 29, 72, 0.4); 
-            --glass-bg: rgba(255, 255, 255, 0.85); 
-            --glass-border: rgba(0, 0, 0, 0.15); 
-            --input-bg: rgba(255, 255, 255, 0.7); 
-        }
+        [data-theme="light-ice"] { --bg-color: #f0f9ff; --text-main: #0f172a; --text-muted: #475569; --accent: #0284c7; --accent-glow: rgba(2, 132, 199, 0.4); --glass-bg: rgba(255, 255, 255, 0.85); --glass-border: rgba(0, 0, 0, 0.15); --input-bg: rgba(255, 255, 255, 0.7); }
+        [data-theme="light-mint"] { --bg-color: #f0fdf4; --text-main: #064e3b; --text-muted: #065f46; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.4); --glass-bg: rgba(255, 255, 255, 0.85); --glass-border: rgba(0, 0, 0, 0.15); --input-bg: rgba(255, 255, 255, 0.7); }
+        [data-theme="light-rose"] { --bg-color: #fff1f2; --text-main: #4c0519; --text-muted: #881337; --accent: #e11d48; --accent-glow: rgba(225, 29, 72, 0.4); --glass-bg: rgba(255, 255, 255, 0.85); --glass-border: rgba(0, 0, 0, 0.15); --input-bg: rgba(255, 255, 255, 0.7); }
 
         /* --- DARK THEMES --- */
-        [data-theme="indigo"] { 
-            --bg-color: #1e1b4b; 
-            --accent: #6366f1; 
-            --accent-glow: rgba(99, 102, 241, 0.5); 
-        }
-
-        [data-theme="neon"] { 
-            --bg-color: #020617; 
-            --accent: #22c55e; 
-            --accent-glow: rgba(34, 197, 94, 0.5); 
-        }
-
-        [data-theme="midnight"] { 
-            --bg-color: #09090b; 
-            --accent: #a855f7; 
-            --accent-glow: rgba(168, 85, 247, 0.5); 
-        }
-
-        [data-theme="sunset"] { 
-            --bg-color: #2c1004; 
-            --accent: #f97316; 
-            --accent-glow: rgba(249, 115, 22, 0.5); 
-        }
+        [data-theme="indigo"] { --bg-color: #1e1b4b; --accent: #6366f1; --accent-glow: rgba(99, 102, 241, 0.5); }
+        [data-theme="neon"] { --bg-color: #020617; --accent: #22c55e; --accent-glow: rgba(34, 197, 94, 0.5); }
+        [data-theme="midnight"] { --bg-color: #09090b; --accent: #a855f7; --accent-glow: rgba(168, 85, 247, 0.5); }
+        [data-theme="sunset"] { --bg-color: #2c1004; --accent: #f97316; --accent-glow: rgba(249, 115, 22, 0.5); }
 
         /* =========================================================
            2. GLOBAL RESET & CUSTOM SCROLLBARS
            ========================================================= */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         
         body { 
             background-color: var(--bg-color); 
@@ -118,28 +64,13 @@
             transition: background-color 0.4s var(--bezier), color 0.3s ease; 
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
+        /* Premium Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-glow); }
 
-        /* The HTML5 Canvas Background Engine */
-        #bgCanvas { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh; 
-            z-index: -10; 
-            pointer-events: none; 
-        }
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; pointer-events: none; }
 
         /* =========================================================
            3. HEAVY GLASSMORPHISM UTILITIES
@@ -153,183 +84,139 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s var(--bezier), border-color 0.3s var(--bezier), box-shadow 0.3s var(--bezier);
         }
-
-        .glass-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-            transform: translateY(-4px);
-        }
+        .glass-card:hover { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-4px); }
 
         /* =========================================================
            4. TYPOGRAPHY & BUTTONS
            ========================================================= */
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+        
         .btn {
-            background: var(--glass-bg); 
-            color: var(--text-main); 
-            border: 1px solid var(--glass-border);
-            padding: 12px 24px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            font-size: 0.95rem;
-            transition: all 0.3s var(--bezier); 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px; 
-            z-index: 2;
+            background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--glass-border);
+            padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 0.95rem;
+            transition: all 0.3s var(--bezier); display: inline-flex; align-items: center; justify-content: center; gap: 8px; z-index: 2;
         }
-
-        .btn:hover { 
-            border-color: var(--accent); 
-            box-shadow: 0 0 15px var(--accent-glow); 
-            background: var(--accent); 
-            color: #fff; 
-            transform: translateY(-2px); 
-        }
-
-        .btn-primary { 
-            background: var(--accent); 
-            border-color: var(--accent); 
-            color: #fff; 
-            box-shadow: 0 4px 15px var(--accent-glow); 
-        }
-
-        .btn-danger { 
-            background: #ef4444; 
-            border-color: #ef4444; 
-            color: #fff; 
-        }
-
-        .btn-danger:hover { 
-            background: #dc2626; 
-            box-shadow: 0 4px 15px rgba(239,68,68,0.5); 
-        }
+        .btn:hover { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); background: var(--accent); color: #fff; transform: translateY(-2px); }
+        .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 4px 15px var(--accent-glow); }
+        .btn-danger { background: #ef4444; border-color: #ef4444; color: #fff; }
+        .btn-danger:hover { background: #dc2626; box-shadow: 0 4px 15px rgba(239,68,68,0.5); }
 
         /* =========================================================
-           5. FORMS & INPUTS
+           5. FORMS, INPUTS & THE NEW PREMIUM CUSTOM DROPDOWN
            ========================================================= */
-        input, select, textarea {
-            width: 100%; 
-            background: var(--input-bg); 
-            border: 1px solid var(--glass-border); 
-            color: var(--text-main);
-            padding: 14px 18px; 
-            border-radius: 12px; 
-            outline: none; 
-            transition: all 0.3s var(--bezier); 
+        input, textarea, select {
+            width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); color: var(--text-main);
+            padding: 14px 18px; border-radius: 12px; outline: none; transition: all 0.3s var(--bezier); font-size: 0.95rem;
+        }
+        input:focus, textarea:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); background: rgba(0,0,0,0.6); }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; }
+        .file-upload-wrapper input[type="file"] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; }
+
+        /* --- THE PREMIUM CUSTOM SELECT CSS --- */
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            width: 100%;
+        }
+        .custom-select {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .custom-select__trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s var(--bezier);
             font-size: 0.95rem;
+            color: var(--text-main);
         }
-
-        input:focus, select:focus, textarea:focus { 
-            border-color: var(--accent); 
-            box-shadow: 0 0 15px var(--accent-glow); 
-            background: rgba(0,0,0,0.6);
+        .custom-select.open .custom-select__trigger {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
-
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            color: var(--text-main); 
+        .custom-options {
+            position: absolute;
+            display: block;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: all 0.3s var(--bezier);
+            z-index: 100;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 8px;
         }
-
-        .file-upload-wrapper { 
-            position: relative; 
-            overflow: hidden; 
-            display: inline-block; 
+        .custom-select.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0);
         }
-        
-        .file-upload-wrapper input[type="file"] { 
-            font-size: 100px; 
-            position: absolute; 
-            left: 0; 
-            top: 0; 
-            opacity: 0; 
-            cursor: pointer; 
-            height: 100%; 
+        .custom-option {
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
         }
+        .custom-option:hover {
+            background: var(--accent);
+            color: #fff;
+            padding-left: 25px; /* Slide effect */
+        }
+        .optgroup-label {
+            padding: 10px 18px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+        .optgroup-label:first-child { margin-top: 0; }
+        .arrow { transition: transform 0.3s; }
+        .custom-select.open .arrow { transform: rotate(180deg); }
 
         /* =========================================================
            6. LAYOUT, NAVIGATION & ANIMATIONS
            ========================================================= */
-        .app-container { 
-            display: flex; 
-            min-height: 100vh; 
-        }
-
+        .app-container { display: flex; min-height: 100vh; }
         .sidebar {
-            width: var(--sidebar-width); 
-            height: 100vh; 
-            position: fixed; 
-            left: -320px; 
-            top: 0; 
-            z-index: 1000;
-            transition: left 0.4s var(--bezier); 
-            display: flex; 
-            flex-direction: column; 
-            padding: 30px 24px;
-            background: var(--glass-bg); 
-            backdrop-filter: blur(30px); 
-            -webkit-backdrop-filter: blur(30px);
-            border-right: 1px solid var(--glass-border);
+            width: var(--sidebar-width); height: 100vh; position: fixed; left: -320px; top: 0; z-index: 1000;
+            transition: left 0.4s var(--bezier); display: flex; flex-direction: column; padding: 30px 24px;
+            background: var(--glass-bg); backdrop-filter: blur(30px); border-right: 1px solid var(--glass-border);
         }
-
-        .sidebar.open { 
-            left: 0; 
-        }
-
-        .menu-overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0,0,0,0.6); 
-            z-index: 999; 
-            display: none; 
-            opacity: 0; 
-            transition: opacity 0.3s; 
-        }
+        .sidebar.open { left: 0; }
+        .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 999; display: none; opacity: 0; transition: opacity 0.3s; }
         
         .nav-item {
-            padding: 14px 18px; 
-            margin-bottom: 8px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 14px;
-            font-weight: 600; 
-            color: var(--text-main); 
-            transition: all 0.3s var(--bezier);
+            padding: 14px 18px; margin-bottom: 8px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 14px;
+            font-weight: 600; color: var(--text-main); transition: all 0.3s var(--bezier);
         }
+        .nav-item:hover, .nav-item.active { background: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow); transform: translateX(5px); }
 
-        .nav-item:hover, .nav-item.active { 
-            background: var(--accent); 
-            color: #fff; 
-            box-shadow: 0 0 15px var(--accent-glow); 
-            transform: translateX(5px); 
-        }
-
-        .main-content { 
-            flex: 1; 
-            padding: 40px; 
-            margin-left: 0; 
-            width: 100%; 
-            transition: margin-left 0.4s var(--bezier); 
-        }
-
-        .mobile-header { 
-            display: flex; 
-            padding: 20px; 
-            align-items: center; 
-            gap: 15px; 
-            z-index: 100; 
-        }
+        .main-content { flex: 1; padding: 40px; margin-left: 0; width: 100%; transition: margin-left 0.4s var(--bezier); }
+        .mobile-header { display: flex; padding: 20px; align-items: center; gap: 15px; z-index: 100; }
 
         @media (min-width: 1024px) {
             .sidebar { left: 0; }
@@ -337,109 +224,33 @@
             .mobile-header { display: none; }
         }
 
-        /* View Switching Logic */
-        .view { 
-            display: none; 
-            animation: scaleIn 0.4s var(--bezier) forwards; 
-        }
-        
-        .view.active { 
-            display: block; 
-        }
-        
-        @keyframes scaleIn { 
-            from { opacity: 0; transform: scale(0.98) translateY(10px); } 
-            to { opacity: 1; transform: scale(1) translateY(0); } 
-        }
+        .view { display: none; animation: scaleIn 0.4s var(--bezier) forwards; }
+        .view.active { display: block; }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
         /* =========================================================
            7. BADGES, MODALS & PROGRESS BARS
            ========================================================= */
-        .badge { 
-            padding: 6px 12px; 
-            border-radius: 20px; 
-            font-size: 0.8rem; 
-            font-weight: 700; 
-            display: inline-block; 
-        }
+        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; }
         .status-wait { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.4); }
         .status-pending { background: rgba(249, 115, 22, 0.2); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.4); }
         .status-progress { background: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.4); }
         .status-completed { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); }
         
-        .modal-overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0,0,0,0.8); 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 2000; 
-            display: none; 
-            align-items: center; 
-            justify-content: center; 
-            opacity: 0; 
-            transition: opacity 0.3s; 
-        }
-
-        .modal-content { 
-            width: 90%; 
-            max-width: 550px; 
-            padding: 40px; 
-            transform: scale(0.9); 
-            transition: all 0.4s var(--bezier); 
-            position: relative; 
-        }
-
-        .modal-overlay.active { 
-            display: flex; 
-            opacity: 1; 
-        }
-
-        .modal-overlay.active .modal-content { 
-            transform: scale(1); 
-        }
-
-        .close-modal { 
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            background: none; 
-            border: none; 
-            font-size: 1.5rem; 
-            cursor: pointer; 
-            color: var(--text-main); 
-            transition: color 0.2s;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-content { width: 90%; max-width: 550px; padding: 40px; transform: scale(0.9); transition: all 0.4s var(--bezier); position: relative; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .close-modal { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main); transition: color 0.2s;}
+        .close-modal:hover { color: #ef4444; }
         
-        .close-modal:hover {
-            color: #ef4444;
-        }
-
-        #toast-container { 
-            position: fixed; 
-            top: 30px; 
-            right: 30px; 
-            z-index: 3000; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-        }
-
-        .toast { 
-            padding: 16px 24px; 
-            border-left: 4px solid var(--accent); 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
+        #toast-container { position: fixed; top: 30px; right: 30px; z-index: 3000; display: flex; flex-direction: column; gap: 15px; }
+        .toast { padding: 16px 24px; border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);}
     </style>
 </head>
 <body>
-    <!-- The HTML5 Animated Background Canvas -->
     <canvas id="bgCanvas"></canvas>
 
-    <!-- Mobile Header Navigation -->
     <div class="mobile-header glass">
         <button class="btn" onclick="toggleSidebar()" style="padding: 8px 12px;">
             <i class="ph ph-list" style="font-size: 1.5rem;"></i>
@@ -450,12 +261,11 @@
         </div>
     </div>
 
-    <!-- Clickable Overlay to close sidebar on mobile -->
     <div class="menu-overlay" onclick="toggleSidebar()"></div>
 
     <div class="app-container">
         <!-- =========================================================
-             SIDEBAR COMPONENT (FULLY EXPANDED)
+             SIDEBAR COMPONENT
              ========================================================= -->
         <nav class="sidebar" id="sidebar">
             <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 40px;">
@@ -463,47 +273,21 @@
                 <h2 style="font-size: 1.4rem;">Rex Edit Hub</h2>
             </div>
             
-            <div class="nav-item active" onclick="switchView('viewShop')">
-                <i class="ph ph-storefront" style="font-size: 1.3rem;"></i> 
-                <span>Marketplace</span>
-            </div>
-            
-            <div class="nav-item" onclick="switchView('viewSearchUser')">
-                <i class="ph ph-magnifying-glass" style="font-size: 1.3rem;"></i> 
-                <span>Search User</span>
-            </div>
-            
-            <div class="nav-item" onclick="switchView('viewProfile')">
-                <i class="ph ph-user-circle" style="font-size: 1.3rem;"></i> 
-                <span>My Profile</span>
-            </div>
-            
-            <div class="nav-item" onclick="switchView('viewOrders')">
-                <i class="ph ph-receipt" style="font-size: 1.3rem;"></i> 
-                <span>Your Orders</span>
-            </div>
-            
-            <div class="nav-item" onclick="switchView('viewRegisterStep1')">
-                <i class="ph ph-rocket" style="font-size: 1.3rem;"></i> 
-                <span>Apply to Earn</span>
-            </div>
+            <div class="nav-item active" onclick="switchView('viewShop')"><i class="ph ph-storefront" style="font-size: 1.3rem;"></i> <span>Marketplace</span></div>
+            <div class="nav-item" onclick="switchView('viewSearchUser')"><i class="ph ph-magnifying-glass" style="font-size: 1.3rem;"></i> <span>Search User</span></div>
+            <div class="nav-item" onclick="switchView('viewProfile')"><i class="ph ph-user-circle" style="font-size: 1.3rem;"></i> <span>My Profile</span></div>
+            <div class="nav-item" onclick="switchView('viewOrders')"><i class="ph ph-receipt" style="font-size: 1.3rem;"></i> <span>Your Orders</span></div>
+            <div class="nav-item" onclick="switchView('viewRegisterStep1')"><i class="ph ph-rocket" style="font-size: 1.3rem;"></i> <span>Apply to Earn</span></div>
             
             <div id="adminNav" style="display: none;">
-                <div class="nav-item" onclick="switchView('viewAdmin')">
-                    <i class="ph ph-shield-check" style="font-size: 1.3rem;"></i> 
-                    <span>Admin Panel</span>
-                </div>
+                <div class="nav-item" onclick="switchView('viewAdmin')"><i class="ph ph-shield-check" style="font-size: 1.3rem;"></i> <span>Admin Panel</span></div>
             </div>
             
             <div style="margin-top: auto; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                <div class="nav-item" id="authBtn" onclick="handleAuth()">
-                    <i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> 
-                    <span>Login / Register</span>
-                </div>
+                <div class="nav-item" id="authBtn" onclick="handleAuth()"><i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> <span>Login / Register</span></div>
             </div>
         </nav>
 
-        <!-- MAIN CONTENT AREA STARTS -->
         <main class="main-content">
             <!-- =========================================================
                  VIEW 1: PREMIUM MARKETPLACE
@@ -542,7 +326,7 @@
                 </div>
                 
                 <div id="searchResult" style="margin-top: 30px; max-width: 600px;">
-                    <!-- Results will be injected here -->
+                    <!-- Search Results will be injected here via JavaScript -->
                 </div>
             </section>
 
@@ -566,7 +350,7 @@
                             </div>
                         </div>
                         
-                        <!-- Name and Editable Handle -->
+                        <!-- Name and Editable Handle Inputs -->
                         <div style="flex: 1;">
                             <label>Display Name</label>
                             <input type="text" id="profileName" placeholder="Your Name" style="margin-bottom: 15px;">
@@ -582,31 +366,49 @@
                     
                     <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 35px 0;">
                     
-                    <!-- Theme Selector Engine -->
+                    <!-- ==========================================
+                         THE NEW PREMIUM CUSTOM DROPDOWN ENGINE 
+                         ========================================== -->
                     <h4 style="margin-bottom: 15px;">Interface Theme Engine</h4>
-                    <select id="themeSelector" onchange="changeTheme(this.value)">
-                        <optgroup label="Dark UI Themes">
-                            <option value="dark">Dark (Default)</option>
-                            <option value="indigo">Indigo</option>
-                            <option value="neon">Neon</option>
-                            <option value="midnight">Midnight</option>
-                            <option value="sunset">Sunset</option>
-                        </optgroup>
-                        <optgroup label="Light UI Themes">
-                            <option value="light-ice">Ice Blue</option>
-                            <option value="light-mint">Mint Green</option>
-                            <option value="light-rose">Rose Red</option>
-                        </optgroup>
-                        <optgroup label="Animated Backgrounds">
-                            <option value="anim_matrix">Matrix Digital Rain</option>
-                            <option value="anim_snow">Cyber Snow</option>
-                        </optgroup>
-                    </select>
+                    
+                    <div class="custom-select-wrapper" id="themeDropdownWrapper">
+                        <div class="custom-select" id="customThemeSelect">
+                            
+                            <!-- The Trigger Box -->
+                            <div class="custom-select__trigger">
+                                <span id="customSelectDisplay">Dark (Default)</span>
+                                <div class="arrow"><i class="ph ph-caret-down"></i></div>
+                            </div>
+                            
+                            <!-- The Dropdown Options Panel -->
+                            <div class="custom-options">
+                                
+                                <div class="optgroup-label">Dark UI Themes</div>
+                                <div class="custom-option" data-value="dark">Dark (Default)</div>
+                                <div class="custom-option" data-value="indigo">Indigo</div>
+                                <div class="custom-option" data-value="neon">Neon</div>
+                                <div class="custom-option" data-value="midnight">Midnight</div>
+                                <div class="custom-option" data-value="sunset">Sunset</div>
+                                
+                                <div class="optgroup-label">Light UI Themes</div>
+                                <div class="custom-option" data-value="light-ice">Ice Blue</div>
+                                <div class="custom-option" data-value="light-mint">Mint Green</div>
+                                <div class="custom-option" data-value="light-rose">Rose Red</div>
+                                
+                                <div class="optgroup-label">Animated Backgrounds</div>
+                                <div class="custom-option" data-value="anim_matrix">Matrix Digital Rain</div>
+                                <div class="custom-option" data-value="anim_snow">Cyber Snow</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden input to store theme if needed by fallback scripts -->
+                    <input type="hidden" id="themeSelector" value="dark">
                 </div>
             </section>
 
             <!-- =========================================================
-                 VIEW 4: YOUR ORDERS (SPLIT VIEW FOR ANTI-CLASH)
+                 VIEW 4: YOUR ORDERS (SPLIT VIEW TO PREVENT CLASHING)
                  ========================================================= -->
             <section id="viewOrders" class="view">
                 <h1>Escrow Contracts</h1>
@@ -663,7 +465,7 @@
                     <label>Shop Logo (Auto-compressed to max 400px)</label>
                     <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px;">
                         <div class="file-upload-wrapper" style="width: 100px; height: 100px; border-radius: 12px; border: 2px dashed var(--accent); position: relative; cursor: pointer;">
-                            <img id="shopLogoPreview" src="https://via.placeholder.com/150" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img id="shopLogoPreview" src="https://via.placeholder.com/150" alt="Logo Preview" style="width: 100%; height: 100%; object-fit: cover;">
                             <input type="file" id="shopLogoUpload" accept="image/*" onchange="compressShopLogo(event)">
                         </div>
                         <p style="font-size: 0.85rem; color: var(--text-muted);">
@@ -782,14 +584,14 @@
                     <div class="glass" style="padding: 30px;">
                         <h3 style="margin-bottom: 20px; color: #f97316;">Pending Shop Approvals</h3>
                         <div id="adminAppsList" style="display: flex; flex-direction: column; gap: 15px; max-height: 500px; overflow-y: auto;">
-                            <!-- Admin Approvals will be injected here -->
+                            <!-- Admin Approvals will be injected here via JavaScript -->
                         </div>
                     </div>
                     
                     <div class="glass" style="padding: 30px;">
                         <h3 style="margin-bottom: 20px; color: #3b82f6;">Escrow Payments & Verifications</h3>
                         <div id="adminOrdersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 500px; overflow-y: auto;">
-                            <!-- Admin Orders will be injected here -->
+                            <!-- Admin Orders will be injected here via JavaScript -->
                         </div>
                     </div>
                     
@@ -851,7 +653,7 @@
             
             <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
                 <!-- Static platform QR. Adjust UPI as needed -->
-                <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=msgamer123098@okaxis&pn=RexEditHub" alt="Payment QR" style="width: 200px; height: 200px;">
+                <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=msgamer123098@okaxis&pn=RexEditHub" alt="Payment QR Code" style="width: 200px; height: 200px;">
                 <h3 style="color: #000; margin-top: 10px;">msgamer123098@okaxis</h3>
             </div>
             
@@ -867,7 +669,7 @@
     <!-- Toast Notifications Container -->
     <div id="toast-container"></div>
     <!-- =========================================================
-         JAVASCRIPT LOGIC (CORE APPLICATION ENGINE)
+         JAVASCRIPT LOGIC (THE HEAVY ENGINE)
          ========================================================= -->
     <script>
         /* =========================================================
@@ -904,7 +706,7 @@
         let activeOrderForModal = null;
 
         /* =========================================================
-           2. UI CONTROLLERS & NOTIFICATIONS
+           2. UI CONTROLLERS, TOASTS & SIDEBAR
            ========================================================= */
         function showToast(message, type = "info") {
             const container = document.getElementById('toast-container');
@@ -926,16 +728,17 @@
             }
             
             toast.innerHTML = `
-                <i class="ph ${icon}" style="font-size: 1.2rem; color: ${color};"></i> 
-                <span style="font-weight: 600;">${message}</span>
+                <i class="ph ${icon}" style="font-size: 1.3rem; color: ${color};"></i> 
+                <span style="font-weight: 700;">${message}</span>
             `;
             
             container.appendChild(toast);
             
+            // Premium slide out animation
             setTimeout(() => { 
                 toast.style.opacity = '0'; 
-                toast.style.transform = 'translateX(100%)'; 
-                setTimeout(() => toast.remove(), 300); 
+                toast.style.transform = 'translateX(120%)'; 
+                setTimeout(() => toast.remove(), 400); 
             }, 4000);
         }
 
@@ -1003,10 +806,45 @@
         }
 
         /* =========================================================
-           3. CANVAS THEME ENGINE
+           3. CUSTOM PREMIUM DROPDOWN ENGINE & THEMES
            ========================================================= */
-        let animId;
         
+        // Custom Dropdown Logic
+        const customSelect = document.getElementById('customThemeSelect');
+        const customTrigger = document.querySelector('.custom-select__trigger');
+        const customDisplay = document.getElementById('customSelectDisplay');
+        const customOptions = document.querySelectorAll('.custom-option');
+
+        if (customTrigger) {
+            customTrigger.addEventListener('click', function() {
+                customSelect.classList.toggle('open');
+            });
+        }
+
+        for (const option of customOptions) {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('selected')) {
+                    // Update display text
+                    customDisplay.textContent = this.textContent;
+                    
+                    // Trigger the theme change
+                    const themeValue = this.getAttribute('data-value');
+                    document.getElementById('themeSelector').value = themeValue;
+                    changeTheme(themeValue);
+                }
+                customSelect.classList.remove('open');
+            });
+        }
+
+        // Close dropdown if clicked outside
+        window.addEventListener('click', function(e) {
+            if (customSelect && !customSelect.contains(e.target)) {
+                customSelect.classList.remove('open');
+            }
+        });
+
+        // HTML5 Canvas Background Logic
+        let animId;
         function changeTheme(themeVal) {
             localStorage.setItem('rex_theme', themeVal);
             cancelAnimationFrame(animId);
@@ -1016,6 +854,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if (themeVal.startsWith('anim_')) {
+                // Apply a fallback dark UI so text remains visible over animations
                 document.documentElement.setAttribute('data-theme', 'dark'); 
                 startCanvasAnimation(themeVal.replace('anim_', ''));
             } else {
@@ -1103,27 +942,35 @@
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('rex_theme') || 'dark';
             document.getElementById('themeSelector').value = savedTheme;
+            
+            // Sync custom dropdown display with saved theme
+            const matchedOption = document.querySelector(`.custom-option[data-value="${savedTheme}"]`);
+            if (matchedOption && customDisplay) {
+                customDisplay.textContent = matchedOption.textContent;
+            }
+            
             changeTheme(savedTheme);
             loadMarketplace();
         });
 
         /* =========================================================
-           4. AUTHENTICATION & EDITABLE PROFILE
+           4. SECURE AUTHENTICATION & PROFILE ENGINE
            ========================================================= */
         const provider = new firebase.auth.GoogleAuthProvider();
 
         function handleAuth() {
             if (currentUser) {
                 auth.signOut().then(() => {
-                    showToast("Logged out successfully", "success");
+                    showToast("Logged out securely.", "success");
                     document.getElementById('authBtn').innerHTML = `
                         <i class="ph ph-sign-in" style="font-size: 1.3rem;"></i> 
                         <span>Login / Register</span>
                     `;
+                    
                     currentUser = null; 
                     currentUserData = null;
                     
-                    // Reset UI
+                    // Securely Clear UI Data
                     document.getElementById('adminNav').style.display = 'none';
                     document.getElementById('profileName').value = ""; 
                     document.getElementById('profileHandle').value = "";
@@ -1178,6 +1025,7 @@
                     document.getElementById('profileHandle').value = currentUserData.userId;
                     document.getElementById('profileAvatar').src = currentUserData.photoURL;
                     
+                    // Admin Privileges Check
                     if (currentUserData.email === ADMIN_EMAIL) { 
                         document.getElementById('adminNav').style.display = 'block'; 
                         loadAdminDashboard(); 
@@ -1190,13 +1038,13 @@
         }
 
         function saveProfile() {
-            if (!currentUser) return showToast("Please login first", "error");
+            if (!currentUser) return showToast("Authentication required.", "error");
             
             const newName = document.getElementById('profileName').value.trim();
             let newHandle = document.getElementById('profileHandle').value.trim();
             
             if (!newName || !newHandle) {
-                return showToast("Name and Handle cannot be empty", "error");
+                return showToast("Name and Handle cannot be blank.", "error");
             }
             if (!newHandle.startsWith('@')) {
                 newHandle = '@' + newHandle;
@@ -1206,12 +1054,12 @@
                 displayName: newName, 
                 userId: newHandle 
             })
-            .then(() => showToast("Profile and Handle updated!", "success"))
+            .then(() => showToast("Profile Data Secured!", "success"))
             .catch(err => showToast(err.message, "error"));
         }
 
         /* =========================================================
-           5. IMAGE COMPRESSION (CANVAS LOGIC)
+           5. CANVAS-BASED IMAGE COMPRESSION
            ========================================================= */
         function compressImage(file, maxWidth, callback) {
             const reader = new FileReader(); 
@@ -1241,7 +1089,7 @@
                 compressImage(file, 400, (base64) => { 
                     db.collection('users').doc(currentUser.uid).update({ 
                         photoURL: base64 
-                    }).then(() => showToast("Avatar updated securely!", "success")); 
+                    }).then(() => showToast("Avatar synced securely!", "success")); 
                 }); 
             }
         }
@@ -1259,7 +1107,7 @@
         }
 
         /* =========================================================
-           6. SHOP APPLICATIONS & MARKETPLACE LOGIC
+           6. SHOP APPLICATIONS & MARKETPLACE RENDERING
            ========================================================= */
         function submitShopApplication() {
             if (!currentUser) return showToast("Login required.", "error");
@@ -1272,8 +1120,8 @@
                 high: parseInt(document.getElementById('rateHigh').value) 
             };
             
-            if (!name || !portfolio || !rates.low) {
-                return showToast("Fill all required fields.", "error");
+            if (!name || !portfolio || isNaN(rates.low) || isNaN(rates.medium) || isNaN(rates.high)) {
+                return showToast("Please completely fill out brand and pricing data.", "error");
             }
 
             db.collection('shop_applications').add({ 
@@ -1287,12 +1135,12 @@
                 applicantEmail: currentUser.email, 
                 status: "Pending" 
             }).then(() => { 
-                showToast("Application Sent for Approval!", "success");
+                showToast("Application securely sent for Admin Verification!", "success");
                 
-                // Notify Super Admin
+                // EmailJS Alert
                 emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { 
                     to_email: ADMIN_EMAIL, 
-                    message: `New Shop Application from ${currentUserData.userId}!` 
+                    message: `Action Required: New Shop Application from ${currentUserData.userId}` 
                 });
                 
                 switchView('viewShop'); 
@@ -1305,7 +1153,7 @@
                 grid.innerHTML = '';
                 
                 if (snap.empty) {
-                    grid.innerHTML = `<div style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 50px;">No premium creators found yet.</div>`;
+                    grid.innerHTML = `<div style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 50px;">Awaiting Premium Creators...</div>`;
                 }
                 
                 snap.forEach(doc => {
@@ -1314,12 +1162,12 @@
                     
                     grid.innerHTML += `
                         <div class="glass glass-card" style="padding: 30px; display: flex; flex-direction: column; align-items: center; text-align: center;" data-name="${shop.name.toLowerCase()}" data-handle="${shop.ownerHandle.toLowerCase()}" data-category="${shop.category.toLowerCase()}">
-                            <img src="${shop.logoUrl}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); margin-bottom: 20px;">
+                            <img src="${shop.logoUrl}" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); margin-bottom: 20px;">
                             
                             <h2 style="margin-bottom: 5px; font-size: 1.4rem;">${shop.name}</h2>
                             <p style="color: var(--accent); font-size: 0.95rem; margin-bottom: 20px; font-weight: 700;">${shop.category} • ${shop.ownerHandle}</p>
                             
-                            <span class="badge" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); margin-bottom: 25px;">Starting at ₹${shop.rates.low}</span>
+                            <span class="badge" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); margin-bottom: 25px;">Commissions Start at ₹${shop.rates.low}</span>
                             
                             <div style="display: flex; gap: 10px; width: 100%;">
                                 <a href="${shop.portfolioLink}" target="_blank" class="btn" style="flex: 1;"><i class="ph ph-play"></i> Portfolio</a>
@@ -1342,14 +1190,14 @@
         function searchUser() {
             let q = document.getElementById('searchInput').value.trim();
             
-            if (!q) return showToast("Enter a handle to search.", "error"); 
+            if (!q) return showToast("Enter a target handle.", "error"); 
             if (!q.startsWith('@')) q = '@' + q;
             
             db.collection('users').where('userId', '==', q).get().then(snap => {
                 const res = document.getElementById('searchResult');
                 
                 if (snap.empty) { 
-                    res.innerHTML = `<div class="glass" style="padding: 20px;">User ${q} not found in the network.</div>`; 
+                    res.innerHTML = `<div class="glass" style="padding: 20px;">Identity ${q} not located in secure network.</div>`; 
                     return; 
                 }
                 
@@ -1360,7 +1208,7 @@
                             <img src="${u.photoURL}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border: 2px solid var(--accent);">
                             <div>
                                 <h3 style="margin-bottom: 5px;">${u.displayName}</h3>
-                                <p style="color: var(--accent); font-weight: 600;">${u.userId}</p>
+                                <p style="color: var(--accent); font-weight: 700;">${u.userId}</p>
                             </div>
                         </div>
                     `; 
@@ -1369,14 +1217,14 @@
         }
 
         /* =========================================================
-           7. ANTI-FRAUD HIRE TERMINAL & 6-STEP STATE MACHINE
+           7. ANTI-FRAUD HIRE TERMINAL & ESCROW STATE MACHINE
            ========================================================= */
         function openHireTerminal(shop) {
-            if (!currentUser) return showToast("Login required to hire creators.", "error");
+            if (!currentUser) return showToast("Authentication required to access Hire Terminal.", "error");
             
-            // ANTI-FRAUD SYSTEM: Block Self-Hire
+            // SECURITY MEASURE: Prevent Self-Fraud
             if (shop.ownerUid === currentUser.uid) {
-                return showToast("Fraud Prevention: You cannot hire your own shop.", "error");
+                return showToast("Security Block: You cannot establish an escrow contract with your own shop.", "error");
             }
             
             activeHireShop = shop;
@@ -1405,16 +1253,16 @@
             if (val === '1:1')  { box.style.width = '200px'; box.style.height = '200px'; }
         }
 
-        // --- THE 6-STEP ESCROW WORKFLOW ACTIONS ---
+        // --- THE ESCROW 6-STEP WORKFLOW ---
 
-        // STEP 1: CREATE ORDER (Wait for Editor Response)
+        // [STEP 1] Client Places Order
         function placeOrder() {
             const total = parseInt(document.getElementById('orderTotal').innerText);
-            const footage = document.getElementById('orderFootage').value; 
-            const req = document.getElementById('orderInstructions').value;
+            const footage = document.getElementById('orderFootage').value.trim(); 
+            const req = document.getElementById('orderInstructions').value.trim();
             
             if (!footage || !req) {
-                return showToast("Please provide the footage link and instructions.", "error");
+                return showToast("Secure links and instructions are strictly required.", "error");
             }
 
             const orderId = 'RX-' + Math.floor(1000 + Math.random() * 9000);
@@ -1435,25 +1283,24 @@
                 workProgress: 0,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
-                showToast("Order Placed! Waiting for editor to accept.", "success");
+                showToast("Escrow Contract Initiated! Awaiting Editor Acceptance.", "success");
                 
-                // Email Editor
                 emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { 
                     to_email: activeHireShop.ownerEmail, 
-                    message: `New Escrow Request ${orderId} received from ${currentUserData.userId}!` 
+                    message: `Alert: New Escrow Contract ${orderId} received from ${currentUserData.userId}. Action Required.` 
                 });
                 
                 switchView('viewOrders');
             });
         }
 
-        // STEP 2: EDITOR ACCEPTS (Send to Admin)
+        // [STEP 2] Editor Reviews & Accepts/Rejects
         function openAcceptModal(id, orderData) {
             activeOrderForModal = id;
             document.getElementById('acceptOrderDetails').innerHTML = `
-                <strong>Order ID:</strong> ${orderData.orderId}<br><br>
-                <strong>Client:</strong> ${orderData.clientHandle}<br>
-                <strong>Amount:</strong> ₹${orderData.price}<br>
+                <strong>Contract ID:</strong> ${orderData.orderId}<br><br>
+                <strong>Client Identity:</strong> ${orderData.clientHandle}<br>
+                <strong>Escrow Amount:</strong> ₹${orderData.price}<br>
                 <strong>Instructions:</strong> ${orderData.instructions}<br>
             `;
             openModal('acceptOrderModal');
@@ -1463,7 +1310,7 @@
             db.collection('orders').doc(activeOrderForModal).update({ 
                 status: "Pending Admin Approval (Locked)" 
             }).then(() => { 
-                showToast("Order Accepted. Sent to Admin queue.", "success"); 
+                showToast("Contract Secured. Transferred to Admin Queue.", "success"); 
                 closeModal('acceptOrderModal'); 
             });
         }
@@ -1472,12 +1319,12 @@
             db.collection('orders').doc(activeOrderForModal).update({ 
                 status: "Rejected by Editor" 
             }).then(() => { 
-                showToast("Order Rejected.", "error"); 
+                showToast("Contract Aborted.", "error"); 
                 closeModal('acceptOrderModal'); 
             });
         }
 
-        // STEP 4: CLIENT SUBMITS PAYMENT PROOF
+        // [STEP 4] Client Uploads Payment Proof
         function openPaymentModal(id) { 
             activeOrderForModal = id; 
             openModal('paymentModal'); 
@@ -1486,18 +1333,18 @@
         function submitPaymentProof() {
             const proof = document.getElementById('paymentProofInput').value.trim();
             if (!proof) {
-                return showToast("Please enter UTR or Proof Link.", "error");
+                return showToast("Transaction proof is mandatory.", "error");
             }
             db.collection('orders').doc(activeOrderForModal).update({ 
                 status: "Payment Under Review (Proof Submitted)", 
                 paymentProof: proof 
             }).then(() => { 
-                showToast("Proof submitted! Admin will verify shortly.", "success"); 
+                showToast("Proof Transmitted. Escrow Admin will verify.", "success"); 
                 closeModal('paymentModal'); 
             });
         }
 
-        // STEP 6: EDITOR UPDATES PROGRESS
+        // [STEP 6] Editor Submits Progress
         function openProgressModal(id, current) { 
             activeOrderForModal = id; 
             document.getElementById('progressSlider').value = current; 
@@ -1517,13 +1364,13 @@
                 workProgress: parseInt(val), 
                 status: stat 
             }).then(() => { 
-                showToast("Progress Sync Complete!", "success"); 
+                showToast("Progress Data Synced to Blockchain/Database!", "success"); 
                 closeModal('progressModal'); 
             });
         }
 
         /* =========================================================
-           8. SPLIT DASHBOARDS (CLIENT VS EDITOR RENDERING)
+           8. SPLIT ISOLATED DASHBOARDS (CLIENT VS EDITOR DATA)
            ========================================================= */
         function loadMyOrders() {
             if (!currentUser) return;
@@ -1534,18 +1381,18 @@
             clientList.innerHTML = '';
             editorList.innerHTML = '';
             
-            // Render Client Orders (Buying)
+            // Isolated Client Listener
             db.collection('orders').where('clientUid', '==', currentUser.uid).onSnapshot(snap => {
                 if (snap.empty && clientList.innerHTML === '') {
-                    clientList.innerHTML = '<p style="color: var(--text-muted);">No active purchases found.</p>';
+                    clientList.innerHTML = '<p style="color: var(--text-muted);">No active purchases established.</p>';
                 }
                 snap.forEach(doc => renderOrderCard(doc.id, doc.data(), clientList, 'client'));
             });
             
-            // Render Editor Orders (Selling)
+            // Isolated Editor Listener
             db.collection('orders').where('editorUid', '==', currentUser.uid).onSnapshot(snap => {
                 if (snap.empty && editorList.innerHTML === '') {
-                    editorList.innerHTML = '<p style="color: var(--text-muted);">No incoming orders found.</p>';
+                    editorList.innerHTML = '<p style="color: var(--text-muted);">No incoming contracts pending.</p>';
                 }
                 snap.forEach(doc => renderOrderCard(doc.id, doc.data(), editorList, 'editor'));
             });
@@ -1554,21 +1401,23 @@
         function renderOrderCard(docId, order, container, role) {
             let badgeClass = 'status-pending';
             
-            if (order.status === 'Wait for editor response') badgeClass = 'status-wait';
+            // Dynamic Status Badge Evaluation
+            if (order.status.includes('Wait')) badgeClass = 'status-wait';
             if (order.status.includes('WIP') || order.status.includes('Verified')) badgeClass = 'status-progress';
-            if (order.status === 'Completed') badgeClass = 'status-completed';
+            if (order.status.includes('Completed')) badgeClass = 'status-completed';
 
             let actionBtn = '';
             
-            // Contextual Buttons based on Role & State
+            // Strict Capability Injection based on Workflow String
             if (role === 'editor' && order.status === 'Wait for editor response') {
-                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick='openAcceptModal("${docId}", ${JSON.stringify(order)})'>Review Request</button>`;
+                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick='openAcceptModal("${docId}", ${JSON.stringify(order)})'>Review & Accept</button>`;
             }
             if (role === 'editor' && (order.status.includes('WIP') || order.status.includes('Verified'))) {
-                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openProgressModal('${docId}', ${order.workProgress})">Update Progress</button>`;
+                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openProgressModal('${docId}', ${order.workProgress})">Update Client Progress</button>`;
             }
-            if (role === 'client' && order.status === 'In Progress (QR Sent - Escrow Awaiting)') {
-                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openPaymentModal('${docId}')">Pay Escrow</button>`;
+            // FIXED: Ensuring string '.includes' check works perfectly for Client payment button
+            if (role === 'client' && order.status.includes('Escrow Awaiting')) {
+                actionBtn = `<button class="btn btn-primary" style="padding: 8px 15px;" onclick="openPaymentModal('${docId}')">Fund Escrow</button>`;
             }
 
             const existingCard = document.getElementById(`orderCard_${docId}_${role}`);
@@ -1577,12 +1426,12 @@
                 <div id="orderCard_${docId}_${role}" class="glass" style="padding: 25px; border-left: 4px solid var(--accent); margin-bottom: 15px;">
                     <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 15px;">
                         <div>
-                            <h3 style="margin-bottom: 8px;">Order ${order.orderId}</h3>
+                            <h3 style="margin-bottom: 8px;">Order: ${order.orderId}</h3>
                             <span class="badge ${badgeClass}">${order.status}</span>
                             <p style="font-size: 0.95rem; margin-top: 15px; color: var(--text-main);">
-                                <strong style="color: #22c55e;">Amount: ₹${order.price}</strong> | ${order.tier.toUpperCase()} Tier
+                                <strong style="color: #22c55e;">Amount Locked: ₹${order.price}</strong> | ${order.tier.toUpperCase()} Tier
                             </p>
-                            ${role === 'editor' ? `<p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Client Asset: <a href="${order.footageLink}" target="_blank" style="color:var(--accent);">View Link</a></p>` : ''}
+                            ${role === 'editor' ? `<p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Secure Client Asset: <a href="${order.footageLink}" target="_blank" style="color:var(--accent);">View Link</a></p>` : ''}
                         </div>
                         <div>${actionBtn}</div>
                     </div>
@@ -1590,17 +1439,18 @@
                     ${order.status.includes('Wait') || order.status.includes('Locked') || order.status.includes('Rejected') ? '' : `
                         <div style="margin-top: 20px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem;">
-                                <span>Project Completion</span>
+                                <span>Project Integrity</span>
                                 <span>${order.workProgress}%</span>
                             </div>
                             <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; overflow: hidden; border: 1px solid var(--glass-border);">
-                                <div style="height: 100%; width: ${order.workProgress}%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); transition: width 0.5s ease;"></div>
+                                <div style="height: 100%; width: ${order.workProgress}%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);"></div>
                             </div>
                         </div>
                     `}
                 </div>
             `;
             
+            // Render logic to prevent duplicate flashing
             if (existingCard) {
                 existingCard.outerHTML = cardHtml; 
             } else {
@@ -1609,10 +1459,10 @@
         }
 
         /* =========================================================
-           9. SUPER ADMIN QUEUE & VERIFICATIONS
+           9. SUPER ADMIN (ESCROW OVERSEER) LOGIC
            ========================================================= */
         function loadAdminDashboard() {
-            // Render Shop Approvals
+            // Monitor Shop Approvals
             db.collection('shop_applications').where('status', '==', 'Pending').onSnapshot(snap => {
                 const list = document.getElementById('adminAppsList'); 
                 list.innerHTML = '';
@@ -1622,17 +1472,17 @@
                     list.innerHTML += `
                         <div class="glass" style="padding: 20px; margin-bottom: 15px;">
                             <h4 style="margin-bottom: 5px;">${app.name}</h4>
-                            <p style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-muted);">Creator: ${app.applicantHandle}</p>
+                            <p style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-muted);">Creator Identity: ${app.applicantHandle}</p>
                             <div style="display: flex; gap: 10px;">
                                 <a href="${app.portfolioLink}" target="_blank" class="btn" style="flex: 1;"><i class="ph ph-link"></i> Portfolio</a>
-                                <button class="btn btn-primary" style="flex: 1;" onclick="approveShop('${doc.id}')">Approve Shop</button>
+                                <button class="btn btn-primary" style="flex: 1;" onclick="approveShop('${doc.id}')">Approve & Push to Market</button>
                             </div>
                         </div>
                     `;
                 });
             });
 
-            // Render Orders Verification (Steps 3 & 5)
+            // Monitor Escrow Pipeline [Steps 3 & 5]
             db.collection('orders').onSnapshot(snap => {
                 const list = document.getElementById('adminOrdersList'); 
                 list.innerHTML = '';
@@ -1643,19 +1493,19 @@
                     
                     // [STEP 3] Admin Sends QR to Client
                     if (order.status === 'Pending Admin Approval (Locked)') {
-                        adminBtn = `<button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'In Progress (QR Sent - Escrow Awaiting)')">Approve Order & Send Escrow Prompt</button>`;
+                        adminBtn = `<button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'In Progress (QR Sent - Escrow Awaiting)')">Approve Order & Send Escrow QR</button>`;
                     }
                     
-                    // [STEP 5] Admin Verifies UTR
+                    // [STEP 5] Admin Verifies UTR Proof
                     if (order.status === 'Payment Under Review (Proof Submitted)') {
-                        adminBtn = `<button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'Payment Verified (Work In Progress)', 15)">Verify UTR: ${order.paymentProof}</button>`;
+                        adminBtn = `<button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="adminUpdateOrder('${doc.id}', 'Payment Verified (Work In Progress)', 15)">Verify UTR Manually: ${order.paymentProof}</button>`;
                     }
                     
                     if (adminBtn !== '') {
                         list.innerHTML += `
                             <div class="glass" style="padding: 20px; border-left: 3px solid #f97316; margin-bottom: 15px;">
-                                <h4 style="margin-bottom: 5px;">Order ID: ${order.orderId}</h4>
-                                <span style="font-size: 0.85rem; color: var(--accent); font-weight: 600;">Status: ${order.status}</span>
+                                <h4 style="margin-bottom: 5px;">System ID: ${order.orderId}</h4>
+                                <span style="font-size: 0.85rem; color: var(--accent); font-weight: 700;">State: ${order.status}</span>
                                 ${adminBtn}
                             </div>
                         `;
@@ -1668,7 +1518,7 @@
             const appSnap = await db.collection('shop_applications').doc(appId).get(); 
             const app = appSnap.data();
             
-            // Promote application fields to verified shop
+            // Promote and Secure
             app.ownerUid = app.applicantUid; 
             app.ownerHandle = app.applicantHandle; 
             app.ownerEmail = app.applicantEmail;
@@ -1680,7 +1530,7 @@
             await db.collection('shops').add(app); 
             await db.collection('shop_applications').doc(appId).update({ status: "Approved" }); 
             
-            showToast("Shop successfully approved and moved to Marketplace!", "success");
+            showToast("Shop successfully whitelisted and moved to Marketplace!", "success");
         }
 
         function adminUpdateOrder(id, status, progress = null) {
@@ -1691,7 +1541,7 @@
             }
             
             db.collection('orders').doc(id).update(updateObj)
-                .then(() => showToast("Order Workflow Updated Securely", "success"));
+                .then(() => showToast("Escrow Network Updated", "success"));
         }
 
     </script>
