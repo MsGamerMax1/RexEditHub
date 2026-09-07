@@ -38,7 +38,7 @@ html[data-theme="graphite"]{--bg:#0c0c0e;--bg2:#18181c;--primary:#8f93a0;--prima
 html[data-canvas="snow"],html[data-canvas="starfield"],html[data-canvas="cyberrain"],html[data-canvas="matrix"],
 html[data-canvas="embers"],html[data-canvas="plasma"],html[data-canvas="chroma"],html[data-canvas="prism"],
 html[data-canvas="auroraflow"],html[data-canvas="golddust"],html[data-canvas="storm"],html[data-canvas="petals"],
-html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"]{--bg:#05060a;--bg2:#0a0b12;}
+html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"],html[data-canvas="egypt"]{--bg:#05060a;--bg2:#0a0b12;}
 
 *{box-sizing:border-box; margin:0; padding:0;}
 ::selection{background:var(--primary); color:#fff;}
@@ -74,6 +74,8 @@ html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
 .nav-item:hover{background:var(--surface); color:var(--text); transform:translateX(2px);}
 .nav-item.active{background:linear-gradient(90deg, rgba(109,91,255,0.18), rgba(180,91,255,0.06)); color:#fff; border-color:var(--border); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.04);}
 .nav-item.hidden{display:none;}
+.nav-item.nav-logout{color:var(--danger);}
+.nav-item.nav-logout:hover{background:rgba(255,91,122,0.1); color:var(--danger);}
 .nav-spacer{flex:1;}
 .sidebar-foot{padding:10px; font-size:11px; color:var(--text-dim2); text-align:center;}
 
@@ -195,7 +197,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .theme-tab{padding:7px 14px; border-radius:9px; font-size:12px; font-weight:700; cursor:pointer; background:var(--surface); border:1px solid var(--border); color:var(--text-dim);}
 .theme-tab.active{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; border-color:transparent;}
 
-.tabs-2{display:flex; gap:10px; margin-bottom:20px;}
+.tabs-2{display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;}
 .tabs-2 .btn-ghost.active{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; border-color:transparent;}
 
 .step-dots{display:flex; gap:8px; margin-bottom:22px;}
@@ -301,6 +303,10 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
     </div>
 
     <div class="nav-spacer"></div>
+    <div class="nav-item nav-logout" id="navLogout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Log Out
+    </div>
     <div class="sidebar-foot">Escrow-secured · Rex Edit Hub © 2026</div>
   </aside>
 
@@ -353,7 +359,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         </div>
         <div>
           <div class="glass card">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 35 Themes</div>
+            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 36 Themes</div>
             <div class="theme-tabs">
               <div class="theme-tab active" data-tpage="1">Page 1</div>
               <div class="theme-tab" data-tpage="2">Page 2</div>
@@ -407,9 +413,11 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
       <div class="tabs-2">
         <button class="btn btn-ghost active" data-atab="apps">Shop Applications</button>
         <button class="btn btn-ghost" data-atab="orders">Escrow Queue</button>
+        <button class="btn btn-ghost" data-atab="shops">Manage Shops</button>
       </div>
       <div id="adminAppsPane"></div>
       <div id="adminOrdersPane" class="hidden"></div>
+      <div id="adminShopsPane" class="hidden"></div>
     </section>
 
     <!-- VIEW: REGISTER STEP 1 -->
@@ -523,6 +531,19 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   </div>
 </div>
 
+<!-- ADMIN REJECT ORDER MODAL -->
+<div class="overlay" id="rejectOverlay">
+  <div class="glass modal">
+    <div class="modal-head"><div class="modal-title">Reject Order</div><div class="modal-close" data-close="rejectOverlay">✕</div></div>
+    <div class="text-dim" style="font-size:12.5px;margin-bottom:14px;">This permanently removes the order from Rex Edit Hub and emails both the client and editor with your reason.</div>
+    <div class="field mb0">
+      <label>Reason for rejection</label>
+      <textarea id="rejectReasonInput" rows="4" placeholder="Explain why this order is being rejected…"></textarea>
+    </div>
+    <button class="btn btn-danger btn-block mt16" id="confirmRejectBtn">Reject & Remove Order</button>
+  </div>
+</div>
+
 <!-- ORDER DETAIL / GENERIC INFO MODAL -->
 <div class="overlay" id="infoOverlay">
   <div class="glass modal">
@@ -579,6 +600,7 @@ const State = {
   hireContext: null,   // { shop }
   activeOrderForPayment: null,
   activeOrderForProgress: null,
+  activeOrderForReject: null,
   selectedTier: "low",
   selectedAR: "16:9",
 };
@@ -659,14 +681,14 @@ function sendEmailNotification(templateParams) {
   });
 }
 
-/* ========================= 4. THEME SYSTEM (35 THEMES) ========================= */
+/* ========================= 4. THEME SYSTEM (36 THEMES) ========================= */
 const STATIC_THEMES = [
   "indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber",
   "slate","crimson","emerald","sapphire","lavender","mono","ice","ember","orchid","graphite"
 ];
 const CANVAS_THEMES = [
   "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
-  "auroraflow","golddust","storm","petals","warp","flares","bubbles"
+  "auroraflow","golddust","storm","petals","warp","flares","bubbles","egypt"
 ];
 const THEME_COLORS = { // representative swatch gradient per theme for the picker UI
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
@@ -677,10 +699,11 @@ const THEME_COLORS = { // representative swatch gradient per theme for the picke
   snow:["#dfe9f5","#8fb3d9"], starfield:["#5b7bff","#c8d4ff"], cyberrain:["#00ffb0","#00c8ff"], matrix:["#00ff6a","#0a3d1a"],
   embers:["#ff5b2e","#ffb85b"], plasma:["#ff2ed6","#5b2eff"], chroma:["#ff2e6a","#2effc8"], prism:["#ff9ded","#9de0ff"],
   auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
-  warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"]
+  warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"], egypt:["#e8b45a","#8a4a1e"]
 };
 const THEME_LABELS = {};
 [...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
+THEME_LABELS.egypt = "Ancient Egypt";
 
 let currentTheme = localStorage.getItem("rex_theme") || "indigo";
 
@@ -712,6 +735,12 @@ function stopCanvasTheme() {
 function rnd(a, b) { return a + Math.random() * (b - a); }
 
 function spawnParticles(themeId, w, h) {
+  if (themeId === "egypt") {
+    const arr = [];
+    for (let i = 0; i < 45; i++) arr.push(makeParticle("egypt", w, h, true));
+    arr.push({ kind: "camel", x: rnd(-140, w * 0.4), speed: rnd(0.55, 0.85), legPhase: rnd(0, 6.28) });
+    return arr;
+  }
   const cfg = {
     snow:       { count: 140 },
     starfield:  { count: 220 },
@@ -769,6 +798,8 @@ function makeParticle(themeId, w, h, initial) {
       return { x: rnd(0, w), y: rnd(0, h), r: rnd(1, 2.5), vx: rnd(-0.2, 0.2), vy: rnd(-0.2, 0.2), pulse: rnd(0, 6.28) };
     case "bubbles":
       return { x: rnd(0, w), y: initial ? rnd(0, h) : h + 10, r: rnd(3, 12), vy: rnd(-1.2, -0.4), vx: rnd(-0.3, 0.3), o: rnd(0.15, 0.5) };
+    case "egypt":
+      return { kind: "dust", x: rnd(-10, w), y: rnd(h * 0.35, h * 0.64), r: rnd(0.6, 2.2), vx: rnd(0.15, 0.55), vy: rnd(-0.05, 0.05), o: rnd(0.15, 0.5) };
     default:
       return { x: rnd(0, w), y: rnd(0, h) };
   }
@@ -904,8 +935,123 @@ function drawParticle(ctx, themeId, p, w, h, t) {
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.stroke();
       break;
     }
+    case "egypt": {
+      if (p.kind === "camel") {
+        p.x += p.speed;
+        if (p.x > w + 150) p.x = -150;
+        p.legPhase += 0.16;
+        drawCamel(ctx, p.x, h, p.legPhase);
+      } else {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x > w + 10) { p.x = -10; p.y = rnd(h * 0.35, h * 0.64); }
+        ctx.globalAlpha = p.o; ctx.fillStyle = "#f2d9a8";
+        ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r * 2.2, p.r * 0.6, 0, 0, 6.283); ctx.fill();
+      }
+      break;
+    }
   }
   ctx.globalAlpha = 1;
+}
+
+/* ---- Ancient Egypt themed backdrop: sky, sun, dunes, pyramids ---- */
+function drawPyramid(ctx, cx, baseY, baseW, height, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(cx - baseW / 2, baseY);
+  ctx.lineTo(cx, baseY - height);
+  ctx.lineTo(cx + baseW / 2, baseY);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = "rgba(0,0,0,0.16)";
+  ctx.beginPath();
+  ctx.moveTo(cx, baseY - height);
+  ctx.lineTo(cx + baseW / 2, baseY);
+  ctx.lineTo(cx + baseW * 0.15, baseY);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawEgyptBackground(ctx, w, h) {
+  const horizon = h * 0.66;
+  const sky = ctx.createLinearGradient(0, 0, 0, horizon);
+  sky.addColorStop(0, "#f7dfa5");
+  sky.addColorStop(0.55, "#f0c477");
+  sky.addColorStop(1, "#e8a85a");
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, w, horizon);
+
+  const sunX = w * 0.78, sunY = h * 0.22, sunR = Math.min(w, h) * 0.09;
+  const sunGlow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR * 3.4);
+  sunGlow.addColorStop(0, "rgba(255,244,214,0.9)");
+  sunGlow.addColorStop(1, "rgba(255,244,214,0)");
+  ctx.fillStyle = sunGlow;
+  ctx.beginPath(); ctx.arc(sunX, sunY, sunR * 3.4, 0, 6.283); ctx.fill();
+  ctx.fillStyle = "#fff3d6";
+  ctx.beginPath(); ctx.arc(sunX, sunY, sunR, 0, 6.283); ctx.fill();
+
+  ctx.fillStyle = "rgba(255,235,190,0.35)";
+  ctx.fillRect(0, horizon - h * 0.05, w, h * 0.05);
+
+  drawPyramid(ctx, w * 0.30, horizon, w * 0.16, h * 0.20, "#c98a4a");
+  drawPyramid(ctx, w * 0.42, horizon, w * 0.11, h * 0.14, "#b87a3e");
+  drawPyramid(ctx, w * 0.20, horizon, w * 0.09, h * 0.11, "#d69a5c");
+
+  const ground = ctx.createLinearGradient(0, horizon, 0, h);
+  ground.addColorStop(0, "#d69a5c");
+  ground.addColorStop(1, "#8a4a1e");
+  ctx.fillStyle = ground;
+  ctx.beginPath();
+  ctx.moveTo(0, horizon);
+  ctx.bezierCurveTo(w * 0.25, horizon - h * 0.02, w * 0.55, horizon + h * 0.03, w, horizon - h * 0.01);
+  ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fill();
+
+  ctx.strokeStyle = "rgba(255,255,255,0.08)"; ctx.lineWidth = 2;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    const yy = horizon + h * (0.08 + i * 0.09);
+    ctx.moveTo(0, yy);
+    ctx.bezierCurveTo(w * 0.3, yy - 14, w * 0.6, yy + 14, w, yy - 6);
+    ctx.stroke();
+  }
+}
+
+function drawCamel(ctx, x, canvasH, legPhase) {
+  const y = canvasH * 0.665;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = "rgba(0,0,0,0.18)";
+  ctx.beginPath(); ctx.ellipse(4, 46, 46, 7, 0, 0, 6.283); ctx.fill();
+  const bob = Math.sin(legPhase * 2) * 2;
+  ctx.translate(0, bob);
+  const swing = Math.sin(legPhase) * 14;
+  const swing2 = Math.sin(legPhase + Math.PI) * 14;
+  ctx.lineCap = "round"; ctx.lineWidth = 5; ctx.strokeStyle = "#8a6135";
+  ctx.beginPath(); ctx.moveTo(-28, 12); ctx.lineTo(-28 + swing * 0.4, 44); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-14, 14); ctx.lineTo(-14 + swing2 * 0.4, 44); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(18, 14); ctx.lineTo(18 + swing2 * 0.4, 44); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(30, 12); ctx.lineTo(30 + swing * 0.4, 44); ctx.stroke();
+
+  ctx.fillStyle = "#b98a4f"; ctx.strokeStyle = "#7a5228"; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(-32, 14);
+  ctx.bezierCurveTo(-30, -6, -18, -20, -6, -8);
+  ctx.bezierCurveTo(0, -18, 10, -18, 14, -8);
+  ctx.bezierCurveTo(26, -14, 34, -2, 32, 14);
+  ctx.bezierCurveTo(20, 20, -20, 20, -32, 14);
+  ctx.closePath();
+  ctx.fill(); ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(28, -2);
+  ctx.bezierCurveTo(38, -10, 46, -22, 44, -32);
+  ctx.bezierCurveTo(50, -34, 52, -28, 48, -22);
+  ctx.bezierCurveTo(46, -14, 40, -4, 34, 4);
+  ctx.closePath();
+  ctx.fill(); ctx.stroke();
+
+  ctx.beginPath(); ctx.moveTo(-32, 6); ctx.quadraticCurveTo(-42, 10, -40, 22);
+  ctx.lineWidth = 3; ctx.strokeStyle = "#7a5228"; ctx.stroke();
+  ctx.restore();
 }
 
 function startCanvasTheme(themeId) {
@@ -931,6 +1077,7 @@ function startCanvasTheme(themeId) {
     if (canvasEngine.themeId !== themeId) return; // theme switched away
     ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
     if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
+    if (themeId === "egypt") drawEgyptBackground(ctx, canvasEngine.w, canvasEngine.h);
     canvasEngine.particles.forEach(p => drawParticle(ctx, themeId, p, canvasEngine.w, canvasEngine.h, t || 0));
     canvasEngine.raf = requestAnimationFrame(loop);
   }
@@ -1011,6 +1158,15 @@ $("#googleSignInBtn").addEventListener("click", () => {
 });
 
 $("#topAvatarBtn").addEventListener("click", () => switchView("viewProfile"));
+
+$("#navLogout").addEventListener("click", () => {
+  if (!confirm("Log out of Rex Edit Hub?")) return;
+  auth.signOut().then(() => {
+    showToast("Signed out.", "ok");
+  }).catch(err => {
+    showToast(err.message || "Failed to log out.", "err");
+  });
+});
 
 auth.onAuthStateChanged(async user => {
   clearUnsubscribes();
@@ -1339,8 +1495,10 @@ $("#hireSubmitBtn").addEventListener("click", async () => {
       shopName: shop.name || "",
       clientUid: State.user.uid,
       clientName: (State.profile && State.profile.displayName) || State.user.displayName || "",
+      clientEmail: State.user.email || "",
       editorUid: shop.ownerUid,
       editorHandle: shop.ownerHandle || "",
+      editorEmail: shop.ownerEmail || "",
       tier: State.selectedTier,
       aspectRatio: State.selectedAR,
       duration: dur,
@@ -1557,6 +1715,7 @@ $all("[data-atab]").forEach(tab => tab.addEventListener("click", () => {
   tab.classList.add("active");
   $("#adminAppsPane").classList.toggle("hidden", tab.dataset.atab !== "apps");
   $("#adminOrdersPane").classList.toggle("hidden", tab.dataset.atab !== "orders");
+  $("#adminShopsPane").classList.toggle("hidden", tab.dataset.atab !== "shops");
 }));
 
 function renderAdminReview() {
@@ -1596,15 +1755,33 @@ function renderAdminReview() {
           <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
         </div>
         <div class="order-actions">
-          ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button>` : ''}
-          ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button>` : ''}
+          ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button><button class="btn btn-danger btn-sm" data-admin-reject-order="${o.id}">Reject</button>` : ''}
+          ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button><button class="btn btn-danger btn-sm" data-admin-reject-order="${o.id}">Reject</button>` : ''}
           <button class="btn btn-ghost btn-sm" data-view-order-a="${o.id}">Details</button>
         </div>
       </div>
     `).join("");
     $all("[data-admin-approve-order]", ordersPane).forEach(b => b.addEventListener("click", () => adminApproveOrder(b.dataset.adminApproveOrder)));
     $all("[data-admin-verify]", ordersPane).forEach(b => b.addEventListener("click", () => adminVerifyPayment(b.dataset.adminVerify)));
+    $all("[data-admin-reject-order]", ordersPane).forEach(b => b.addEventListener("click", () => openAdminRejectModal(b.dataset.adminRejectOrder)));
     $all("[data-view-order-a]", ordersPane).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderA, "admin")));
+  }
+
+  const shopsPane = $("#adminShopsPane");
+  const allShops = State.shops || [];
+  if (allShops.length === 0) {
+    shopsPane.innerHTML = `<div class="empty-state"><h3>No shops listed</h3><p>Approved creator shops will appear here for management.</p></div>`;
+  } else {
+    shopsPane.innerHTML = `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">` + allShops.map(s => `
+      <div class="glass card">
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:10px;">
+          <img src="${s.logoUrl || ''}" style="width:44px;height:44px;border-radius:10px;object-fit:cover;" onerror="this.style.display='none'">
+          <div><div style="font-weight:800;">${esc(s.name)}</div><div class="text-dim" style="font-size:12px;">${esc(s.category || '')} · ${esc(s.ownerHandle || '')}</div></div>
+        </div>
+        <div class="text-dim" style="font-size:12px; margin-bottom:12px;">Basic ${money(s.rates && s.rates.low)} · Std ${money(s.rates && s.rates.medium)} · Prem ${money(s.rates && s.rates.high)}</div>
+        <button class="btn btn-danger btn-sm btn-block" data-admin-del-shop="${s.id}">Delete Shop</button>
+      </div>`).join("") + `</div>`;
+    $all("[data-admin-del-shop]", shopsPane).forEach(b => b.addEventListener("click", () => deleteShop(b.dataset.adminDelShop)));
   }
 }
 
@@ -1614,7 +1791,7 @@ async function approveApplication(appId) {
   try {
     await db.collection("shops").add({
       name: app.name, category: app.category, rates: app.rates, logoUrl: app.logoUrl || "",
-      ownerUid: app.applicantUid, ownerHandle: app.applicantHandle || "",
+      ownerUid: app.applicantUid, ownerHandle: app.applicantHandle || "", ownerEmail: app.applicantEmail || "",
       portfolio: app.portfolio || "", createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     await db.collection("shop_applications").doc(appId).delete();
@@ -1648,8 +1825,57 @@ async function adminVerifyPayment(orderId) {
   try {
     await db.collection("orders").doc(orderId).update({ status: "payment_verified", workProgress: order.workProgress || 15 });
     showToast("Payment verified — creator notified.", "ok");
+    sendEmailNotification({
+      to_email: order.editorEmail || "",
+      subject: `Payment verified for ${order.orderId} — start work`,
+      message: `Payment for order ${order.orderId} (${money(order.price)}) has been verified by admin. You can start work and update progress in the app.`,
+      order_id: order.orderId,
+    });
+    sendEmailNotification({
+      to_email: order.clientEmail || "",
+      subject: `Payment verified for ${order.orderId}`,
+      message: `Your payment for order ${order.orderId} has been verified. The editor will now begin work and you'll be able to track progress in My Orders.`,
+      order_id: order.orderId,
+    });
   } catch (e) { console.error(e); showToast("Failed to verify payment.", "err"); }
 }
+
+function openAdminRejectModal(orderId) {
+  const order = (State.allOrdersAdmin || []).find(o => o.id === orderId);
+  if (!order) return;
+  State.activeOrderForReject = order;
+  $("#rejectReasonInput").value = "";
+  openModal("rejectOverlay");
+}
+$("#confirmRejectBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReject;
+  if (!order) return;
+  const reason = $("#rejectReasonInput").value.trim();
+  if (!reason) return showToast("Please provide a reason.", "err");
+  const btn = $("#confirmRejectBtn"); btn.disabled = true; btn.textContent = "Rejecting…";
+  try {
+    await sendEmailNotification({
+      to_email: order.clientEmail || "",
+      subject: `Order ${order.orderId} rejected`,
+      message: `Your order ${order.orderId} (${order.shopName || ''}) was rejected by the admin. Reason: ${reason}`,
+      order_id: order.orderId,
+    });
+    await sendEmailNotification({
+      to_email: order.editorEmail || "",
+      subject: `Order ${order.orderId} rejected`,
+      message: `Order ${order.orderId} from ${order.clientName || 'a client'} was rejected by the admin. Reason: ${reason}`,
+      order_id: order.orderId,
+    });
+    await db.collection("orders").doc(order.id).delete();
+    showToast("Order rejected, removed, and both parties notified.", "ok");
+    closeModal("rejectOverlay");
+    State.activeOrderForReject = null;
+  } catch (e) {
+    console.error(e); showToast("Failed to reject order.", "err");
+  } finally {
+    btn.disabled = false; btn.textContent = "Reject & Remove Order";
+  }
+});
 
 /* ========================= 14. APPLY FOR EARN (2-step) ========================= */
 const RegState = { logoBase64: null };
@@ -1689,6 +1915,7 @@ $("#regStep2Submit").addEventListener("click", async () => {
       rates: { low, medium: med, high },
       applicantUid: State.user.uid,
       applicantHandle: (State.profile && State.profile.userId) || "",
+      applicantEmail: State.user.email || "",
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     showToast("Application submitted for review!", "ok");
