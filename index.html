@@ -39,6 +39,7 @@ html[data-canvas="snow"],html[data-canvas="starfield"],html[data-canvas="cyberra
 html[data-canvas="embers"],html[data-canvas="plasma"],html[data-canvas="chroma"],html[data-canvas="prism"],
 html[data-canvas="auroraflow"],html[data-canvas="golddust"],html[data-canvas="storm"],html[data-canvas="petals"],
 html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"],html[data-canvas="egypt"]{--bg:#05060a;--bg2:#0a0b12;}
+html[data-canvas3d]{--bg:#020205;--bg2:#05060a;}
 
 *{box-sizing:border-box; margin:0; padding:0;}
 ::selection{background:var(--primary); color:#fff;}
@@ -49,9 +50,10 @@ body{
   transition:background 0.6s ease;
 }
 #themeCanvas{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; display:none;}
+#themeCanvas3d{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; display:none;}
 html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
+html[data-canvas3d]:not([data-canvas3d=""]) #themeCanvas3d{display:block;}
 
-/* scrollbar */
 ::-webkit-scrollbar{width:10px; height:10px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--primary2)); border-radius:10px; border:2px solid var(--bg);}
@@ -105,12 +107,15 @@ html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
 .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; box-shadow:0 4px 20px -4px var(--primary), var(--glow);}
 .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 28px -4px var(--primary), 0 0 32px rgba(109,91,255,0.5);}
 .btn-primary:active{transform:translateY(0);}
+.btn-primary:disabled{opacity:.5; cursor:not-allowed; transform:none;}
 .btn-ghost{background:var(--surface); color:var(--text); border:1px solid var(--border);}
 .btn-ghost:hover{background:var(--surface-hi); border-color:rgba(255,255,255,0.18);}
 .btn-danger{background:rgba(255,91,122,0.12); color:var(--danger); border:1px solid rgba(255,91,122,0.3);}
 .btn-danger:hover{background:rgba(255,91,122,0.22);}
+.btn-success{background:rgba(62,230,140,0.12); color:var(--success); border:1px solid rgba(62,230,140,0.3);}
+.btn-success:hover{background:rgba(62,230,140,0.22);}
+.btn-success:disabled{opacity:.5; cursor:not-allowed;}
 .btn-sm{padding:8px 14px; font-size:12.5px; border-radius:9px;}
-.btn:disabled{opacity:.45; cursor:not-allowed; transform:none !important;}
 .btn-block{width:100%;}
 .btn-icon{width:38px; height:38px; padding:0; border-radius:10px;}
 
@@ -153,6 +158,9 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .badge-verified{background:rgba(62,230,140,0.15); color:var(--success);}
 .badge-done{background:rgba(62,230,140,0.2); color:var(--success);}
 .badge-reject{background:rgba(255,91,122,0.15); color:var(--danger);}
+.badge-delivery{background:rgba(255,179,91,0.18); color:var(--warning);}
+.badge-signature{background:rgba(109,91,255,0.18); color:var(--primary);}
+.badge-reported{background:rgba(255,91,122,0.18); color:var(--danger);}
 
 .progress-track{width:100%; height:8px; border-radius:20px; background:rgba(255,255,255,0.06); overflow:hidden; margin:10px 0;}
 .progress-fill{height:100%; border-radius:20px; background:linear-gradient(90deg,var(--primary),var(--accent)); box-shadow:0 0 12px var(--primary); transition:width .5s cubic-bezier(.2,.8,.2,1);}
@@ -193,7 +201,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .theme-swatch:hover{transform:scale(1.06);}
 .theme-swatch.active{border-color:var(--text); box-shadow:0 0 0 2px var(--primary);}
 .theme-swatch-label{position:absolute; bottom:3px; left:0; right:0; text-align:center; font-size:8.5px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.8);}
-.theme-tabs{display:flex; gap:8px; margin-bottom:6px;}
+.theme-tabs{display:flex; gap:8px; margin-bottom:6px; flex-wrap:wrap;}
 .theme-tab{padding:7px 14px; border-radius:9px; font-size:12px; font-weight:700; cursor:pointer; background:var(--surface); border:1px solid var(--border); color:var(--text-dim);}
 .theme-tab.active{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; border-color:transparent;}
 
@@ -241,6 +249,27 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .skel{background:linear-gradient(90deg,var(--surface) 25%,var(--surface-hi) 50%,var(--surface) 75%); background-size:200% 100%; animation:skel 1.4s ease infinite; border-radius:10px;}
 @keyframes skel{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
 
+.countdown-box{text-align:center; padding:24px 20px;}
+.countdown-timer{font-size:46px; font-weight:800; font-family:monospace; letter-spacing:4px; background:linear-gradient(90deg,var(--primary),var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1.2;}
+.countdown-label{font-size:11px; color:var(--text-dim); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:4px;}
+.sign-btn{padding:16px 40px; font-size:16px; border-radius:14px;}
+.video-box{border-radius:14px; overflow:hidden; background:#000; margin:14px 0; position:relative;}
+.video-box iframe,.video-box video{width:100%; height:240px; border:none; display:block;}
+.video-link-input{font-family:monospace; font-size:12.5px;}
+.report-reason{background:rgba(255,91,122,0.08); border:1px solid rgba(255,91,122,0.25); border-radius:12px; padding:14px; margin:10px 0;}
+.warning-card{padding:16px; margin-bottom:12px; border-radius:12px; border-left:3px solid var(--warning); background:var(--surface); transition:all .2s ease;}
+.warning-card.unread{background:rgba(255,179,91,0.08); border-left-color:var(--danger);}
+.warning-reply{margin-top:10px; padding-top:10px; border-top:1px solid var(--border); display:flex; gap:8px; align-items:flex-start;}
+.warning-admin-tag{font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:var(--warning); margin-bottom:4px;}
+.signature-status{display:flex; gap:16px; margin:14px 0; flex-wrap:wrap;}
+.sig-pill{padding:8px 14px; border-radius:10px; font-size:12px; font-weight:700; background:var(--surface); border:1px solid var(--border);}
+.sig-pill.signed{background:rgba(62,230,140,0.15); color:var(--success); border-color:rgba(62,230,140,0.3);}
+.sig-pill.pending{background:rgba(255,179,91,0.15); color:var(--warning); border-color:rgba(255,179,91,0.3);}
+.delivery-note{background:rgba(62,230,196,0.08); border:1px solid rgba(62,230,196,0.25); border-radius:12px; padding:14px; font-size:13px; margin:10px 0;}
+.reply-thread{display:flex; flex-direction:column; gap:6px; margin-top:8px;}
+.reply-bubble{padding:8px 12px; border-radius:10px; background:rgba(255,255,255,0.04); font-size:12.5px; line-height:1.5;}
+.reply-bubble.admin{background:rgba(109,91,255,0.1); border:1px solid rgba(109,91,255,0.2);}
+
 @media(max-width:860px){
   .app{grid-template-columns:1fr;}
   .sidebar{position:fixed; left:-280px; top:0; width:260px; z-index:50; transition:left .3s ease; box-shadow:0 0 40px rgba(0,0,0,0.5);}
@@ -255,6 +284,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 </head>
 <body>
 <canvas id="themeCanvas"></canvas>
+<div id="themeCanvas3d"></div>
 
 <!-- AUTH GATE -->
 <div id="authGate" class="center-screen">
@@ -359,11 +389,12 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         </div>
         <div>
           <div class="glass card">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 36 Themes</div>
+            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — Themes</div>
             <div class="theme-tabs">
               <div class="theme-tab active" data-tpage="1">Page 1</div>
               <div class="theme-tab" data-tpage="2">Page 2</div>
               <div class="theme-tab" data-tpage="3">Animated</div>
+              <div class="theme-tab" data-tpage="4">3D Worlds</div>
             </div>
             <div class="theme-grid" id="themeGrid"></div>
           </div>
@@ -371,6 +402,11 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
             <div class="modal-title mb0" style="margin-bottom:14px;">Your Shops</div>
             <div id="myShopsList"></div>
             <div id="myShopsEmpty" class="text-dim" style="font-size:13px;">You don't own any approved shops yet.</div>
+          </div>
+          <div class="glass card mt16">
+            <div class="modal-title mb0" style="margin-bottom:14px;">Warnings & Notices</div>
+            <div id="warningsList"></div>
+            <div id="warningsEmpty" class="text-dim" style="font-size:13px;">No warnings or notices.</div>
           </div>
         </div>
       </div>
@@ -414,10 +450,14 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         <button class="btn btn-ghost active" data-atab="apps">Shop Applications</button>
         <button class="btn btn-ghost" data-atab="orders">Escrow Queue</button>
         <button class="btn btn-ghost" data-atab="shops">Manage Shops</button>
+        <button class="btn btn-ghost" data-atab="reports">Order Reports</button>
+        <button class="btn btn-ghost" data-atab="warnings">Send Warnings</button>
       </div>
       <div id="adminAppsPane"></div>
       <div id="adminOrdersPane" class="hidden"></div>
       <div id="adminShopsPane" class="hidden"></div>
+      <div id="adminReportsPane" class="hidden"></div>
+      <div id="adminWarningsPane" class="hidden"></div>
     </section>
 
     <!-- VIEW: REGISTER STEP 1 -->
@@ -468,6 +508,164 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
     </section>
 
   </main>
+</div>
+
+<!-- DELIVERY MODAL -->
+<div class="overlay" id="deliveryOverlay">
+  <div class="glass modal">
+    <div class="modal-head">
+      <div class="modal-title">Submit Watermarked Delivery</div>
+      <div class="modal-close" data-close="deliveryOverlay">✕</div>
+    </div>
+    <div class="delivery-note">
+      <strong>Step 1 of Delivery:</strong> Upload your watermarked preview video. The client will review it before the final unwatermarked version is released after signing.
+    </div>
+    <div class="field">
+      <label>Watermarked Video Link</label>
+      <input id="watermarkedVideoInput" class="video-link-input" placeholder="https://drive.google.com/...">
+    </div>
+    <div class="field mb0">
+      <label>Delivery Notes</label>
+      <textarea id="deliveryNotesInput" rows="3" placeholder="Any notes about the delivery…"></textarea>
+    </div>
+    <button class="btn btn-primary btn-block mt16" id="submitDeliveryBtn">Send to Client for Review</button>
+  </div>
+</div>
+
+<!-- REPORT MODAL (client -> editor + admin) -->
+<div class="overlay" id="reportOverlay">
+  <div class="glass modal">
+    <div class="modal-head">
+      <div class="modal-title">Report Delivery Issue</div>
+      <div class="modal-close" data-close="reportOverlay">✕</div>
+    </div>
+    <div class="report-reason">
+      This will notify the editor and the admin. The editor can restart the project or reject your report.
+    </div>
+    <div class="field">
+      <label>What's wrong with the delivery?</label>
+      <textarea id="reportReasonInput" rows="4" placeholder="Describe the issues: quality, missing edits, wrong style, etc."></textarea>
+    </div>
+    <button class="btn btn-danger btn-block mt16" id="submitReportBtn">Submit Report</button>
+  </div>
+</div>
+
+<!-- EDITOR RESPONSE TO REPORT MODAL -->
+<div class="overlay" id="editorReportResponseOverlay">
+  <div class="glass modal">
+    <div class="modal-head">
+      <div class="modal-title">Client Reported This Delivery</div>
+      <div class="modal-close" data-close="editorReportResponseOverlay">✕</div>
+    </div>
+    <div id="editorReportReasonDisplay" class="report-reason"></div>
+    <div class="row mt16">
+      <button class="btn btn-ghost" id="editorRestartBtn">↺ Restart Your Project</button>
+      <button class="btn btn-danger" id="editorRejectReportBtn">✕ Reject Report</button>
+    </div>
+    <div class="field mt16 hidden" id="editorRejectReasonWrap">
+      <label>Reason for rejecting the report</label>
+      <textarea id="editorRejectReasonInput" rows="3" placeholder="Explain why this report should be rejected…"></textarea>
+      <button class="btn btn-danger btn-block mt8" id="editorConfirmRejectReportBtn">Confirm Rejection</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN RESPONSE TO REPORT MODAL -->
+<div class="overlay" id="adminReportResponseOverlay">
+  <div class="glass modal">
+    <div class="modal-head">
+      <div class="modal-title">Resolve Client Report</div>
+      <div class="modal-close" data-close="adminReportResponseOverlay">✕</div>
+    </div>
+    <div id="adminReportReasonDisplay" class="report-reason"></div>
+    <div class="row mt16">
+      <button class="btn btn-success" id="adminOkFineBtn">✓ Ok Fine</button>
+      <button class="btn btn-danger" id="adminReportEditorBtn">⚠ Report Editor</button>
+    </div>
+    <div class="field mt16 hidden" id="adminReportEditorReasonWrap">
+      <label>Reason for reporting the editor</label>
+      <textarea id="adminReportEditorReasonInput" rows="3" placeholder="Explain what the editor did wrong…"></textarea>
+      <button class="btn btn-danger btn-block mt8" id="adminConfirmReportEditorBtn">Send Report to Editor</button>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNATURE MODAL -->
+<div class="overlay" id="signatureOverlay">
+  <div class="glass modal modal-wide">
+    <div class="modal-head">
+      <div class="modal-title">Digital Signature — Final Delivery</div>
+      <div class="modal-close" data-close="signatureOverlay">✕</div>
+    </div>
+    <div id="signatureClientView">
+      <div class="delivery-note">
+        <strong>Review the watermarked preview below.</strong> If satisfied, sign to release escrow and receive the unwatermarked final version. You have <strong>3 days</strong> to review before auto-approval.
+      </div>
+      <div class="video-box" id="signatureVideoBox">
+        <div style="padding:60px 20px; text-align:center; color:var(--text-dim);">Loading preview…</div>
+      </div>
+      <div class="countdown-box">
+        <div class="countdown-timer" id="signatureTimer">--:--:--</div>
+        <div class="countdown-label">Time remaining to review</div>
+      </div>
+      <div class="signature-status" id="signatureStatusPills">
+        <div class="sig-pill pending">Client: Pending</div>
+        <div class="sig-pill pending">Editor: Pending</div>
+      </div>
+      <div class="row mt16">
+        <button class="btn btn-success sign-btn" id="clientSignBtn" style="flex:1;">✓ Sign & Approve Delivery</button>
+      </div>
+    </div>
+    <div id="signatureEditorView" class="hidden">
+      <div class="delivery-note">
+        <strong>Editor Panel:</strong> Once the client signs, upload the unwatermarked final video and sign to complete escrow release.
+      </div>
+      <div class="field">
+        <label>Unwatermarked Final Video Link</label>
+        <input id="unwatermarkedVideoInput" class="video-link-input" placeholder="https://drive.google.com/...">
+      </div>
+      <div class="signature-status" id="editorSignatureStatus">
+        <div class="sig-pill pending">Client: Pending</div>
+        <div class="sig-pill pending">Editor: Pending</div>
+      </div>
+      <button class="btn btn-primary btn-block mt16" id="editorSignBtn" disabled>Send Unwatermarked Video & Sign</button>
+      <div class="text-dim mt8" style="font-size:12px;" id="editorSignHint">Waiting for client to sign first…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN WARNING MODAL -->
+<div class="overlay" id="warningOverlay">
+  <div class="glass modal">
+    <div class="modal-head">
+      <div class="modal-title">Send Warning to User</div>
+      <div class="modal-close" data-close="warningOverlay">✕</div>
+    </div>
+    <div class="field">
+      <label>Target User Handle</label>
+      <input id="warningTargetInput" placeholder="@handle">
+    </div>
+    <div class="field mb0">
+      <label>Warning Message</label>
+      <textarea id="warningMessageInput" rows="4" placeholder="Write the warning or notice…"></textarea>
+    </div>
+    <button class="btn btn-primary btn-block mt16" id="sendWarningBtn">Send Warning</button>
+  </div>
+</div>
+
+<!-- REPLY WARNING MODAL -->
+<div class="overlay" id="replyWarningOverlay">
+  <div class="glass modal">
+    <div class="modal-head">
+      <div class="modal-title">Reply to Warning</div>
+      <div class="modal-close" data-close="replyWarningOverlay">✕</div>
+    </div>
+    <div class="field mb0">
+      <label>Your Reply</label>
+      <textarea id="warningReplyInput" rows="4" placeholder="Type your response…"></textarea>
+    </div>
+    <button class="btn btn-primary btn-block mt16" id="submitWarningReplyBtn">Send Reply</button>
+  </div>
 </div>
 
 <!-- HIRE TERMINAL MODAL -->
@@ -524,7 +722,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   <div class="glass modal">
     <div class="modal-head"><div class="modal-title">Update Progress</div><div class="modal-close" data-close="progressOverlay">✕</div></div>
     <div class="field">
-      <label>Completion — <span id="progressValLabel">15</span>%</label>
+      <label>Completion — <span id="progressValLabel">15%</span></label>
       <input type="range" id="progressSlider" min="0" max="100" step="5" value="15" style="width:100%; accent-color:var(--primary);">
     </div>
     <button class="btn btn-primary btn-block" id="saveProgressBtn">Save Progress</button>
@@ -544,7 +742,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   </div>
 </div>
 
-<!-- ORDER DETAIL / GENERIC INFO MODAL -->
+<!-- ORDER DETAIL MODAL -->
 <div class="overlay" id="infoOverlay">
   <div class="glass modal">
     <div class="modal-head"><div class="modal-title" id="infoModalTitle">Details</div><div class="modal-close" data-close="infoOverlay">✕</div></div>
@@ -554,16 +752,16 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 
 <div class="toast-stack" id="toastStack"></div>
 
-<!-- FIREBASE (compat) -->
+<!-- SCRIPTS -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
 'use strict';
 
-/* ========================= 1. CONFIG ========================= */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
   authDomain: "rex-edit-hub.firebaseapp.com",
@@ -578,50 +776,39 @@ const EMAILJS_SERVICE_ID = "service_ii7zzqx";
 const EMAILJS_TEMPLATE_ID = "template_ob1ef5u";
 const SUPER_ADMIN_EMAIL = "msgamer123098@gmail.com";
 const PLATFORM_UPI_ID = "msgamer123098@okaxis";
+const SIGN_WINDOW_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
 
 firebase.initializeApp(FIREBASE_CONFIG);
 const auth = firebase.auth();
 const db = firebase.firestore();
 try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch (e) { console.warn("EmailJS init skipped:", e); }
 
-/* ========================= 2. STATE ========================= */
 const State = {
-  user: null,          // firebase auth user
-  profile: null,       // users/{uid} doc
-  isAdmin: false,
-  shops: [],
-  myShops: [],
-  allOrdersAsClient: [],
-  allOrdersAsEditor: [],
-  pendingApplications: [],
-  allOrdersAdmin: [],
-  unsubscribes: [],    // active onSnapshot unsubscribe fns
-  currentView: "viewShop",
-  hireContext: null,   // { shop }
-  activeOrderForPayment: null,
-  activeOrderForProgress: null,
-  activeOrderForReject: null,
-  selectedTier: "low",
-  selectedAR: "16:9",
+  user: null, profile: null, isAdmin: false, shops: [], myShops: [],
+  allOrdersAsClient: [], allOrdersAsEditor: [], pendingApplications: [],
+  allOrdersAdmin: [], warnings: [], unsubscribes: [], currentView: "viewShop",
+  hireContext: null, activeOrderForPayment: null, activeOrderForProgress: null,
+  activeOrderForReject: null, activeOrderForDelivery: null,
+  activeOrderForSignature: null, activeOrderForReport: null,
+  activeWarningId: null, selectedTier: "low", selectedAR: "16:9",
+  signatureTimerInterval: null,
 };
 
-/* ========================= 3. UTILITIES ========================= */
 function $(sel, root) { return (root || document).querySelector(sel); }
 function $all(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
 function esc(str) {
   if (str === null || str === undefined) return "";
   return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
-function genOrderId() {
-  return "RX-" + Math.floor(1000 + Math.random() * 9000);
-}
-function money(n) {
-  const v = Number(n) || 0;
-  return "₹" + v.toLocaleString("en-IN");
-}
+function genOrderId() { return "RX-" + Math.floor(1000 + Math.random() * 9000); }
+function money(n) { const v = Number(n) || 0; return "₹" + v.toLocaleString("en-IN"); }
 function clearUnsubscribes() {
   State.unsubscribes.forEach(fn => { try { fn(); } catch (e) {} });
   State.unsubscribes = [];
+}
+function fmtCompletion(pct) {
+  const p = Math.round(Number(pct) || 0);
+  return p >= 100 ? "Work Completed" : (p + "%");
 }
 
 function showToast(msg, type) {
@@ -649,7 +836,6 @@ function closeModal(id) { $("#" + id).classList.remove("show"); }
 $all("[data-close]").forEach(btn => btn.addEventListener("click", () => closeModal(btn.dataset.close)));
 $all(".overlay").forEach(ov => ov.addEventListener("click", e => { if (e.target === ov) ov.classList.remove("show"); }));
 
-/* Compress an <input type=file> image to max-width 400px, return base64 string */
 function compressImageToBase64(file, maxW) {
   maxW = maxW || 400;
   return new Promise((resolve, reject) => {
@@ -674,1265 +860,1101 @@ function compressImageToBase64(file, maxW) {
   });
 }
 
-function sendEmailNotification(templateParams) {
-  if (typeof emailjs === "undefined" || !emailjs.send) return Promise.resolve();
-  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams).catch(err => {
+/* ==================== EMAIL SYSTEM (nice HTML templates) ==================== */
+function emailShell(title, bodyHtml, accentColor) {
+  accentColor = accentColor || "#6d5bff";
+  return `
+  <div style="font-family:Arial,Helvetica,sans-serif; background:#0a0b0f; padding:32px 16px; margin:0;">
+    <table role="presentation" width="100%" style="max-width:520px; margin:0 auto; background:#12131c; border-radius:16px; overflow:hidden; border:1px solid #23242f;">
+      <tr><td style="padding:0;">
+        <div style="height:6px; width:100%; background:linear-gradient(90deg,${accentColor},#3ee6c4);"></div>
+        <div style="padding:28px 28px 8px;">
+          <div style="display:inline-block; width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,${accentColor},#b45bff); color:#fff; font-weight:800; font-size:16px; text-align:center; line-height:34px; margin-bottom:14px;">R</div>
+          <h1 style="color:#f2f2f7; font-size:19px; margin:0 0 4px; letter-spacing:-0.02em;">${esc(title)}</h1>
+        </div>
+        <div style="padding:4px 28px 28px; color:#c7c8d1; font-size:14px; line-height:1.65;">
+          ${bodyHtml}
+        </div>
+        <div style="padding:16px 28px; border-top:1px solid #23242f; color:#5c5e6b; font-size:11.5px;">
+          Rex Edit Hub — Escrow-secured video editing marketplace. This is an automated notification.
+        </div>
+      </td></tr>
+    </table>
+  </div>`;
+}
+function emailRow(label, value) {
+  return `<div style="margin-bottom:6px;"><span style="color:#8b8d9a;">${esc(label)}:</span> <strong style="color:#f2f2f7;">${esc(value)}</strong></div>`;
+}
+function sendRichEmail(to_email, subject, htmlBody, plainFallback) {
+  if (!to_email || typeof emailjs === "undefined" || !emailjs.send) return Promise.resolve();
+  const params = {
+    to_email: to_email, subject: subject,
+    message: plainFallback || htmlBody.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(),
+    html_message: htmlBody,
+  };
+  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params).catch(err => {
     console.warn("EmailJS send failed (non-fatal):", err);
   });
 }
 
-/* ========================= 4. THEME SYSTEM (36 THEMES) ========================= */
+/* ==================== AUTH ==================== */
+$("#googleSignInBtn").addEventListener("click", () => {
+  $("#authLoading").classList.remove("hidden");
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).catch(err => {
+    $("#authLoading").classList.add("hidden");
+    showToast("Sign-in failed: " + err.message, "err");
+  });
+});
+$("#navLogout").addEventListener("click", () => {
+  clearUnsubscribes();
+  auth.signOut();
+});
+
+auth.onAuthStateChanged(async (user) => {
+  if (!user) {
+    State.user = null; State.profile = null; State.isAdmin = false;
+    clearUnsubscribes();
+    $("#authGate").classList.remove("hidden");
+    $("#appRoot").classList.add("hidden");
+    return;
+  }
+  State.user = user;
+  $("#authLoading").classList.add("hidden");
+  await ensureUserProfile(user);
+  $("#authGate").classList.add("hidden");
+  $("#appRoot").classList.remove("hidden");
+  wireRealtimeListeners();
+});
+
+async function ensureUserProfile(user) {
+  const ref = db.collection("users").doc(user.uid);
+  const snap = await ref.get();
+  if (!snap.exists) {
+    const handle = "@" + (user.email || "user").split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "");
+    const data = {
+      uid: user.uid, email: user.email, name: user.displayName || "New User",
+      handle, avatar: user.photoURL || "", theme: "indigo", canvas: "", canvas3d: "",
+      isAdmin: user.email === SUPER_ADMIN_EMAIL, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    await ref.set(data);
+    State.profile = data;
+  } else {
+    State.profile = snap.data();
+    if (user.email === SUPER_ADMIN_EMAIL && !State.profile.isAdmin) {
+      await ref.update({ isAdmin: true });
+      State.profile.isAdmin = true;
+    }
+  }
+  State.isAdmin = !!State.profile.isAdmin;
+  applyProfileToUI();
+}
+
+function applyProfileToUI() {
+  const p = State.profile || {};
+  $("#topAvatarInitial").textContent = (p.name || "?").charAt(0).toUpperCase();
+  $("#topAvatarBtn").innerHTML = p.avatar ? `<img src="${esc(p.avatar)}">` : `<span>${esc((p.name||"?").charAt(0).toUpperCase())}</span>`;
+  $("#profileAvatarPreview").src = p.avatar || "https://api.dicebear.com/7.x/initials/svg?seed=" + encodeURIComponent(p.name || "U");
+  $("#profileNameInput").value = p.name || "";
+  $("#profileHandleInput").value = p.handle || "";
+  document.documentElement.setAttribute("data-theme", p.theme || "indigo");
+  document.documentElement.setAttribute("data-canvas", p.canvas || "");
+  document.documentElement.setAttribute("data-canvas3d", p.canvas3d || "");
+  $("#navAdmin").classList.toggle("hidden", !State.isAdmin);
+  applyCanvasTheme(p.canvas || "");
+  applyCanvas3DTheme(p.canvas3d || "");
+  renderThemeGrid();
+}
+
+$("#topAvatarBtn").addEventListener("click", () => switchView("viewProfile"));
+
+/* ==================== NAVIGATION ==================== */
+const VIEW_META = {
+  viewShop: ["Marketplace", "Browse vetted editors and hire with escrow protection"],
+  viewSearchUser: ["Search Network", "Look up any Rex Edit Hub user by handle"],
+  viewPlacedOrder: ["My Orders", "Track the status of everything you've hired"],
+  viewEditorManage: ["Incoming Requests", "Manage commissions sent to your shop"],
+  viewRegisterStep1: ["Apply for Earn", "Register your editing shop — step 1 of 2"],
+  viewRegisterStep2: ["Apply for Earn", "Set your pricing tiers — step 2 of 2"],
+  viewAdminReview: ["Admin Console", "Review applications, escrow, reports and warnings"],
+  viewProfile: ["Profile Settings", "Manage your identity, appearance and notices"],
+};
+function switchView(viewId) {
+  State.currentView = viewId;
+  $all(".view").forEach(v => v.classList.add("hidden"));
+  const target = $("#" + viewId);
+  if (target) target.classList.remove("hidden");
+  $all(".nav-item[data-view]").forEach(n => n.classList.toggle("active", n.dataset.view === viewId));
+  const meta = VIEW_META[viewId] || ["Rex Edit Hub", ""];
+  $("#pageTitle").textContent = meta[0];
+  $("#pageSub").textContent = meta[1];
+  $("#marketSearchWrap").style.display = viewId === "viewShop" ? "" : "none";
+  $("#sidebar").classList.remove("open");
+  if (viewId === "viewEditorManage") renderEditorOrders();
+  if (viewId === "viewPlacedOrder") renderPlacedOrders();
+  if (viewId === "viewAdminReview") renderAdminAll();
+  if (viewId === "viewProfile") renderWarningsList();
+}
+$all(".nav-item[data-view]").forEach(item => item.addEventListener("click", () => switchView(item.dataset.view)));
+$("#menuToggle").addEventListener("click", () => $("#sidebar").classList.toggle("open"));
+
+/* ==================== REALTIME LISTENERS ==================== */
+function wireRealtimeListeners() {
+  clearUnsubscribes();
+  const uid = State.user.uid;
+
+  State.unsubscribes.push(db.collection("shops").where("status", "==", "approved")
+    .onSnapshot(snap => { State.shops = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderShopGrid(); }));
+
+  State.unsubscribes.push(db.collection("shops").where("ownerUid", "==", uid)
+    .onSnapshot(snap => {
+      State.myShops = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderMyShops();
+      const hasApproved = State.myShops.some(s => s.status === "approved");
+      $("#navEditorManage").classList.toggle("hidden", !hasApproved);
+      if (State.currentView === "viewEditorManage") renderEditorOrders();
+    }));
+
+  State.unsubscribes.push(db.collection("orders").where("clientUid", "==", uid)
+    .onSnapshot(snap => {
+      State.allOrdersAsClient = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (State.currentView === "viewPlacedOrder") renderPlacedOrders();
+      checkSignatureModalLive();
+    }));
+
+  State.unsubscribes.push(db.collection("orders").where("editorUid", "==", uid)
+    .onSnapshot(snap => {
+      State.allOrdersAsEditor = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (State.currentView === "viewEditorManage") renderEditorOrders();
+      checkSignatureModalLive();
+    }));
+
+  State.unsubscribes.push(db.collection("warnings").where("targetUid", "==", uid)
+    .onSnapshot(snap => {
+      State.warnings = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (b.createdAtMs||0)-(a.createdAtMs||0));
+      renderWarningsList();
+    }));
+
+  if (State.isAdmin) {
+    State.unsubscribes.push(db.collection("shops").where("status", "==", "pending")
+      .onSnapshot(snap => { State.pendingApplications = snap.docs.map(d => ({ id: d.id, ...d.data() })); if (State.currentView === "viewAdminReview") renderAdminApps(); }));
+    State.unsubscribes.push(db.collection("orders")
+      .onSnapshot(snap => { State.allOrdersAdmin = snap.docs.map(d => ({ id: d.id, ...d.data() })); if (State.currentView === "viewAdminReview") renderAdminAll(); }));
+    State.unsubscribes.push(db.collection("shops")
+      .onSnapshot(snap => { State.allShopsAdmin = snap.docs.map(d => ({ id: d.id, ...d.data() })); if (State.currentView === "viewAdminReview") renderAdminShops(); }));
+  }
+}
+
+/* ==================== MARKETPLACE ==================== */
+function renderShopGrid(filterTerm) {
+  const term = (filterTerm || $("#marketSearchInput").value || "").trim().toLowerCase();
+  const list = State.shops.filter(s => !term || (s.name||"").toLowerCase().includes(term) || (s.category||"").toLowerCase().includes(term));
+  const grid = $("#shopGrid");
+  $("#shopEmpty").classList.toggle("hidden", list.length > 0);
+  grid.innerHTML = list.map(s => `
+    <div class="glass shop-card">
+      <div class="shop-banner"><img class="shop-logo" src="${esc(s.logo || 'https://api.dicebear.com/7.x/shapes/svg?seed='+encodeURIComponent(s.name||''))}"></div>
+      <div class="shop-body">
+        <div class="shop-name">${esc(s.name)}</div>
+        <div class="shop-handle">by ${esc(s.ownerHandle || 'unknown')}</div>
+        <div class="shop-cat">${esc(s.category)}</div>
+        <div class="shop-rates">
+          <div class="rate-pill">Basic<b>${money(s.rateLow)}</b></div>
+          <div class="rate-pill">Standard<b>${money(s.rateMed)}</b></div>
+          <div class="rate-pill">Premium<b>${money(s.rateHigh)}</b></div>
+        </div>
+        <button class="btn btn-primary btn-block hire-btn" data-shop="${s.id}">Hire This Shop</button>
+      </div>
+    </div>`).join("");
+  $all(".hire-btn", grid).forEach(btn => btn.addEventListener("click", () => openHireTerminal(btn.dataset.shop)));
+}
+$("#marketSearchInput").addEventListener("input", () => renderShopGrid());
+
+/* ==================== SEARCH NETWORK (fixed) ==================== */
+async function searchUserByHandle(raw) {
+  let handle = (raw || "").trim();
+  if (!handle) { showToast("Enter a handle to search", "err"); return; }
+  if (!handle.startsWith("@")) handle = "@" + handle;
+  const resultBox = $("#handleSearchResult");
+  resultBox.innerHTML = '<div class="glass card text-dim">Searching…</div>';
+  try {
+    // Firestore string matches are case-sensitive, so normalize + also try a couple of common casings.
+    const candidates = Array.from(new Set([handle, handle.toLowerCase(), handle.toUpperCase()]));
+    let found = null;
+    for (const h of candidates) {
+      const snap = await db.collection("users").where("handle", "==", h).limit(1).get();
+      if (!snap.empty) { found = { id: snap.docs[0].id, ...snap.docs[0].data() }; break; }
+    }
+    if (!found) {
+      // fallback: fetch a page of users and match case-insensitively client-side
+      const allSnap = await db.collection("users").limit(200).get();
+      const match = allSnap.docs.find(d => (d.data().handle || "").toLowerCase() === handle.toLowerCase());
+      if (match) found = { id: match.id, ...match.data() };
+    }
+    if (!found) {
+      resultBox.innerHTML = '<div class="empty-state"><h3>No user found</h3><p>Double-check the handle and try again.</p></div>';
+      return;
+    }
+    const shopsSnap = await db.collection("shops").where("ownerUid", "==", found.id).where("status", "==", "approved").get();
+    const shops = shopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    resultBox.innerHTML = `
+      <div class="glass card" style="display:flex; gap:16px; align-items:center;">
+        <img src="${esc(found.avatar || 'https://api.dicebear.com/7.x/initials/svg?seed='+encodeURIComponent(found.name||'U'))}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid var(--border);">
+        <div>
+          <div style="font-weight:800; font-size:16px;">${esc(found.name)}</div>
+          <div class="text-dim" style="font-size:13px;">${esc(found.handle)}</div>
+        </div>
+      </div>
+      ${shops.length ? `<div class="modal-title mt20" style="margin-bottom:12px;">Shops</div><div class="grid grid-shops">` +
+        shops.map(s => `<div class="glass shop-card"><div class="shop-banner"><img class="shop-logo" src="${esc(s.logo||'')}"></div><div class="shop-body"><div class="shop-name">${esc(s.name)}</div><div class="shop-cat">${esc(s.category)}</div><button class="btn btn-primary btn-block hire-btn2" data-shop="${s.id}">Hire</button></div></div>`).join("") +
+        `</div>` : '<div class="text-dim mt16" style="font-size:13px;">This user has no approved shops yet.</div>'}
+    `;
+    $all(".hire-btn2", resultBox).forEach(btn => btn.addEventListener("click", () => openHireTerminal(btn.dataset.shop)));
+  } catch (err) {
+    console.error(err);
+    resultBox.innerHTML = '<div class="empty-state"><h3>Search failed</h3><p>' + esc(err.message) + '</p></div>';
+  }
+}
+$("#handleSearchBtn").addEventListener("click", () => searchUserByHandle($("#handleSearchInput").value));
+$("#handleSearchInput").addEventListener("keydown", e => { if (e.key === "Enter") searchUserByHandle(e.target.value); });
+
+/* ==================== HIRE TERMINAL ==================== */
+function openHireTerminal(shopId) {
+  const shop = State.shops.find(s => s.id === shopId) || (State.allShopsAdmin||[]).find(s=>s.id===shopId);
+  if (!shop) { showToast("Shop not found", "err"); return; }
+  State.hireContext = shop;
+  State.selectedTier = "low"; State.selectedAR = "16:9";
+  $("#tierLowPrice").textContent = money(shop.rateLow);
+  $("#tierMedPrice").textContent = money(shop.rateMed);
+  $("#tierHighPrice").textContent = money(shop.rateHigh);
+  $all(".tier-opt").forEach(t => t.classList.toggle("active", t.dataset.tier === "low"));
+  $all(".aspect-btn").forEach(t => t.classList.toggle("active", t.dataset.ar === "16:9"));
+  $("#hireDuration").value = 1; $("#hireQty").value = 1;
+  $("#hireAssetUrl").value = ""; $("#hireInstructions").value = "";
+  drawAspectPreview("16:9");
+  updateHireTotal();
+  openModal("hireOverlay");
+}
+$all(".tier-opt").forEach(opt => opt.addEventListener("click", () => {
+  $all(".tier-opt").forEach(t => t.classList.remove("active")); opt.classList.add("active");
+  State.selectedTier = opt.dataset.tier; updateHireTotal();
+}));
+$all(".aspect-btn").forEach(btn => btn.addEventListener("click", () => {
+  $all(".aspect-btn").forEach(t => t.classList.remove("active")); btn.classList.add("active");
+  State.selectedAR = btn.dataset.ar; drawAspectPreview(btn.dataset.ar);
+}));
+$("#hireDuration").addEventListener("input", updateHireTotal);
+$("#hireQty").addEventListener("input", updateHireTotal);
+function tierRate(shop, tier) { return tier === "low" ? shop.rateLow : tier === "med" ? shop.rateMed : shop.rateHigh; }
+function updateHireTotal() {
+  const shop = State.hireContext; if (!shop) return;
+  const rate = Number(tierRate(shop, State.selectedTier)) || 0;
+  const qty = Math.max(1, Number($("#hireQty").value) || 1);
+  const total = rate * qty;
+  $("#hireTotalPrice").textContent = money(total);
+}
+function drawAspectPreview(ar) {
+  const canvas = $("#aspectCanvas");
+  const wrap = canvas.parentElement;
+  const [aw, ah] = ar.split(":").map(Number);
+  const maxH = wrap.clientHeight || 220, maxW = wrap.clientWidth || 400;
+  let w = maxW, h = w * (ah/aw);
+  if (h > maxH) { h = maxH; w = h * (aw/ah); }
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const grad = ctx.createLinearGradient(0,0,w,h);
+  grad.addColorStop(0, "#1a1c2e"); grad.addColorStop(1, "#0a0b12");
+  ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle = "rgba(109,91,255,0.4)"; ctx.strokeRect(1,1,w-2,h-2);
+  ctx.fillStyle = "rgba(255,255,255,0.35)"; ctx.font = "12px sans-serif"; ctx.textAlign = "center";
+  ctx.fillText(ar + " preview", w/2, h/2);
+}
+$("#hireSubmitBtn").addEventListener("click", async () => {
+  const shop = State.hireContext; if (!shop) return;
+  const assetUrl = $("#hireAssetUrl").value.trim();
+  if (!assetUrl) { showToast("Add your footage / asset link", "err"); return; }
+  const rate = Number(tierRate(shop, State.selectedTier)) || 0;
+  const qty = Math.max(1, Number($("#hireQty").value) || 1);
+  const total = rate * qty;
+  const orderId = genOrderId();
+  const order = {
+    orderId, shopId: shop.id, shopName: shop.name,
+    clientUid: State.user.uid, clientName: State.profile.name, clientEmail: State.user.email, clientHandle: State.profile.handle,
+    editorUid: shop.ownerUid, editorName: shop.ownerName || shop.ownerHandle, editorEmail: shop.ownerEmail,
+    tier: State.selectedTier, rate, qty, total, aspectRatio: State.selectedAR,
+    duration: Number($("#hireDuration").value) || 1, assetUrl, instructions: $("#hireInstructions").value.trim(),
+    status: "awaiting_payment", progress: 0, createdAt: firebase.firestore.FieldValue.serverTimestamp(), createdAtMs: Date.now(),
+  };
+  try {
+    const ref = await db.collection("orders").add(order);
+    closeModal("hireOverlay");
+    State.activeOrderForPayment = { id: ref.id, ...order };
+    openPaymentModal(State.activeOrderForPayment);
+    showToast("Order created — complete payment to lock escrow", "ok");
+  } catch (err) { showToast("Failed to create order: " + err.message, "err"); }
+});
+
+/* ==================== PAYMENT / ESCROW ==================== */
+function openPaymentModal(order) {
+  State.activeOrderForPayment = order;
+  const upiUrl = `upi://pay?pa=${encodeURIComponent(PLATFORM_UPI_ID)}&pn=RexEditHub&am=${order.total}&cu=INR&tn=${encodeURIComponent(order.orderId)}`;
+  $("#qrImage").src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(upiUrl);
+  $("#qrUpiId").textContent = PLATFORM_UPI_ID + " — " + money(order.total);
+  $("#paymentProofInput").value = "";
+  openModal("qrOverlay");
+}
+$("#submitProofBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForPayment; if (!order) return;
+  const proof = $("#paymentProofInput").value.trim();
+  if (!proof) { showToast("Add payment proof first", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({ status: "locked", paymentProof: proof, lockedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    closeModal("qrOverlay");
+    showToast("Escrow locked — editor notified", "ok");
+    sendRichEmail(order.editorEmail, "New Escrow Order — " + order.orderId, emailShell("New Order Locked in Escrow",
+      emailRow("Order", order.orderId) + emailRow("Client", order.clientName) + emailRow("Shop", order.shopName) +
+      emailRow("Tier", order.tier) + emailRow("Amount", money(order.total)) +
+      `<p style="margin-top:14px;">The client's payment has been submitted. Verify the proof in your admin queue, then begin editing.</p>`
+    ));
+    sendRichEmail(SUPER_ADMIN_EMAIL, "Escrow Payment Proof Submitted — " + order.orderId, emailShell("Escrow Payment Needs Verification",
+      emailRow("Order", order.orderId) + emailRow("Client", order.clientName) + emailRow("Amount", money(order.total)) + emailRow("Proof", proof)
+    ));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== ORDER RENDERING (CLIENT) ==================== */
+const STATUS_LABELS = {
+  awaiting_payment: ["Awaiting Payment", "badge-wait"],
+  locked: ["Escrow Locked", "badge-locked"],
+  in_progress: ["In Progress", "badge-progress"],
+  delivery_processing: ["Delivery Processing", "badge-delivery"],
+  reported: ["Reported", "badge-reported"],
+  restarted: ["Restarted by Editor", "badge-progress"],
+  signature_pending: ["Signature Pending", "badge-signature"],
+  completed: ["Completed & Signed", "badge-done"],
+  rejected: ["Rejected", "badge-reject"],
+};
+function statusBadge(status) {
+  const m = STATUS_LABELS[status] || ["Unknown", "badge-wait"];
+  return `<span class="badge ${m[1]}">${m[0]}</span>`;
+}
+function renderPlacedOrders() {
+  const list = [...State.allOrdersAsClient].sort((a,b) => (b.createdAtMs||0)-(a.createdAtMs||0));
+  const box = $("#placedOrdersList");
+  $("#placedOrdersEmpty").classList.toggle("hidden", list.length > 0);
+  box.innerHTML = list.map(o => `
+    <div class="glass order-card">
+      <div class="order-top">
+        <div><div class="order-id">${o.orderId}</div><div style="font-weight:700;">${esc(o.shopName)}</div></div>
+        <div style="text-align:right;">${statusBadge(o.status)}<div class="order-price">${money(o.total)}</div></div>
+      </div>
+      <div class="order-meta">Tier: ${esc(o.tier)} · Qty: ${o.qty} · AR: ${esc(o.aspectRatio)}</div>
+      ${o.status === "in_progress" || o.status === "restarted" ? `
+        <div class="progress-track"><div class="progress-fill" style="width:${o.progress||0}%"></div></div>
+        <div class="order-meta">${fmtCompletion(o.progress||0)}</div>` : ""}
+      <div class="order-actions">
+        ${o.status === "awaiting_payment" ? `<button class="btn btn-primary btn-sm pay-btn" data-id="${o.id}">Complete Payment</button>` : ""}
+        ${o.status === "delivery_processing" ? `<button class="btn btn-success btn-sm good-btn" data-id="${o.id}">Good — Start Sign Process</button><button class="btn btn-danger btn-sm report-btn" data-id="${o.id}">Report Issue</button>` : ""}
+        ${o.status === "signature_pending" ? `<button class="btn btn-primary btn-sm view-sign-btn" data-id="${o.id}">Open Signature</button>` : ""}
+        ${o.status === "completed" ? `<button class="btn btn-ghost btn-sm view-final-btn" data-id="${o.id}">View Final Video</button>` : ""}
+        <button class="btn btn-ghost btn-sm detail-btn" data-id="${o.id}">Details</button>
+      </div>
+    </div>`).join("");
+
+  $all(".pay-btn", box).forEach(b => b.addEventListener("click", () => openPaymentModal(list.find(o=>o.id===b.dataset.id))));
+  $all(".good-btn", box).forEach(b => b.addEventListener("click", () => startSignProcess(list.find(o=>o.id===b.dataset.id))));
+  $all(".report-btn", box).forEach(b => b.addEventListener("click", () => { State.activeOrderForReport = list.find(o=>o.id===b.dataset.id); $("#reportReasonInput").value=""; openModal("reportOverlay"); }));
+  $all(".view-sign-btn", box).forEach(b => b.addEventListener("click", () => openSignatureModal(list.find(o=>o.id===b.dataset.id), "client")));
+  $all(".view-final-btn", box).forEach(b => b.addEventListener("click", () => {
+    const o = list.find(x=>x.id===b.dataset.id);
+    $("#infoModalTitle").textContent = "Final Delivered Video";
+    $("#infoModalBody").innerHTML = `<div class="video-box"><iframe src="${esc(toEmbeddable(o.unwatermarkedVideo))}" allowfullscreen></iframe></div><a href="${esc(o.unwatermarkedVideo)}" target="_blank" class="btn btn-primary btn-block mt16">Open Original Link</a>`;
+    openModal("infoOverlay");
+  }));
+  $all(".detail-btn", box).forEach(b => b.addEventListener("click", () => showOrderDetail(list.find(o=>o.id===b.dataset.id))));
+}
+function toEmbeddable(url) {
+  if (!url) return "";
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (driveMatch) return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+  return url;
+}
+function showOrderDetail(o) {
+  if (!o) return;
+  $("#infoModalTitle").textContent = "Order " + o.orderId;
+  $("#infoModalBody").innerHTML = `
+    ${emailRow("Shop", o.shopName)}${emailRow("Client", o.clientName)}${emailRow("Editor", o.editorName||"—")}
+    ${emailRow("Tier", o.tier)}${emailRow("Amount", money(o.total))}${emailRow("Status", (STATUS_LABELS[o.status]||["—"])[0])}
+    ${o.instructions ? `<div class="mt16"><label>Instructions</label><div style="font-size:13px;">${esc(o.instructions)}</div></div>` : ""}
+  `.replace(/<div style="margin-bottom:6px;">/g, '<div style="margin-bottom:6px; font-size:13px;">');
+  openModal("infoOverlay");
+}
+
+/* ==================== ORDER RENDERING (EDITOR) ==================== */
+function renderEditorOrders() {
+  const list = [...State.allOrdersAsEditor].sort((a,b) => (b.createdAtMs||0)-(a.createdAtMs||0));
+  const box = $("#editorOrdersList");
+  $("#editorOrdersEmpty").classList.toggle("hidden", list.length > 0);
+  box.innerHTML = list.map(o => `
+    <div class="glass order-card">
+      <div class="order-top">
+        <div><div class="order-id">${o.orderId}</div><div style="font-weight:700;">${esc(o.clientName)} <span class="text-dim">(${esc(o.clientHandle||"")})</span></div></div>
+        <div style="text-align:right;">${statusBadge(o.status)}<div class="order-price">${money(o.total)}</div></div>
+      </div>
+      <div class="order-meta">Tier: ${esc(o.tier)} · Qty: ${o.qty} · AR: ${esc(o.aspectRatio)}<br>Asset: <a href="${esc(o.assetUrl)}" target="_blank">${esc(o.assetUrl)}</a></div>
+      ${(o.status === "in_progress" || o.status === "restarted") ? `
+        <div class="progress-track"><div class="progress-fill" style="width:${o.progress||0}%"></div></div>
+        <div class="order-meta">${fmtCompletion(o.progress||0)}</div>` : ""}
+      <div class="order-actions">
+        ${o.status === "locked" ? `<button class="btn btn-primary btn-sm start-btn" data-id="${o.id}">Start Editing</button>` : ""}
+        ${(o.status === "in_progress" || o.status === "restarted") ? `<button class="btn btn-ghost btn-sm progress-btn" data-id="${o.id}">Update Progress</button><button class="btn btn-primary btn-sm deliver-btn" data-id="${o.id}">Send Watermarked Delivery</button>` : ""}
+        ${o.status === "reported" ? `<button class="btn btn-danger btn-sm respond-report-btn" data-id="${o.id}">View Report</button>` : ""}
+        ${o.status === "signature_pending" ? `<button class="btn btn-primary btn-sm view-sign-btn" data-id="${o.id}">Open Signature Panel</button>` : ""}
+        <button class="btn btn-ghost btn-sm detail-btn" data-id="${o.id}">Details</button>
+      </div>
+    </div>`).join("");
+
+  $all(".start-btn", box).forEach(b => b.addEventListener("click", async () => {
+    await db.collection("orders").doc(b.dataset.id).update({ status: "in_progress", progress: 5 });
+    showToast("Order moved to In Progress", "ok");
+  }));
+  $all(".progress-btn", box).forEach(b => b.addEventListener("click", () => {
+    State.activeOrderForProgress = list.find(o=>o.id===b.dataset.id);
+    const cur = State.activeOrderForProgress.progress || 0;
+    $("#progressSlider").value = cur; $("#progressValLabel").textContent = fmtCompletion(cur);
+    openModal("progressOverlay");
+  }));
+  $all(".deliver-btn", box).forEach(b => b.addEventListener("click", () => {
+    State.activeOrderForDelivery = list.find(o=>o.id===b.dataset.id);
+    $("#watermarkedVideoInput").value = ""; $("#deliveryNotesInput").value = "";
+    openModal("deliveryOverlay");
+  }));
+  $all(".respond-report-btn", box).forEach(b => b.addEventListener("click", () => {
+    const o = list.find(x=>x.id===b.dataset.id);
+    State.activeOrderForReport = o;
+    $("#editorReportReasonDisplay").innerHTML = `<strong>Client's reason:</strong><br>${esc(o.reportReason||"—")}`;
+    $("#editorRejectReasonWrap").classList.add("hidden");
+    openModal("editorReportResponseOverlay");
+  }));
+  $all(".view-sign-btn", box).forEach(b => b.addEventListener("click", () => openSignatureModal(list.find(o=>o.id===b.dataset.id), "editor")));
+  $all(".detail-btn", box).forEach(b => b.addEventListener("click", () => showOrderDetail(list.find(o=>o.id===b.dataset.id))));
+}
+
+/* ==================== PROGRESS SLIDER (shows "Work Completed" at 100%) ==================== */
+$("#progressSlider").addEventListener("input", e => { $("#progressValLabel").textContent = fmtCompletion(e.target.value); });
+$("#saveProgressBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForProgress; if (!order) return;
+  const val = Number($("#progressSlider").value);
+  try {
+    await db.collection("orders").doc(order.id).update({ progress: val });
+    closeModal("progressOverlay");
+    showToast("Progress set to " + fmtCompletion(val), "ok");
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== DELIVERY (watermarked) ==================== */
+$("#submitDeliveryBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForDelivery; if (!order) return;
+  const link = $("#watermarkedVideoInput").value.trim();
+  if (!link) { showToast("Add the watermarked video link", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({
+      status: "delivery_processing", watermarkedVideo: link, deliveryNotes: $("#deliveryNotesInput").value.trim(),
+      progress: 100, deliveredAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    closeModal("deliveryOverlay");
+    showToast("Delivered — client will review", "ok");
+    sendRichEmail(order.clientEmail, "Your Video Is Ready for Review — " + order.orderId, emailShell("Watermarked Preview Delivered",
+      emailRow("Order", order.orderId) + emailRow("Shop", order.shopName) +
+      `<p style="margin-top:14px;">Your editor delivered a watermarked preview. Open Rex Edit Hub, review it, and click <strong>Good — Start Sign Process</strong> if it looks right, or report an issue.</p>
+       <p style="margin-top:10px;"><a href="${esc(link)}" style="color:#8f9dff;">View watermarked preview →</a></p>`
+    ));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== CLIENT: GOOD -> START SIGN PROCESS ==================== */
+async function startSignProcess(order) {
+  if (!order) return;
+  const deadline = Date.now() + SIGN_WINDOW_MS;
+  try {
+    await db.collection("orders").doc(order.id).update({
+      status: "signature_pending", signDeadlineMs: deadline, clientSigned: false, editorSigned: false,
+    });
+    showToast("Sign process started — you have 3 days to review", "ok");
+    openSignatureModal({ ...order, status: "signature_pending", signDeadlineMs: deadline }, "client");
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+}
+
+/* ==================== REPORT FLOW ==================== */
+$("#submitReportBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReport; if (!order) return;
+  const reason = $("#reportReasonInput").value.trim();
+  if (!reason) { showToast("Describe the issue first", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({ status: "reported", reportReason: reason, reportedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    closeModal("reportOverlay");
+    showToast("Report submitted to editor and admin", "ok");
+    sendRichEmail(order.editorEmail, "Client Reported Your Delivery — " + order.orderId, emailShell("Delivery Reported", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">${esc(reason)}</p><p style="margin-top:10px;">Open Rex Edit Hub to Restart the project or Reject this report.</p>`, "#ff5b7a"));
+    sendRichEmail(SUPER_ADMIN_EMAIL, "New Delivery Report — " + order.orderId, emailShell("Client Filed a Report", emailRow("Order", order.orderId) + emailRow("Client", order.clientName) + `<p style="margin-top:10px;">${esc(reason)}</p>`, "#ff5b7a"));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+// Editor: Restart Your Project
+$("#editorRestartBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReport; if (!order) return;
+  try {
+    await db.collection("orders").doc(order.id).update({ status: "restarted", progress: 10 });
+    closeModal("editorReportResponseOverlay");
+    showToast("Project restarted", "ok");
+    sendRichEmail(order.clientEmail, "Editor Is Restarting Your Project — " + order.orderId, emailShell("Project Restarted", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">Your editor has agreed to restart the project based on your feedback.</p>`));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+// Editor: Reject report
+$("#editorRejectReportBtn").addEventListener("click", () => $("#editorRejectReasonWrap").classList.remove("hidden"));
+$("#editorConfirmRejectReportBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReport; if (!order) return;
+  const reason = $("#editorRejectReasonInput").value.trim();
+  if (!reason) { showToast("Give a reason for rejecting", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({ editorRejectReason: reason, status: "reported_escalated" });
+    closeModal("editorReportResponseOverlay");
+    showToast("Report rejection sent to admin", "ok");
+    sendRichEmail(SUPER_ADMIN_EMAIL, "Editor Rejected a Client Report — " + order.orderId, emailShell("Editor Disputed the Report", emailRow("Order", order.orderId) + emailRow("Client reason", order.reportReason||"") + emailRow("Editor rejection reason", reason), "#ff5b7a"));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== ADMIN: RESOLVE REPORT ==================== */
+function openAdminReportResponse(order) {
+  State.activeOrderForReport = order;
+  $("#adminReportReasonDisplay").innerHTML = `<strong>Client's reason:</strong><br>${esc(order.reportReason||"—")}` + (order.editorRejectReason ? `<br><br><strong>Editor's rejection reason:</strong><br>${esc(order.editorRejectReason)}` : "");
+  $("#adminReportEditorReasonWrap").classList.add("hidden");
+  openModal("adminReportResponseOverlay");
+}
+$("#adminOkFineBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReport; if (!order) return;
+  try {
+    await db.collection("orders").doc(order.id).update({ status: "restarted", progress: 10 });
+    closeModal("adminReportResponseOverlay");
+    showToast("Client notified — editor asked to redo the work", "ok");
+    sendRichEmail(order.clientEmail, "Update on Your Report — " + order.orderId, emailShell("Admin Review Complete", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">Ok Fine — we will ask the editor to redo the delivery based on your report.</p>`));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+$("#adminReportEditorBtn").addEventListener("click", () => $("#adminReportEditorReasonWrap").classList.remove("hidden"));
+$("#adminConfirmReportEditorBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReport; if (!order) return;
+  const reason = $("#adminReportEditorReasonInput").value.trim();
+  if (!reason) { showToast("Give a reason", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({ status: "restarted", adminActionReason: reason, progress: 5 });
+    closeModal("adminReportResponseOverlay");
+    showToast("Editor reported and instructed to redo work", "ok");
+    sendRichEmail(order.editorEmail, "Admin Report Against Your Delivery — " + order.orderId, emailShell("Admin Report", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">${esc(reason)}</p><p style="margin-top:10px;">Please restart and redeliver this project.</p>`, "#ff5b7a"));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== SIGNATURE FLOW ==================== */
+function openSignatureModal(order, role) {
+  State.activeOrderForSignature = order;
+  openModal("signatureOverlay");
+  $("#signatureClientView").classList.toggle("hidden", role !== "client");
+  $("#signatureEditorView").classList.toggle("hidden", role !== "editor");
+  if (role === "client") {
+    $("#signatureVideoBox").innerHTML = `<iframe src="${esc(toEmbeddable(order.watermarkedVideo))}" allowfullscreen></iframe>`;
+    $("#clientSignBtn").disabled = !!order.clientSigned;
+    $("#clientSignBtn").textContent = order.clientSigned ? "✓ You Signed" : "✓ Sign & Approve Delivery";
+  } else {
+    $("#unwatermarkedVideoInput").value = order.unwatermarkedVideo || "";
+  }
+  updateSignaturePills(order);
+  startSignatureTimer(order);
+}
+function updateSignaturePills(order) {
+  const pillsHtml = (clientSigned, editorSigned) => `
+    <div class="sig-pill ${clientSigned?'signed':'pending'}">Client: ${clientSigned?'Signed':'Pending'}</div>
+    <div class="sig-pill ${editorSigned?'signed':'pending'}">Editor: ${editorSigned?'Signed':'Pending'}</div>`;
+  $("#signatureStatusPills").innerHTML = pillsHtml(order.clientSigned, order.editorSigned);
+  $("#editorSignatureStatus").innerHTML = pillsHtml(order.clientSigned, order.editorSigned);
+  const canEditorSign = !!order.clientSigned && !order.editorSigned;
+  $("#editorSignBtn").disabled = !canEditorSign;
+  $("#editorSignHint").textContent = order.editorSigned ? "You already signed — escrow released." : (order.clientSigned ? "Client has signed — you may now deliver and sign." : "Waiting for client to sign first…");
+}
+function startSignatureTimer(order) {
+  if (State.signatureTimerInterval) clearInterval(State.signatureTimerInterval);
+  const tick = () => {
+    const remain = (order.signDeadlineMs || 0) - Date.now();
+    if (remain <= 0) {
+      $("#signatureTimer").textContent = "00:00:00";
+      clearInterval(State.signatureTimerInterval);
+      maybeAutoSign(order);
+      return;
+    }
+    const h = Math.floor(remain / 3600000);
+    const m = Math.floor((remain % 3600000) / 60000);
+    const s = Math.floor((remain % 60000) / 1000);
+    const days = Math.floor(h / 24);
+    $("#signatureTimer").textContent = (days > 0 ? days + "d " : "") + String(h % 24).padStart(2,"0") + ":" + String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+  };
+  tick();
+  State.signatureTimerInterval = setInterval(tick, 1000);
+}
+async function maybeAutoSign(order) {
+  if (order.clientSigned || order.status !== "signature_pending") return;
+  try {
+    await db.collection("orders").doc(order.id).update({ clientSigned: true, clientSignedAt: firebase.firestore.FieldValue.serverTimestamp(), autoSigned: true });
+    showToast("Review window elapsed — auto-signed on your behalf", "info");
+  } catch (e) {}
+}
+function checkSignatureModalLive() {
+  // keep the open signature modal's pills/timer in sync if the underlying order changed
+  const active = State.activeOrderForSignature;
+  if (!active || !$("#signatureOverlay").classList.contains("show")) return;
+  const fresh = [...State.allOrdersAsClient, ...State.allOrdersAsEditor].find(o => o.id === active.id);
+  if (fresh) { State.activeOrderForSignature = fresh; updateSignaturePills(fresh); }
+}
+$("#clientSignBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForSignature; if (!order) return;
+  try {
+    await db.collection("orders").doc(order.id).update({ clientSigned: true, clientSignedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    showToast("Signed — waiting on editor's final delivery", "ok");
+    sendRichEmail(order.editorEmail, "Client Signed — Send Final Video — " + order.orderId, emailShell("Client Approved Delivery", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">The client signed off. Upload the unwatermarked final video and sign to release escrow.</p>`));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+$("#editorSignBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForSignature; if (!order) return;
+  const finalLink = $("#unwatermarkedVideoInput").value.trim();
+  if (!finalLink) { showToast("Add the unwatermarked final video link", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({
+      unwatermarkedVideo: finalLink, editorSigned: true, editorSignedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      status: "completed", escrowReleased: true, completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    closeModal("signatureOverlay");
+    showToast("Signed — escrow released, order completed", "ok");
+    const detailsHtml = emailRow("Order", order.orderId) + emailRow("Shop", order.shopName) + emailRow("Client", order.clientName) +
+      emailRow("Editor", order.editorName || "") + emailRow("Tier", order.tier) + emailRow("Amount Released", money(order.total)) +
+      `<p style="margin-top:14px;"><a href="${esc(finalLink)}" style="color:#8f9dff;">Final unwatermarked video →</a></p>`;
+    sendRichEmail(order.clientEmail, "Order Completed & Signed — " + order.orderId, emailShell("Order Signed & Completed", detailsHtml, "#3ee68c"));
+    sendRichEmail(order.editorEmail, "Escrow Released — " + order.orderId, emailShell("Escrow Released to You", detailsHtml, "#3ee68c"));
+    sendRichEmail(SUPER_ADMIN_EMAIL, "Order Signed & Escrow Released — " + order.orderId, emailShell("Order Fully Signed", detailsHtml, "#3ee68c"));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== ADMIN CONSOLE ==================== */
+$all("[data-atab]").forEach(tab => tab.addEventListener("click", () => {
+  $all("[data-atab]").forEach(t => t.classList.remove("active")); tab.classList.add("active");
+  ["apps","orders","shops","reports","warnings"].forEach(k => $("#admin"+k.charAt(0).toUpperCase()+k.slice(1)+"Pane").classList.toggle("hidden", k !== tab.dataset.atab));
+}));
+function renderAdminAll() { renderAdminApps(); renderAdminOrders(); renderAdminShops(); renderAdminReports(); renderAdminWarningsPane(); }
+
+function renderAdminApps() {
+  const pane = $("#adminAppsPane");
+  const list = State.pendingApplications || [];
+  if (!list.length) { pane.innerHTML = '<div class="empty-state"><h3>No pending applications</h3></div>'; return; }
+  pane.innerHTML = list.map(s => `
+    <div class="glass order-card">
+      <div class="order-top">
+        <div style="display:flex; gap:12px; align-items:center;"><img src="${esc(s.logo||'')}" style="width:48px;height:48px;border-radius:12px;object-fit:cover;"><div><div style="font-weight:800;">${esc(s.name)}</div><div class="text-dim" style="font-size:12px;">${esc(s.ownerHandle)} · ${esc(s.category)}</div></div></div>
+        <div class="badge badge-wait">Pending</div>
+      </div>
+      <div class="order-meta">Rates — Basic ${money(s.rateLow)} · Standard ${money(s.rateMed)} · Premium ${money(s.rateHigh)}<br>Portfolio: <a href="${esc(s.portfolio)}" target="_blank">${esc(s.portfolio)}</a></div>
+      <div class="order-actions">
+        <button class="btn btn-success btn-sm approve-shop" data-id="${s.id}">Approve</button>
+        <button class="btn btn-danger btn-sm deny-shop" data-id="${s.id}">Deny</button>
+      </div>
+    </div>`).join("");
+  $all(".approve-shop", pane).forEach(b => b.addEventListener("click", async () => {
+    await db.collection("shops").doc(b.dataset.id).update({ status: "approved" });
+    showToast("Shop approved", "ok");
+    const s = list.find(x=>x.id===b.dataset.id);
+    sendRichEmail(s.ownerEmail, "Your Shop Was Approved — Rex Edit Hub", emailShell("Shop Approved", `<p>Your shop <strong>${esc(s.name)}</strong> is now live on the marketplace.</p>`, "#3ee68c"));
+  }));
+  $all(".deny-shop", pane).forEach(b => b.addEventListener("click", async () => {
+    await db.collection("shops").doc(b.dataset.id).update({ status: "denied" });
+    showToast("Application denied", "info");
+    const s = list.find(x=>x.id===b.dataset.id);
+    sendRichEmail(s.ownerEmail, "Shop Application Update — Rex Edit Hub", emailShell("Application Not Approved", `<p>Your application for <strong>${esc(s.name)}</strong> was not approved this time.</p>`, "#ff5b7a"));
+  }));
+}
+function renderAdminOrders() {
+  const pane = $("#adminOrdersPane");
+  const list = [...(State.allOrdersAdmin||[])].filter(o=>o.status!=="completed").sort((a,b)=>(b.createdAtMs||0)-(a.createdAtMs||0));
+  if (!list.length) { pane.innerHTML = '<div class="empty-state"><h3>No active escrow orders</h3></div>'; return; }
+  pane.innerHTML = list.map(o => `
+    <div class="glass order-card">
+      <div class="order-top"><div><div class="order-id">${o.orderId}</div><div>${esc(o.clientName)} → ${esc(o.shopName)}</div></div><div style="text-align:right;">${statusBadge(o.status)}<div class="order-price">${money(o.total)}</div></div></div>
+      <div class="order-meta">${o.paymentProof ? "Proof: " + esc(o.paymentProof) : "No proof submitted yet"}</div>
+      <div class="order-actions">
+        <button class="btn btn-ghost btn-sm admin-detail" data-id="${o.id}">Details</button>
+        <button class="btn btn-danger btn-sm admin-reject" data-id="${o.id}">Reject Order</button>
+      </div>
+    </div>`).join("");
+  $all(".admin-detail", pane).forEach(b => b.addEventListener("click", () => showOrderDetail(list.find(o=>o.id===b.dataset.id))));
+  $all(".admin-reject", pane).forEach(b => b.addEventListener("click", () => { State.activeOrderForReject = list.find(o=>o.id===b.dataset.id); $("#rejectReasonInput").value=""; openModal("rejectOverlay"); }));
+}
+$("#confirmRejectBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForReject; if (!order) return;
+  const reason = $("#rejectReasonInput").value.trim();
+  if (!reason) { showToast("Give a reason", "err"); return; }
+  try {
+    await db.collection("orders").doc(order.id).update({ status: "rejected", rejectReason: reason });
+    closeModal("rejectOverlay");
+    showToast("Order rejected", "info");
+    sendRichEmail(order.clientEmail, "Order Rejected — " + order.orderId, emailShell("Order Rejected by Admin", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">${esc(reason)}</p>`, "#ff5b7a"));
+    sendRichEmail(order.editorEmail, "Order Rejected — " + order.orderId, emailShell("Order Rejected by Admin", emailRow("Order", order.orderId) + `<p style="margin-top:10px;">${esc(reason)}</p>`, "#ff5b7a"));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+function renderAdminShops() {
+  const pane = $("#adminShopsPane");
+  const list = (State.allShopsAdmin||[]).filter(s=>s.status==="approved");
+  if (!list.length) { pane.innerHTML = '<div class="empty-state"><h3>No approved shops</h3></div>'; return; }
+  pane.innerHTML = list.map(s => `
+    <div class="glass order-card">
+      <div class="order-top"><div style="font-weight:700;">${esc(s.name)}</div><div class="badge badge-verified">Live</div></div>
+      <div class="order-meta">${esc(s.ownerHandle)} · ${esc(s.category)}</div>
+      <div class="order-actions"><button class="btn btn-danger btn-sm delist-shop" data-id="${s.id}">Delist</button></div>
+    </div>`).join("");
+  $all(".delist-shop", pane).forEach(b => b.addEventListener("click", async () => { await db.collection("shops").doc(b.dataset.id).update({ status: "denied" }); showToast("Shop delisted", "info"); }));
+}
+function renderAdminReports() {
+  const pane = $("#adminReportsPane");
+  const list = (State.allOrdersAdmin||[]).filter(o => o.status === "reported" || o.status === "reported_escalated");
+  if (!list.length) { pane.innerHTML = '<div class="empty-state"><h3>No open reports</h3></div>'; return; }
+  pane.innerHTML = list.map(o => `
+    <div class="glass order-card">
+      <div class="order-top"><div class="order-id">${o.orderId}</div><div class="badge badge-reported">Reported</div></div>
+      <div class="order-meta">${esc(o.clientName)} vs ${esc(o.editorName||o.shopName)}<br>${esc(o.reportReason||"")}</div>
+      <div class="order-actions"><button class="btn btn-primary btn-sm resolve-report" data-id="${o.id}">Resolve</button></div>
+    </div>`).join("");
+  $all(".resolve-report", pane).forEach(b => b.addEventListener("click", () => openAdminReportResponse(list.find(o=>o.id===b.dataset.id))));
+}
+function renderAdminWarningsPane() {
+  const pane = $("#adminWarningsPane");
+  pane.innerHTML = `<div class="glass card" style="max-width:480px;">
+    <div class="text-dim" style="font-size:13px; margin-bottom:14px;">Send a warning or notice to any user by handle. They'll see it in their Profile Settings and can reply.</div>
+    <button class="btn btn-primary" id="openWarningBtn">+ Send Warning</button>
+  </div>`;
+  $("#openWarningBtn").addEventListener("click", () => { $("#warningTargetInput").value=""; $("#warningMessageInput").value=""; openModal("warningOverlay"); });
+}
+$("#sendWarningBtn").addEventListener("click", async () => {
+  let handle = $("#warningTargetInput").value.trim();
+  const message = $("#warningMessageInput").value.trim();
+  if (!handle || !message) { showToast("Fill in handle and message", "err"); return; }
+  if (!handle.startsWith("@")) handle = "@" + handle;
+  try {
+    const snap = await db.collection("users").where("handle", "==", handle).limit(1).get();
+    let userDoc = snap.empty ? null : snap.docs[0];
+    if (!userDoc) {
+      const allSnap = await db.collection("users").limit(200).get();
+      userDoc = allSnap.docs.find(d => (d.data().handle||"").toLowerCase() === handle.toLowerCase()) || null;
+    }
+    if (!userDoc) { showToast("User not found", "err"); return; }
+    const target = userDoc.data();
+    await db.collection("warnings").add({
+      targetUid: userDoc.id, targetHandle: target.handle, message, read: false,
+      replies: [], createdAt: firebase.firestore.FieldValue.serverTimestamp(), createdAtMs: Date.now(),
+    });
+    closeModal("warningOverlay");
+    showToast("Warning sent to " + target.handle, "ok");
+    sendRichEmail(target.email, "You Have a New Notice — Rex Edit Hub", emailShell("Notice from Admin", `<p>${esc(message)}</p><p style="margin-top:10px;">View and reply in Profile Settings on Rex Edit Hub.</p>`, "#ffb35b"));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== WARNINGS (user-facing) ==================== */
+function renderWarningsList() {
+  const list = State.warnings || [];
+  $("#warningsEmpty").classList.toggle("hidden", list.length > 0);
+  $("#warningsList").innerHTML = list.map(w => `
+    <div class="warning-card ${w.read ? '' : 'unread'}">
+      <div class="warning-admin-tag">Admin Notice</div>
+      <div style="font-size:13.5px;">${esc(w.message)}</div>
+      ${(w.replies||[]).length ? `<div class="reply-thread">${w.replies.map(r => `<div class="reply-bubble ${r.from==='admin'?'admin':''}"><strong>${r.from==='admin'?'Admin':'You'}:</strong> ${esc(r.text)}</div>`).join("")}</div>` : ""}
+      <div class="warning-reply">
+        <input class="reply-input" data-id="${w.id}" placeholder="Reply…" style="flex:1;">
+        <button class="btn btn-primary btn-sm reply-send" data-id="${w.id}">Send</button>
+      </div>
+    </div>`).join("");
+  $all(".reply-send").forEach(btn => btn.addEventListener("click", async () => {
+    const id = btn.dataset.id;
+    const input = $(`.reply-input[data-id="${id}"]`);
+    const text = input.value.trim(); if (!text) return;
+    try {
+      await db.collection("warnings").doc(id).update({
+        replies: firebase.firestore.FieldValue.arrayUnion({ from: "user", text, atMs: Date.now() }), read: true,
+      });
+      input.value = "";
+      showToast("Reply sent", "ok");
+      sendRichEmail(SUPER_ADMIN_EMAIL, "User Replied to a Warning", emailShell("Warning Reply", emailRow("User", State.profile.handle) + `<p style="margin-top:10px;">${esc(text)}</p>`));
+    } catch (err) { showToast("Failed: " + err.message, "err"); }
+  }));
+  list.filter(w => !w.read).forEach(w => db.collection("warnings").doc(w.id).update({ read: true }).catch(()=>{}));
+}
+
+/* ==================== PROFILE ==================== */
+$("#profileAvatarInput").addEventListener("change", async e => {
+  const file = e.target.files[0]; if (!file) return;
+  try {
+    const b64 = await compressImageToBase64(file, 300);
+    $("#profileAvatarPreview").src = b64;
+    await db.collection("users").doc(State.user.uid).update({ avatar: b64 });
+    State.profile.avatar = b64; applyProfileToUI();
+    showToast("Photo updated", "ok");
+  } catch (err) { showToast("Upload failed: " + err.message, "err"); }
+});
+$("#saveProfileBtn").addEventListener("click", async () => {
+  const name = $("#profileNameInput").value.trim();
+  let handle = $("#profileHandleInput").value.trim();
+  if (!handle.startsWith("@")) handle = "@" + handle;
+  try {
+    await db.collection("users").doc(State.user.uid).update({ name, handle });
+    State.profile.name = name; State.profile.handle = handle; applyProfileToUI();
+    showToast("Profile saved", "ok");
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+function renderMyShops() {
+  const list = State.myShops || [];
+  $("#myShopsEmpty").classList.toggle("hidden", list.some(s=>s.status==="approved"));
+  $("#myShopsList").innerHTML = list.map(s => `<div class="row" style="margin-bottom:8px; align-items:center;"><div style="flex:1;"><b>${esc(s.name)}</b> <span class="text-dim">(${esc(s.category)})</span></div>${statusBadge(s.status==="approved"?"locked":s.status)}</div>`).join("");
+}
+
+/* ==================== REGISTER SHOP FLOW ==================== */
+let regDraft = {};
+$("#regLogoInput").addEventListener("change", async e => {
+  const file = e.target.files[0]; if (!file) return;
+  const b64 = await compressImageToBase64(file, 300);
+  regDraft.logo = b64;
+  $("#regLogoPreview").src = b64; $("#regLogoPreview").classList.remove("hidden");
+});
+$("#regStep1Next").addEventListener("click", () => {
+  regDraft.name = $("#regShopName").value.trim();
+  regDraft.category = $("#regCategory").value;
+  regDraft.portfolio = $("#regPortfolio").value.trim();
+  if (!regDraft.name) { showToast("Shop name required", "err"); return; }
+  switchView("viewRegisterStep2");
+});
+$("#regStep2Back").addEventListener("click", () => switchView("viewRegisterStep1"));
+$("#regStep2Submit").addEventListener("click", async () => {
+  const rateLow = Number($("#regRateLow").value), rateMed = Number($("#regRateMed").value), rateHigh = Number($("#regRateHigh").value);
+  if (!rateLow || !rateMed || !rateHigh) { showToast("Fill in all pricing tiers", "err"); return; }
+  try {
+    await db.collection("shops").add({
+      ...regDraft, rateLow, rateMed, rateHigh, status: "pending",
+      ownerUid: State.user.uid, ownerName: State.profile.name, ownerHandle: State.profile.handle, ownerEmail: State.user.email,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    showToast("Application submitted for review", "ok");
+    regDraft = {};
+    $("#regShopName").value = ""; $("#regPortfolio").value = ""; $("#regLogoPreview").classList.add("hidden");
+    $("#regRateLow").value = ""; $("#regRateMed").value = ""; $("#regRateHigh").value = "";
+    switchView("viewProfile");
+    sendRichEmail(SUPER_ADMIN_EMAIL, "New Shop Application", emailShell("New Shop Application", emailRow("Applicant", State.profile.handle)));
+  } catch (err) { showToast("Failed: " + err.message, "err"); }
+});
+
+/* ==================== THEME SYSTEM ==================== */
 const STATIC_THEMES = [
   "indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber",
   "slate","crimson","emerald","sapphire","lavender","mono","ice","ember","orchid","graphite"
 ];
 const CANVAS_THEMES = [
   "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
-  "auroraflow","golddust","storm","petals","warp","flares","bubbles","egypt"
+  "auroraflow","golddust","storm","petals","warp","flares","bubbles"
 ];
-const THEME_COLORS = { // representative swatch gradient per theme for the picker UI
+const THEME_3D = [
+  { id: "egypt3d", label: "Ancient Egypt" }, { id: "greece3d", label: "Modern Greece" },
+  { id: "jungle3d", label: "Ancient Jungle Temple" }, { id: "china3d", label: "Ancient China" },
+];
+const THEME_COLORS = {
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
   midnight:["#3b5bff","#5b8cff"], sunset:["#ff5b7a","#ff9d5b"], ocean:["#00b8d4","#00e5c8"], forest:["#3ee68c","#6be63e"],
   rose:["#ff5bb0","#ff8fd6"], amber:["#ffb020","#ff7a20"], slate:["#7a8ba0","#a4b8cc"], crimson:["#e6203e","#ff5b6d"],
   emerald:["#10d99a","#5bffcf"], sapphire:["#2b6bff","#5b9dff"], lavender:["#a58bff","#d3b8ff"], mono:["#d9d9d9","#ffffff"],
   ice:["#7ee6ff","#b8f4ff"], ember:["#ff7a3e","#ffb85b"], orchid:["#c85bff","#ff5be0"], graphite:["#8f93a0","#c4c8d4"],
-  snow:["#dfe9f5","#8fb3d9"], starfield:["#5b7bff","#c8d4ff"], cyberrain:["#00ffb0","#00c8ff"], matrix:["#00ff6a","#0a3d1a"],
-  embers:["#ff5b2e","#ffb85b"], plasma:["#ff2ed6","#5b2eff"], chroma:["#ff2e6a","#2effc8"], prism:["#ff9ded","#9de0ff"],
-  auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
-  warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"], egypt:["#e8b45a","#8a4a1e"]
 };
-const THEME_LABELS = {};
-[...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
-THEME_LABELS.egypt = "Ancient Egypt";
-
-let currentTheme = localStorage.getItem("rex_theme") || "indigo";
-
-function applyTheme(themeId) {
-  currentTheme = themeId;
-  localStorage.setItem("rex_theme", themeId);
-  const html = document.documentElement;
-  if (CANVAS_THEMES.includes(themeId)) {
-    html.removeAttribute("data-theme");
-    html.setAttribute("data-canvas", themeId);
-    startCanvasTheme(themeId);
-  } else {
-    html.setAttribute("data-theme", themeId);
-    html.removeAttribute("data-canvas");
-    stopCanvasTheme();
-  }
-  renderThemeGrid();
-}
-
-/* ---- Canvas particle engine: one flexible engine, distinct behavior per theme id ---- */
-let canvasEngine = { raf: null, particles: [], w: 0, h: 0, themeId: null, ctx: null, resizeBound: false };
-
-function stopCanvasTheme() {
-  if (canvasEngine.raf) cancelAnimationFrame(canvasEngine.raf);
-  canvasEngine.raf = null;
-  canvasEngine.particles = [];
-}
-
-function rnd(a, b) { return a + Math.random() * (b - a); }
-
-function spawnParticles(themeId, w, h) {
-  if (themeId === "egypt") {
-    const arr = [];
-    for (let i = 0; i < 45; i++) arr.push(makeParticle("egypt", w, h, true));
-    arr.push({ kind: "camel", x: rnd(-140, w * 0.4), speed: rnd(0.55, 0.85), legPhase: rnd(0, 6.28) });
-    return arr;
-  }
-  const cfg = {
-    snow:       { count: 140 },
-    starfield:  { count: 220 },
-    cyberrain:  { count: 160 },
-    matrix:     { count: 90  },
-    embers:     { count: 110 },
-    plasma:     { count: 60  },
-    chroma:     { count: 90  },
-    prism:      { count: 70  },
-    auroraflow: { count: 5   },
-    golddust:   { count: 150 },
-    storm:      { count: 100 },
-    petals:     { count: 60  },
-    warp:       { count: 240 },
-    flares:     { count: 45  },
-    bubbles:    { count: 80  },
-  }[themeId];
-  const arr = [];
-  for (let i = 0; i < cfg.count; i++) {
-    arr.push(makeParticle(themeId, w, h, true));
-  }
-  return arr;
-}
-
-function makeParticle(themeId, w, h, initial) {
-  const [c1] = THEME_COLORS[themeId] || ["#6d5bff"];
-  switch (themeId) {
-    case "snow":
-      return { x: rnd(0, w), y: initial ? rnd(0, h) : -10, r: rnd(1.5, 4), vy: rnd(0.4, 1.4), vx: rnd(-0.3, 0.3), sway: rnd(0, 6.28), o: rnd(0.4, 0.9) };
-    case "starfield":
-      return { x: rnd(0, w), y: rnd(0, h), r: rnd(0.5, 1.8), tw: rnd(0, 6.28), speed: rnd(0.01, 0.04), vx: rnd(-0.05, 0.05) };
-    case "cyberrain":
-      return { x: rnd(0, w), y: initial ? rnd(-h, 0) : -20, len: rnd(14, 34), vy: rnd(6, 13), o: rnd(0.3, 0.9) };
-    case "matrix":
-      return { x: Math.floor(rnd(0, w / 14)) * 14, y: initial ? rnd(-h, 0) : -20, vy: rnd(2, 6), ch: 0, chars: "アカサタナ0123456789" };
-    case "embers":
-      return { x: rnd(0, w), y: initial ? rnd(0, h) : h + 10, r: rnd(1, 3.4), vy: rnd(-1.8, -0.5), vx: rnd(-0.4, 0.4), life: rnd(60, 200), age: 0, o: rnd(0.5, 1) };
-    case "plasma":
-      return { x: rnd(0, w), y: rnd(0, h), r: rnd(80, 180), vx: rnd(-0.4, 0.4), vy: rnd(-0.4, 0.4), hue: rnd(260, 330) };
-    case "chroma":
-      return { x: rnd(0, w), y: rnd(0, h), r: rnd(1, 3), vx: rnd(-0.6, 0.6), vy: rnd(-0.6, 0.6), hue: rnd(0, 360) };
-    case "prism":
-      return { x: rnd(0, w), y: rnd(0, h), r: rnd(30, 70), vx: rnd(-0.15, 0.15), vy: rnd(-0.15, 0.15), rot: rnd(0, 6.28), vr: rnd(-0.004, 0.004) };
-    case "auroraflow":
-      return { phase: rnd(0, 6.28), amp: rnd(40, 120), speed: rnd(0.002, 0.006), hue: rnd(150, 280), yOff: rnd(0.15, 0.85) };
-    case "golddust":
-      return { x: rnd(0, w), y: rnd(0, h), r: rnd(0.6, 2.2), vy: rnd(-0.3, 0.3), vx: rnd(-0.3, 0.3), tw: rnd(0, 6.28) };
-    case "storm":
-      return { x: rnd(0, w), y: initial ? rnd(-h, 0) : -20, len: rnd(20, 46), vy: rnd(9, 18), vx: rnd(-4, -1.5), o: rnd(0.2, 0.55) };
-    case "petals":
-      return { x: rnd(0, w), y: initial ? rnd(0, h) : -10, r: rnd(4, 9), vy: rnd(0.5, 1.4), vx: rnd(-0.5, 0.5), rot: rnd(0, 6.28), vr: rnd(-0.03, 0.03) };
-    case "warp":
-      return { a: rnd(0, 6.28), d: rnd(0, 1), speed: rnd(0.003, 0.012) };
-    case "flares":
-      return { x: rnd(0, w), y: rnd(0, h), r: rnd(1, 2.5), vx: rnd(-0.2, 0.2), vy: rnd(-0.2, 0.2), pulse: rnd(0, 6.28) };
-    case "bubbles":
-      return { x: rnd(0, w), y: initial ? rnd(0, h) : h + 10, r: rnd(3, 12), vy: rnd(-1.2, -0.4), vx: rnd(-0.3, 0.3), o: rnd(0.15, 0.5) };
-    case "egypt":
-      return { kind: "dust", x: rnd(-10, w), y: rnd(h * 0.35, h * 0.64), r: rnd(0.6, 2.2), vx: rnd(0.15, 0.55), vy: rnd(-0.05, 0.05), o: rnd(0.15, 0.5) };
-    default:
-      return { x: rnd(0, w), y: rnd(0, h) };
-  }
-}
-
-function drawParticle(ctx, themeId, p, w, h, t) {
-  const [c1, c2] = THEME_COLORS[themeId] || ["#6d5bff", "#9b7bff"];
-  switch (themeId) {
-    case "snow": {
-      p.sway += 0.02; p.y += p.vy; p.x += p.vx + Math.sin(p.sway) * 0.4;
-      if (p.y > h + 10) { p.y = -10; p.x = rnd(0, w); }
-      ctx.globalAlpha = p.o; ctx.fillStyle = "#eaf3ff";
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "starfield": {
-      p.tw += p.speed * 40; p.x += p.vx; if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
-      const a = 0.4 + Math.sin(p.tw) * 0.4;
-      ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = "#ffffff";
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "cyberrain": {
-      p.y += p.vy;
-      if (p.y > h + 20) { p.y = -20; p.x = rnd(0, w); }
-      const grad = ctx.createLinearGradient(p.x, p.y, p.x, p.y + p.len);
-      grad.addColorStop(0, "rgba(0,255,180,0)"); grad.addColorStop(1, c1);
-      ctx.globalAlpha = p.o; ctx.strokeStyle = grad; ctx.lineWidth = 1.4;
-      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y + p.len); ctx.stroke();
-      break;
-    }
-    case "matrix": {
-      p.y += p.vy; p.ch++;
-      if (p.y > h + 20) { p.y = -20; }
-      ctx.globalAlpha = 0.85; ctx.fillStyle = "#00ff6a"; ctx.font = "13px monospace";
-      const ch = p.chars[Math.floor((p.ch / 6) % p.chars.length)];
-      ctx.fillText(ch, p.x, p.y);
-      break;
-    }
-    case "embers": {
-      p.age++; p.x += p.vx; p.y += p.vy;
-      if (p.age > p.life) { p.age = 0; p.y = h + 10; p.x = rnd(0, w); }
-      const fade = 1 - p.age / p.life;
-      ctx.globalAlpha = p.o * fade; ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "plasma": {
-      p.x += p.vx; p.y += p.vy; p.hue += 0.15;
-      if (p.x < -p.r) p.x = w + p.r; if (p.x > w + p.r) p.x = -p.r;
-      if (p.y < -p.r) p.y = h + p.r; if (p.y > h + p.r) p.y = -p.r;
-      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-      g.addColorStop(0, `hsla(${p.hue},90%,65%,0.28)`); g.addColorStop(1, "hsla(0,0%,0%,0)");
-      ctx.globalAlpha = 1; ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "chroma": {
-      p.x += p.vx; p.y += p.vy; p.hue += 0.6;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      ctx.globalAlpha = 0.85; ctx.fillStyle = `hsl(${p.hue % 360},90%,65%)`;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "prism": {
-      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
-      if (p.x < -p.r) p.x = w + p.r; if (p.x > w + p.r) p.x = -p.r;
-      if (p.y < -p.r) p.y = h + p.r; if (p.y > h + p.r) p.y = -p.r;
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-      ctx.globalAlpha = 0.10; ctx.strokeStyle = c2; ctx.lineWidth = 1;
-      ctx.strokeRect(-p.r / 2, -p.r / 2, p.r, p.r);
-      ctx.restore();
-      break;
-    }
-    case "auroraflow": {
-      p.phase += p.speed * 60;
-      ctx.globalAlpha = 0.18; ctx.strokeStyle = `hsl(${p.hue},85%,60%)`; ctx.lineWidth = 40;
-      ctx.beginPath();
-      for (let x = 0; x <= w; x += 20) {
-        const y = h * p.yOff + Math.sin(x * 0.006 + p.phase) * p.amp;
-        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-      break;
-    }
-    case "golddust": {
-      p.tw += 0.05; p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-      ctx.globalAlpha = 0.5 + Math.sin(p.tw) * 0.4; ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "storm": {
-      p.x += p.vx; p.y += p.vy;
-      if (p.y > h + 20 || p.x < -40) { p.y = -20; p.x = rnd(w * 0.4, w + 40); }
-      ctx.globalAlpha = p.o; ctx.strokeStyle = "#c8d4ff"; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + p.vx * 2, p.y + p.len); ctx.stroke();
-      break;
-    }
-    case "petals": {
-      p.rot += p.vr; p.y += p.vy; p.x += p.vx + Math.sin(p.rot) * 0.5;
-      if (p.y > h + 10) { p.y = -10; p.x = rnd(0, w); }
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-      ctx.globalAlpha = 0.8; ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.ellipse(0, 0, p.r, p.r * 0.55, 0, 0, 6.283); ctx.fill();
-      ctx.restore();
-      break;
-    }
-    case "warp": {
-      p.a += p.speed; p.d += 0.006;
-      if (p.d > 1) p.d = 0;
-      const cx = w / 2, cy = h / 2, maxD = Math.max(w, h) * 0.7;
-      const x = cx + Math.cos(p.a) * p.d * maxD, y = cy + Math.sin(p.a) * p.d * maxD;
-      ctx.globalAlpha = p.d; ctx.fillStyle = "#ffffff";
-      ctx.beginPath(); ctx.arc(x, y, 1.4 * p.d + 0.3, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "flares": {
-      p.pulse += 0.03; p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1; if (p.y < 0 || p.y > h) p.vy *= -1;
-      const r = p.r * (1.5 + Math.sin(p.pulse));
-      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 6);
-      g.addColorStop(0, c1); g.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.globalAlpha = 0.5; ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(p.x, p.y, r * 6, 0, 6.283); ctx.fill();
-      break;
-    }
-    case "bubbles": {
-      p.y += p.vy; p.x += p.vx + Math.sin(t / 800 + p.y) * 0.3;
-      if (p.y < -20) { p.y = h + 10; p.x = rnd(0, w); }
-      ctx.globalAlpha = p.o; ctx.strokeStyle = "#bfe9ff"; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.stroke();
-      break;
-    }
-    case "egypt": {
-      if (p.kind === "camel") {
-        p.x += p.speed;
-        if (p.x > w + 150) p.x = -150;
-        p.legPhase += 0.16;
-        drawCamel(ctx, p.x, h, p.legPhase);
-      } else {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x > w + 10) { p.x = -10; p.y = rnd(h * 0.35, h * 0.64); }
-        ctx.globalAlpha = p.o; ctx.fillStyle = "#f2d9a8";
-        ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r * 2.2, p.r * 0.6, 0, 0, 6.283); ctx.fill();
-      }
-      break;
-    }
-  }
-  ctx.globalAlpha = 1;
-}
-
-/* ---- Ancient Egypt themed backdrop: sky, sun, dunes, pyramids ---- */
-function drawPyramid(ctx, cx, baseY, baseW, height, color) {
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(cx - baseW / 2, baseY);
-  ctx.lineTo(cx, baseY - height);
-  ctx.lineTo(cx + baseW / 2, baseY);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = "rgba(0,0,0,0.16)";
-  ctx.beginPath();
-  ctx.moveTo(cx, baseY - height);
-  ctx.lineTo(cx + baseW / 2, baseY);
-  ctx.lineTo(cx + baseW * 0.15, baseY);
-  ctx.closePath();
-  ctx.fill();
-}
-
-function drawEgyptBackground(ctx, w, h) {
-  const horizon = h * 0.66;
-  const sky = ctx.createLinearGradient(0, 0, 0, horizon);
-  sky.addColorStop(0, "#f7dfa5");
-  sky.addColorStop(0.55, "#f0c477");
-  sky.addColorStop(1, "#e8a85a");
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, w, horizon);
-
-  const sunX = w * 0.78, sunY = h * 0.22, sunR = Math.min(w, h) * 0.09;
-  const sunGlow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR * 3.4);
-  sunGlow.addColorStop(0, "rgba(255,244,214,0.9)");
-  sunGlow.addColorStop(1, "rgba(255,244,214,0)");
-  ctx.fillStyle = sunGlow;
-  ctx.beginPath(); ctx.arc(sunX, sunY, sunR * 3.4, 0, 6.283); ctx.fill();
-  ctx.fillStyle = "#fff3d6";
-  ctx.beginPath(); ctx.arc(sunX, sunY, sunR, 0, 6.283); ctx.fill();
-
-  ctx.fillStyle = "rgba(255,235,190,0.35)";
-  ctx.fillRect(0, horizon - h * 0.05, w, h * 0.05);
-
-  drawPyramid(ctx, w * 0.30, horizon, w * 0.16, h * 0.20, "#c98a4a");
-  drawPyramid(ctx, w * 0.42, horizon, w * 0.11, h * 0.14, "#b87a3e");
-  drawPyramid(ctx, w * 0.20, horizon, w * 0.09, h * 0.11, "#d69a5c");
-
-  const ground = ctx.createLinearGradient(0, horizon, 0, h);
-  ground.addColorStop(0, "#d69a5c");
-  ground.addColorStop(1, "#8a4a1e");
-  ctx.fillStyle = ground;
-  ctx.beginPath();
-  ctx.moveTo(0, horizon);
-  ctx.bezierCurveTo(w * 0.25, horizon - h * 0.02, w * 0.55, horizon + h * 0.03, w, horizon - h * 0.01);
-  ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fill();
-
-  ctx.strokeStyle = "rgba(255,255,255,0.08)"; ctx.lineWidth = 2;
-  for (let i = 0; i < 3; i++) {
-    ctx.beginPath();
-    const yy = horizon + h * (0.08 + i * 0.09);
-    ctx.moveTo(0, yy);
-    ctx.bezierCurveTo(w * 0.3, yy - 14, w * 0.6, yy + 14, w, yy - 6);
-    ctx.stroke();
-  }
-}
-
-function drawCamel(ctx, x, canvasH, legPhase) {
-  const y = canvasH * 0.665;
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.fillStyle = "rgba(0,0,0,0.18)";
-  ctx.beginPath(); ctx.ellipse(4, 46, 46, 7, 0, 0, 6.283); ctx.fill();
-  const bob = Math.sin(legPhase * 2) * 2;
-  ctx.translate(0, bob);
-  const swing = Math.sin(legPhase) * 14;
-  const swing2 = Math.sin(legPhase + Math.PI) * 14;
-  ctx.lineCap = "round"; ctx.lineWidth = 5; ctx.strokeStyle = "#8a6135";
-  ctx.beginPath(); ctx.moveTo(-28, 12); ctx.lineTo(-28 + swing * 0.4, 44); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(-14, 14); ctx.lineTo(-14 + swing2 * 0.4, 44); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(18, 14); ctx.lineTo(18 + swing2 * 0.4, 44); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(30, 12); ctx.lineTo(30 + swing * 0.4, 44); ctx.stroke();
-
-  ctx.fillStyle = "#b98a4f"; ctx.strokeStyle = "#7a5228"; ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(-32, 14);
-  ctx.bezierCurveTo(-30, -6, -18, -20, -6, -8);
-  ctx.bezierCurveTo(0, -18, 10, -18, 14, -8);
-  ctx.bezierCurveTo(26, -14, 34, -2, 32, 14);
-  ctx.bezierCurveTo(20, 20, -20, 20, -32, 14);
-  ctx.closePath();
-  ctx.fill(); ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(28, -2);
-  ctx.bezierCurveTo(38, -10, 46, -22, 44, -32);
-  ctx.bezierCurveTo(50, -34, 52, -28, 48, -22);
-  ctx.bezierCurveTo(46, -14, 40, -4, 34, 4);
-  ctx.closePath();
-  ctx.fill(); ctx.stroke();
-
-  ctx.beginPath(); ctx.moveTo(-32, 6); ctx.quadraticCurveTo(-42, 10, -40, 22);
-  ctx.lineWidth = 3; ctx.strokeStyle = "#7a5228"; ctx.stroke();
-  ctx.restore();
-}
-
-function startCanvasTheme(themeId) {
-  const canvas = $("#themeCanvas");
-  const ctx = canvas.getContext("2d");
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvasEngine.w = canvas.width; canvasEngine.h = canvas.height;
-  }
-  if (!canvasEngine.resizeBound) {
-    window.addEventListener("resize", () => {
-      resize();
-      if (canvasEngine.themeId) canvasEngine.particles = spawnParticles(canvasEngine.themeId, canvasEngine.w, canvasEngine.h);
-    });
-    canvasEngine.resizeBound = true;
-  }
-  resize();
-  canvasEngine.themeId = themeId;
-  canvasEngine.particles = spawnParticles(themeId, canvasEngine.w, canvasEngine.h);
-  if (canvasEngine.raf) cancelAnimationFrame(canvasEngine.raf);
-  function loop(t) {
-    if (canvasEngine.themeId !== themeId) return; // theme switched away
-    ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
-    if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
-    if (themeId === "egypt") drawEgyptBackground(ctx, canvasEngine.w, canvasEngine.h);
-    canvasEngine.particles.forEach(p => drawParticle(ctx, themeId, p, canvasEngine.w, canvasEngine.h, t || 0));
-    canvasEngine.raf = requestAnimationFrame(loop);
-  }
-  canvasEngine.raf = requestAnimationFrame(loop);
-}
-
-/* Bind window.onload so the canvas never renders at 0x0 */
-window.addEventListener("load", () => {
-  if (CANVAS_THEMES.includes(currentTheme)) startCanvasTheme(currentTheme);
-});
-
+let themeTabPage = "1";
 function renderThemeGrid() {
   const grid = $("#themeGrid");
-  if (!grid) return;
-  const activeTab = $(".theme-tab.active");
-  const page = activeTab ? activeTab.dataset.tpage : "1";
-  let list;
-  if (page === "1") list = STATIC_THEMES.slice(0, 10);
-  else if (page === "2") list = STATIC_THEMES.slice(10, 20);
-  else list = CANVAS_THEMES;
-  grid.innerHTML = list.map(t => {
-    const [c1, c2] = THEME_COLORS[t];
-    const active = t === currentTheme ? "active" : "";
-    return `<div class="theme-swatch ${active}" data-theme-id="${t}" style="background:linear-gradient(135deg,${c1},${c2})">
-      <div class="theme-swatch-label">${THEME_LABELS[t]}</div>
+  const current = State.profile || {};
+  let items = [];
+  if (themeTabPage === "1") items = STATIC_THEMES.slice(0,10).map(id => ({ id, kind: "static" }));
+  else if (themeTabPage === "2") items = STATIC_THEMES.slice(10).map(id => ({ id, kind: "static" }));
+  else if (themeTabPage === "3") items = CANVAS_THEMES.map(id => ({ id, kind: "canvas" }));
+  else items = THEME_3D.map(t => ({ id: t.id, kind: "3d", label: t.label }));
+
+  grid.innerHTML = items.map(it => {
+    const isActive = it.kind === "static" ? current.theme === it.id : it.kind === "canvas" ? current.canvas === it.id : current.canvas3d === it.id;
+    const colors = it.kind === "static" ? THEME_COLORS[it.id] : ["#6d5bff","#3ee6c4"];
+    const bg = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
+    const label = it.label || it.id;
+    return `<div class="theme-swatch ${isActive?'active':''}" style="background:${bg};" data-kind="${it.kind}" data-id="${it.id}">
+      <div class="theme-swatch-label">${esc(label)}</div>
     </div>`;
   }).join("");
-  $all(".theme-swatch", grid).forEach(sw => sw.addEventListener("click", () => applyTheme(sw.dataset.themeId)));
+
+  $all(".theme-swatch", grid).forEach(sw => sw.addEventListener("click", async () => {
+    const kind = sw.dataset.kind, id = sw.dataset.id;
+    const update = kind === "static" ? { theme: id, canvas: "", canvas3d: "" } : kind === "canvas" ? { canvas: id, canvas3d: "" } : { canvas3d: id, canvas: "" };
+    try {
+      await db.collection("users").doc(State.user.uid).update(update);
+      Object.assign(State.profile, update);
+      applyProfileToUI();
+    } catch (err) { showToast("Failed: " + err.message, "err"); }
+  }));
 }
 $all(".theme-tab").forEach(tab => tab.addEventListener("click", () => {
-  $all(".theme-tab").forEach(t => t.classList.remove("active"));
-  tab.classList.add("active");
-  renderThemeGrid();
+  $all(".theme-tab").forEach(t => t.classList.remove("active")); tab.classList.add("active");
+  themeTabPage = tab.dataset.tpage; renderThemeGrid();
 }));
 
-applyTheme(currentTheme);
-
-/* ========================= 5. NAVIGATION ========================= */
-const VIEW_META = {
-  viewShop: { title: "Marketplace", sub: "Browse vetted editors and hire with escrow protection" },
-  viewProfile: { title: "Profile Settings", sub: "Manage your identity and appearance" },
-  viewSearchUser: { title: "Search Network", sub: "Look up any creator by their handle" },
-  viewOrderConfig: { title: "Hire Terminal", sub: "Configure your commission" },
-  viewPlacedOrder: { title: "My Orders", sub: "Track escrow status on commissions you've placed" },
-  viewEditorManage: { title: "Incoming Requests", sub: "Manage commissions clients have sent you" },
-  viewAdminReview: { title: "Review Shops", sub: "Approve or reject creator applications" },
-  viewRegisterStep1: { title: "Apply for Earn", sub: "Step 1 of 2 — Shop details" },
-  viewRegisterStep2: { title: "Apply for Earn", sub: "Step 2 of 2 — Pricing tiers" },
-};
-
-function switchView(viewId) {
-  State.currentView = viewId;
-  $all(".view").forEach(v => v.classList.add("hidden"));
-  const target = $("#" + viewId);
-  if (target) target.classList.remove("hidden");
-  $all(".nav-item").forEach(n => n.classList.toggle("active", n.dataset.view === viewId));
-  const meta = VIEW_META[viewId] || { title: "Rex Edit Hub", sub: "" };
-  $("#pageTitle").textContent = meta.title;
-  $("#pageSub").textContent = meta.sub;
-  $("#marketSearchWrap").classList.toggle("hidden", viewId !== "viewShop");
-  $("#sidebar").classList.remove("open");
-  if (viewId === "viewProfile") renderProfileView();
-  if (viewId === "viewPlacedOrder") renderPlacedOrders();
-  if (viewId === "viewEditorManage") renderEditorOrders();
-  if (viewId === "viewAdminReview") renderAdminReview();
-}
-$all(".nav-item[data-view]").forEach(item => item.addEventListener("click", () => switchView(item.dataset.view)));
-$("#menuToggle").addEventListener("click", () => $("#sidebar").classList.toggle("open"));
-
-/* ========================= 6. AUTH ========================= */
-$("#googleSignInBtn").addEventListener("click", () => {
-  $("#authLoading").classList.remove("hidden");
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).catch(err => {
-    $("#authLoading").classList.add("hidden");
-    showToast(err.message || "Sign-in failed", "err");
-  });
-});
-
-$("#topAvatarBtn").addEventListener("click", () => switchView("viewProfile"));
-
-$("#navLogout").addEventListener("click", () => {
-  if (!confirm("Log out of Rex Edit Hub?")) return;
-  auth.signOut().then(() => {
-    showToast("Signed out.", "ok");
-  }).catch(err => {
-    showToast(err.message || "Failed to log out.", "err");
-  });
-});
-
-auth.onAuthStateChanged(async user => {
-  clearUnsubscribes();
-  if (!user) {
-    State.user = null; State.profile = null; State.isAdmin = false;
-    $("#authGate").classList.remove("hidden");
-    $("#appRoot").classList.add("hidden");
-    return;
-  }
-  State.user = user;
-  State.isAdmin = (user.email === SUPER_ADMIN_EMAIL);
-  $("#authGate").classList.add("hidden");
-  $("#appRoot").classList.remove("hidden");
-  $("#navAdmin").classList.toggle("hidden", !State.isAdmin);
-
-  await ensureUserDoc(user);
-  attachAllListeners(user);
-  switchView("viewShop");
-});
-
-async function ensureUserDoc(user) {
-  const ref = db.collection("users").doc(user.uid);
-  try {
-    const snap = await ref.get();
-    if (!snap.exists) {
-      const defaultHandle = "@" + (user.email ? user.email.split("@")[0] : user.uid.slice(0, 8)).toLowerCase().replace(/[^a-z0-9_]/g, "");
-      const data = {
-        uid: user.uid,
-        email: user.email || "",
-        displayName: user.displayName || "New User",
-        userId: defaultHandle,
-        photoURL: user.photoURL || "",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      };
-      await ref.set(data);
-      State.profile = data;
-    } else {
-      State.profile = snap.data();
-    }
-  } catch (e) {
-    console.error("ensureUserDoc error:", e);
-    showToast("Could not load your profile.", "err");
-  }
-  updateTopAvatar();
-}
-
-function updateTopAvatar() {
-  const btn = $("#topAvatarBtn");
-  const photo = State.profile && State.profile.photoURL;
-  if (photo) {
-    btn.innerHTML = `<img src="${photo}" alt="avatar">`;
-  } else {
-    const initial = ((State.profile && State.profile.displayName) || "?").charAt(0).toUpperCase();
-    btn.innerHTML = `<span>${esc(initial)}</span>`;
-  }
-}
-
-/* ========================= 7. FIRESTORE LISTENERS ========================= */
-function attachAllListeners(user) {
-  // Approved shops (marketplace)
-  const unsubShops = db.collection("shops").onSnapshot(snap => {
-    State.shops = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    State.myShops = State.shops.filter(s => s.ownerUid === user.uid);
-    if (State.currentView === "viewShop") renderMarketplace();
-    if (State.currentView === "viewProfile") renderMyShops();
-    if (State.currentView === "viewAdminReview") renderAdminReview();
-  }, err => { console.error("shops listener error:", err); showToast("Couldn't load shops.", "err"); });
-  State.unsubscribes.push(unsubShops);
-
-  // Orders where user is the client
-  const unsubClientOrders = db.collection("orders").where("clientUid", "==", user.uid).onSnapshot(snap => {
-    State.allOrdersAsClient = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
-    if (State.currentView === "viewPlacedOrder") renderPlacedOrders();
-  }, err => { console.error("client orders error:", err); });
-  State.unsubscribes.push(unsubClientOrders);
-
-  // Orders where user is the editor
-  const unsubEditorOrders = db.collection("orders").where("editorUid", "==", user.uid).onSnapshot(snap => {
-    State.allOrdersAsEditor = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
-    $("#navEditorManage").classList.toggle("hidden", State.myShops.length === 0 && State.allOrdersAsEditor.length === 0);
-    if (State.currentView === "viewEditorManage") renderEditorOrders();
-  }, err => { console.error("editor orders error:", err); });
-  State.unsubscribes.push(unsubEditorOrders);
-
-  if (State.isAdmin) {
-    const unsubApps = db.collection("shop_applications").onSnapshot(snap => {
-      State.pendingApplications = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      if (State.currentView === "viewAdminReview") renderAdminReview();
-    }, err => console.error("apps listener error:", err));
-    State.unsubscribes.push(unsubApps);
-
-    const unsubAllOrders = db.collection("orders").onSnapshot(snap => {
-      State.allOrdersAdmin = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
-      if (State.currentView === "viewAdminReview") renderAdminReview();
-    }, err => console.error("admin orders listener error:", err));
-    State.unsubscribes.push(unsubAllOrders);
-  }
-}
-
-/* also keep editor-nav visible if user owns shops even pre-listener */
-function refreshEditorNavVisibility() {
-  const show = (State.myShops && State.myShops.length > 0) || (State.allOrdersAsEditor && State.allOrdersAsEditor.length > 0);
-  $("#navEditorManage").classList.toggle("hidden", !show);
-}
-
-/* ========================= 8. MARKETPLACE ========================= */
-function renderMarketplace() {
-  const grid = $("#shopGrid");
-  const q = ($("#marketSearchInput").value || "").trim().toLowerCase();
-  const list = State.shops.filter(s => {
-    if (!q) return true;
-    return (s.name || "").toLowerCase().includes(q) || (s.category || "").toLowerCase().includes(q);
-  });
-  $("#shopEmpty").classList.toggle("hidden", list.length > 0);
-  grid.innerHTML = list.map(shop => `
-    <div class="glass shop-card">
-      <div class="shop-banner">
-        <img class="shop-logo" src="${shop.logoUrl || ''}" onerror="this.style.display='none'" alt="">
-      </div>
-      <div class="shop-body">
-        <div class="shop-name">${esc(shop.name)}</div>
-        <div class="shop-handle">${esc(shop.ownerHandle || '')}</div>
-        <div class="shop-cat">${esc(shop.category || 'General')}</div>
-        <div class="shop-rates">
-          <div class="rate-pill">Basic<b>${money(shop.rates && shop.rates.low)}</b></div>
-          <div class="rate-pill">Std<b>${money(shop.rates && shop.rates.medium)}</b></div>
-          <div class="rate-pill">Prem<b>${money(shop.rates && shop.rates.high)}</b></div>
-        </div>
-        <button class="btn btn-primary btn-block hire-btn" data-shop-id="${shop.id}">Hire</button>
-      </div>
-    </div>
-  `).join("");
-  $all(".hire-btn", grid).forEach(btn => btn.addEventListener("click", () => openHireTerminal(btn.dataset.shopId)));
-}
-$("#marketSearchInput").addEventListener("input", renderMarketplace);
-
-/* ========================= 9. PROFILE VIEW ========================= */
-function renderProfileView() {
-  $("#profileNameInput").value = (State.profile && State.profile.displayName) || "";
-  $("#profileHandleInput").value = (State.profile && State.profile.userId) || "";
-  $("#profileAvatarPreview").src = (State.profile && State.profile.photoURL) || "https://api.dicebear.com/7.x/initials/svg?seed=" + encodeURIComponent((State.profile && State.profile.displayName) || "U");
-  renderThemeGrid();
-  renderMyShops();
-}
-function renderMyShops() {
-  const list = $("#myShopsList");
-  const empty = $("#myShopsEmpty");
-  if (!State.myShops || State.myShops.length === 0) { list.innerHTML = ""; empty.classList.remove("hidden"); return; }
-  empty.classList.add("hidden");
-  list.innerHTML = State.myShops.map(s => `
-    <div class="row" style="align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
-      <img src="${s.logoUrl || ''}" style="width:40px;height:40px;border-radius:10px;object-fit:cover;flex:0 0 auto;">
-      <div style="flex:1;">
-        <div style="font-weight:700;font-size:13.5px;">${esc(s.name)}</div>
-        <div class="text-dim" style="font-size:11.5px;">${esc(s.category || '')}</div>
-      </div>
-      <button class="btn btn-danger btn-sm" data-del-shop="${s.id}">Delete</button>
-    </div>
-  `).join("");
-  $all("[data-del-shop]", list).forEach(btn => btn.addEventListener("click", () => deleteShop(btn.dataset.delShop)));
-}
-async function deleteShop(shopId) {
-  if (!confirm("Delete this shop listing? This cannot be undone.")) return;
-  try {
-    await db.collection("shops").doc(shopId).delete();
-    showToast("Shop deleted.", "ok");
-  } catch (e) {
-    console.error(e); showToast("Failed to delete shop.", "err");
-  }
-}
-
-$("#profileAvatarInput").addEventListener("change", async e => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  try {
-    const base64 = await compressImageToBase64(file, 400);
-    $("#profileAvatarPreview").src = base64;
-    $("#profileAvatarPreview").dataset.pending = base64;
-  } catch (err) { showToast("Could not process image.", "err"); }
-});
-
-$("#saveProfileBtn").addEventListener("click", async () => {
-  if (!State.user) return;
-  const name = $("#profileNameInput").value.trim();
-  let handle = $("#profileHandleInput").value.trim();
-  if (!name) return showToast("Display name can't be empty.", "err");
-  if (!handle.startsWith("@")) handle = "@" + handle;
-  handle = handle.toLowerCase().replace(/\s+/g, "");
-  const pendingPhoto = $("#profileAvatarPreview").dataset.pending;
-  const update = { displayName: name, userId: handle };
-  if (pendingPhoto) update.photoURL = pendingPhoto;
-  try {
-    await db.collection("users").doc(State.user.uid).update(update);
-    State.profile = { ...(State.profile || {}), ...update };
-    updateTopAvatar();
-    showToast("Profile updated.", "ok");
-  } catch (e) {
-    console.error(e); showToast("Failed to save profile.", "err");
-  }
-});
-
-/* ========================= 10. SEARCH NETWORK ========================= */
-async function searchByHandle() {
-  let handle = $("#handleSearchInput").value.trim();
-  if (!handle) return;
-  if (!handle.startsWith("@")) handle = "@" + handle;
-  handle = handle.toLowerCase();
-  const resultEl = $("#handleSearchResult");
-  resultEl.innerHTML = `<div class="skel" style="height:90px;"></div>`;
-  try {
-    const snap = await db.collection("users").where("userId", "==", handle).limit(1).get();
-    if (snap.empty) {
-      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3><p>Nobody uses the handle ${esc(handle)}.</p></div>`;
-      return;
-    }
-    const u = snap.docs[0].data();
-    const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
-    const hasShop = !shopSnap.empty;
-    resultEl.innerHTML = `
-      <div class="glass card" style="display:flex; gap:16px; align-items:center;">
-        <img src="${u.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(u.displayName || 'U')}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
-        <div style="flex:1;">
-          <div style="font-weight:800; font-size:16px;">${esc(u.displayName)}</div>
-          <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
-        </div>
-        ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
-      </div>`;
-  } catch (e) {
-    console.error(e);
-    resultEl.innerHTML = `<div class="empty-state"><h3>Search failed</h3><p>Please try again.</p></div>`;
-  }
-}
-$("#handleSearchBtn").addEventListener("click", searchByHandle);
-$("#handleSearchInput").addEventListener("keydown", e => { if (e.key === "Enter") searchByHandle(); });
-
-/* ========================= 11. HIRE TERMINAL ========================= */
-function openHireTerminal(shopId) {
-  const shop = State.shops.find(s => s.id === shopId);
-  if (!shop) return showToast("Shop not found.", "err");
-  State.hireContext = { shop };
-  State.selectedTier = "low";
-  State.selectedAR = "16:9";
-  $("#tierLowPrice").textContent = money(shop.rates && shop.rates.low);
-  $("#tierMedPrice").textContent = money(shop.rates && shop.rates.medium);
-  $("#tierHighPrice").textContent = money(shop.rates && shop.rates.high);
-  $all(".tier-opt").forEach(o => o.classList.toggle("active", o.dataset.tier === "low"));
-  $all(".aspect-btn").forEach(o => o.classList.toggle("active", o.dataset.ar === "16:9"));
-  $("#hireDuration").value = 1; $("#hireQty").value = 1;
-  $("#hireAssetUrl").value = ""; $("#hireInstructions").value = "";
-  recalcHirePrice();
-  drawAspectPreview("16:9");
-  openModal("hireOverlay");
-}
-$all(".tier-opt").forEach(opt => opt.addEventListener("click", () => {
-  $all(".tier-opt").forEach(o => o.classList.remove("active"));
-  opt.classList.add("active");
-  State.selectedTier = opt.dataset.tier;
-  recalcHirePrice();
-}));
-$all(".aspect-btn").forEach(btn => btn.addEventListener("click", () => {
-  $all(".aspect-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  State.selectedAR = btn.dataset.ar;
-  drawAspectPreview(btn.dataset.ar);
-}));
-$("#hireDuration").addEventListener("input", recalcHirePrice);
-$("#hireQty").addEventListener("input", recalcHirePrice);
-
-function recalcHirePrice() {
-  const shop = State.hireContext && State.hireContext.shop;
-  if (!shop) return;
-  const tierKey = { low: "low", med: "medium", high: "high" }[State.selectedTier];
-  const base = Number((shop.rates || {})[tierKey]) || 0;
-  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
-  const qty = Math.max(1, Number($("#hireQty").value) || 1);
-  const total = base * dur * qty;
-  $("#hireTotalPrice").textContent = money(total);
-}
-
-/* Aspect ratio preview rendered on <canvas>, bound inside window.onload-safe function w/ resize guard */
-function drawAspectPreview(ar) {
-  const canvas = $("#aspectCanvas");
-  const wrap = canvas.parentElement;
-  const boxW = wrap.clientWidth || 300;
-  const boxH = wrap.clientHeight || 220;
-  if (boxW === 0 || boxH === 0) return; // guard against 0x0 render
-  canvas.width = boxW; canvas.height = boxH;
+/* ---- 2D animated canvas backgrounds ---- */
+let canvasAnimFrame = null;
+function applyCanvasTheme(name) {
+  const canvas = $("#themeCanvas");
+  if (canvasAnimFrame) cancelAnimationFrame(canvasAnimFrame);
+  if (!name || !CANVAS_THEMES.includes(name)) { canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height); return; }
   const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, boxW, boxH);
-  const ratios = { "16:9": 16 / 9, "9:16": 9 / 16, "1:1": 1, "4:5": 4 / 5 };
-  const targetRatio = ratios[ar] || 16 / 9;
-  let rw = boxW * 0.7, rh = rw / targetRatio;
-  if (rh > boxH * 0.85) { rh = boxH * 0.85; rw = rh * targetRatio; }
-  const rx = (boxW - rw) / 2, ry = (boxH - rh) / 2;
-  const grad = ctx.createLinearGradient(rx, ry, rx + rw, ry + rh);
-  grad.addColorStop(0, "#6d5bff"); grad.addColorStop(1, "#b45bff");
-  ctx.fillStyle = "rgba(255,255,255,0.03)"; ctx.fillRect(0, 0, boxW, boxH);
-  ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.setLineDash([6, 5]);
-  ctx.strokeRect(rx, ry, rw, rh);
-  ctx.setLineDash([]);
-  ctx.fillStyle = "rgba(255,255,255,0.5)"; ctx.font = "13px 'Plus Jakarta Sans', sans-serif"; ctx.textAlign = "center";
-  ctx.fillText(ar, boxW / 2, boxH / 2);
-}
-window.addEventListener("resize", () => { if ($("#hireOverlay").classList.contains("show")) drawAspectPreview(State.selectedAR); });
-
-$("#hireSubmitBtn").addEventListener("click", async () => {
-  if (!State.user || !State.hireContext) return;
-  const shop = State.hireContext.shop;
-  if (shop.ownerUid === State.user.uid) return showToast("You can't hire your own shop.", "err");
-  const tierKey = { low: "low", med: "medium", high: "high" }[State.selectedTier];
-  const base = Number((shop.rates || {})[tierKey]) || 0;
-  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
-  const qty = Math.max(1, Number($("#hireQty").value) || 1);
-  const price = base * dur * qty;
-  const assetUrl = $("#hireAssetUrl").value.trim();
-  const instructions = $("#hireInstructions").value.trim();
-  if (!assetUrl) return showToast("Please add a footage/asset link.", "err");
-  if (price <= 0) return showToast("Invalid price — check the shop's rates.", "err");
-
-  const btn = $("#hireSubmitBtn"); btn.disabled = true; btn.textContent = "Sending…";
-  try {
-    const orderId = genOrderId();
-    const order = {
-      orderId,
-      shopId: shop.id,
-      shopName: shop.name || "",
-      clientUid: State.user.uid,
-      clientName: (State.profile && State.profile.displayName) || State.user.displayName || "",
-      clientEmail: State.user.email || "",
-      editorUid: shop.ownerUid,
-      editorHandle: shop.ownerHandle || "",
-      editorEmail: shop.ownerEmail || "",
-      tier: State.selectedTier,
-      aspectRatio: State.selectedAR,
-      duration: dur,
-      quantity: qty,
-      price,
-      footageLink: assetUrl,
-      instructions,
-      workProgress: 0,
-      status: "wait_editor",
-      createdAtMs: Date.now(),
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    };
-    await db.collection("orders").add(order);
-    showToast("Order sent to editor — awaiting response.", "ok");
-    closeModal("hireOverlay");
-  } catch (e) {
-    console.error(e); showToast("Failed to send order.", "err");
-  } finally {
-    btn.disabled = false; btn.textContent = "Send Order";
-  }
-});
-
-/* ========================= 12. ESCROW WORKFLOW ========================= */
-const STATUS_META = {
-  wait_editor:       { label: "Wait for editor response",            badge: "badge-wait" },
-  pending_admin:     { label: "Pending Admin Approval (Locked)",      badge: "badge-locked" },
-  in_progress_escrow:{ label: "In Progress (QR Sent — Escrow Awaiting)", badge: "badge-progress" },
-  payment_review:    { label: "Payment Under Review (Proof Submitted)", badge: "badge-review" },
-  payment_verified:  { label: "Payment Verified (Work In Progress)",  badge: "badge-verified" },
-  completed:         { label: "Completed",                           badge: "badge-done" },
-  rejected:          { label: "Rejected",                            badge: "badge-reject" },
-};
-function statusBadge(status) {
-  const m = STATUS_META[status] || { label: status, badge: "badge-wait" };
-  return `<span class="badge ${m.badge}">${esc(m.label)}</span>`;
-}
-
-/* ---- CLIENT: Placed Orders ---- */
-function renderPlacedOrders() {
-  const list = $("#placedOrdersList");
-  const empty = $("#placedOrdersEmpty");
-  const orders = State.allOrdersAsClient || [];
-  empty.classList.toggle("hidden", orders.length > 0);
-  list.innerHTML = orders.map(o => `
-    <div class="glass order-card">
-      <div class="order-top">
-        <div>
-          <div class="order-id">${esc(o.orderId)}</div>
-          <div style="font-weight:800; font-size:15px; margin-top:4px;">${esc(o.shopName)}</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="order-price">${money(o.price)}</div>
-          ${statusBadge(o.status)}
-        </div>
-      </div>
-      <div class="order-meta">
-        ${esc(o.tier ? (o.tier === 'low' ? 'Basic' : o.tier === 'med' ? 'Standard' : 'Premium') : '')} tier ·
-        ${esc(o.aspectRatio || '')} · ${esc(o.duration || 1)} min × ${esc(o.quantity || 1)}
-      </div>
-      ${o.status === 'payment_verified' || o.status === 'completed' ? `
-        <div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div>
-        <div class="text-dim" style="font-size:11.5px;">${o.workProgress || 0}% complete</div>` : ''}
-      <div class="order-actions">
-        ${o.status === 'in_progress_escrow' ? `<button class="btn btn-primary btn-sm" data-pay="${o.id}">Do Payment</button>` : ''}
-        ${o.status === 'payment_review' ? `<span class="text-dim" style="font-size:12px;">Awaiting admin verification…</span>` : ''}
-        <button class="btn btn-ghost btn-sm" data-view-order="${o.id}">Details</button>
-      </div>
-    </div>
-  `).join("");
-  $all("[data-pay]", list).forEach(b => b.addEventListener("click", () => openPaymentModal(b.dataset.pay)));
-  $all("[data-view-order]", list).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrder, "client")));
-}
-
-function openPaymentModal(orderId) {
-  const order = State.allOrdersAsClient.find(o => o.id === orderId);
-  if (!order) return;
-  State.activeOrderForPayment = order;
-  $("#qrUpiId").textContent = PLATFORM_UPI_ID;
-  $("#qrImage").src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(`upi://pay?pa=${PLATFORM_UPI_ID}&pn=RexEditHub&am=${order.price}&cu=INR&tn=${order.orderId}`);
-  $("#paymentProofInput").value = "";
-  openModal("qrOverlay");
-}
-
-$("#submitProofBtn").addEventListener("click", async () => {
-  const order = State.activeOrderForPayment;
-  if (!order) return;
-  const proof = $("#paymentProofInput").value.trim();
-  if (!proof) return showToast("Please add proof (UTR or link).", "err");
-  const btn = $("#submitProofBtn"); btn.disabled = true; btn.textContent = "Submitting…";
-  try {
-    await db.collection("orders").doc(order.id).update({ status: "payment_review", paymentProof: proof });
-    showToast("Proof submitted — awaiting admin verification.", "ok");
-    closeModal("qrOverlay");
-  } catch (e) {
-    console.error(e); showToast("Failed to submit proof.", "err");
-  } finally {
-    btn.disabled = false; btn.textContent = "Submit Proof";
-  }
-});
-
-function showOrderDetail(orderId, role) {
-  const source = role === "client" ? State.allOrdersAsClient : role === "editor" ? State.allOrdersAsEditor : State.allOrdersAdmin;
-  const o = source.find(x => x.id === orderId);
-  if (!o) return;
-  $("#infoModalTitle").textContent = o.orderId;
-  $("#infoModalBody").innerHTML = `
-    <div class="field"><label>Status</label>${statusBadge(o.status)}</div>
-    <div class="field"><label>Shop</label>${esc(o.shopName)}</div>
-    <div class="field"><label>Client</label>${esc(o.clientName || o.clientUid)}</div>
-    <div class="field"><label>Footage / Asset Link</label><div style="word-break:break-all;font-size:13px;">${esc(o.footageLink || '—')}</div></div>
-    <div class="field"><label>Instructions</label><div style="font-size:13px; white-space:pre-wrap;">${esc(o.instructions || '—')}</div></div>
-    <div class="field"><label>Price</label>${money(o.price)}</div>
-    ${o.paymentProof ? `<div class="field"><label>Payment Proof</label><div style="word-break:break-all;font-size:13px;">${esc(o.paymentProof)}</div></div>` : ''}
-    <div class="field mb0"><label>Progress</label>
-      <div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div>
-      <div class="text-dim" style="font-size:11.5px;">${o.workProgress || 0}%</div>
-    </div>
-  `;
-  openModal("infoOverlay");
-}
-
-/* ---- EDITOR: Incoming Requests ---- */
-function renderEditorOrders() {
-  const list = $("#editorOrdersList");
-  const empty = $("#editorOrdersEmpty");
-  const orders = State.allOrdersAsEditor || [];
-  empty.classList.toggle("hidden", orders.length > 0);
-  list.innerHTML = orders.map(o => `
-    <div class="glass order-card">
-      <div class="order-top">
-        <div>
-          <div class="order-id">${esc(o.orderId)}</div>
-          <div style="font-weight:800; font-size:15px; margin-top:4px;">${esc(o.clientName || 'Client')}</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="order-price">${money(o.price)}</div>
-          ${statusBadge(o.status)}
-        </div>
-      </div>
-      <div class="order-meta">
-        ${esc(o.tier ? (o.tier === 'low' ? 'Basic' : o.tier === 'med' ? 'Standard' : 'Premium') : '')} tier ·
-        ${esc(o.aspectRatio || '')} · ${esc(o.duration || 1)} min × ${esc(o.quantity || 1)}
-      </div>
-      ${o.status === 'payment_verified' || o.status === 'completed' ? `
-        <div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div>` : ''}
-      <div class="order-actions">
-        ${o.status === 'wait_editor' ? `
-          <button class="btn btn-primary btn-sm" data-accept="${o.id}">Accept</button>
-          <button class="btn btn-danger btn-sm" data-reject="${o.id}">Reject</button>` : ''}
-        ${o.status === 'payment_verified' ? `<button class="btn btn-primary btn-sm" data-progress="${o.id}">Update Progress</button>` : ''}
-        <button class="btn btn-ghost btn-sm" data-view-order-e="${o.id}">Details</button>
-      </div>
-    </div>
-  `).join("");
-  $all("[data-accept]", list).forEach(b => b.addEventListener("click", () => acceptOrder(b.dataset.accept)));
-  $all("[data-reject]", list).forEach(b => b.addEventListener("click", () => rejectOrder(b.dataset.reject)));
-  $all("[data-progress]", list).forEach(b => b.addEventListener("click", () => openProgressModal(b.dataset.progress)));
-  $all("[data-view-order-e]", list).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderE, "editor")));
-}
-
-async function acceptOrder(orderId) {
-  const order = State.allOrdersAsEditor.find(o => o.id === orderId);
-  if (!order) return;
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "pending_admin" });
-    showToast("Order accepted — sent for admin approval.", "ok");
-    sendEmailNotification({
-      to_email: SUPER_ADMIN_EMAIL,
-      subject: `New escrow approval needed — ${order.orderId}`,
-      message: `Editor accepted order ${order.orderId} for ${money(order.price)}. Please review and approve in the Admin panel.`,
-      order_id: order.orderId,
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize(); window.onresize = resize;
+  const particles = Array.from({ length: 90 }, () => ({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    r: Math.random()*2+0.6, s: Math.random()*0.6+0.15, hue: Math.random()*360,
+  }));
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const colorMap = { snow:"#fff", starfield:"#fff", cyberrain:"#0ff", matrix:"#0f6", embers:"#f73", plasma:"#a5f", chroma:"#5cf", prism:"#fc5", auroraflow:"#5fc", golddust:"#fd6", storm:"#8af", petals:"#f8b", warp:"#9cf", flares:"#fb6", bubbles:"#9df" };
+    const color = colorMap[name] || "#6d5bff";
+    particles.forEach(p => {
+      p.y += p.s; if (p.y > canvas.height) { p.y = -5; p.x = Math.random()*canvas.width; }
+      if (name === "cyberrain" || name === "matrix") p.y += p.s*3;
+      ctx.beginPath(); ctx.fillStyle = color; ctx.globalAlpha = 0.55; ctx.arc(p.x,p.y,p.r,0,7); ctx.fill();
     });
-  } catch (e) { console.error(e); showToast("Failed to accept order.", "err"); }
-}
-async function rejectOrder(orderId) {
-  if (!confirm("Reject this commission request?")) return;
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "rejected" });
-    showToast("Order rejected.", "ok");
-  } catch (e) { console.error(e); showToast("Failed to reject order.", "err"); }
-}
-
-function openProgressModal(orderId) {
-  const order = State.allOrdersAsEditor.find(o => o.id === orderId);
-  if (!order) return;
-  State.activeOrderForProgress = order;
-  const val = order.workProgress || 15;
-  $("#progressSlider").value = val;
-  $("#progressValLabel").textContent = val;
-  openModal("progressOverlay");
-}
-$("#progressSlider").addEventListener("input", e => { $("#progressValLabel").textContent = e.target.value; });
-$("#saveProgressBtn").addEventListener("click", async () => {
-  const order = State.activeOrderForProgress;
-  if (!order) return;
-  const val = Number($("#progressSlider").value);
-  const btn = $("#saveProgressBtn"); btn.disabled = true; btn.textContent = "Saving…";
-  try {
-    const update = { workProgress: val };
-    if (val >= 100) update.status = "completed";
-    await db.collection("orders").doc(order.id).update(update);
-    showToast(val >= 100 ? "Marked as completed! 🎉" : "Progress updated.", "ok");
-    closeModal("progressOverlay");
-  } catch (e) {
-    console.error(e); showToast("Failed to update progress.", "err");
-  } finally {
-    btn.disabled = false; btn.textContent = "Save Progress";
+    ctx.globalAlpha = 1;
+    canvasAnimFrame = requestAnimationFrame(frame);
   }
-});
+  frame();
+}
 
-/* ========================= 13. ADMIN REVIEW ========================= */
-$all("[data-atab]").forEach(tab => tab.addEventListener("click", () => {
-  $all("[data-atab]").forEach(t => t.classList.remove("active"));
-  tab.classList.add("active");
-  $("#adminAppsPane").classList.toggle("hidden", tab.dataset.atab !== "apps");
-  $("#adminOrdersPane").classList.toggle("hidden", tab.dataset.atab !== "orders");
-  $("#adminShopsPane").classList.toggle("hidden", tab.dataset.atab !== "shops");
-}));
+/* ---- 3D realistic theme worlds (Three.js) ---- */
+let threeState = null;
+function disposeThree() {
+  if (!threeState) return;
+  cancelAnimationFrame(threeState.raf);
+  threeState.renderer.dispose();
+  if (threeState.renderer.domElement.parentNode) threeState.renderer.domElement.parentNode.removeChild(threeState.renderer.domElement);
+  threeState = null;
+}
+function applyCanvas3DTheme(name) {
+  const host = $("#themeCanvas3d");
+  host.innerHTML = "";
+  disposeThree();
+  if (!name) return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  host.appendChild(renderer.domElement);
 
-function renderAdminReview() {
-  if (!State.isAdmin) return;
-  const appsPane = $("#adminAppsPane");
-  const apps = State.pendingApplications || [];
-  if (apps.length === 0) {
-    appsPane.innerHTML = `<div class="empty-state"><h3>No pending applications</h3><p>New creator applications will show up here.</p></div>`;
-  } else {
-    appsPane.innerHTML = `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr));">` + apps.map(a => `
-      <div class="glass card">
-        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
-          <img src="${a.logoUrl || ''}" style="width:48px;height:48px;border-radius:12px;object-fit:cover;">
-          <div><div style="font-weight:800;">${esc(a.name)}</div><div class="text-dim" style="font-size:12px;">${esc(a.category || '')}</div></div>
-        </div>
-        <div class="text-dim" style="font-size:12.5px; margin-bottom:6px;">By ${esc(a.applicantHandle || a.applicantUid)}</div>
-        <div class="text-dim" style="font-size:12.5px; margin-bottom:6px; word-break:break-all;">${esc(a.portfolio || '')}</div>
-        <div class="text-dim" style="font-size:12.5px; margin-bottom:14px;">Basic ${money(a.rates && a.rates.low)} · Std ${money(a.rates && a.rates.medium)} · Prem ${money(a.rates && a.rates.high)}</div>
-        <div class="row">
-          <button class="btn btn-primary btn-sm" data-approve="${a.id}">Approve</button>
-          <button class="btn btn-danger btn-sm" data-decline="${a.id}">Reject</button>
-        </div>
-      </div>`).join("") + `</div>`;
-    $all("[data-approve]", appsPane).forEach(b => b.addEventListener("click", () => approveApplication(b.dataset.approve)));
-    $all("[data-decline]", appsPane).forEach(b => b.addEventListener("click", () => declineApplication(b.dataset.decline)));
+  const themeSetups = {
+    egypt3d: () => {
+      scene.fog = new THREE.FogExp2(0x2a1a08, 0.008);
+      scene.add(new THREE.AmbientLight(0xffcf8f, 0.5));
+      const sun = new THREE.DirectionalLight(0xffe0a0, 1.4); sun.position.set(-30, 40, 20); scene.add(sun);
+      const sandMat = new THREE.MeshStandardMaterial({ color: 0xd8a860, roughness: 1 });
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(400,400,40,40), sandMat);
+      ground.rotation.x = -Math.PI/2; ground.position.y = -6; scene.add(ground);
+      const pyramidMat = new THREE.MeshStandardMaterial({ color: 0xc79a5b, roughness: 0.85, flatShading: true });
+      for (let i=0;i<3;i++){
+        const h = 22 - i*4;
+        const pyr = new THREE.Mesh(new THREE.ConeGeometry(h*1.05, h, 4), pyramidMat);
+        pyr.position.set(-40 + i*45, -6+h/2, -60 - i*20); pyr.rotation.y = Math.PI/4; scene.add(pyr);
+      }
+      camera.position.set(0, 8, 55);
+      return { rotSpeed: 0.0006 };
+    },
+    greece3d: () => {
+      scene.fog = new THREE.FogExp2(0x8fd0ff, 0.006);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      const sun = new THREE.DirectionalLight(0xffffff, 1.2); sun.position.set(20,40,10); scene.add(sun);
+      const groundMat = new THREE.MeshStandardMaterial({ color: 0xe8e4d8, roughness: 0.9 });
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(400,400), groundMat);
+      ground.rotation.x = -Math.PI/2; ground.position.y = -6; scene.add(ground);
+      const colMat = new THREE.MeshStandardMaterial({ color: 0xf4f2ec, roughness: 0.6 });
+      for (let i=0;i<8;i++){
+        const col = new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.3,16,16), colMat);
+        col.position.set(-25 + i*7, 2, -40); scene.add(col);
+        const cap = new THREE.Mesh(new THREE.BoxGeometry(2.6,1,2.6), colMat);
+        cap.position.set(-25 + i*7, 10.5, -40); scene.add(cap);
+      }
+      const roof = new THREE.Mesh(new THREE.BoxGeometry(56,2,10), colMat); roof.position.set(-1.5, 11.5, -40); scene.add(roof);
+      camera.position.set(0, 8, 45);
+      return { rotSpeed: 0.0004 };
+    },
+    jungle3d: () => {
+      scene.fog = new THREE.FogExp2(0x0e2410, 0.015);
+      scene.add(new THREE.AmbientLight(0x88ff99, 0.45));
+      const sun = new THREE.DirectionalLight(0xbfffb0, 0.9); sun.position.set(10,50,10); scene.add(sun);
+      const groundMat = new THREE.MeshStandardMaterial({ color: 0x1e3d1a, roughness: 1 });
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(400,400), groundMat);
+      ground.rotation.x = -Math.PI/2; ground.position.y = -6; scene.add(ground);
+      const templeMat = new THREE.MeshStandardMaterial({ color: 0x6b5a44, roughness: 0.9, flatShading: true });
+      for (let i=0;i<4;i++){
+        const size = 26 - i*6;
+        const tier = new THREE.Mesh(new THREE.BoxGeometry(size,4,size), templeMat);
+        tier.position.set(0, -6 + i*4 + 2, -50); scene.add(tier);
+      }
+      const leafMat = new THREE.MeshStandardMaterial({ color: 0x2f7d32, roughness: 1 });
+      for (let i=0;i<24;i++){
+        const tree = new THREE.Mesh(new THREE.ConeGeometry(2.5+Math.random()*2, 10+Math.random()*8, 8), leafMat);
+        tree.position.set((Math.random()-0.5)*140, -1, -20-Math.random()*80); scene.add(tree);
+      }
+      camera.position.set(0, 6, 40);
+      return { rotSpeed: 0.0005 };
+    },
+    china3d: () => {
+      scene.fog = new THREE.FogExp2(0x1a1420, 0.01);
+      scene.add(new THREE.AmbientLight(0xffd0e0, 0.45));
+      const lantern = new THREE.PointLight(0xff5b6d, 1.2, 60); lantern.position.set(0,15,-30); scene.add(lantern);
+      const moon = new THREE.DirectionalLight(0xbcd0ff, 0.6); moon.position.set(-20,40,20); scene.add(moon);
+      const groundMat = new THREE.MeshStandardMaterial({ color: 0x2a2032, roughness: 1 });
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(400,400), groundMat);
+      ground.rotation.x = -Math.PI/2; ground.position.y = -6; scene.add(ground);
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0x8a3b3b, roughness: 0.85, flatShading: true });
+      const roofMat = new THREE.MeshStandardMaterial({ color: 0x2e2e33, roughness: 0.6, flatShading: true });
+      for (let t=0;t<3;t++){
+        const w = 18 - t*4;
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w,4,w), wallMat);
+        body.position.set(0, -4 + t*6, -55); scene.add(body);
+        const roof = new THREE.Mesh(new THREE.ConeGeometry(w*0.85, 3, 4), roofMat);
+        roof.position.set(0, -1.5 + t*6, -55); roof.rotation.y = Math.PI/4; scene.add(roof);
+      }
+      camera.position.set(0, 6, 45);
+      return { rotSpeed: 0.0004 };
+    },
+  };
+  const setup = themeSetups[name]; if (!setup) return;
+  const { rotSpeed } = setup();
+  function resize() {
+    camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
-
-  const ordersPane = $("#adminOrdersPane");
-  const relevant = (State.allOrdersAdmin || []).filter(o => o.status === "pending_admin" || o.status === "payment_review");
-  if (relevant.length === 0) {
-    ordersPane.innerHTML = `<div class="empty-state"><h3>Escrow queue is clear</h3><p>Orders needing approval or payment verification appear here.</p></div>`;
-  } else {
-    ordersPane.innerHTML = relevant.map(o => `
-      <div class="glass order-card">
-        <div class="order-top">
-          <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800;margin-top:4px;">${esc(o.shopName)}</div></div>
-          <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
-        </div>
-        <div class="order-actions">
-          ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button><button class="btn btn-danger btn-sm" data-admin-reject-order="${o.id}">Reject</button>` : ''}
-          ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button><button class="btn btn-danger btn-sm" data-admin-reject-order="${o.id}">Reject</button>` : ''}
-          <button class="btn btn-ghost btn-sm" data-view-order-a="${o.id}">Details</button>
-        </div>
-      </div>
-    `).join("");
-    $all("[data-admin-approve-order]", ordersPane).forEach(b => b.addEventListener("click", () => adminApproveOrder(b.dataset.adminApproveOrder)));
-    $all("[data-admin-verify]", ordersPane).forEach(b => b.addEventListener("click", () => adminVerifyPayment(b.dataset.adminVerify)));
-    $all("[data-admin-reject-order]", ordersPane).forEach(b => b.addEventListener("click", () => openAdminRejectModal(b.dataset.adminRejectOrder)));
-    $all("[data-view-order-a]", ordersPane).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderA, "admin")));
+  window.addEventListener("resize", resize);
+  let t = 0;
+  function frame() {
+    t += 1;
+    const radius = 55;
+    camera.position.x = Math.sin(t*rotSpeed) * radius;
+    camera.position.z = Math.cos(t*rotSpeed) * radius;
+    camera.lookAt(0, 4, -40);
+    renderer.render(scene, camera);
+    threeState.raf = requestAnimationFrame(frame);
   }
-
-  const shopsPane = $("#adminShopsPane");
-  const allShops = State.shops || [];
-  if (allShops.length === 0) {
-    shopsPane.innerHTML = `<div class="empty-state"><h3>No shops listed</h3><p>Approved creator shops will appear here for management.</p></div>`;
-  } else {
-    shopsPane.innerHTML = `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">` + allShops.map(s => `
-      <div class="glass card">
-        <div style="display:flex; gap:12px; align-items:center; margin-bottom:10px;">
-          <img src="${s.logoUrl || ''}" style="width:44px;height:44px;border-radius:10px;object-fit:cover;" onerror="this.style.display='none'">
-          <div><div style="font-weight:800;">${esc(s.name)}</div><div class="text-dim" style="font-size:12px;">${esc(s.category || '')} · ${esc(s.ownerHandle || '')}</div></div>
-        </div>
-        <div class="text-dim" style="font-size:12px; margin-bottom:12px;">Basic ${money(s.rates && s.rates.low)} · Std ${money(s.rates && s.rates.medium)} · Prem ${money(s.rates && s.rates.high)}</div>
-        <button class="btn btn-danger btn-sm btn-block" data-admin-del-shop="${s.id}">Delete Shop</button>
-      </div>`).join("") + `</div>`;
-    $all("[data-admin-del-shop]", shopsPane).forEach(b => b.addEventListener("click", () => deleteShop(b.dataset.adminDelShop)));
-  }
+  threeState = { renderer, raf: null };
+  frame();
 }
 
-async function approveApplication(appId) {
-  const app = State.pendingApplications.find(a => a.id === appId);
-  if (!app) return;
-  try {
-    await db.collection("shops").add({
-      name: app.name, category: app.category, rates: app.rates, logoUrl: app.logoUrl || "",
-      ownerUid: app.applicantUid, ownerHandle: app.applicantHandle || "", ownerEmail: app.applicantEmail || "",
-      portfolio: app.portfolio || "", createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    await db.collection("shop_applications").doc(appId).delete();
-    showToast("Shop approved & listed.", "ok");
-  } catch (e) { console.error(e); showToast("Failed to approve.", "err"); }
-}
-async function declineApplication(appId) {
-  if (!confirm("Reject this application?")) return;
-  try {
-    await db.collection("shop_applications").doc(appId).delete();
-    showToast("Application rejected.", "ok");
-  } catch (e) { console.error(e); showToast("Failed to reject.", "err"); }
-}
-async function adminApproveOrder(orderId) {
-  const order = State.allOrdersAdmin.find(o => o.id === orderId);
-  if (!order) return;
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "in_progress_escrow" });
-    showToast("Escrow approved — QR sent to client.", "ok");
-    sendEmailNotification({
-      to_email: order.clientEmail || "",
-      subject: `Escrow approved for ${order.orderId} — complete payment`,
-      message: `Your order ${order.orderId} was approved. Pay ${money(order.price)} to UPI ID ${PLATFORM_UPI_ID} and submit proof in the app.`,
-      upi_id: PLATFORM_UPI_ID, order_id: order.orderId,
-    });
-  } catch (e) { console.error(e); showToast("Failed to approve order.", "err"); }
-}
-async function adminVerifyPayment(orderId) {
-  const order = State.allOrdersAdmin.find(o => o.id === orderId);
-  if (!order) return;
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "payment_verified", workProgress: order.workProgress || 15 });
-    showToast("Payment verified — creator notified.", "ok");
-    sendEmailNotification({
-      to_email: order.editorEmail || "",
-      subject: `Payment verified for ${order.orderId} — start work`,
-      message: `Payment for order ${order.orderId} (${money(order.price)}) has been verified by admin. You can start work and update progress in the app.`,
-      order_id: order.orderId,
-    });
-    sendEmailNotification({
-      to_email: order.clientEmail || "",
-      subject: `Payment verified for ${order.orderId}`,
-      message: `Your payment for order ${order.orderId} has been verified. The editor will now begin work and you'll be able to track progress in My Orders.`,
-      order_id: order.orderId,
-    });
-  } catch (e) { console.error(e); showToast("Failed to verify payment.", "err"); }
-}
-
-function openAdminRejectModal(orderId) {
-  const order = (State.allOrdersAdmin || []).find(o => o.id === orderId);
-  if (!order) return;
-  State.activeOrderForReject = order;
-  $("#rejectReasonInput").value = "";
-  openModal("rejectOverlay");
-}
-$("#confirmRejectBtn").addEventListener("click", async () => {
-  const order = State.activeOrderForReject;
-  if (!order) return;
-  const reason = $("#rejectReasonInput").value.trim();
-  if (!reason) return showToast("Please provide a reason.", "err");
-  const btn = $("#confirmRejectBtn"); btn.disabled = true; btn.textContent = "Rejecting…";
-  try {
-    await sendEmailNotification({
-      to_email: order.clientEmail || "",
-      subject: `Order ${order.orderId} rejected`,
-      message: `Your order ${order.orderId} (${order.shopName || ''}) was rejected by the admin. Reason: ${reason}`,
-      order_id: order.orderId,
-    });
-    await sendEmailNotification({
-      to_email: order.editorEmail || "",
-      subject: `Order ${order.orderId} rejected`,
-      message: `Order ${order.orderId} from ${order.clientName || 'a client'} was rejected by the admin. Reason: ${reason}`,
-      order_id: order.orderId,
-    });
-    await db.collection("orders").doc(order.id).delete();
-    showToast("Order rejected, removed, and both parties notified.", "ok");
-    closeModal("rejectOverlay");
-    State.activeOrderForReject = null;
-  } catch (e) {
-    console.error(e); showToast("Failed to reject order.", "err");
-  } finally {
-    btn.disabled = false; btn.textContent = "Reject & Remove Order";
-  }
-});
-
-/* ========================= 14. APPLY FOR EARN (2-step) ========================= */
-const RegState = { logoBase64: null };
-
-$("#regLogoInput").addEventListener("change", async e => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  try {
-    const base64 = await compressImageToBase64(file, 400);
-    RegState.logoBase64 = base64;
-    $("#regLogoPreview").src = base64;
-    $("#regLogoPreview").classList.remove("hidden");
-  } catch (err) { showToast("Could not process logo.", "err"); }
-});
-
-$("#regStep1Next").addEventListener("click", () => {
-  const name = $("#regShopName").value.trim();
-  const portfolio = $("#regPortfolio").value.trim();
-  if (!name) return showToast("Shop name is required.", "err");
-  if (!portfolio) return showToast("Portfolio link is required.", "err");
-  if (!RegState.logoBase64) return showToast("Please upload a logo.", "err");
-  switchView("viewRegisterStep2");
-});
-$("#regStep2Back").addEventListener("click", () => switchView("viewRegisterStep1"));
-
-$("#regStep2Submit").addEventListener("click", async () => {
-  if (!State.user) return;
-  const low = Number($("#regRateLow").value), med = Number($("#regRateMed").value), high = Number($("#regRateHigh").value);
-  if (!low || !med || !high) return showToast("All three pricing tiers are required.", "err");
-  const btn = $("#regStep2Submit"); btn.disabled = true; btn.textContent = "Submitting…";
-  try {
-    await db.collection("shop_applications").add({
-      name: $("#regShopName").value.trim(),
-      category: $("#regCategory").value,
-      portfolio: $("#regPortfolio").value.trim(),
-      logoUrl: RegState.logoBase64,
-      rates: { low, medium: med, high },
-      applicantUid: State.user.uid,
-      applicantHandle: (State.profile && State.profile.userId) || "",
-      applicantEmail: State.user.email || "",
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    showToast("Application submitted for review!", "ok");
-    $("#regShopName").value = ""; $("#regPortfolio").value = ""; $("#regRateLow").value = "";
-    $("#regRateMed").value = ""; $("#regRateHigh").value = ""; RegState.logoBase64 = null;
-    $("#regLogoPreview").classList.add("hidden");
-    switchView("viewShop");
-  } catch (e) {
-    console.error(e); showToast("Failed to submit application.", "err");
-  } finally {
-    btn.disabled = false; btn.textContent = "Submit Application";
-  }
-});
-
-/* ========================= 15. GLOBAL ERROR SAFETY NET ========================= */
-window.addEventListener("error", e => console.error("Uncaught error:", e.error || e.message));
-window.addEventListener("unhandledrejection", e => console.error("Unhandled rejection:", e.reason));
+/* ==================== GLOBAL ERROR HANDLER ==================== */
+window.addEventListener("error", (e) => { console.error("Runtime error:", e.error || e.message); });
+window.addEventListener("unhandledrejection", (e) => { console.error("Unhandled promise rejection:", e.reason); });
 </script>
 </body>
 </html>
