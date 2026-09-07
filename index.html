@@ -531,30 +531,6 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   </div>
 </div>
 
-<!-- EDIT SHOP MODAL -->
-<div class="overlay" id="editShopOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Edit Creator Shop</div><div class="modal-close" data-close="editShopOverlay">✕</div></div>
-    <div class="field"><label>Shop Name</label><input id="editShopNameInput"></div>
-    <div class="field"><label>Logo URL or Base64</label><input id="editShopLogoInput"></div>
-    <div class="row">
-      <div class="field"><label>Basic (₹)</label><input id="editRateLow" type="number"></div>
-      <div class="field"><label>Std (₹)</label><input id="editRateMed" type="number"></div>
-      <div class="field"><label>Prem (₹)</label><input id="editRateHigh" type="number"></div>
-    </div>
-    <button class="btn btn-primary btn-block mt16" id="saveShopEditBtn">Save Changes</button>
-  </div>
-</div>
-
-<!-- REJECT APP MODAL -->
-<div class="overlay" id="rejectAppOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Decline Application</div><div class="modal-close" data-close="rejectAppOverlay">✕</div></div>
-    <div class="field"><label>Reason for rejection</label><textarea id="rejectAppReasonInput" rows="3" placeholder="Provide feedback…"></textarea></div>
-    <button class="btn btn-danger btn-block" id="confirmRejectAppBtn">Decline Application</button>
-  </div>
-</div>
-
 <div class="toast-stack" id="toastStack"></div>
 
 <!-- FIREBASE (compat) -->
@@ -603,8 +579,6 @@ const State = {
   hireContext: null,
   activeOrderForPayment: null,
   activeOrderForProgress: null,
-  activeEditingShopId: null,
-  activeDecliningAppId: null,
   selectedTier: "low",
   selectedAR: "16:9",
 };
@@ -852,10 +826,10 @@ $("#menuToggle").addEventListener("click", () => $("#sidebar").classList.toggle(
 
 /* ========================= 6. AUTH ========================= */
 $("#googleSignInBtn").addEventListener("click", () => {
-  $("#authLoading").classList.remove("hidden");
+  $("#authLoading").classList.add("hidden");
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider).catch(err => {
-    $("#authLoading").classList.add("hidden");
+    $("#authLoading").classList.remove("hidden");
     showToast(err.message || "Sign-in failed", "err");
   });
 });
@@ -1013,14 +987,11 @@ function renderMyShops() {
         <div style="font-weight:700;font-size:13.5px;">${esc(s.name)}</div>
         <div class="text-dim" style="font-size:11.5px;">${esc(s.category || '')}</div>
       </div>
-      <button class="btn btn-ghost btn-sm" data-edit-shop="${s.id}" style="margin-right:6px;">Edit</button>
       <button class="btn btn-danger btn-sm" data-del-shop="${s.id}">Delete</button>
     </div>
   `).join("");
   $all("[data-del-shop]", list).forEach(btn => btn.addEventListener("click", () => deleteShop(btn.dataset.delShop)));
-  $all("[data-edit-shop]", list).forEach(btn => btn.addEventListener("click", () => openEditShopModal(btn.dataset.editShop)));
 }
-
 async function deleteShop(shopId) {
   if (!confirm("Delete this shop listing?")) return;
   try {
@@ -1028,34 +999,6 @@ async function deleteShop(shopId) {
     showToast("Shop deleted.", "ok");
   } catch (e) { showToast("Failed to delete shop.", "err"); }
 }
-
-function openEditShopModal(shopId) {
-  const shop = State.myShops.find(s => s.id === shopId);
-  if (!shop) return;
-  State.activeEditingShopId = shopId;
-  $("#editShopNameInput").value = shop.name || "";
-  $("#editShopLogoInput").value = shop.logoUrl || "";
-  $("#editRateLow").value = (shop.rates && shop.rates.low) || 0;
-  $("#editRateMed").value = (shop.rates && shop.rates.medium) || 0;
-  $("#editRateHigh").value = (shop.rates && shop.rates.high) || 0;
-  openModal("editShopOverlay");
-}
-
-$("#saveShopEditBtn").addEventListener("click", async () => {
-  const shopId = State.activeEditingShopId;
-  if (!shopId) return;
-  const name = $("#editShopNameInput").value.trim();
-  const logoUrl = $("#editShopLogoInput").value.trim();
-  const low = Number($("#editRateLow").value), med = Number($("#editRateMed").value), high = Number($("#editRateHigh").value);
-  if (!name) return showToast("Shop name can't be empty.", "err");
-  const btn = $("#saveShopEditBtn"); btn.disabled = true; btn.textContent = "Saving…";
-  try {
-    await db.collection("shops").doc(shopId).update({ name, logoUrl, rates: { low, medium: med, high } });
-    showToast("Shop updated.", "ok");
-    closeModal("editShopOverlay");
-  } catch (e) { showToast("Failed to update shop.", "err"); }
-  finally { btn.disabled = false; btn.textContent = "Save Changes"; }
-});
 
 $("#profileAvatarInput").addEventListener("change", async e => {
   const file = e.target.files && e.target.files[0];
@@ -1336,34 +1279,6 @@ async function rejectOrder(orderId) {
   } catch (e) { showToast("Failed to reject.", "err"); }
 }
 
-function openProgressModal(orderId) {
-  const order = State.allOrdersAsEditor.find(o => o.id === orderId);
-  if (!order) return;
-  State.activeOrderForProgress = order;
-  const val = order.workProgress || 15;
-  $("#progressSlider").value = val;
-  $("#progressValLabel").textContent = val;
-  openModal("progressOverlay");
-}
-$("#progressSlider").addEventListener("input", e => { $("#progressValLabel").textContent = e.target.value; });
-$("#saveProgressBtn").addEventListener("click", async () => {
-  const order = State.activeOrderForProgress;
-  if (!order) return;
-  const val = Number($("#progressSlider").value);
-  const btn = $("#saveProgressBtn"); btn.disabled = true; btn.textContent = "Saving…";
-  try {
-    const update = { workProgress: val };
-    if (val >= 100) update.status = "completed";
-    await db.collection("orders").doc(order.id).update(update);
-    showToast(val >= 100 ? "Marked as completed! 🎉" : "Progress updated.", "ok");
-    closeModal("progressOverlay");
-  } catch (e) {
-    showToast("Failed to update progress.", "err");
-  } finally {
-    btn.disabled = false; btn.textContent = "Save Progress";
-  }
-});
-
 /* ========================= 13. ADMIN REVIEW ========================= */
 $all("[data-atab]").forEach(tab => tab.addEventListener("click", () => {
   $all("[data-atab]").forEach(t => t.classList.remove("active"));
@@ -1391,29 +1306,6 @@ function renderAdminReview() {
     $all("[data-approve]", appsPane).forEach(b => b.addEventListener("click", () => approveApp(b.dataset.approve)));
     $all("[data-decline]", appsPane).forEach(b => b.addEventListener("click", () => openDeclineModal(b.dataset.decline)));
   }
-
-  const ordersPane = $("#adminOrdersPane");
-  const relevant = (State.allOrdersAdmin || []).filter(o => o.status === "pending_admin" || o.status === "payment_review");
-  if (relevant.length === 0) {
-    ordersPane.innerHTML = `<div class="empty-state"><h3>Escrow queue is clear</h3></div>`;
-  } else {
-    ordersPane.innerHTML = relevant.map(o => `
-      <div class="glass order-card">
-        <div class="order-top">
-          <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800;margin-top:4px;">${esc(o.shopName)}</div></div>
-          <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
-        </div>
-        <div class="order-actions">
-          ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button>` : ''}
-          ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button>` : ''}
-          <button class="btn btn-ghost btn-sm" data-view-order-a="${o.id}">Details</button>
-        </div>
-      </div>
-    `).join("");
-    $all("[data-admin-approve-order]", ordersPane).forEach(b => b.addEventListener("click", () => adminApproveOrder(b.dataset.adminApproveOrder)));
-    $all("[data-admin-verify]", ordersPane).forEach(b => b.addEventListener("click", () => adminVerifyPayment(b.dataset.adminVerify)));
-    $all("[data-view-order-a]", ordersPane).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderA, "admin")));
-  }
 }
 
 async function approveApp(appId) {
@@ -1427,45 +1319,6 @@ async function approveApp(appId) {
     await db.collection("shop_applications").doc(appId).delete();
     showToast("Shop approved.", "ok");
   } catch (e) { showToast("Approval failed.", "err"); }
-}
-
-function openDeclineModal(appId) {
-  State.activeDecliningAppId = appId;
-  $("#rejectAppReasonInput").value = "";
-  openModal("rejectAppOverlay");
-}
-$("#confirmRejectAppBtn").addEventListener("click", async () => {
-  const appId = State.activeDecliningAppId;
-  if (!appId) return;
-  const reason = $("#rejectAppReasonInput").value.trim() || "No reason given";
-  const btn = $("#confirmRejectAppBtn"); btn.disabled = true; btn.textContent = "Declining…";
-  try {
-    const app = State.pendingApplications.find(a => a.id === appId);
-    if (app && app.applicantUid) {
-      sendEmailNotification({
-        to_email: app.applicantEmail || "",
-        subject: "Shop Application Update",
-        message: `Your application for shop "${app.name}" was declined.\nReason: ${reason}`,
-      });
-    }
-    await db.collection("shop_applications").doc(appId).delete();
-    showToast("Application declined.", "ok");
-    closeModal("rejectAppOverlay");
-  } catch (e) { showToast("Failed to decline application.", "err"); }
-  finally { btn.disabled = false; btn.textContent = "Decline Application"; }
-});
-
-async function adminApproveOrder(orderId) {
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "in_progress_escrow" });
-    showToast("Escrow approved — QR sent.", "ok");
-  } catch (e) { showToast("Failed to approve.", "err"); }
-}
-async function adminVerifyPayment(orderId) {
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "payment_verified", workProgress: 15 });
-    showToast("Payment verified.", "ok");
-  } catch (e) { showToast("Failed to verify.", "err"); }
 }
 
 /* ========================= 14. APPLY FOR EARN ========================= */
@@ -1498,7 +1351,6 @@ $("#regStep2Submit").addEventListener("click", async () => {
       portfolio: $("#regPortfolio").value.trim(), logoUrl: RegState.logoBase64,
       rates: { low, medium: med, high }, applicantUid: State.user.uid,
       applicantHandle: (State.profile && State.profile.userId) || "",
-      applicantEmail: State.user.email || "",
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     showToast("Application submitted!", "ok");
