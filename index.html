@@ -35,7 +35,10 @@ html[data-theme="ice"]{--bg:#081018;--bg2:#0f1e2c;--primary:#7ee6ff;--primary2:#
 html[data-theme="ember"]{--bg:#120806;--bg2:#20100a;--primary:#ff7a3e;--primary2:#ffb85b;--accent:#ff3e5b;}
 html[data-theme="orchid"]{--bg:#120a16;--bg2:#20122a;--primary:#c85bff;--primary2:#ff5be0;--accent:#5be6ff;}
 html[data-theme="graphite"]{--bg:#0c0c0e;--bg2:#18181c;--primary:#8f93a0;--primary2:#c4c8d4;--accent:#5be6c8;}
-html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
+html[data-canvas="snow"],html[data-canvas="starfield"],html[data-canvas="cyberrain"],html[data-canvas="matrix"],
+html[data-canvas="embers"],html[data-canvas="plasma"],html[data-canvas="chroma"],html[data-canvas="prism"],
+html[data-canvas="auroraflow"],html[data-canvas="golddust"],html[data-canvas="storm"],html[data-canvas="petals"],
+html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"]{--bg:#05060a;--bg2:#0a0b12;}
 
 *{box-sizing:border-box; margin:0; padding:0;}
 ::selection{background:var(--primary); color:#fff;}
@@ -46,7 +49,9 @@ body{
   transition:background 0.6s ease;
 }
 #themeCanvas{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; display:none;}
+html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
 
+/* scrollbar */
 ::-webkit-scrollbar{width:10px; height:10px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--primary2)); border-radius:10px; border:2px solid var(--bg);}
@@ -88,34 +93,46 @@ body{
   backdrop-filter:blur(18px) saturate(140%); box-shadow:0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 .card{padding:20px;}
+.card-hi{background:var(--surface-hi);}
+
 .btn{
   font-family:var(--font); border:none; cursor:pointer; padding:11px 20px; border-radius:12px; font-weight:700; font-size:13.5px;
   transition:all .22s cubic-bezier(.2,.8,.2,1); display:inline-flex; align-items:center; gap:8px; justify-content:center;
+  letter-spacing:-0.01em;
 }
 .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; box-shadow:0 4px 20px -4px var(--primary), var(--glow);}
-.btn-primary:hover{transform:translateY(-2px);}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 28px -4px var(--primary), 0 0 32px rgba(109,91,255,0.5);}
+.btn-primary:active{transform:translateY(0);}
 .btn-ghost{background:var(--surface); color:var(--text); border:1px solid var(--border);}
-.btn-ghost:hover{background:var(--surface-hi);}
+.btn-ghost:hover{background:var(--surface-hi); border-color:rgba(255,255,255,0.18);}
 .btn-danger{background:rgba(255,91,122,0.12); color:var(--danger); border:1px solid rgba(255,91,122,0.3);}
+.btn-danger:hover{background:rgba(255,91,122,0.22);}
 .btn-sm{padding:8px 14px; font-size:12.5px; border-radius:9px;}
-.btn:disabled{opacity:.45; cursor:not-allowed;}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none !important;}
 .btn-block{width:100%;}
+.btn-icon{width:38px; height:38px; padding:0; border-radius:10px;}
 
 input, textarea, select{
   font-family:var(--font); background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--text);
   border-radius:11px; padding:11px 14px; font-size:14px; outline:none; transition:all .2s ease; width:100%;
 }
+input::placeholder, textarea::placeholder{color:var(--text-dim2);}
 input:focus, textarea:focus, select:focus{border-color:var(--primary); box-shadow:0 0 0 3px rgba(109,91,255,0.15);}
-label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; margin-bottom:7px;}
+label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; margin-bottom:7px; text-transform:none;}
 .field{margin-bottom:16px;}
+select{appearance:none; -webkit-appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--text-dim) 50%),linear-gradient(135deg,var(--text-dim) 50%,transparent 50%); background-position:calc(100% - 18px) center, calc(100% - 13px) center; background-size:5px 5px,5px 5px; background-repeat:no-repeat;}
 
-.file-drop{position:relative; border:1.5px dashed var(--border); border-radius:var(--radius-sm); padding:22px; text-align:center; cursor:pointer; background:rgba(255,255,255,0.02);}
+.file-drop{position:relative; border:1.5px dashed var(--border); border-radius:var(--radius-sm); padding:22px; text-align:center; cursor:pointer; transition:all .2s ease; background:rgba(255,255,255,0.02);}
+.file-drop:hover{border-color:var(--primary); background:rgba(109,91,255,0.06);}
 .file-drop input[type=file]{position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;}
+.file-drop svg{width:26px; height:26px; opacity:.6; margin-bottom:8px;}
+.file-drop-text{font-size:13px; color:var(--text-dim); font-weight:600;}
 .upload-preview{width:64px; height:64px; border-radius:12px; object-fit:cover; border:1px solid var(--border);}
 
 .grid{display:grid; gap:18px;}
 .grid-shops{grid-template-columns:repeat(auto-fill, minmax(260px,1fr));}
-.shop-card{padding:0; overflow:hidden;}
+.shop-card{padding:0; overflow:hidden; cursor:default; transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;}
+.shop-card:hover{transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.45), 0 0 0 1px var(--primary);}
 .shop-banner{height:88px; background:linear-gradient(135deg,var(--primary),var(--primary2)); position:relative;}
 .shop-logo{width:56px; height:56px; border-radius:16px; object-fit:cover; border:3px solid var(--bg2); position:absolute; left:18px; bottom:-28px; background:var(--bg2);}
 .shop-body{padding:36px 18px 18px;}
@@ -132,13 +149,11 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 .badge-progress{background:rgba(62,230,196,0.15); color:var(--accent);}
 .badge-review{background:rgba(91,140,255,0.15); color:#5b8cff;}
 .badge-verified{background:rgba(62,230,140,0.15); color:var(--success);}
-.badge-delivery{background:rgba(109,91,255,0.2); color:var(--primary2);}
-.badge-signing{background:rgba(255,179,91,0.2); color:var(--warning);}
 .badge-done{background:rgba(62,230,140,0.2); color:var(--success);}
 .badge-reject{background:rgba(255,91,122,0.15); color:var(--danger);}
 
 .progress-track{width:100%; height:8px; border-radius:20px; background:rgba(255,255,255,0.06); overflow:hidden; margin:10px 0;}
-.progress-fill{height:100%; border-radius:20px; background:linear-gradient(90deg,var(--primary),var(--accent)); transition:width .5s;}
+.progress-fill{height:100%; border-radius:20px; background:linear-gradient(90deg,var(--primary),var(--accent)); box-shadow:0 0 12px var(--primary); transition:width .5s cubic-bezier(.2,.8,.2,1);}
 
 .order-card{padding:18px; margin-bottom:14px;}
 .order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;}
@@ -148,25 +163,32 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 .order-actions{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
 
 .empty-state{text-align:center; padding:70px 20px; color:var(--text-dim);}
+.empty-state svg{width:44px; height:44px; opacity:.35; margin-bottom:14px;}
 .empty-state h3{color:var(--text); font-size:16px; margin-bottom:6px;}
+.empty-state p{font-size:13.5px;}
 
 .overlay{position:fixed; inset:0; background:rgba(4,4,8,0.72); backdrop-filter:blur(6px); z-index:100; display:none; align-items:center; justify-content:center; padding:20px;}
 .overlay.show{display:flex;}
-.modal{width:100%; max-width:520px; max-height:88vh; overflow-y:auto; padding:26px;}
+.modal{width:100%; max-width:520px; max-height:88vh; overflow-y:auto; padding:26px; transform:scale(.94); opacity:0; transition:all .28s cubic-bezier(.2,.8,.2,1);}
+.overlay.show .modal{transform:scale(1); opacity:1;}
 .modal-wide{max-width:680px;}
 .modal-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;}
 .modal-title{font-size:18px; font-weight:800;}
-.modal-close{width:32px; height:32px; border-radius:9px; background:var(--surface); border:1px solid var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text-dim);}
+.modal-close{width:32px; height:32px; border-radius:9px; background:var(--surface); border:1px solid var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text-dim); flex-shrink:0;}
+.modal-close:hover{color:var(--text); background:var(--surface-hi);}
 
 .toast-stack{position:fixed; top:20px; right:20px; z-index:200; display:flex; flex-direction:column; gap:10px; width:320px; max-width:88vw;}
-.toast{padding:14px 16px; border-radius:13px; display:flex; gap:10px; align-items:flex-start; box-shadow:0 10px 34px rgba(0,0,0,0.4);}
+.toast{padding:14px 16px; border-radius:13px; display:flex; gap:10px; align-items:flex-start; animation:toastIn .32s cubic-bezier(.2,.8,.2,1); box-shadow:0 10px 34px rgba(0,0,0,0.4);}
+.toast svg{width:18px; height:18px; flex-shrink:0; margin-top:1px;}
 .toast-msg{font-size:13px; font-weight:600; line-height:1.4;}
 .toast-ok{border-left:3px solid var(--success);}
 .toast-err{border-left:3px solid var(--danger);}
 .toast-info{border-left:3px solid var(--primary);}
+@keyframes toastIn{from{transform:translateX(40px); opacity:0;} to{transform:translateX(0); opacity:1;}}
 
 .theme-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(78px,1fr)); gap:10px; margin-top:8px;}
-.theme-swatch{aspect-ratio:1; border-radius:12px; cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden;}
+.theme-swatch{aspect-ratio:1; border-radius:12px; cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; transition:transform .2s ease;}
+.theme-swatch:hover{transform:scale(1.06);}
 .theme-swatch.active{border-color:var(--text); box-shadow:0 0 0 2px var(--primary);}
 .theme-swatch-label{position:absolute; bottom:3px; left:0; right:0; text-align:center; font-size:8.5px; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.8);}
 .theme-tabs{display:flex; gap:8px; margin-bottom:6px;}
@@ -178,15 +200,16 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 
 .step-dots{display:flex; gap:8px; margin-bottom:22px;}
 .step-dot{width:10px; height:10px; border-radius:50%; background:var(--surface); border:1px solid var(--border);}
-.step-dot.active{background:linear-gradient(135deg,var(--primary),var(--primary2));}
+.step-dot.active{background:linear-gradient(135deg,var(--primary),var(--primary2)); box-shadow:var(--glow);}
 
 .aspect-preview{width:100%; border-radius:14px; overflow:hidden; position:relative; background:#000; margin-bottom:16px; display:flex; align-items:center; justify-content:center;}
 .aspect-preview canvas{width:100%; height:100%; display:block;}
 .aspect-btns{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+.aspect-btn{padding:8px 14px; font-size:12px;}
 
 .tier-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px;}
 .tier-opt{padding:14px 10px; text-align:center; border-radius:12px; border:1px solid var(--border); cursor:pointer; background:var(--surface);}
-.tier-opt.active{border-color:var(--primary); background:rgba(109,91,255,0.12);}
+.tier-opt.active{border-color:var(--primary); background:rgba(109,91,255,0.12); box-shadow:0 0 0 1px var(--primary);}
 .tier-opt b{display:block; font-size:14px;}
 .tier-opt span{font-size:11px; color:var(--text-dim);}
 
@@ -203,12 +226,18 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 .hero-sub{color:var(--text-dim); font-size:15px; max-width:420px;}
 
 .g-btn{display:inline-flex; align-items:center; gap:10px; padding:12px 22px; border-radius:12px; background:#fff; color:#1a1a1a; font-weight:700; font-size:14px; cursor:pointer; border:none;}
+.g-btn svg{width:18px; height:18px;}
+
+.divider{height:1px; background:var(--border); margin:22px 0;}
 .row{display:flex; gap:12px;}
 .row > *{flex:1;}
 .mt8{margin-top:8px;} .mt16{margin-top:16px;} .mt20{margin-top:20px;} .mb0{margin-bottom:0;}
 .hidden{display:none !important;}
 .text-dim{color:var(--text-dim);}
-.skel{background:linear-gradient(90deg,var(--surface) 25%,var(--surface-hi) 50%,var(--surface) 75%); background-size:200% 100%; border-radius:10px;}
+.spin{animation:spin 0.9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.skel{background:linear-gradient(90deg,var(--surface) 25%,var(--surface-hi) 50%,var(--surface) 75%); background-size:200% 100%; animation:skel 1.4s ease infinite; border-radius:10px;}
+@keyframes skel{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
 
 @media(max-width:860px){
   .app{grid-template-columns:1fr;}
@@ -218,7 +247,8 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
   .search-wrap{width:100%; max-width:100%; order:3;}
   .menu-toggle{display:flex !important;}
 }
-.menu-toggle{display:none; width:40px; height:40px; border-radius:10px; background:var(--surface); border:1px solid var(--border); align-items:center; justify-content:center; cursor:pointer;}
+.menu-toggle{display:none; width:40px; height:40px; border-radius:10px; background:var(--surface); border:1px solid var(--border); align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;}
+@media(prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}}
 </style>
 </head>
 <body>
@@ -228,9 +258,9 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 <div id="authGate" class="center-screen">
   <div class="hero-mark">R</div>
   <div class="hero-title">Rex Edit Hub</div>
-  <div class="hero-sub">The escrow marketplace connecting creators with vetted editors. Payments held safe, work delivered on trust.</div>
+  <div class="hero-sub">The escrow marketplace connecting creators with vetted video editors. Payments held safe, work delivered on trust.</div>
   <button class="g-btn" id="googleSignInBtn">
-    <svg viewBox="0 0 48 48" width="18" height="18"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 5.5 29.6 3.5 24 3.5 12.7 3.5 3.5 12.7 3.5 24S12.7 44.5 24 44.5 44.5 35.3 44.5 24c0-1.2-.1-2.4-.9-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.6 18.9 12.5 24 12.5c3.1 0 5.8 1.1 8 3l6-6C34.5 5.5 29.6 3.5 24 3.5c-7.9 0-14.7 4.5-18.1 11.1z"/><path fill="#4CAF50" d="M24 44.5c5.5 0 10.4-1.9 14.1-5.1l-6.5-5.5c-2 1.4-4.6 2.3-7.6 2.3-5.3 0-9.7-3.1-11.3-7.7l-6.6 5.1C9.3 40 16 44.5 24 44.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.5 5.5C41.5 36.4 44.5 30.7 44.5 24c0-1.2-.1-2.4-.9-3.5z"/></svg>
+    <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 5.5 29.6 3.5 24 3.5 12.7 3.5 3.5 12.7 3.5 24S12.7 44.5 24 44.5 44.5 35.3 44.5 24c0-1.2-.1-2.4-.9-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.6 18.9 12.5 24 12.5c3.1 0 5.8 1.1 8 3l6-6C34.5 5.5 29.6 3.5 24 3.5c-7.9 0-14.7 4.5-18.1 11.1z"/><path fill="#4CAF50" d="M24 44.5c5.5 0 10.4-1.9 14.1-5.1l-6.5-5.5c-2 1.4-4.6 2.3-7.6 2.3-5.3 0-9.7-3.1-11.3-7.7l-6.6 5.1C9.3 40 16 44.5 24 44.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.5 5.5C41.5 36.4 44.5 30.7 44.5 24c0-1.2-.1-2.4-.9-3.5z"/></svg>
     Continue with Google
   </button>
   <div id="authLoading" class="hidden text-dim" style="font-size:13px;">Signing you in…</div>
@@ -263,7 +293,7 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
     </div>
     <div class="nav-item hidden" data-view="viewAdminReview" id="navAdmin">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6l8-4z"/></svg>
-      Review Shops & Admin
+      Review Shops
     </div>
     <div class="nav-item" data-view="viewProfile">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
@@ -294,7 +324,10 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
     <!-- VIEW: MARKETPLACE -->
     <section id="viewShop" class="view">
       <div id="shopGrid" class="grid grid-shops"></div>
-      <div id="shopEmpty" class="empty-state hidden"><h3>No shops yet</h3><p>Be the first creator to apply and get listed.</p></div>
+      <div id="shopEmpty" class="empty-state hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"/></svg>
+        <h3>No shops yet</h3><p>Be the first creator to apply and get listed.</p>
+      </div>
     </section>
 
     <!-- VIEW: PROFILE -->
@@ -305,11 +338,17 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
             <img id="profileAvatarPreview" class="upload-preview" style="width:96px;height:96px;border-radius:50%;margin-bottom:14px;" src="">
             <div class="file-drop" style="padding:12px;">
               <input type="file" id="profileAvatarInput" accept="image/*">
-              <div class="file-drop-text">Change photo</div>
+              <div class="file-drop-text">Change photo (auto-compressed)</div>
             </div>
           </div>
-          <div class="field mt16"><label>Display Name</label><input id="profileNameInput" placeholder="Your name"></div>
-          <div class="field"><label>Handle</label><input id="profileHandleInput" placeholder="@yourhandle"></div>
+          <div class="field mt16">
+            <label>Display Name</label>
+            <input id="profileNameInput" placeholder="Your name">
+          </div>
+          <div class="field">
+            <label>Handle</label>
+            <input id="profileHandleInput" placeholder="@yourhandle">
+          </div>
           <button class="btn btn-primary btn-block" id="saveProfileBtn">Save Changes</button>
         </div>
         <div>
@@ -321,11 +360,6 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
               <div class="theme-tab" data-tpage="3">Animated</div>
             </div>
             <div class="theme-grid" id="themeGrid"></div>
-          </div>
-          <div class="glass card mt16">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Admin Warnings & Notices</div>
-            <div id="userWarningsList"></div>
-            <div id="userWarningsEmpty" class="text-dim" style="font-size:13px;">No warnings or notices received.</div>
           </div>
           <div class="glass card mt16">
             <div class="modal-title mb0" style="margin-bottom:14px;">Your Shops</div>
@@ -340,9 +374,9 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
     <section id="viewSearchUser" class="view hidden">
       <div class="glass card" style="max-width:480px;">
         <div class="field mb0">
-          <label>Look up user or creator by handle</label>
+          <label>Look up by handle</label>
           <div class="row">
-            <input id="handleSearchInput" placeholder="@handle or name">
+            <input id="handleSearchInput" placeholder="@handle">
             <button class="btn btn-primary" id="handleSearchBtn" style="flex:0 0 auto;">Search</button>
           </div>
         </div>
@@ -350,37 +384,42 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
       <div id="handleSearchResult" class="mt20"></div>
     </section>
 
-    <!-- VIEW: PLACED ORDERS -->
+    <!-- VIEW: PLACED ORDERS (client) -->
     <section id="viewPlacedOrder" class="view hidden">
       <div id="placedOrdersList"></div>
-      <div id="placedOrdersEmpty" class="empty-state hidden"><h3>No orders yet</h3><p>Hire an editor from the Marketplace to get started.</p></div>
+      <div id="placedOrdersEmpty" class="empty-state hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5h6M6 7h12l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7z"/></svg>
+        <h3>No orders yet</h3><p>Hire an editor from the Marketplace to get started.</p>
+      </div>
     </section>
 
-    <!-- VIEW: EDITOR MANAGE -->
+    <!-- VIEW: EDITOR MANAGE (creator) -->
     <section id="viewEditorManage" class="view hidden">
       <div id="editorOrdersList"></div>
-      <div id="editorOrdersEmpty" class="empty-state hidden"><h3>No requests yet</h3><p>Incoming commission requests will appear here.</p></div>
+      <div id="editorOrdersEmpty" class="empty-state hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <h3>No requests yet</h3><p>Incoming commission requests will appear here.</p>
+      </div>
     </section>
 
     <!-- VIEW: ADMIN REVIEW -->
     <section id="viewAdminReview" class="view hidden">
       <div class="tabs-2">
         <button class="btn btn-ghost active" data-atab="apps">Shop Applications</button>
-        <button class="btn btn-ghost" data-atab="orders">Escrow & Payment Queue</button>
-        <button class="btn btn-ghost" data-atab="reports">Reports & Disputes</button>
-        <button class="btn btn-ghost" data-atab="allshops">Manage All Shops</button>
+        <button class="btn btn-ghost" data-atab="orders">Escrow Queue</button>
       </div>
       <div id="adminAppsPane"></div>
       <div id="adminOrdersPane" class="hidden"></div>
-      <div id="adminReportsPane" class="hidden"></div>
-      <div id="adminShopsPane" class="hidden"></div>
     </section>
 
     <!-- VIEW: REGISTER STEP 1 -->
     <section id="viewRegisterStep1" class="view hidden">
       <div class="glass card" style="max-width:560px;">
         <div class="step-dots"><div class="step-dot active"></div><div class="step-dot"></div></div>
-        <div class="field"><label>Shop Name</label><input id="regShopName" placeholder="e.g. Nova Cuts Studio"></div>
+        <div class="field">
+          <label>Shop Name</label>
+          <input id="regShopName" placeholder="e.g. Nova Cuts Studio">
+        </div>
         <div class="field">
           <label>Category</label>
           <select id="regCategory">
@@ -388,11 +427,15 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
             <option>Color Grading</option><option>VFX & Compositing</option><option>Podcast Editing</option><option>Documentary</option>
           </select>
         </div>
-        <div class="field"><label>Portfolio Link</label><input id="regPortfolio" placeholder="https://…"></div>
+        <div class="field">
+          <label>Portfolio Link</label>
+          <input id="regPortfolio" placeholder="https://…">
+        </div>
         <div class="field mb0">
           <label>Shop Logo</label>
           <div class="file-drop">
             <input type="file" id="regLogoInput" accept="image/*">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4l-4 4M12 4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
             <div class="file-drop-text">Click or drag logo to upload</div>
           </div>
           <img id="regLogoPreview" class="upload-preview mt8 hidden" src="">
@@ -406,28 +449,36 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
       <div class="glass card" style="max-width:560px;">
         <div class="step-dots"><div class="step-dot active"></div><div class="step-dot active"></div></div>
         <div class="modal-title mb0" style="margin-bottom:16px;">Custom Pricing Tiers (per delivery)</div>
-        <div class="field"><label>Basic Tier — ₹</label><input id="regRateLow" type="number" placeholder="499"></div>
-        <div class="field"><label>Standard Tier — ₹</label><input id="regRateMed" type="number" placeholder="999"></div>
-        <div class="field mb0"><label>Premium Tier — ₹</label><input id="regRateHigh" type="number" placeholder="1999"></div>
+        <div class="field"><label>Basic Tier — ₹</label><input id="regRateLow" type="number" placeholder="e.g. 499"></div>
+        <div class="field"><label>Standard Tier — ₹</label><input id="regRateMed" type="number" placeholder="e.g. 999"></div>
+        <div class="field mb0"><label>Premium Tier — ₹</label><input id="regRateHigh" type="number" placeholder="e.g. 1999"></div>
         <div class="row mt20">
           <button class="btn btn-ghost" id="regStep2Back">Back</button>
           <button class="btn btn-primary" id="regStep2Submit">Submit Application</button>
         </div>
       </div>
     </section>
+
   </main>
 </div>
 
-<!-- MODALS -->
+<!-- HIRE TERMINAL MODAL -->
 <div class="overlay" id="hireOverlay">
   <div class="glass modal modal-wide">
-    <div class="modal-head"><div class="modal-title">Hire Terminal</div><div class="modal-close" data-close="hireOverlay">✕</div></div>
-    <div class="aspect-preview" style="height:220px;"><canvas id="aspectCanvas" width="400" height="400"></canvas></div>
-    <div class="aspect-btns">
-      <button class="btn btn-ghost btn-sm active" data-ar="16:9">16:9</button>
-      <button class="btn btn-ghost btn-sm" data-ar="9:16">9:16</button>
-      <button class="btn btn-ghost btn-sm" data-ar="1:1">1:1</button>
+    <div class="modal-head">
+      <div class="modal-title">Hire Terminal</div>
+      <div class="modal-close" data-close="hireOverlay">✕</div>
     </div>
+    <div class="aspect-preview" style="height:220px;">
+      <canvas id="aspectCanvas" width="400" height="400"></canvas>
+    </div>
+    <div class="aspect-btns">
+      <button class="btn btn-ghost btn-sm aspect-btn active" data-ar="16:9">16:9</button>
+      <button class="btn btn-ghost btn-sm aspect-btn" data-ar="9:16">9:16</button>
+      <button class="btn btn-ghost btn-sm aspect-btn" data-ar="1:1">1:1</button>
+      <button class="btn btn-ghost btn-sm aspect-btn" data-ar="4:5">4:5</button>
+    </div>
+    <div class="modal-title mb0" style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">Select Tier</div>
     <div class="tier-grid">
       <div class="tier-opt active" data-tier="low"><b>Basic</b><span id="tierLowPrice">₹0</span></div>
       <div class="tier-opt" data-tier="med"><b>Standard</b><span id="tierMedPrice">₹0</span></div>
@@ -437,8 +488,8 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
       <div class="field"><label>Duration (min)</label><input id="hireDuration" type="number" value="1" min="1"></div>
       <div class="field"><label>Quantity</label><input id="hireQty" type="number" value="1" min="1"></div>
     </div>
-    <div class="field"><label>Footage / Asset Link</label><input id="hireAssetUrl" placeholder="Google Drive link"></div>
-    <div class="field"><label>Instructions</label><textarea id="hireInstructions" rows="3" placeholder="Style notes…"></textarea></div>
+    <div class="field"><label>Footage / Asset Link</label><input id="hireAssetUrl" placeholder="Google Drive / Frame.io link"></div>
+    <div class="field"><label>Instructions</label><textarea id="hireInstructions" rows="3" placeholder="Style references, pacing notes, deadline…"></textarea></div>
     <div class="price-box">
       <div><div style="font-size:11px;color:var(--text-dim);font-weight:700;">TOTAL ESCROW AMOUNT</div><div class="amt" id="hireTotalPrice">₹0</div></div>
       <button class="btn btn-primary" id="hireSubmitBtn">Send Order</button>
@@ -446,73 +497,33 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
   </div>
 </div>
 
+<!-- QR PAYMENT MODAL -->
 <div class="overlay" id="qrOverlay">
   <div class="glass modal">
     <div class="modal-head"><div class="modal-title">Complete Escrow Payment</div><div class="modal-close" data-close="qrOverlay">✕</div></div>
     <div class="qr-box">
       <img id="qrImage" src="" alt="Scan to pay">
       <div class="upi-id" id="qrUpiId">—</div>
-      <div class="text-dim" style="font-size:12.5px;margin-bottom:16px;">Pay exact amount, then submit proof.</div>
-      <div class="field"><label>Proof (UTR / Link)</label><input id="paymentProofInput" placeholder="UTR12345"></div>
+      <div class="text-dim" style="font-size:12.5px;margin-bottom:16px;">Pay the exact escrow amount, then submit your proof below.</div>
+      <div class="field"><label>Proof (Drive link / UTR number)</label><input id="paymentProofInput" placeholder="UTR12345 or drive link"></div>
       <button class="btn btn-primary btn-block" id="submitProofBtn">Submit Proof</button>
     </div>
   </div>
 </div>
 
-<div class="overlay" id="deliveryOverlay">
+<!-- PROGRESS UPDATE MODAL -->
+<div class="overlay" id="progressOverlay">
   <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Deliver Watermarked Video</div><div class="modal-close" data-close="deliveryOverlay">✕</div></div>
-    <div class="field"><label>Watermarked Video Link (Drive / Video URL)</label><input id="watermarkedLinkInput" placeholder="https://drive.google.com/..."></div>
-    <button class="btn btn-primary btn-block" id="submitDeliveryBtn">Send Delivery to Client</button>
-  </div>
-</div>
-
-<div class="overlay" id="unwatermarkOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Send Final Unwatermarked Video</div><div class="modal-close" data-close="unwatermarkOverlay">✕</div></div>
-    <div class="field"><label>Unwatermarked Video Link</label><input id="unwatermarkedLinkInput" placeholder="https://drive.google.com/..."></div>
-    <button class="btn btn-primary btn-block" id="submitUnwatermarkBtn">Submit & Release Escrow</button>
-  </div>
-</div>
-
-<div class="overlay" id="clientReportOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Report Order to Admin</div><div class="modal-close" data-close="clientReportOverlay">✕</div></div>
-    <div class="field"><label>Reason for Report</label><textarea id="clientReportReason" rows="3" placeholder="Describe the issue..."></textarea></div>
-    <button class="btn btn-danger btn-block" id="submitClientReportBtn">Submit Report to Admin</button>
-  </div>
-</div>
-
-<div class="overlay" id="editorActionOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Editor Dispute Action</div><div class="modal-close" data-close="editorActionOverlay">✕</div></div>
-    <div class="text-dim" style="font-size:13px;margin-bottom:16px;">The client has reported this delivery. Choose an action:</div>
-    <div class="row">
-      <button class="btn btn-primary" id="editorRestartBtn">Restart Project</button>
-      <button class="btn btn-danger" id="editorRejectOrderBtn">Reject Order</button>
+    <div class="modal-head"><div class="modal-title">Update Progress</div><div class="modal-close" data-close="progressOverlay">✕</div></div>
+    <div class="field">
+      <label>Completion — <span id="progressValLabel">15</span>%</label>
+      <input type="range" id="progressSlider" min="0" max="100" step="5" value="15" style="width:100%; accent-color:var(--primary);">
     </div>
+    <button class="btn btn-primary btn-block" id="saveProgressBtn">Save Progress</button>
   </div>
 </div>
 
-<div class="overlay" id="adminReportActionOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Admin Dispute Action</div><div class="modal-close" data-close="adminReportActionOverlay">✕</div></div>
-    <div class="field"><label>Admin Reason / Note</label><textarea id="adminReportNote" rows="2" placeholder="Note..."></textarea></div>
-    <div class="row mt16">
-      <button class="btn btn-primary" id="adminOkFineBtn">Ok Fine (Ask Client)</button>
-      <button class="btn btn-danger" id="adminReportEditorBtn">Report Editor</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="adminWarningOverlay">
-  <div class="glass modal">
-    <div class="modal-head"><div class="modal-title">Send Warning to User</div><div class="modal-close" data-close="adminWarningOverlay">✕</div></div>
-    <div class="field"><label>Warning Message</label><textarea id="adminWarningText" rows="3" placeholder="Warning details..."></textarea></div>
-    <button class="btn btn-danger btn-block" id="sendAdminWarningBtn">Send Warning</button>
-  </div>
-</div>
-
+<!-- ORDER DETAIL / GENERIC INFO MODAL -->
 <div class="overlay" id="infoOverlay">
   <div class="glass modal">
     <div class="modal-head"><div class="modal-title" id="infoModalTitle">Details</div><div class="modal-close" data-close="infoOverlay">✕</div></div>
@@ -522,6 +533,7 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 
 <div class="toast-stack" id="toastStack"></div>
 
+<!-- FIREBASE (compat) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -530,6 +542,7 @@ label{font-size:12.5px; font-weight:700; color:var(--text-dim); display:block; m
 <script>
 'use strict';
 
+/* ========================= 1. CONFIG ========================= */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyBIauHpVxalTjg4rNNmN4MRFXcU6Bjnp-Q",
   authDomain: "rex-edit-hub.firebaseapp.com",
@@ -548,30 +561,65 @@ const PLATFORM_UPI_ID = "msgamer123098@okaxis";
 firebase.initializeApp(FIREBASE_CONFIG);
 const auth = firebase.auth();
 const db = firebase.firestore();
-try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch (e) {}
+try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch (e) { console.warn("EmailJS init skipped:", e); }
 
+/* ========================= 2. STATE ========================= */
 const State = {
-  user: null, profile: null, isAdmin: false,
-  shops: [], myShops: [], allOrdersAsClient: [], allOrdersAsEditor: [],
-  pendingApplications: [], allOrdersAdmin: [], allReports: [],
-  unsubscribes: [], currentView: "viewShop", hireContext: null,
-  activeOrder: null, selectedTier: "low", selectedAR: "16:9", targetUidForWarning: null
+  user: null,          // firebase auth user
+  profile: null,       // users/{uid} doc
+  isAdmin: false,
+  shops: [],
+  myShops: [],
+  allOrdersAsClient: [],
+  allOrdersAsEditor: [],
+  pendingApplications: [],
+  allOrdersAdmin: [],
+  unsubscribes: [],    // active onSnapshot unsubscribe fns
+  currentView: "viewShop",
+  hireContext: null,   // { shop }
+  activeOrderForPayment: null,
+  activeOrderForProgress: null,
+  selectedTier: "low",
+  selectedAR: "16:9",
 };
 
+/* ========================= 3. UTILITIES ========================= */
 function $(sel, root) { return (root || document).querySelector(sel); }
 function $all(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
-function esc(str) { if (str == null) return ""; return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-function genOrderId() { return "RX-" + Math.floor(1000 + Math.random() * 9000); }
-function money(n) { return "₹" + (Number(n) || 0).toLocaleString("en-IN"); }
-function clearUnsubscribes() { State.unsubscribes.forEach(fn => { try { fn(); } catch(e){} }); State.unsubscribes = []; }
+function esc(str) {
+  if (str === null || str === undefined) return "";
+  return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function genOrderId() {
+  return "RX-" + Math.floor(1000 + Math.random() * 9000);
+}
+function money(n) {
+  const v = Number(n) || 0;
+  return "₹" + v.toLocaleString("en-IN");
+}
+function clearUnsubscribes() {
+  State.unsubscribes.forEach(fn => { try { fn(); } catch (e) {} });
+  State.unsubscribes = [];
+}
 
-function showToast(msg, type = "info") {
+function showToast(msg, type) {
+  type = type || "info";
   const stack = $("#toastStack");
   const el = document.createElement("div");
   el.className = "toast glass toast-" + type;
-  el.innerHTML = `<div class="toast-msg">${esc(msg)}</div>`;
+  const icons = {
+    ok: '<svg viewBox="0 0 24 24" fill="none" stroke="#3ee68c" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>',
+    err: '<svg viewBox="0 0 24 24" fill="none" stroke="#ff5b7a" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>',
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="#6d5bff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>'
+  };
+  el.innerHTML = (icons[type] || icons.info) + '<div class="toast-msg">' + esc(msg) + "</div>";
   stack.appendChild(el);
-  setTimeout(() => { el.style.opacity = "0"; setTimeout(() => el.remove(), 300); }, 3800);
+  setTimeout(() => {
+    el.style.transition = "all .3s ease";
+    el.style.opacity = "0";
+    el.style.transform = "translateX(40px)";
+    setTimeout(() => el.remove(), 320);
+  }, 3800);
 }
 
 function openModal(id) { $("#" + id).classList.add("show"); }
@@ -579,18 +627,23 @@ function closeModal(id) { $("#" + id).classList.remove("show"); }
 $all("[data-close]").forEach(btn => btn.addEventListener("click", () => closeModal(btn.dataset.close)));
 $all(".overlay").forEach(ov => ov.addEventListener("click", e => { if (e.target === ov) ov.classList.remove("show"); }));
 
-function compressImageToBase64(file, maxW = 400) {
+/* Compress an <input type=file> image to max-width 400px, return base64 string */
+function compressImageToBase64(file, maxW) {
+  maxW = maxW || 400;
   return new Promise((resolve, reject) => {
     if (!file) return reject(new Error("No file"));
     const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Read failed"));
     reader.onload = () => {
       const img = new Image();
+      img.onerror = () => reject(new Error("Image decode failed"));
       img.onload = () => {
         let w = img.width, h = img.height;
         if (w > maxW) { h = Math.round(h * (maxW / w)); w = maxW; }
         const canvas = document.createElement("canvas");
         canvas.width = w; canvas.height = h;
-        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, w, h);
         resolve(canvas.toDataURL("image/jpeg", 0.82));
       };
       img.src = reader.result;
@@ -599,74 +652,333 @@ function compressImageToBase64(file, maxW = 400) {
   });
 }
 
-function sendEmailNotification(to, subject, title, bodyText) {
+function sendEmailNotification(templateParams) {
   if (typeof emailjs === "undefined" || !emailjs.send) return Promise.resolve();
-  const htmlMessage = `
-    <div style="font-family:sans-serif;background:#0a0b0f;color:#f2f2f7;padding:24px;border-radius:12px;">
-      <h2 style="color:#6d5bff;margin-top:0;">Rex Edit Hub — ${esc(title)}</h2>
-      <p style="font-size:14px;line-height:1.6;color:#d1d1d6;">${esc(bodyText)}</p>
-      <hr style="border:0;border-top:1px solid rgba(255,255,255,0.1);margin:20px 0;">
-      <p style="font-size:11px;color:#8b8d9a;">Secure Escrow Marketplace · Automated Notification</p>
-    </div>
-  `;
-  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-    to_email: to,
-    subject: subject,
-    message: htmlMessage
-  }).catch(err => console.warn("EmailJS error:", err));
+  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams).catch(err => {
+    console.warn("EmailJS send failed (non-fatal):", err);
+  });
 }
 
-const STATIC_THEMES = ["indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber","slate","crimson","emerald","sapphire","lavender","mono","ice","ember","orchid","graphite"];
-const CANVAS_THEMES = ["snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism","auroraflow","golddust","storm","petals","warp","flares","bubbles"];
-const THEME_COLORS = {
+/* ========================= 4. THEME SYSTEM (35 THEMES) ========================= */
+const STATIC_THEMES = [
+  "indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber",
+  "slate","crimson","emerald","sapphire","lavender","mono","ice","ember","orchid","graphite"
+];
+const CANVAS_THEMES = [
+  "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
+  "auroraflow","golddust","storm","petals","warp","flares","bubbles"
+];
+const THEME_COLORS = { // representative swatch gradient per theme for the picker UI
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
   midnight:["#3b5bff","#5b8cff"], sunset:["#ff5b7a","#ff9d5b"], ocean:["#00b8d4","#00e5c8"], forest:["#3ee68c","#6be63e"],
   rose:["#ff5bb0","#ff8fd6"], amber:["#ffb020","#ff7a20"], slate:["#7a8ba0","#a4b8cc"], crimson:["#e6203e","#ff5b6d"],
   emerald:["#10d99a","#5bffcf"], sapphire:["#2b6bff","#5b9dff"], lavender:["#a58bff","#d3b8ff"], mono:["#d9d9d9","#ffffff"],
-  ice:["#7ee6ff","#b8f4ff"], ember:["#ff7a3e","#ffb85b"], orchid:["#c85bff","#ff5be0"], graphite:["#8f93a0","#c4c8d4"]
+  ice:["#7ee6ff","#b8f4ff"], ember:["#ff7a3e","#ffb85b"], orchid:["#c85bff","#ff5be0"], graphite:["#8f93a0","#c4c8d4"],
+  snow:["#dfe9f5","#8fb3d9"], starfield:["#5b7bff","#c8d4ff"], cyberrain:["#00ffb0","#00c8ff"], matrix:["#00ff6a","#0a3d1a"],
+  embers:["#ff5b2e","#ffb85b"], plasma:["#ff2ed6","#5b2eff"], chroma:["#ff2e6a","#2effc8"], prism:["#ff9ded","#9de0ff"],
+  auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
+  warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"]
 };
-[...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => { if(!THEME_COLORS[t]) THEME_COLORS[t] = ["#6d5bff","#9b7bff"]; });
+const THEME_LABELS = {};
+[...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
 
 let currentTheme = localStorage.getItem("rex_theme") || "indigo";
+
 function applyTheme(themeId) {
   currentTheme = themeId;
   localStorage.setItem("rex_theme", themeId);
   const html = document.documentElement;
   if (CANVAS_THEMES.includes(themeId)) {
-    html.removeAttribute("data-theme"); html.setAttribute("data-canvas", themeId);
+    html.removeAttribute("data-theme");
+    html.setAttribute("data-canvas", themeId);
+    startCanvasTheme(themeId);
   } else {
-    html.setAttribute("data-theme", themeId); html.removeAttribute("data-canvas");
+    html.setAttribute("data-theme", themeId);
+    html.removeAttribute("data-canvas");
+    stopCanvasTheme();
   }
   renderThemeGrid();
 }
+
+/* ---- Canvas particle engine: one flexible engine, distinct behavior per theme id ---- */
+let canvasEngine = { raf: null, particles: [], w: 0, h: 0, themeId: null, ctx: null, resizeBound: false };
+
+function stopCanvasTheme() {
+  if (canvasEngine.raf) cancelAnimationFrame(canvasEngine.raf);
+  canvasEngine.raf = null;
+  canvasEngine.particles = [];
+}
+
+function rnd(a, b) { return a + Math.random() * (b - a); }
+
+function spawnParticles(themeId, w, h) {
+  const cfg = {
+    snow:       { count: 140 },
+    starfield:  { count: 220 },
+    cyberrain:  { count: 160 },
+    matrix:     { count: 90  },
+    embers:     { count: 110 },
+    plasma:     { count: 60  },
+    chroma:     { count: 90  },
+    prism:      { count: 70  },
+    auroraflow: { count: 5   },
+    golddust:   { count: 150 },
+    storm:      { count: 100 },
+    petals:     { count: 60  },
+    warp:       { count: 240 },
+    flares:     { count: 45  },
+    bubbles:    { count: 80  },
+  }[themeId];
+  const arr = [];
+  for (let i = 0; i < cfg.count; i++) {
+    arr.push(makeParticle(themeId, w, h, true));
+  }
+  return arr;
+}
+
+function makeParticle(themeId, w, h, initial) {
+  const [c1] = THEME_COLORS[themeId] || ["#6d5bff"];
+  switch (themeId) {
+    case "snow":
+      return { x: rnd(0, w), y: initial ? rnd(0, h) : -10, r: rnd(1.5, 4), vy: rnd(0.4, 1.4), vx: rnd(-0.3, 0.3), sway: rnd(0, 6.28), o: rnd(0.4, 0.9) };
+    case "starfield":
+      return { x: rnd(0, w), y: rnd(0, h), r: rnd(0.5, 1.8), tw: rnd(0, 6.28), speed: rnd(0.01, 0.04), vx: rnd(-0.05, 0.05) };
+    case "cyberrain":
+      return { x: rnd(0, w), y: initial ? rnd(-h, 0) : -20, len: rnd(14, 34), vy: rnd(6, 13), o: rnd(0.3, 0.9) };
+    case "matrix":
+      return { x: Math.floor(rnd(0, w / 14)) * 14, y: initial ? rnd(-h, 0) : -20, vy: rnd(2, 6), ch: 0, chars: "アカサタナ0123456789" };
+    case "embers":
+      return { x: rnd(0, w), y: initial ? rnd(0, h) : h + 10, r: rnd(1, 3.4), vy: rnd(-1.8, -0.5), vx: rnd(-0.4, 0.4), life: rnd(60, 200), age: 0, o: rnd(0.5, 1) };
+    case "plasma":
+      return { x: rnd(0, w), y: rnd(0, h), r: rnd(80, 180), vx: rnd(-0.4, 0.4), vy: rnd(-0.4, 0.4), hue: rnd(260, 330) };
+    case "chroma":
+      return { x: rnd(0, w), y: rnd(0, h), r: rnd(1, 3), vx: rnd(-0.6, 0.6), vy: rnd(-0.6, 0.6), hue: rnd(0, 360) };
+    case "prism":
+      return { x: rnd(0, w), y: rnd(0, h), r: rnd(30, 70), vx: rnd(-0.15, 0.15), vy: rnd(-0.15, 0.15), rot: rnd(0, 6.28), vr: rnd(-0.004, 0.004) };
+    case "auroraflow":
+      return { phase: rnd(0, 6.28), amp: rnd(40, 120), speed: rnd(0.002, 0.006), hue: rnd(150, 280), yOff: rnd(0.15, 0.85) };
+    case "golddust":
+      return { x: rnd(0, w), y: rnd(0, h), r: rnd(0.6, 2.2), vy: rnd(-0.3, 0.3), vx: rnd(-0.3, 0.3), tw: rnd(0, 6.28) };
+    case "storm":
+      return { x: rnd(0, w), y: initial ? rnd(-h, 0) : -20, len: rnd(20, 46), vy: rnd(9, 18), vx: rnd(-4, -1.5), o: rnd(0.2, 0.55) };
+    case "petals":
+      return { x: rnd(0, w), y: initial ? rnd(0, h) : -10, r: rnd(4, 9), vy: rnd(0.5, 1.4), vx: rnd(-0.5, 0.5), rot: rnd(0, 6.28), vr: rnd(-0.03, 0.03) };
+    case "warp":
+      return { a: rnd(0, 6.28), d: rnd(0, 1), speed: rnd(0.003, 0.012) };
+    case "flares":
+      return { x: rnd(0, w), y: rnd(0, h), r: rnd(1, 2.5), vx: rnd(-0.2, 0.2), vy: rnd(-0.2, 0.2), pulse: rnd(0, 6.28) };
+    case "bubbles":
+      return { x: rnd(0, w), y: initial ? rnd(0, h) : h + 10, r: rnd(3, 12), vy: rnd(-1.2, -0.4), vx: rnd(-0.3, 0.3), o: rnd(0.15, 0.5) };
+    default:
+      return { x: rnd(0, w), y: rnd(0, h) };
+  }
+}
+
+function drawParticle(ctx, themeId, p, w, h, t) {
+  const [c1, c2] = THEME_COLORS[themeId] || ["#6d5bff", "#9b7bff"];
+  switch (themeId) {
+    case "snow": {
+      p.sway += 0.02; p.y += p.vy; p.x += p.vx + Math.sin(p.sway) * 0.4;
+      if (p.y > h + 10) { p.y = -10; p.x = rnd(0, w); }
+      ctx.globalAlpha = p.o; ctx.fillStyle = "#eaf3ff";
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "starfield": {
+      p.tw += p.speed * 40; p.x += p.vx; if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      const a = 0.4 + Math.sin(p.tw) * 0.4;
+      ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = "#ffffff";
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "cyberrain": {
+      p.y += p.vy;
+      if (p.y > h + 20) { p.y = -20; p.x = rnd(0, w); }
+      const grad = ctx.createLinearGradient(p.x, p.y, p.x, p.y + p.len);
+      grad.addColorStop(0, "rgba(0,255,180,0)"); grad.addColorStop(1, c1);
+      ctx.globalAlpha = p.o; ctx.strokeStyle = grad; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y + p.len); ctx.stroke();
+      break;
+    }
+    case "matrix": {
+      p.y += p.vy; p.ch++;
+      if (p.y > h + 20) { p.y = -20; }
+      ctx.globalAlpha = 0.85; ctx.fillStyle = "#00ff6a"; ctx.font = "13px monospace";
+      const ch = p.chars[Math.floor((p.ch / 6) % p.chars.length)];
+      ctx.fillText(ch, p.x, p.y);
+      break;
+    }
+    case "embers": {
+      p.age++; p.x += p.vx; p.y += p.vy;
+      if (p.age > p.life) { p.age = 0; p.y = h + 10; p.x = rnd(0, w); }
+      const fade = 1 - p.age / p.life;
+      ctx.globalAlpha = p.o * fade; ctx.fillStyle = c1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "plasma": {
+      p.x += p.vx; p.y += p.vy; p.hue += 0.15;
+      if (p.x < -p.r) p.x = w + p.r; if (p.x > w + p.r) p.x = -p.r;
+      if (p.y < -p.r) p.y = h + p.r; if (p.y > h + p.r) p.y = -p.r;
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+      g.addColorStop(0, `hsla(${p.hue},90%,65%,0.28)`); g.addColorStop(1, "hsla(0,0%,0%,0)");
+      ctx.globalAlpha = 1; ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "chroma": {
+      p.x += p.vx; p.y += p.vy; p.hue += 0.6;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      ctx.globalAlpha = 0.85; ctx.fillStyle = `hsl(${p.hue % 360},90%,65%)`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "prism": {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      if (p.x < -p.r) p.x = w + p.r; if (p.x > w + p.r) p.x = -p.r;
+      if (p.y < -p.r) p.y = h + p.r; if (p.y > h + p.r) p.y = -p.r;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = 0.10; ctx.strokeStyle = c2; ctx.lineWidth = 1;
+      ctx.strokeRect(-p.r / 2, -p.r / 2, p.r, p.r);
+      ctx.restore();
+      break;
+    }
+    case "auroraflow": {
+      p.phase += p.speed * 60;
+      ctx.globalAlpha = 0.18; ctx.strokeStyle = `hsl(${p.hue},85%,60%)`; ctx.lineWidth = 40;
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 20) {
+        const y = h * p.yOff + Math.sin(x * 0.006 + p.phase) * p.amp;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      break;
+    }
+    case "golddust": {
+      p.tw += 0.05; p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.globalAlpha = 0.5 + Math.sin(p.tw) * 0.4; ctx.fillStyle = c1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "storm": {
+      p.x += p.vx; p.y += p.vy;
+      if (p.y > h + 20 || p.x < -40) { p.y = -20; p.x = rnd(w * 0.4, w + 40); }
+      ctx.globalAlpha = p.o; ctx.strokeStyle = "#c8d4ff"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + p.vx * 2, p.y + p.len); ctx.stroke();
+      break;
+    }
+    case "petals": {
+      p.rot += p.vr; p.y += p.vy; p.x += p.vx + Math.sin(p.rot) * 0.5;
+      if (p.y > h + 10) { p.y = -10; p.x = rnd(0, w); }
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = 0.8; ctx.fillStyle = c1;
+      ctx.beginPath(); ctx.ellipse(0, 0, p.r, p.r * 0.55, 0, 0, 6.283); ctx.fill();
+      ctx.restore();
+      break;
+    }
+    case "warp": {
+      p.a += p.speed; p.d += 0.006;
+      if (p.d > 1) p.d = 0;
+      const cx = w / 2, cy = h / 2, maxD = Math.max(w, h) * 0.7;
+      const x = cx + Math.cos(p.a) * p.d * maxD, y = cy + Math.sin(p.a) * p.d * maxD;
+      ctx.globalAlpha = p.d; ctx.fillStyle = "#ffffff";
+      ctx.beginPath(); ctx.arc(x, y, 1.4 * p.d + 0.3, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "flares": {
+      p.pulse += 0.03; p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1; if (p.y < 0 || p.y > h) p.vy *= -1;
+      const r = p.r * (1.5 + Math.sin(p.pulse));
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 6);
+      g.addColorStop(0, c1); g.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.globalAlpha = 0.5; ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r * 6, 0, 6.283); ctx.fill();
+      break;
+    }
+    case "bubbles": {
+      p.y += p.vy; p.x += p.vx + Math.sin(t / 800 + p.y) * 0.3;
+      if (p.y < -20) { p.y = h + 10; p.x = rnd(0, w); }
+      ctx.globalAlpha = p.o; ctx.strokeStyle = "#bfe9ff"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.stroke();
+      break;
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+function startCanvasTheme(themeId) {
+  const canvas = $("#themeCanvas");
+  const ctx = canvas.getContext("2d");
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvasEngine.w = canvas.width; canvasEngine.h = canvas.height;
+  }
+  if (!canvasEngine.resizeBound) {
+    window.addEventListener("resize", () => {
+      resize();
+      if (canvasEngine.themeId) canvasEngine.particles = spawnParticles(canvasEngine.themeId, canvasEngine.w, canvasEngine.h);
+    });
+    canvasEngine.resizeBound = true;
+  }
+  resize();
+  canvasEngine.themeId = themeId;
+  canvasEngine.particles = spawnParticles(themeId, canvasEngine.w, canvasEngine.h);
+  if (canvasEngine.raf) cancelAnimationFrame(canvasEngine.raf);
+  function loop(t) {
+    if (canvasEngine.themeId !== themeId) return; // theme switched away
+    ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
+    if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
+    canvasEngine.particles.forEach(p => drawParticle(ctx, themeId, p, canvasEngine.w, canvasEngine.h, t || 0));
+    canvasEngine.raf = requestAnimationFrame(loop);
+  }
+  canvasEngine.raf = requestAnimationFrame(loop);
+}
+
+/* Bind window.onload so the canvas never renders at 0x0 */
+window.addEventListener("load", () => {
+  if (CANVAS_THEMES.includes(currentTheme)) startCanvasTheme(currentTheme);
+});
 
 function renderThemeGrid() {
   const grid = $("#themeGrid");
   if (!grid) return;
   const activeTab = $(".theme-tab.active");
   const page = activeTab ? activeTab.dataset.tpage : "1";
-  let list = page === "1" ? STATIC_THEMES.slice(0, 10) : page === "2" ? STATIC_THEMES.slice(10, 20) : CANVAS_THEMES;
+  let list;
+  if (page === "1") list = STATIC_THEMES.slice(0, 10);
+  else if (page === "2") list = STATIC_THEMES.slice(10, 20);
+  else list = CANVAS_THEMES;
   grid.innerHTML = list.map(t => {
-    const [c1, c2] = THEME_COLORS[t] || ["#6d5bff", "#9b7bff"];
-    return `<div class="theme-swatch ${t === currentTheme ? 'active' : ''}" data-theme-id="${t}" style="background:linear-gradient(135deg,${c1},${c2})"><div class="theme-swatch-label">${t}</div></div>`;
+    const [c1, c2] = THEME_COLORS[t];
+    const active = t === currentTheme ? "active" : "";
+    return `<div class="theme-swatch ${active}" data-theme-id="${t}" style="background:linear-gradient(135deg,${c1},${c2})">
+      <div class="theme-swatch-label">${THEME_LABELS[t]}</div>
+    </div>`;
   }).join("");
   $all(".theme-swatch", grid).forEach(sw => sw.addEventListener("click", () => applyTheme(sw.dataset.themeId)));
 }
 $all(".theme-tab").forEach(tab => tab.addEventListener("click", () => {
   $all(".theme-tab").forEach(t => t.classList.remove("active"));
-  tab.classList.add("active"); renderThemeGrid();
+  tab.classList.add("active");
+  renderThemeGrid();
 }));
+
 applyTheme(currentTheme);
 
+/* ========================= 5. NAVIGATION ========================= */
 const VIEW_META = {
   viewShop: { title: "Marketplace", sub: "Browse vetted editors and hire with escrow protection" },
-  viewProfile: { title: "Profile Settings", sub: "Manage identity and view warnings" },
-  viewSearchUser: { title: "Search Network", sub: "Look up any creator or user by name or handle" },
-  viewPlacedOrder: { title: "My Orders", sub: "Track escrow status and review deliveries" },
-  viewEditorManage: { title: "Incoming Requests", sub: "Manage commissions and deliver watermarked videos" },
-  viewAdminReview: { title: "Review Shops & Admin", sub: "Manage applications, escrow queues, and reports" },
-  viewRegisterStep1: { title: "Apply for Earn", sub: "Step 1 — Shop details" },
-  viewRegisterStep2: { title: "Apply for Earn", sub: "Step 2 — Pricing tiers" },
+  viewProfile: { title: "Profile Settings", sub: "Manage your identity and appearance" },
+  viewSearchUser: { title: "Search Network", sub: "Look up any creator by their handle" },
+  viewOrderConfig: { title: "Hire Terminal", sub: "Configure your commission" },
+  viewPlacedOrder: { title: "My Orders", sub: "Track escrow status on commissions you've placed" },
+  viewEditorManage: { title: "Incoming Requests", sub: "Manage commissions clients have sent you" },
+  viewAdminReview: { title: "Review Shops", sub: "Approve or reject creator applications" },
+  viewRegisterStep1: { title: "Apply for Earn", sub: "Step 1 of 2 — Shop details" },
+  viewRegisterStep2: { title: "Apply for Earn", sub: "Step 2 of 2 — Pricing tiers" },
 };
 
 function switchView(viewId) {
@@ -676,7 +988,8 @@ function switchView(viewId) {
   if (target) target.classList.remove("hidden");
   $all(".nav-item").forEach(n => n.classList.toggle("active", n.dataset.view === viewId));
   const meta = VIEW_META[viewId] || { title: "Rex Edit Hub", sub: "" };
-  $("#pageTitle").textContent = meta.title; $("#pageSub").textContent = meta.sub;
+  $("#pageTitle").textContent = meta.title;
+  $("#pageSub").textContent = meta.sub;
   $("#marketSearchWrap").classList.toggle("hidden", viewId !== "viewShop");
   $("#sidebar").classList.remove("open");
   if (viewId === "viewProfile") renderProfileView();
@@ -687,9 +1000,11 @@ function switchView(viewId) {
 $all(".nav-item[data-view]").forEach(item => item.addEventListener("click", () => switchView(item.dataset.view)));
 $("#menuToggle").addEventListener("click", () => $("#sidebar").classList.toggle("open"));
 
+/* ========================= 6. AUTH ========================= */
 $("#googleSignInBtn").addEventListener("click", () => {
   $("#authLoading").classList.remove("hidden");
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).catch(err => {
     $("#authLoading").classList.add("hidden");
     showToast(err.message || "Sign-in failed", "err");
   });
@@ -701,12 +1016,14 @@ auth.onAuthStateChanged(async user => {
   clearUnsubscribes();
   if (!user) {
     State.user = null; State.profile = null; State.isAdmin = false;
-    $("#authGate").classList.remove("hidden"); $("#appRoot").classList.add("hidden");
+    $("#authGate").classList.remove("hidden");
+    $("#appRoot").classList.add("hidden");
     return;
   }
   State.user = user;
   State.isAdmin = (user.email === SUPER_ADMIN_EMAIL);
-  $("#authGate").classList.add("hidden"); $("#appRoot").classList.remove("hidden");
+  $("#authGate").classList.add("hidden");
+  $("#appRoot").classList.remove("hidden");
   $("#navAdmin").classList.toggle("hidden", !State.isAdmin);
 
   await ensureUserDoc(user);
@@ -721,82 +1038,98 @@ async function ensureUserDoc(user) {
     if (!snap.exists) {
       const defaultHandle = "@" + (user.email ? user.email.split("@")[0] : user.uid.slice(0, 8)).toLowerCase().replace(/[^a-z0-9_]/g, "");
       const data = {
-        uid: user.uid, email: user.email || "", displayName: user.displayName || "New User",
-        userId: defaultHandle, photoURL: user.photoURL || "", warnings: [],
+        uid: user.uid,
+        email: user.email || "",
+        displayName: user.displayName || "New User",
+        userId: defaultHandle,
+        photoURL: user.photoURL || "",
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      await ref.set(data); State.profile = data;
+      await ref.set(data);
+      State.profile = data;
     } else {
       State.profile = snap.data();
     }
-  } catch (e) { console.error(e); }
+  } catch (e) {
+    console.error("ensureUserDoc error:", e);
+    showToast("Could not load your profile.", "err");
+  }
   updateTopAvatar();
 }
 
 function updateTopAvatar() {
   const btn = $("#topAvatarBtn");
   const photo = State.profile && State.profile.photoURL;
-  if (photo) btn.innerHTML = `<img src="${photo}" alt="avatar">`;
-  else btn.innerHTML = `<span>${((State.profile && State.profile.displayName) || "?").charAt(0).toUpperCase()}</span>`;
+  if (photo) {
+    btn.innerHTML = `<img src="${photo}" alt="avatar">`;
+  } else {
+    const initial = ((State.profile && State.profile.displayName) || "?").charAt(0).toUpperCase();
+    btn.innerHTML = `<span>${esc(initial)}</span>`;
+  }
 }
 
+/* ========================= 7. FIRESTORE LISTENERS ========================= */
 function attachAllListeners(user) {
+  // Approved shops (marketplace)
   const unsubShops = db.collection("shops").onSnapshot(snap => {
     State.shops = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     State.myShops = State.shops.filter(s => s.ownerUid === user.uid);
     if (State.currentView === "viewShop") renderMarketplace();
     if (State.currentView === "viewProfile") renderMyShops();
     if (State.currentView === "viewAdminReview") renderAdminReview();
-  });
+  }, err => { console.error("shops listener error:", err); showToast("Couldn't load shops.", "err"); });
   State.unsubscribes.push(unsubShops);
 
+  // Orders where user is the client
   const unsubClientOrders = db.collection("orders").where("clientUid", "==", user.uid).onSnapshot(snap => {
-    State.allOrdersAsClient = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (b.createdAtMs||0)-(a.createdAtMs||0));
+    State.allOrdersAsClient = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
     if (State.currentView === "viewPlacedOrder") renderPlacedOrders();
-  });
+  }, err => { console.error("client orders error:", err); });
   State.unsubscribes.push(unsubClientOrders);
 
+  // Orders where user is the editor
   const unsubEditorOrders = db.collection("orders").where("editorUid", "==", user.uid).onSnapshot(snap => {
-    State.allOrdersAsEditor = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (b.createdAtMs||0)-(a.createdAtMs||0));
+    State.allOrdersAsEditor = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
     $("#navEditorManage").classList.toggle("hidden", State.myShops.length === 0 && State.allOrdersAsEditor.length === 0);
     if (State.currentView === "viewEditorManage") renderEditorOrders();
-  });
+  }, err => { console.error("editor orders error:", err); });
   State.unsubscribes.push(unsubEditorOrders);
-
-  const unsubUserDoc = db.collection("users").doc(user.uid).onSnapshot(snap => {
-    if (snap.exists) { State.profile = snap.data(); if (State.currentView === "viewProfile") renderUserWarnings(); }
-  });
-  State.unsubscribes.push(unsubUserDoc);
 
   if (State.isAdmin) {
     const unsubApps = db.collection("shop_applications").onSnapshot(snap => {
       State.pendingApplications = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       if (State.currentView === "viewAdminReview") renderAdminReview();
-    });
+    }, err => console.error("apps listener error:", err));
     State.unsubscribes.push(unsubApps);
 
     const unsubAllOrders = db.collection("orders").onSnapshot(snap => {
-      State.allOrdersAdmin = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (b.createdAtMs||0)-(a.createdAtMs||0));
+      State.allOrdersAdmin = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
       if (State.currentView === "viewAdminReview") renderAdminReview();
-    });
+    }, err => console.error("admin orders listener error:", err));
     State.unsubscribes.push(unsubAllOrders);
-
-    const unsubReports = db.collection("reports").onSnapshot(snap => {
-      State.allReports = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      if (State.currentView === "viewAdminReview") renderAdminReview();
-    });
-    State.unsubscribes.push(unsubReports);
   }
 }
 
+/* also keep editor-nav visible if user owns shops even pre-listener */
+function refreshEditorNavVisibility() {
+  const show = (State.myShops && State.myShops.length > 0) || (State.allOrdersAsEditor && State.allOrdersAsEditor.length > 0);
+  $("#navEditorManage").classList.toggle("hidden", !show);
+}
+
+/* ========================= 8. MARKETPLACE ========================= */
 function renderMarketplace() {
   const grid = $("#shopGrid");
   const q = ($("#marketSearchInput").value || "").trim().toLowerCase();
-  const list = State.shops.filter(s => !q || (s.name||"").toLowerCase().includes(q) || (s.category||"").toLowerCase().includes(q));
+  const list = State.shops.filter(s => {
+    if (!q) return true;
+    return (s.name || "").toLowerCase().includes(q) || (s.category || "").toLowerCase().includes(q);
+  });
   $("#shopEmpty").classList.toggle("hidden", list.length > 0);
   grid.innerHTML = list.map(shop => `
     <div class="glass shop-card">
-      <div class="shop-banner"><img class="shop-logo" src="${shop.logoUrl || ''}" onerror="this.style.display='none'" alt=""></div>
+      <div class="shop-banner">
+        <img class="shop-logo" src="${shop.logoUrl || ''}" onerror="this.style.display='none'" alt="">
+      </div>
       <div class="shop-body">
         <div class="shop-name">${esc(shop.name)}</div>
         <div class="shop-handle">${esc(shop.ownerHandle || '')}</div>
@@ -806,79 +1139,47 @@ function renderMarketplace() {
           <div class="rate-pill">Std<b>${money(shop.rates && shop.rates.medium)}</b></div>
           <div class="rate-pill">Prem<b>${money(shop.rates && shop.rates.high)}</b></div>
         </div>
-        <div class="row">
-          <button class="btn btn-primary btn-sm hire-btn" data-shop-id="${shop.id}">Hire</button>
-          ${State.isAdmin ? `<button class="btn btn-danger btn-sm" data-admin-del-shop="${shop.id}">Delete</button>` : ''}
-        </div>
+        <button class="btn btn-primary btn-block hire-btn" data-shop-id="${shop.id}">Hire</button>
       </div>
     </div>
   `).join("");
-  $all(".hire-btn", grid).forEach(b => b.addEventListener("click", () => openHireTerminal(b.dataset.shopId)));
-  $all("[data-admin-del-shop]", grid).forEach(b => b.addEventListener("click", () => adminDeleteShop(b.dataset.adminDelShop)));
+  $all(".hire-btn", grid).forEach(btn => btn.addEventListener("click", () => openHireTerminal(btn.dataset.shopId)));
 }
 $("#marketSearchInput").addEventListener("input", renderMarketplace);
 
-async function adminDeleteShop(shopId) {
-  if (!confirm("Delete this shop permanently?")) return;
-  try { await db.collection("shops").doc(shopId).delete(); showToast("Shop deleted by admin.", "ok"); }
-  catch(e) { showToast("Failed to delete shop.", "err"); }
-}
-
+/* ========================= 9. PROFILE VIEW ========================= */
 function renderProfileView() {
   $("#profileNameInput").value = (State.profile && State.profile.displayName) || "";
   $("#profileHandleInput").value = (State.profile && State.profile.userId) || "";
-  $("#profileAvatarPreview").src = (State.profile && State.profile.photoURL) || "";
+  $("#profileAvatarPreview").src = (State.profile && State.profile.photoURL) || "https://api.dicebear.com/7.x/initials/svg?seed=" + encodeURIComponent((State.profile && State.profile.displayName) || "U");
   renderThemeGrid();
   renderMyShops();
-  renderUserWarnings();
 }
-
-function renderUserWarnings() {
-  const container = $("#userWarningsList");
-  const empty = $("#userWarningsEmpty");
-  const warnings = (State.profile && State.profile.warnings) || [];
-  if (warnings.length === 0) { container.innerHTML = ""; empty.classList.remove("hidden"); return; }
-  empty.classList.add("hidden");
-  container.innerHTML = warnings.map((w, idx) => `
-    <div style="background:rgba(255,91,122,0.08);border:1px solid rgba(255,91,122,0.25);border-radius:10px;padding:12px;margin-bottom:10px;">
-      <div style="font-weight:700;color:var(--danger);font-size:13px;">Warning #${idx+1}</div>
-      <div style="font-size:13px;margin:6px 0;">${esc(w.message)}</div>
-      ${w.reply ? `<div style="font-size:12px;color:var(--success);margin-top:6px;"><strong>Your Reply:</strong> ${esc(w.reply)}</div>` : `
-        <div class="row mt8">
-          <input id="warningReplyInput_${idx}" placeholder="Type reply to admin...">
-          <button class="btn btn-primary btn-sm" data-reply-idx="${idx}" style="flex:0 0 auto;">Send Reply</button>
-        </div>
-      `}
-    </div>
-  `).join("");
-  $all("[data-reply-idx]", container).forEach(btn => btn.addEventListener("click", () => sendWarningReply(Number(btn.dataset.replyIdx))));
-}
-
-async function sendWarningReply(idx) {
-  const input = $(`#warningReplyInput_${idx}`);
-  const replyText = input.value.trim();
-  if (!replyText) return showToast("Reply cannot be empty", "err");
-  let warnings = [...(State.profile.warnings || [])];
-  warnings[idx].reply = replyText;
-  try {
-    await db.collection("users").doc(State.user.uid).update({ warnings });
-    showToast("Reply sent to admin.", "ok");
-  } catch(e) { showToast("Failed to send reply.", "err"); }
-}
-
 function renderMyShops() {
-  const list = $("#myShopsList"), empty = $("#myShopsEmpty");
+  const list = $("#myShopsList");
+  const empty = $("#myShopsEmpty");
   if (!State.myShops || State.myShops.length === 0) { list.innerHTML = ""; empty.classList.remove("hidden"); return; }
   empty.classList.add("hidden");
   list.innerHTML = State.myShops.map(s => `
-    <div class="row" style="align-items:center; padding:10px 0; border-bottom:1px solid var(--border);">
-      <div style="flex:1;font-weight:700;font-size:13px;">${esc(s.name)}</div>
+    <div class="row" style="align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
+      <img src="${s.logoUrl || ''}" style="width:40px;height:40px;border-radius:10px;object-fit:cover;flex:0 0 auto;">
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:13.5px;">${esc(s.name)}</div>
+        <div class="text-dim" style="font-size:11.5px;">${esc(s.category || '')}</div>
+      </div>
       <button class="btn btn-danger btn-sm" data-del-shop="${s.id}">Delete</button>
     </div>
   `).join("");
-  $all("[data-del-shop]", list).forEach(b => b.addEventListener("click", async () => {
-    if(confirm("Delete shop?")) { await db.collection("shops").doc(b.dataset.delShop).delete(); showToast("Shop deleted", "ok"); }
-  }));
+  $all("[data-del-shop]", list).forEach(btn => btn.addEventListener("click", () => deleteShop(btn.dataset.delShop)));
+}
+async function deleteShop(shopId) {
+  if (!confirm("Delete this shop listing? This cannot be undone.")) return;
+  try {
+    await db.collection("shops").doc(shopId).delete();
+    showToast("Shop deleted.", "ok");
+  } catch (e) {
+    console.error(e); showToast("Failed to delete shop.", "err");
+  }
 }
 
 $("#profileAvatarInput").addEventListener("change", async e => {
@@ -888,442 +1189,523 @@ $("#profileAvatarInput").addEventListener("change", async e => {
     const base64 = await compressImageToBase64(file, 400);
     $("#profileAvatarPreview").src = base64;
     $("#profileAvatarPreview").dataset.pending = base64;
-  } catch(err) { showToast("Image processing failed", "err"); }
+  } catch (err) { showToast("Could not process image.", "err"); }
 });
 
 $("#saveProfileBtn").addEventListener("click", async () => {
   if (!State.user) return;
   const name = $("#profileNameInput").value.trim();
   let handle = $("#profileHandleInput").value.trim();
-  if(!handle.startsWith("@")) handle = "@" + handle;
+  if (!name) return showToast("Display name can't be empty.", "err");
+  if (!handle.startsWith("@")) handle = "@" + handle;
+  handle = handle.toLowerCase().replace(/\s+/g, "");
   const pendingPhoto = $("#profileAvatarPreview").dataset.pending;
-  const update = { displayName: name, userId: handle.toLowerCase() };
-  if(pendingPhoto) update.photoURL = pendingPhoto;
+  const update = { displayName: name, userId: handle };
+  if (pendingPhoto) update.photoURL = pendingPhoto;
   try {
     await db.collection("users").doc(State.user.uid).update(update);
-    State.profile = {...State.profile, ...update};
-    updateTopAvatar(); showToast("Profile updated.", "ok");
-  } catch(e) { showToast("Update failed.", "err"); }
+    State.profile = { ...(State.profile || {}), ...update };
+    updateTopAvatar();
+    showToast("Profile updated.", "ok");
+  } catch (e) {
+    console.error(e); showToast("Failed to save profile.", "err");
+  }
 });
 
-/* SEARCH NETWORK WITH USER WARNING BUTTON */
+/* ========================= 10. SEARCH NETWORK ========================= */
 async function searchByHandle() {
-  let query = $("#handleSearchInput").value.trim().toLowerCase();
+  let handle = $("#handleSearchInput").value.trim();
+  if (!handle) return;
+  if (!handle.startsWith("@")) handle = "@" + handle;
+  handle = handle.toLowerCase();
   const resultEl = $("#handleSearchResult");
-  if (!query) return;
   resultEl.innerHTML = `<div class="skel" style="height:90px;"></div>`;
   try {
-    const snap = await db.collection("users").get();
-    const matched = snap.docs.map(d => ({id: d.id, ...d.data()})).filter(u => 
-      (u.userId && u.userId.toLowerCase().includes(query)) || 
-      (u.displayName && u.displayName.toLowerCase().includes(query)) ||
-      (u.email && u.email.toLowerCase().includes(query))
-    );
-    if (matched.length === 0) {
-      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3></div>`;
+    const snap = await db.collection("users").where("userId", "==", handle).limit(1).get();
+    if (snap.empty) {
+      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3><p>Nobody uses the handle ${esc(handle)}.</p></div>`;
       return;
     }
-    resultEl.innerHTML = matched.map(u => `
-      <div class="glass card" style="display:flex; gap:16px; align-items:center; margin-bottom:10px;">
-        <img src="${u.photoURL || ''}" style="width:50px;height:50px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'">
+    const u = snap.docs[0].data();
+    const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
+    const hasShop = !shopSnap.empty;
+    resultEl.innerHTML = `
+      <div class="glass card" style="display:flex; gap:16px; align-items:center;">
+        <img src="${u.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(u.displayName || 'U')}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
         <div style="flex:1;">
-          <div style="font-weight:800; font-size:15px;">${esc(u.displayName)}</div>
-          <div class="text-dim" style="font-size:12px;">${esc(u.userId)} · ${esc(u.email)}</div>
+          <div style="font-weight:800; font-size:16px;">${esc(u.displayName)}</div>
+          <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
         </div>
-        ${State.isAdmin ? `<button class="btn btn-danger btn-sm" data-warn-uid="${u.id}">Send Warning</button>` : ''}
-      </div>
-    `).join("");
-    if(State.isAdmin) {
-      $all("[data-warn-uid]", resultEl).forEach(btn => btn.addEventListener("click", () => {
-        State.targetUidForWarning = btn.dataset.warnUid;
-        $("#adminWarningText").value = "";
-        openModal("adminWarningOverlay");
-      }));
-    }
-  } catch(e) {
-    resultEl.innerHTML = `<div class="empty-state"><h3>Search error</h3></div>`;
+        ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
+      </div>`;
+  } catch (e) {
+    console.error(e);
+    resultEl.innerHTML = `<div class="empty-state"><h3>Search failed</h3><p>Please try again.</p></div>`;
   }
 }
 $("#handleSearchBtn").addEventListener("click", searchByHandle);
 $("#handleSearchInput").addEventListener("keydown", e => { if (e.key === "Enter") searchByHandle(); });
 
-$("#sendAdminWarningBtn").addEventListener("click", async () => {
-  const msg = $("#adminWarningText").value.trim();
-  if(!msg || !State.targetUidForWarning) return showToast("Enter warning message", "err");
-  try {
-    const userRef = db.collection("users").doc(State.targetUidForWarning);
-    const uSnap = await userRef.get();
-    if(uSnap.exists) {
-      const warnings = uSnap.data().warnings || [];
-      warnings.push({ message: msg, date: new Date().toISOString(), reply: null });
-      await userRef.update({ warnings });
-      showToast("Warning sent to user.", "ok");
-      closeModal("adminWarningOverlay");
-    }
-  } catch(e) { showToast("Failed to send warning", "err"); }
-});
-
-/* HIRE TERMINAL */
+/* ========================= 11. HIRE TERMINAL ========================= */
 function openHireTerminal(shopId) {
   const shop = State.shops.find(s => s.id === shopId);
-  if (!shop) return;
+  if (!shop) return showToast("Shop not found.", "err");
   State.hireContext = { shop };
   State.selectedTier = "low";
-  $("#tierLowPrice").textContent = money(shop.rates?.low);
-  $("#tierMedPrice").textContent = money(shop.rates?.medium);
-  $("#tierHighPrice").textContent = money(shop.rates?.high);
+  State.selectedAR = "16:9";
+  $("#tierLowPrice").textContent = money(shop.rates && shop.rates.low);
+  $("#tierMedPrice").textContent = money(shop.rates && shop.rates.medium);
+  $("#tierHighPrice").textContent = money(shop.rates && shop.rates.high);
   $all(".tier-opt").forEach(o => o.classList.toggle("active", o.dataset.tier === "low"));
-  recalcHirePrice(); openModal("hireOverlay");
+  $all(".aspect-btn").forEach(o => o.classList.toggle("active", o.dataset.ar === "16:9"));
+  $("#hireDuration").value = 1; $("#hireQty").value = 1;
+  $("#hireAssetUrl").value = ""; $("#hireInstructions").value = "";
+  recalcHirePrice();
+  drawAspectPreview("16:9");
+  openModal("hireOverlay");
 }
 $all(".tier-opt").forEach(opt => opt.addEventListener("click", () => {
   $all(".tier-opt").forEach(o => o.classList.remove("active"));
-  opt.classList.add("active"); State.selectedTier = opt.dataset.tier; recalcHirePrice();
+  opt.classList.add("active");
+  State.selectedTier = opt.dataset.tier;
+  recalcHirePrice();
 }));
-function recalcHirePrice() {
-  const shop = State.hireContext?.shop;
-  if(!shop) return;
-  const base = Number(shop.rates?.[State.selectedTier === 'low' ? 'low' : State.selectedTier === 'med' ? 'medium' : 'high']) || 0;
-  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
-  const qty = Math.max(1, Number($("#hireQty").value) || 1);
-  $("#hireTotalPrice").textContent = money(base * dur * qty);
-}
+$all(".aspect-btn").forEach(btn => btn.addEventListener("click", () => {
+  $all(".aspect-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  State.selectedAR = btn.dataset.ar;
+  drawAspectPreview(btn.dataset.ar);
+}));
 $("#hireDuration").addEventListener("input", recalcHirePrice);
 $("#hireQty").addEventListener("input", recalcHirePrice);
 
+function recalcHirePrice() {
+  const shop = State.hireContext && State.hireContext.shop;
+  if (!shop) return;
+  const tierKey = { low: "low", med: "medium", high: "high" }[State.selectedTier];
+  const base = Number((shop.rates || {})[tierKey]) || 0;
+  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
+  const qty = Math.max(1, Number($("#hireQty").value) || 1);
+  const total = base * dur * qty;
+  $("#hireTotalPrice").textContent = money(total);
+}
+
+/* Aspect ratio preview rendered on <canvas>, bound inside window.onload-safe function w/ resize guard */
+function drawAspectPreview(ar) {
+  const canvas = $("#aspectCanvas");
+  const wrap = canvas.parentElement;
+  const boxW = wrap.clientWidth || 300;
+  const boxH = wrap.clientHeight || 220;
+  if (boxW === 0 || boxH === 0) return; // guard against 0x0 render
+  canvas.width = boxW; canvas.height = boxH;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, boxW, boxH);
+  const ratios = { "16:9": 16 / 9, "9:16": 9 / 16, "1:1": 1, "4:5": 4 / 5 };
+  const targetRatio = ratios[ar] || 16 / 9;
+  let rw = boxW * 0.7, rh = rw / targetRatio;
+  if (rh > boxH * 0.85) { rh = boxH * 0.85; rw = rh * targetRatio; }
+  const rx = (boxW - rw) / 2, ry = (boxH - rh) / 2;
+  const grad = ctx.createLinearGradient(rx, ry, rx + rw, ry + rh);
+  grad.addColorStop(0, "#6d5bff"); grad.addColorStop(1, "#b45bff");
+  ctx.fillStyle = "rgba(255,255,255,0.03)"; ctx.fillRect(0, 0, boxW, boxH);
+  ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.setLineDash([6, 5]);
+  ctx.strokeRect(rx, ry, rw, rh);
+  ctx.setLineDash([]);
+  ctx.fillStyle = "rgba(255,255,255,0.5)"; ctx.font = "13px 'Plus Jakarta Sans', sans-serif"; ctx.textAlign = "center";
+  ctx.fillText(ar, boxW / 2, boxH / 2);
+}
+window.addEventListener("resize", () => { if ($("#hireOverlay").classList.contains("show")) drawAspectPreview(State.selectedAR); });
+
 $("#hireSubmitBtn").addEventListener("click", async () => {
-  const shop = State.hireContext?.shop;
-  if (!shop || !State.user) return;
-  const dur = Number($("#hireDuration").value) || 1;
-  const qty = Number($("#hireQty").value) || 1;
-  const base = Number(shop.rates?.[State.selectedTier === 'low' ? 'low' : State.selectedTier === 'med' ? 'medium' : 'high']) || 0;
+  if (!State.user || !State.hireContext) return;
+  const shop = State.hireContext.shop;
+  if (shop.ownerUid === State.user.uid) return showToast("You can't hire your own shop.", "err");
+  const tierKey = { low: "low", med: "medium", high: "high" }[State.selectedTier];
+  const base = Number((shop.rates || {})[tierKey]) || 0;
+  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
+  const qty = Math.max(1, Number($("#hireQty").value) || 1);
   const price = base * dur * qty;
   const assetUrl = $("#hireAssetUrl").value.trim();
-  if(!assetUrl) return showToast("Asset link required", "err");
+  const instructions = $("#hireInstructions").value.trim();
+  if (!assetUrl) return showToast("Please add a footage/asset link.", "err");
+  if (price <= 0) return showToast("Invalid price — check the shop's rates.", "err");
 
+  const btn = $("#hireSubmitBtn"); btn.disabled = true; btn.textContent = "Sending…";
   try {
     const orderId = genOrderId();
     const order = {
-      orderId, shopId: shop.id, shopName: shop.name,
-      clientUid: State.user.uid, clientName: State.profile.displayName, clientEmail: State.user.email,
-      editorUid: shop.ownerUid, editorHandle: shop.ownerHandle,
-      tier: State.selectedTier, duration: dur, quantity: qty, price,
-      footageLink: assetUrl, instructions: $("#hireInstructions").value.trim(),
-      status: "wait_editor", workProgress: 0, createdAtMs: Date.now(),
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      orderId,
+      shopId: shop.id,
+      shopName: shop.name || "",
+      clientUid: State.user.uid,
+      clientName: (State.profile && State.profile.displayName) || State.user.displayName || "",
+      editorUid: shop.ownerUid,
+      editorHandle: shop.ownerHandle || "",
+      tier: State.selectedTier,
+      aspectRatio: State.selectedAR,
+      duration: dur,
+      quantity: qty,
+      price,
+      footageLink: assetUrl,
+      instructions,
+      workProgress: 0,
+      status: "wait_editor",
+      createdAtMs: Date.now(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
     await db.collection("orders").add(order);
-    showToast("Order sent to editor.", "ok"); closeModal("hireOverlay");
-  } catch(e) { showToast("Failed to send order", "err"); }
+    showToast("Order sent to editor — awaiting response.", "ok");
+    closeModal("hireOverlay");
+  } catch (e) {
+    console.error(e); showToast("Failed to send order.", "err");
+  } finally {
+    btn.disabled = false; btn.textContent = "Send Order";
+  }
 });
 
-/* STATUS & BADGES */
+/* ========================= 12. ESCROW WORKFLOW ========================= */
 const STATUS_META = {
-  wait_editor: { label: "Waiting for editor", badge: "badge-wait" },
-  pending_admin: { label: "Pending Admin Approval", badge: "badge-locked" },
-  in_progress_escrow: { label: "Escrow Payment Pending", badge: "badge-progress" },
-  payment_review: { label: "Payment Verification", badge: "badge-review" },
-  payment_verified: { label: "Work In Progress", badge: "badge-verified" },
-  delivery_processing: { label: "Delivery Processing (Watermarked)", badge: "badge-delivery" },
-  signing_phase: { label: "Signing Phase (3 Days)", badge: "badge-signing" },
-  disputed: { label: "Disputed / Reported", badge: "badge-reject" },
-  completed: { label: "Completed & Released", badge: "badge-done" },
-  rejected: { label: "Rejected", badge: "badge-reject" }
+  wait_editor:       { label: "Wait for editor response",            badge: "badge-wait" },
+  pending_admin:     { label: "Pending Admin Approval (Locked)",      badge: "badge-locked" },
+  in_progress_escrow:{ label: "In Progress (QR Sent — Escrow Awaiting)", badge: "badge-progress" },
+  payment_review:    { label: "Payment Under Review (Proof Submitted)", badge: "badge-review" },
+  payment_verified:  { label: "Payment Verified (Work In Progress)",  badge: "badge-verified" },
+  completed:         { label: "Completed",                           badge: "badge-done" },
+  rejected:          { label: "Rejected",                            badge: "badge-reject" },
 };
-function statusBadge(st) {
-  const m = STATUS_META[st] || { label: st, badge: "badge-wait" };
+function statusBadge(status) {
+  const m = STATUS_META[status] || { label: status, badge: "badge-wait" };
   return `<span class="badge ${m.badge}">${esc(m.label)}</span>`;
 }
 
-/* PLACED ORDERS (CLIENT) */
+/* ---- CLIENT: Placed Orders ---- */
 function renderPlacedOrders() {
-  const list = $("#placedOrdersList"), empty = $("#placedOrdersEmpty");
+  const list = $("#placedOrdersList");
+  const empty = $("#placedOrdersEmpty");
   const orders = State.allOrdersAsClient || [];
   empty.classList.toggle("hidden", orders.length > 0);
   list.innerHTML = orders.map(o => `
     <div class="glass order-card">
       <div class="order-top">
-        <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800;font-size:15px;margin-top:4px;">${esc(o.shopName)}</div></div>
-        <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
+        <div>
+          <div class="order-id">${esc(o.orderId)}</div>
+          <div style="font-weight:800; font-size:15px; margin-top:4px;">${esc(o.shopName)}</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="order-price">${money(o.price)}</div>
+          ${statusBadge(o.status)}
+        </div>
       </div>
       <div class="order-meta">
-        ${o.watermarkedLink ? `<br><strong>Watermarked Video:</strong> <a href="${esc(o.watermarkedLink)}" target="_blank" style="color:var(--accent)">${esc(o.watermarkedLink)}</a>` : ''}
-        ${o.unwatermarkedLink ? `<br><strong>Final Video:</strong> <a href="${esc(o.unwatermarkedLink)}" target="_blank" style="color:var(--success)">${esc(o.unwatermarkedLink)}</a>` : ''}
+        ${esc(o.tier ? (o.tier === 'low' ? 'Basic' : o.tier === 'med' ? 'Standard' : 'Premium') : '')} tier ·
+        ${esc(o.aspectRatio || '')} · ${esc(o.duration || 1)} min × ${esc(o.quantity || 1)}
       </div>
+      ${o.status === 'payment_verified' || o.status === 'completed' ? `
+        <div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div>
+        <div class="text-dim" style="font-size:11.5px;">${o.workProgress || 0}% complete</div>` : ''}
       <div class="order-actions">
         ${o.status === 'in_progress_escrow' ? `<button class="btn btn-primary btn-sm" data-pay="${o.id}">Do Payment</button>` : ''}
-        ${o.status === 'delivery_processing' ? `
-          <button class="btn btn-primary btn-sm" data-client-good="${o.id}">Good (Start Sign Process)</button>
-          <button class="btn btn-danger btn-sm" data-client-report="${o.id}">Report Editor</button>
-        ` : ''}
-        ${o.status === 'signing_phase' ? `
-          <button class="btn btn-primary btn-sm" data-client-sign="${o.id}">Sign Now & Release Escrow</button>
-        ` : ''}
+        ${o.status === 'payment_review' ? `<span class="text-dim" style="font-size:12px;">Awaiting admin verification…</span>` : ''}
         <button class="btn btn-ghost btn-sm" data-view-order="${o.id}">Details</button>
       </div>
     </div>
   `).join("");
-
   $all("[data-pay]", list).forEach(b => b.addEventListener("click", () => openPaymentModal(b.dataset.pay)));
-  $all("[data-client-good]", list).forEach(b => b.addEventListener("click", () => clientApproveDelivery(b.dataset.clientGood)));
-  $all("[data-client-report]", list).forEach(b => b.addEventListener("click", () => { State.activeOrder = orders.find(x=>x.id===b.dataset.clientReport); openModal("clientReportOverlay"); }));
-  $all("[data-client-sign]", list).forEach(b => b.addEventListener("click", () => clientSignOrder(b.dataset.clientSign)));
   $all("[data-view-order]", list).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrder, "client")));
 }
 
 function openPaymentModal(orderId) {
-  State.activeOrder = State.allOrdersAsClient.find(o => o.id === orderId);
+  const order = State.allOrdersAsClient.find(o => o.id === orderId);
+  if (!order) return;
+  State.activeOrderForPayment = order;
   $("#qrUpiId").textContent = PLATFORM_UPI_ID;
-  $("#qrImage").src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(`upi://pay?pa=${PLATFORM_UPI_ID}&pn=RexEditHub&am=${State.activeOrder.price}&cu=INR&tn=${State.activeOrder.orderId}`);
-  $("#paymentProofInput").value = ""; openModal("qrOverlay");
+  $("#qrImage").src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(`upi://pay?pa=${PLATFORM_UPI_ID}&pn=RexEditHub&am=${order.price}&cu=INR&tn=${order.orderId}`);
+  $("#paymentProofInput").value = "";
+  openModal("qrOverlay");
 }
 
 $("#submitProofBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForPayment;
+  if (!order) return;
   const proof = $("#paymentProofInput").value.trim();
-  if(!proof) return showToast("Enter payment proof", "err");
+  if (!proof) return showToast("Please add proof (UTR or link).", "err");
+  const btn = $("#submitProofBtn"); btn.disabled = true; btn.textContent = "Submitting…";
   try {
-    await db.collection("orders").doc(State.activeOrder.id).update({ status: "payment_review", paymentProof: proof });
-    showToast("Proof submitted.", "ok"); closeModal("qrOverlay");
-  } catch(e) { showToast("Failed", "err"); }
+    await db.collection("orders").doc(order.id).update({ status: "payment_review", paymentProof: proof });
+    showToast("Proof submitted — awaiting admin verification.", "ok");
+    closeModal("qrOverlay");
+  } catch (e) {
+    console.error(e); showToast("Failed to submit proof.", "err");
+  } finally {
+    btn.disabled = false; btn.textContent = "Submit Proof";
+  }
 });
 
-async function clientApproveDelivery(orderId) {
-  try {
-    const deadline = Date.now() + (3 * 24 * 60 * 60 * 1000); // 3 days auto-sign
-    await db.collection("orders").doc(orderId).update({ status: "signing_phase", signDeadlineMs: deadline });
-    showToast("Started sign process. Editor will provide final unwatermarked video.", "ok");
-  } catch(e) { showToast("Error", "err"); }
+function showOrderDetail(orderId, role) {
+  const source = role === "client" ? State.allOrdersAsClient : role === "editor" ? State.allOrdersAsEditor : State.allOrdersAdmin;
+  const o = source.find(x => x.id === orderId);
+  if (!o) return;
+  $("#infoModalTitle").textContent = o.orderId;
+  $("#infoModalBody").innerHTML = `
+    <div class="field"><label>Status</label>${statusBadge(o.status)}</div>
+    <div class="field"><label>Shop</label>${esc(o.shopName)}</div>
+    <div class="field"><label>Client</label>${esc(o.clientName || o.clientUid)}</div>
+    <div class="field"><label>Footage / Asset Link</label><div style="word-break:break-all;font-size:13px;">${esc(o.footageLink || '—')}</div></div>
+    <div class="field"><label>Instructions</label><div style="font-size:13px; white-space:pre-wrap;">${esc(o.instructions || '—')}</div></div>
+    <div class="field"><label>Price</label>${money(o.price)}</div>
+    ${o.paymentProof ? `<div class="field"><label>Payment Proof</label><div style="word-break:break-all;font-size:13px;">${esc(o.paymentProof)}</div></div>` : ''}
+    <div class="field mb0"><label>Progress</label>
+      <div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div>
+      <div class="text-dim" style="font-size:11.5px;">${o.workProgress || 0}%</div>
+    </div>
+  `;
+  openModal("infoOverlay");
 }
 
-async function clientSignOrder(orderId) {
-  const order = State.allOrdersAsClient.find(o => o.id === orderId);
-  if(!order) return;
-  try {
-    await db.collection("orders").doc(orderId).update({ status: "completed", workProgress: 100 });
-    showToast("Order signed and completed! Escrow released.", "ok");
-    sendEmailNotification(order.clientEmail, `Order Completed — ${order.orderId}`, "Order Completed", `Your order ${order.orderId} is signed and escrow funds have been released.`);
-  } catch(e) { showToast("Error", "err"); }
-}
-
-$("#submitClientReportBtn").addEventListener("click", async () => {
-  const reason = $("#clientReportReason").value.trim();
-  if(!reason || !State.activeOrder) return showToast("Enter reason", "err");
-  try {
-    await db.collection("orders").doc(State.activeOrder.id).update({ status: "disputed" });
-    await db.collection("reports").add({
-      orderId: State.activeOrder.orderId, orderDocId: State.activeOrder.id,
-      reporterUid: State.user.uid, reporterName: State.profile.displayName,
-      editorUid: State.activeOrder.editorUid, reason, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    showToast("Report submitted to admin.", "ok"); closeModal("clientReportOverlay");
-  } catch(e) { showToast("Error", "err"); }
-});
-
-/* EDITOR MANAGE */
+/* ---- EDITOR: Incoming Requests ---- */
 function renderEditorOrders() {
-  const list = $("#editorOrdersList"), empty = $("#editorOrdersEmpty");
+  const list = $("#editorOrdersList");
+  const empty = $("#editorOrdersEmpty");
   const orders = State.allOrdersAsEditor || [];
   empty.classList.toggle("hidden", orders.length > 0);
   list.innerHTML = orders.map(o => `
     <div class="glass order-card">
       <div class="order-top">
-        <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800;font-size:15px;margin-top:4px;">${esc(o.clientName)}</div></div>
-        <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
+        <div>
+          <div class="order-id">${esc(o.orderId)}</div>
+          <div style="font-weight:800; font-size:15px; margin-top:4px;">${esc(o.clientName || 'Client')}</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="order-price">${money(o.price)}</div>
+          ${statusBadge(o.status)}
+        </div>
       </div>
+      <div class="order-meta">
+        ${esc(o.tier ? (o.tier === 'low' ? 'Basic' : o.tier === 'med' ? 'Standard' : 'Premium') : '')} tier ·
+        ${esc(o.aspectRatio || '')} · ${esc(o.duration || 1)} min × ${esc(o.quantity || 1)}
+      </div>
+      ${o.status === 'payment_verified' || o.status === 'completed' ? `
+        <div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div>` : ''}
       <div class="order-actions">
         ${o.status === 'wait_editor' ? `
           <button class="btn btn-primary btn-sm" data-accept="${o.id}">Accept</button>
-          <button class="btn btn-danger btn-sm" data-reject="${o.id}">Reject</button>
-        ` : ''}
-        ${o.status === 'payment_verified' ? `<button class="btn btn-primary btn-sm" data-deliver="${o.id}">Send Watermarked Video</button>` : ''}
-        ${o.status === 'signing_phase' ? `<button class="btn btn-primary btn-sm" data-unwatermark="${o.id}">Send Unwatermarked Video</button>` : ''}
-        ${o.status === 'disputed' ? `<button class="btn btn-danger btn-sm" data-editor-dispute="${o.id}">Dispute Actions</button>` : ''}
+          <button class="btn btn-danger btn-sm" data-reject="${o.id}">Reject</button>` : ''}
+        ${o.status === 'payment_verified' ? `<button class="btn btn-primary btn-sm" data-progress="${o.id}">Update Progress</button>` : ''}
         <button class="btn btn-ghost btn-sm" data-view-order-e="${o.id}">Details</button>
       </div>
     </div>
   `).join("");
-
-  $all("[data-accept]", list).forEach(b => b.addEventListener("click", async () => {
-    await db.collection("orders").doc(b.dataset.accept).update({ status: "pending_admin" });
-    showToast("Accepted.", "ok");
-  }));
-  $all("[data-reject]", list).forEach(b => b.addEventListener("click", async () => {
-    const reason = prompt("Rejection reason:");
-    if(!reason) return;
-    const ord = orders.find(x => x.id === b.dataset.reject);
-    await db.collection("orders").doc(b.dataset.reject).update({ status: "rejected", rejectionReason: reason });
-    sendEmailNotification(ord.clientEmail, `Order Rejected — ${ord.orderId}`, "Order Rejected", `Reason: ${reason}`);
-    showToast("Rejected.", "ok");
-  }));
-  $all("[data-deliver]", list).forEach(b => b.addEventListener("click", () => { State.activeOrder = orders.find(x=>x.id===b.dataset.deliver); openModal("deliveryOverlay"); }));
-  $all("[data-unwatermark]", list).forEach(b => b.addEventListener("click", () => { State.activeOrder = orders.find(x=>x.id===b.dataset.unwatermark); openModal("unwatermarkOverlay"); }));
-  $all("[data-editor-dispute]", list).forEach(b => b.addEventListener("click", () => { State.activeOrder = orders.find(x=>x.id===b.dataset.editorDispute); openModal("editorActionOverlay"); }));
+  $all("[data-accept]", list).forEach(b => b.addEventListener("click", () => acceptOrder(b.dataset.accept)));
+  $all("[data-reject]", list).forEach(b => b.addEventListener("click", () => rejectOrder(b.dataset.reject)));
+  $all("[data-progress]", list).forEach(b => b.addEventListener("click", () => openProgressModal(b.dataset.progress)));
+  $all("[data-view-order-e]", list).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderE, "editor")));
 }
 
-$("#submitDeliveryBtn").addEventListener("click", async () => {
-  const link = $("#watermarkedLinkInput").value.trim();
-  if(!link || !State.activeOrder) return showToast("Enter link", "err");
+async function acceptOrder(orderId) {
+  const order = State.allOrdersAsEditor.find(o => o.id === orderId);
+  if (!order) return;
   try {
-    await db.collection("orders").doc(State.activeOrder.id).update({ status: "delivery_processing", watermarkedLink: link, workProgress: 100 });
-    showToast("Watermarked video delivered.", "ok"); closeModal("deliveryOverlay");
-  } catch(e) { showToast("Error", "err"); }
-});
-
-$("#submitUnwatermarkBtn").addEventListener("click", async () => {
-  const link = $("#unwatermarkedLinkInput").value.trim();
-  if(!link || !State.activeOrder) return showToast("Enter link", "err");
+    await db.collection("orders").doc(orderId).update({ status: "pending_admin" });
+    showToast("Order accepted — sent for admin approval.", "ok");
+    sendEmailNotification({
+      to_email: SUPER_ADMIN_EMAIL,
+      subject: `New escrow approval needed — ${order.orderId}`,
+      message: `Editor accepted order ${order.orderId} for ${money(order.price)}. Please review and approve in the Admin panel.`,
+      order_id: order.orderId,
+    });
+  } catch (e) { console.error(e); showToast("Failed to accept order.", "err"); }
+}
+async function rejectOrder(orderId) {
+  if (!confirm("Reject this commission request?")) return;
   try {
-    await db.collection("orders").doc(State.activeOrder.id).update({ unwatermarkedLink: link });
-    showToast("Unwatermarked video submitted.", "ok"); closeModal("unwatermarkOverlay");
-  } catch(e) { showToast("Error", "err"); }
+    await db.collection("orders").doc(orderId).update({ status: "rejected" });
+    showToast("Order rejected.", "ok");
+  } catch (e) { console.error(e); showToast("Failed to reject order.", "err"); }
+}
+
+function openProgressModal(orderId) {
+  const order = State.allOrdersAsEditor.find(o => o.id === orderId);
+  if (!order) return;
+  State.activeOrderForProgress = order;
+  const val = order.workProgress || 15;
+  $("#progressSlider").value = val;
+  $("#progressValLabel").textContent = val;
+  openModal("progressOverlay");
+}
+$("#progressSlider").addEventListener("input", e => { $("#progressValLabel").textContent = e.target.value; });
+$("#saveProgressBtn").addEventListener("click", async () => {
+  const order = State.activeOrderForProgress;
+  if (!order) return;
+  const val = Number($("#progressSlider").value);
+  const btn = $("#saveProgressBtn"); btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    const update = { workProgress: val };
+    if (val >= 100) update.status = "completed";
+    await db.collection("orders").doc(order.id).update(update);
+    showToast(val >= 100 ? "Marked as completed! 🎉" : "Progress updated.", "ok");
+    closeModal("progressOverlay");
+  } catch (e) {
+    console.error(e); showToast("Failed to update progress.", "err");
+  } finally {
+    btn.disabled = false; btn.textContent = "Save Progress";
+  }
 });
 
-$("#editorRestartBtn").addEventListener("click", async () => {
-  await db.collection("orders").doc(State.activeOrder.id).update({ status: "payment_verified", workProgress: 0, watermarkedLink: null });
-  showToast("Project restarted.", "ok"); closeModal("editorActionOverlay");
-});
-$("#editorRejectOrderBtn").addEventListener("click", async () => {
-  await db.collection("orders").doc(State.activeOrder.id).update({ status: "rejected" });
-  showToast("Order rejected.", "ok"); closeModal("editorActionOverlay");
-});
-
-/* ADMIN REVIEW */
+/* ========================= 13. ADMIN REVIEW ========================= */
 $all("[data-atab]").forEach(tab => tab.addEventListener("click", () => {
   $all("[data-atab]").forEach(t => t.classList.remove("active"));
   tab.classList.add("active");
   $("#adminAppsPane").classList.toggle("hidden", tab.dataset.atab !== "apps");
   $("#adminOrdersPane").classList.toggle("hidden", tab.dataset.atab !== "orders");
-  $("#adminReportsPane").classList.toggle("hidden", tab.dataset.atab !== "reports");
-  $("#adminShopsPane").classList.toggle("hidden", tab.dataset.atab !== "allshops");
 }));
 
 function renderAdminReview() {
   if (!State.isAdmin) return;
-
-  // Apps
   const appsPane = $("#adminAppsPane");
   const apps = State.pendingApplications || [];
-  appsPane.innerHTML = apps.length === 0 ? `<div class="empty-state"><h3>No pending applications</h3></div>` : apps.map(a => `
-    <div class="glass card" style="margin-bottom:10px;">
-      <div style="font-weight:800;">${esc(a.name)}</div>
-      <div class="row mt8">
-        <button class="btn btn-primary btn-sm" data-approve-app="${a.id}">Approve</button>
-        <button class="btn btn-danger btn-sm" data-decline-app="${a.id}">Reject</button>
-      </div>
-    </div>
-  `).join("");
-  $all("[data-approve-app]", appsPane).forEach(b => b.addEventListener("click", async () => {
-    const a = apps.find(x => x.id === b.dataset.approveApp);
-    await db.collection("shops").add({ name: a.name, category: a.category, rates: a.rates, logoUrl: a.logoUrl||"", ownerUid: a.applicantUid, ownerHandle: a.applicantHandle||"" });
-    await db.collection("shop_applications").doc(a.id).delete();
-    showToast("Approved", "ok");
-  }));
-  $all("[data-decline-app]", appsPane).forEach(b => b.addEventListener("click", async () => {
-    await db.collection("shop_applications").doc(b.dataset.declineApp).delete();
-    showToast("Rejected", "ok");
-  }));
+  if (apps.length === 0) {
+    appsPane.innerHTML = `<div class="empty-state"><h3>No pending applications</h3><p>New creator applications will show up here.</p></div>`;
+  } else {
+    appsPane.innerHTML = `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr));">` + apps.map(a => `
+      <div class="glass card">
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+          <img src="${a.logoUrl || ''}" style="width:48px;height:48px;border-radius:12px;object-fit:cover;">
+          <div><div style="font-weight:800;">${esc(a.name)}</div><div class="text-dim" style="font-size:12px;">${esc(a.category || '')}</div></div>
+        </div>
+        <div class="text-dim" style="font-size:12.5px; margin-bottom:6px;">By ${esc(a.applicantHandle || a.applicantUid)}</div>
+        <div class="text-dim" style="font-size:12.5px; margin-bottom:6px; word-break:break-all;">${esc(a.portfolio || '')}</div>
+        <div class="text-dim" style="font-size:12.5px; margin-bottom:14px;">Basic ${money(a.rates && a.rates.low)} · Std ${money(a.rates && a.rates.medium)} · Prem ${money(a.rates && a.rates.high)}</div>
+        <div class="row">
+          <button class="btn btn-primary btn-sm" data-approve="${a.id}">Approve</button>
+          <button class="btn btn-danger btn-sm" data-decline="${a.id}">Reject</button>
+        </div>
+      </div>`).join("") + `</div>`;
+    $all("[data-approve]", appsPane).forEach(b => b.addEventListener("click", () => approveApplication(b.dataset.approve)));
+    $all("[data-decline]", appsPane).forEach(b => b.addEventListener("click", () => declineApplication(b.dataset.decline)));
+  }
 
-  // Orders
   const ordersPane = $("#adminOrdersPane");
-  const relOrders = (State.allOrdersAdmin || []).filter(o => o.status === "pending_admin" || o.status === "payment_review");
-  ordersPane.innerHTML = relOrders.length === 0 ? `<div class="empty-state"><h3>Escrow queue is clear</h3></div>` : relOrders.map(o => `
-    <div class="glass order-card">
-      <div style="font-weight:800;">${esc(o.orderId)} — ${money(o.price)}</div>
-      <div class="text-dim" style="font-size:12px;">Status: ${o.status} ${o.paymentProof ? '· Proof: ' + esc(o.paymentProof) : ''}</div>
-      <div class="row mt8">
-        ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-app-ord="${o.id}">Approve & Send QR</button>` : ''}
-        ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-ver-pay="${o.id}">Verify Payment</button>` : ''}
+  const relevant = (State.allOrdersAdmin || []).filter(o => o.status === "pending_admin" || o.status === "payment_review");
+  if (relevant.length === 0) {
+    ordersPane.innerHTML = `<div class="empty-state"><h3>Escrow queue is clear</h3><p>Orders needing approval or payment verification appear here.</p></div>`;
+  } else {
+    ordersPane.innerHTML = relevant.map(o => `
+      <div class="glass order-card">
+        <div class="order-top">
+          <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800;margin-top:4px;">${esc(o.shopName)}</div></div>
+          <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
+        </div>
+        <div class="order-actions">
+          ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button>` : ''}
+          ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button>` : ''}
+          <button class="btn btn-ghost btn-sm" data-view-order-a="${o.id}">Details</button>
+        </div>
       </div>
-    </div>
-  `).join("");
-  $all("[data-admin-app-ord]", ordersPane).forEach(b => b.addEventListener("click", async () => {
-    const ord = relOrders.find(x => x.id === b.dataset.adminApp-ord);
-    await db.collection("orders").doc(b.dataset.adminApp-ord).update({ status: "in_progress_escrow" });
-    showToast("Approved QR sent", "ok");
-  }));
-  $all("[data-admin-ver-pay]", ordersPane).forEach(b => b.addEventListener("click", async () => {
-    await db.collection("orders").doc(b.dataset.adminVerPay).update({ status: "payment_verified", workProgress: 0 });
-    showToast("Payment verified", "ok");
-  }));
-
-  // Reports
-  const reportsPane = $("#adminReportsPane");
-  const reports = State.allReports || [];
-  reportsPane.innerHTML = reports.length === 0 ? `<div class="empty-state"><h3>No reports or disputes</h3></div>` : reports.map(r => `
-    <div class="glass card" style="margin-bottom:10px;">
-      <div style="font-weight:800;color:var(--danger);">Report on Order: ${esc(r.orderId)}</div>
-      <div style="font-size:13px;margin:6px 0;">Reason: ${esc(r.reason)}</div>
-      <div class="row mt8">
-        <button class="btn btn-primary btn-sm" data-admin-okfine="${r.id}" data-ordid="${r.orderDocId}">Ok Fine</button>
-        <button class="btn btn-danger btn-sm" data-admin-repedit="${r.editorUid}">Report Editor</button>
-      </div>
-    </div>
-  `).join("");
-  $all("[data-admin-okfine]", reportsPane).forEach(b => b.addEventListener("click", async () => {
-    await db.collection("orders").doc(b.dataset.ordid).update({ status: "payment_verified" });
-    await db.collection("reports").doc(b.dataset.adminOkfine).delete();
-    showToast("Sent 'Ok Fine' response.", "ok");
-  }));
-  $all("[data-admin-repedit]", reportsPane).forEach(b => b.addEventListener("click", () => {
-    State.targetUidForWarning = b.dataset.adminRepedit;
-    $("#adminWarningText").value = "Admin notice regarding client dispute report.";
-    openModal("adminWarningOverlay");
-  }));
-
-  // All Shops
-  const shopsPane = $("#adminShopsPane");
-  shopsPane.innerHTML = (State.shops || []).map(s => `
-    <div class="glass card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
-      <div><div style="font-weight:800;">${esc(s.name)}</div><div class="text-dim" style="font-size:12px;">${esc(s.ownerHandle)}</div></div>
-      <button class="btn btn-danger btn-sm" data-admin-del-sh="${s.id}">Delete</button>
-    </div>
-  `).join("");
-  $all("[data-admin-del-sh]", shopsPane).forEach(b => b.addEventListener("click", async () => {
-    await db.collection("shops").doc(b.dataset.adminDelSh).delete();
-    showToast("Shop deleted", "ok");
-  }));
+    `).join("");
+    $all("[data-admin-approve-order]", ordersPane).forEach(b => b.addEventListener("click", () => adminApproveOrder(b.dataset.adminApproveOrder)));
+    $all("[data-admin-verify]", ordersPane).forEach(b => b.addEventListener("click", () => adminVerifyPayment(b.dataset.adminVerify)));
+    $all("[data-view-order-a]", ordersPane).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderA, "admin")));
+  }
 }
 
-function showOrderDetail(orderId, role) {
-  const source = role === "client" ? State.allOrdersAsClient : role === "editor" ? State.allOrdersAsEditor : State.allOrdersAdmin;
-  const o = source.find(x => x.id === orderId);
-  if(!o) return;
-  $("#infoModalTitle").textContent = o.orderId;
-  $("#infoModalBody").innerHTML = `
-    <div class="field"><label>Status</label>${statusBadge(o.status)}</div>
-    <div class="field"><label>Shop</label>${esc(o.shopName)}</div>
-    <div class="field"><label>Footage Link</label><a href="${esc(o.footageLink)}" target="_blank" style="color:var(--accent)">${esc(o.footageLink)}</a></div>
-    ${o.watermarkedLink ? `<div class="field"><label>Watermarked Video</label><a href="${esc(o.watermarkedLink)}" target="_blank" style="color:var(--accent)">${esc(o.watermarkedLink)}</a></div>` : ''}
-    ${o.unwatermarkedLink ? `<div class="field"><label>Unwatermarked Video</label><a href="${esc(o.unwatermarkedLink)}" target="_blank" style="color:var(--success)">${esc(o.unwatermarkedLink)}</a></div>` : ''}
-    <div class="field"><label>Price</label>${money(o.price)}</div>
-  `;
-  openModal("infoOverlay");
+async function approveApplication(appId) {
+  const app = State.pendingApplications.find(a => a.id === appId);
+  if (!app) return;
+  try {
+    await db.collection("shops").add({
+      name: app.name, category: app.category, rates: app.rates, logoUrl: app.logoUrl || "",
+      ownerUid: app.applicantUid, ownerHandle: app.applicantHandle || "",
+      portfolio: app.portfolio || "", createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    await db.collection("shop_applications").doc(appId).delete();
+    showToast("Shop approved & listed.", "ok");
+  } catch (e) { console.error(e); showToast("Failed to approve.", "err"); }
+}
+async function declineApplication(appId) {
+  if (!confirm("Reject this application?")) return;
+  try {
+    await db.collection("shop_applications").doc(appId).delete();
+    showToast("Application rejected.", "ok");
+  } catch (e) { console.error(e); showToast("Failed to reject.", "err"); }
+}
+async function adminApproveOrder(orderId) {
+  const order = State.allOrdersAdmin.find(o => o.id === orderId);
+  if (!order) return;
+  try {
+    await db.collection("orders").doc(orderId).update({ status: "in_progress_escrow" });
+    showToast("Escrow approved — QR sent to client.", "ok");
+    sendEmailNotification({
+      to_email: order.clientEmail || "",
+      subject: `Escrow approved for ${order.orderId} — complete payment`,
+      message: `Your order ${order.orderId} was approved. Pay ${money(order.price)} to UPI ID ${PLATFORM_UPI_ID} and submit proof in the app.`,
+      upi_id: PLATFORM_UPI_ID, order_id: order.orderId,
+    });
+  } catch (e) { console.error(e); showToast("Failed to approve order.", "err"); }
+}
+async function adminVerifyPayment(orderId) {
+  const order = State.allOrdersAdmin.find(o => o.id === orderId);
+  if (!order) return;
+  try {
+    await db.collection("orders").doc(orderId).update({ status: "payment_verified", workProgress: order.workProgress || 15 });
+    showToast("Payment verified — creator notified.", "ok");
+  } catch (e) { console.error(e); showToast("Failed to verify payment.", "err"); }
 }
 
-/* APPLY FOR EARN */
+/* ========================= 14. APPLY FOR EARN (2-step) ========================= */
 const RegState = { logoBase64: null };
+
 $("#regLogoInput").addEventListener("change", async e => {
   const file = e.target.files && e.target.files[0];
-  if(!file) return;
-  RegState.logoBase64 = await compressImageToBase64(file, 400);
-  $("#regLogoPreview").src = RegState.logoBase64;
-  $("#regLogoPreview").classList.remove("hidden");
+  if (!file) return;
+  try {
+    const base64 = await compressImageToBase64(file, 400);
+    RegState.logoBase64 = base64;
+    $("#regLogoPreview").src = base64;
+    $("#regLogoPreview").classList.remove("hidden");
+  } catch (err) { showToast("Could not process logo.", "err"); }
 });
+
 $("#regStep1Next").addEventListener("click", () => {
-  if(!$("#regShopName").value.trim() || !RegState.logoBase64) return showToast("Fill name and logo", "err");
+  const name = $("#regShopName").value.trim();
+  const portfolio = $("#regPortfolio").value.trim();
+  if (!name) return showToast("Shop name is required.", "err");
+  if (!portfolio) return showToast("Portfolio link is required.", "err");
+  if (!RegState.logoBase64) return showToast("Please upload a logo.", "err");
   switchView("viewRegisterStep2");
 });
 $("#regStep2Back").addEventListener("click", () => switchView("viewRegisterStep1"));
+
 $("#regStep2Submit").addEventListener("click", async () => {
+  if (!State.user) return;
   const low = Number($("#regRateLow").value), med = Number($("#regRateMed").value), high = Number($("#regRateHigh").value);
-  if(!low || !med || !high) return showToast("Enter all rates", "err");
-  await db.collection("shop_applications").add({
-    name: $("#regShopName").value.trim(), category: $("#regCategory").value,
-    portfolio: $("#regPortfolio").value.trim(), logoUrl: RegState.logoBase64,
-    rates: { low, medium: med, high }, applicantUid: State.user.uid, applicantHandle: State.profile.userId,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
-  showToast("Application submitted!", "ok"); switchView("viewShop");
+  if (!low || !med || !high) return showToast("All three pricing tiers are required.", "err");
+  const btn = $("#regStep2Submit"); btn.disabled = true; btn.textContent = "Submitting…";
+  try {
+    await db.collection("shop_applications").add({
+      name: $("#regShopName").value.trim(),
+      category: $("#regCategory").value,
+      portfolio: $("#regPortfolio").value.trim(),
+      logoUrl: RegState.logoBase64,
+      rates: { low, medium: med, high },
+      applicantUid: State.user.uid,
+      applicantHandle: (State.profile && State.profile.userId) || "",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    showToast("Application submitted for review!", "ok");
+    $("#regShopName").value = ""; $("#regPortfolio").value = ""; $("#regRateLow").value = "";
+    $("#regRateMed").value = ""; $("#regRateHigh").value = ""; RegState.logoBase64 = null;
+    $("#regLogoPreview").classList.add("hidden");
+    switchView("viewShop");
+  } catch (e) {
+    console.error(e); showToast("Failed to submit application.", "err");
+  } finally {
+    btn.disabled = false; btn.textContent = "Submit Application";
+  }
 });
+
+/* ========================= 15. GLOBAL ERROR SAFETY NET ========================= */
+window.addEventListener("error", e => console.error("Uncaught error:", e.error || e.message));
+window.addEventListener("unhandledrejection", e => console.error("Unhandled rejection:", e.reason));
 </script>
 </body>
 </html>
