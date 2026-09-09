@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Rex Edit Hub — Escrow Marketplace</title>
+<title>Rex Edit Hub — Escrow Marketplace for Editors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
   --radius:16px; --radius-sm:10px; --radius-lg:24px;
   --glow: 0 0 24px rgba(109,91,255,0.35); --font:'Plus Jakarta Sans',system-ui,sans-serif;
 }
-html[data-theme="light"]{--bg:#f4f5fc;--bg2:#ffffff;--primary:#4d3cf2;--primary2:#7a5eff;--accent:#0087a3;}
+html[data-theme="indigo"]{--bg:#0a0b16;--bg2:#141530;--primary:#6d5bff;--primary2:#9b7bff;--accent:#5be6ff;}
 html[data-theme="dark"]{--bg:#08090b;--bg2:#101114;--primary:#9aa0ac;--primary2:#e7e9ee;--accent:#6d5bff;}
 html[data-theme="coral"]{--bg:#150a0c;--bg2:#241014;--primary:#ff6b6b;--primary2:#ff9d6b;--accent:#ffd36b;}
 html[data-theme="neon"]{--bg:#05070a;--bg2:#0a0f14;--primary:#00ffc8;--primary2:#00c8ff;--accent:#ff00c8;}
@@ -28,7 +28,7 @@ html[data-theme="amber"]{--bg:#140f04;--bg2:#241c08;--primary:#ffb020;--primary2
 html[data-canvas="snow"],html[data-canvas="starfield"],html[data-canvas="cyberrain"],html[data-canvas="matrix"],
 html[data-canvas="embers"],html[data-canvas="plasma"],html[data-canvas="chroma"],html[data-canvas="prism"],
 html[data-canvas="auroraflow"],html[data-canvas="golddust"],html[data-canvas="storm"],html[data-canvas="petals"],
-html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"]{--bg:#05060a;--bg2:#0a0b12;}
+html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"],html[data-canvas="egypt"]{--bg:#05060a;--bg2:#0a0b12;}
 
 *{box-sizing:border-box; margin:0; padding:0;}
 ::selection{background:var(--primary); color:#fff;}
@@ -239,6 +239,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .warning-reply{padding:8px 12px; border-radius:9px; background:rgba(255,255,255,0.04); font-size:12.5px; margin-top:6px;}
 .warning-reply b{color:var(--primary2);}
 
+.profile-grid{grid-template-columns:340px 1fr;}
 @media(max-width:860px){
   .app{grid-template-columns:1fr;}
   .sidebar{position:fixed; left:-280px; top:0; width:260px; z-index:50; transition:left .3s ease; box-shadow:0 0 40px rgba(0,0,0,0.5);}
@@ -246,6 +247,8 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   .main{padding:18px 16px 60px;}
   .search-wrap{width:100%; max-width:100%; order:3;}
   .menu-toggle{display:flex !important;}
+  .profile-grid{grid-template-columns:1fr;}
+  .theme-grid{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));}
 }
 .menu-toggle{display:none; width:40px; height:40px; border-radius:10px; background:var(--surface); border:1px solid var(--border); align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;}
 @media(prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}}
@@ -315,15 +318,20 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         <div class="page-sub" id="pageSub">Browse vetted editors and hire with escrow protection</div>
       </div>
       <div class="spacer"></div>
-      <div class="search-wrap" id="marketSearchWrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="marketSearchInput" placeholder="Search shops or category…">
-      </div>
       <div class="avatar-btn" id="topAvatarBtn"><span id="topAvatarInitial">?</span></div>
     </div>
 
     <!-- VIEW: MARKETPLACE -->
     <section id="viewShop" class="view">
+      <div class="row mb0" style="margin-bottom:18px; flex-wrap:wrap;">
+        <div class="search-wrap" style="width:auto; max-width:none; flex:1; min-width:220px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="shopSearchInput" placeholder="Search shops by name or category…">
+        </div>
+        <select id="shopCategoryFilter" style="flex:0 0 220px;">
+          <option value="">All categories</option>
+        </select>
+      </div>
       <div id="shopGrid" class="grid grid-shops"></div>
       <div id="shopEmpty" class="empty-state hidden">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"/></svg>
@@ -333,7 +341,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 
     <!-- VIEW: PROFILE -->
     <section id="viewProfile" class="view hidden">
-      <div class="grid" style="grid-template-columns:340px 1fr; align-items:start;">
+      <div class="grid profile-grid" style="align-items:start;">
         <div class="glass card">
           <div style="text-align:center;">
             <img id="profileAvatarPreview" class="upload-preview" style="width:96px;height:96px;border-radius:50%;margin-bottom:14px;" src="">
@@ -354,7 +362,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         </div>
         <div>
           <div class="glass card">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 25 Themes</div>
+            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 26 Themes</div>
             <div class="theme-tabs">
               <div class="theme-tab active" data-tpage="1">Standard</div>
               <div class="theme-tab" data-tpage="3">Animated</div>
@@ -379,9 +387,9 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
     <section id="viewSearchUser" class="view hidden">
       <div class="glass card" style="max-width:480px;">
         <div class="field mb0">
-          <label>Look up by handle</label>
+          <label>Look up by name or handle</label>
           <div class="row">
-            <input id="handleSearchInput" placeholder="@handle">
+            <input id="handleSearchInput" placeholder="Name or @handle">
             <button class="btn btn-primary" id="handleSearchBtn" style="flex:0 0 auto;">Search</button>
           </div>
         </div>
@@ -628,7 +636,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-    'use strict';
+  'use strict';
 
 /* ========================= 1. CONFIG ========================= */
 const FIREBASE_CONFIG = {
@@ -757,11 +765,11 @@ function notifyEmail(opts) {
   });
 }
 
-/* ========================= 4. THEME SYSTEM (25 THEMES) ========================= */
+/* ========================= 4. THEME SYSTEM (26 THEMES) ========================= */
 const STATIC_THEMES = ["indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber"];
 const CANVAS_THEMES = [
   "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
-  "auroraflow","golddust","storm","petals","warp","flares","bubbles"
+  "auroraflow","golddust","storm","petals","warp","flares","bubbles","egypt"
 ];
 const THEME_COLORS = {
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
@@ -770,10 +778,12 @@ const THEME_COLORS = {
   snow:["#dfe9f5","#8fb3d9"], starfield:["#5b7bff","#c8d4ff"], cyberrain:["#00ffb0","#00c8ff"], matrix:["#00ff6a","#0a3d1a"],
   embers:["#ff5b2e","#ffb85b"], plasma:["#ff2ed6","#5b2eff"], chroma:["#ff2e6a","#2effc8"], prism:["#ff9ded","#9de0ff"],
   auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
-  warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"]
+  warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"],
+  egypt:["#e8804a","#ffd27a"]
 };
 const THEME_LABELS = {};
 [...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
+THEME_LABELS.egypt = "Ancient Egypt";
 
 let currentTheme = localStorage.getItem("rex_theme") || "indigo";
 if (!THEME_LABELS[currentTheme]) currentTheme = "indigo"; // guard against a theme that was removed
@@ -797,6 +807,20 @@ function stopCanvasTheme() { if (canvasEngine.raf) cancelAnimationFrame(canvasEn
 function rnd(a, b) { return a + Math.random() * (b - a); }
 
 function spawnParticles(themeId, w, h) {
+  if (themeId === "egypt") {
+    const arr = [];
+    // the camel — one long-lived actor that loops left→right forever
+    arr.push({ type: "camel", x: -180, y: h * 0.80, speed: rnd(0.55, 0.75) * (w / 1000), step: 0, scale: Math.max(0.7, Math.min(1.3, h / 700)) });
+    // drifting sand motes, low in the frame near the dunes
+    for (let i = 0; i < 90; i++) {
+      arr.push({ type: "dust", x: rnd(0, w), y: rnd(h * 0.55, h * 0.98), r: rnd(0.5, 2.1), vx: rnd(0.12, 0.5), vy: rnd(-0.06, 0.06), o: rnd(0.12, 0.5), drift: rnd(0, 6.28) });
+    }
+    // a couple of high, slow-drifting haze wisps for atmosphere
+    for (let i = 0; i < 4; i++) {
+      arr.push({ type: "haze", x: rnd(0, w), y: rnd(h * 0.55, h * 0.72), w: rnd(200, 420), vx: rnd(0.05, 0.12), o: rnd(0.04, 0.09) });
+    }
+    return arr;
+  }
   const cfg = {
     snow:{count:140}, starfield:{count:220}, cyberrain:{count:160}, matrix:{count:90}, embers:{count:110},
     plasma:{count:60}, chroma:{count:90}, prism:{count:70}, auroraflow:{count:5}, golddust:{count:150},
@@ -883,16 +907,102 @@ function drawParticle(ctx, themeId, p, w, h, t) {
       ctx.globalAlpha = 0.5; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, r * 6, 0, 6.283); ctx.fill(); break; }
     case "bubbles": { p.y += p.vy; p.x += p.vx + Math.sin(t / 800 + p.y) * 0.3; if (p.y < -20) { p.y = h + 10; p.x = rnd(0, w); }
       ctx.globalAlpha = p.o; ctx.strokeStyle = "#bfe9ff"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.stroke(); break; }
+    case "egypt": {
+      if (p.type === "camel") { p.x += p.speed; p.step += 0.14; if (p.x > w + 180) p.x = -180; drawCamel(ctx, p.x, p.y, p.scale, p.step); break; }
+      if (p.type === "dust") {
+        p.drift += 0.02; p.x += p.vx; p.y += p.vy + Math.sin(p.drift) * 0.06;
+        if (p.x > w + 5) p.x = -5; if (p.y < h * 0.5) p.y = h * 0.98; if (p.y > h) p.y = h * 0.55;
+        ctx.globalAlpha = p.o; ctx.fillStyle = "#e8c99a"; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); break;
+      }
+      if (p.type === "haze") {
+        p.x += p.vx; if (p.x > w + p.w) p.x = -p.w;
+        const g = ctx.createLinearGradient(p.x, 0, p.x + p.w, 0);
+        g.addColorStop(0, "rgba(255,220,180,0)"); g.addColorStop(0.5, `rgba(255,220,180,${p.o})`); g.addColorStop(1, "rgba(255,220,180,0)");
+        ctx.fillStyle = g; ctx.fillRect(p.x, h * 0.55, p.w, h * 0.35); break;
+      }
+      break;
+    }
   }
   ctx.globalAlpha = 1;
+}
+
+/* ---- Ancient Egypt: static-per-frame scene (sky, sun, pyramids, dunes) ---- */
+function drawEgyptScene(ctx, w, h) {
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, "#1a1330"); sky.addColorStop(0.32, "#5c3358"); sky.addColorStop(0.58, "#c8663f");
+  sky.addColorStop(0.74, "#f0a15c"); sky.addColorStop(0.82, "#ffd27a");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h * 0.85);
+
+  // sun, low on the horizon, partly hazed
+  const sunX = w * 0.68, sunY = h * 0.62, sunR = h * 0.09;
+  const glow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR * 4.2);
+  glow.addColorStop(0, "rgba(255,214,150,0.65)"); glow.addColorStop(1, "rgba(255,214,150,0)");
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(sunX, sunY, sunR * 4.2, 0, 6.283); ctx.fill();
+  ctx.fillStyle = "#ffe6b0"; ctx.beginPath(); ctx.arc(sunX, sunY, sunR, 0, 6.283); ctx.fill();
+
+  // far dune line
+  ctx.fillStyle = "#8a5a3f"; ctx.beginPath(); ctx.moveTo(0, h * 0.82);
+  for (let x = 0; x <= w; x += 40) ctx.lineTo(x, h * 0.80 + Math.sin(x * 0.006) * h * 0.015);
+  ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fill();
+
+  // three pyramids, Giza-style, with two-tone raking-light shading
+  const base = h * 0.815;
+  const pyramids = [{ cx: w * 0.52, w: w * 0.24, h: h * 0.30 }, { cx: w * 0.64, w: w * 0.17, h: h * 0.21 }, { cx: w * 0.735, w: w * 0.10, h: h * 0.13 }];
+  pyramids.forEach(p => {
+    const left = p.cx - p.w / 2, right = p.cx + p.w / 2, top = base - p.h;
+    ctx.fillStyle = "#3a2a2e"; ctx.beginPath(); ctx.moveTo(p.cx, top); ctx.lineTo(left, base); ctx.lineTo(p.cx, base); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#5c4038"; ctx.beginPath(); ctx.moveTo(p.cx, top); ctx.lineTo(p.cx, base); ctx.lineTo(right, base); ctx.closePath(); ctx.fill();
+  });
+
+  // near dune (darker foreground silhouette for depth)
+  ctx.fillStyle = "#2b1c18"; ctx.beginPath(); ctx.moveTo(0, h * 0.97);
+  for (let x = 0; x <= w; x += 50) ctx.lineTo(x, h * 0.94 + Math.sin(x * 0.004 + 2) * h * 0.02);
+  ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fill();
+}
+
+function drawCamel(ctx, x, y, scale, step) {
+  const legLift = Math.sin(step) * 6 * scale, legLift2 = Math.sin(step + Math.PI) * 6 * scale;
+  ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+  ctx.fillStyle = "rgba(20,12,10,0.85)";
+  // shadow
+  ctx.beginPath(); ctx.ellipse(0, 46, 46, 6, 0, 0, 6.283); ctx.fill();
+  // legs (simple animated strokes)
+  ctx.strokeStyle = "rgba(20,12,10,0.85)"; ctx.lineWidth = 5; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(-24, 20); ctx.lineTo(-24 + legLift * 0.3, 44); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-8, 22); ctx.lineTo(-8 + legLift2 * 0.3, 44); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(14, 22); ctx.lineTo(14 + legLift * 0.3, 44); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(28, 20); ctx.lineTo(28 + legLift2 * 0.3, 44); ctx.stroke();
+  // body + hump + neck + head (single silhouette path)
+  ctx.beginPath();
+  ctx.moveTo(-34, 20);
+  ctx.quadraticCurveTo(-38, -4, -14, -8);
+  ctx.quadraticCurveTo(-2, -22, 10, -8);
+  ctx.quadraticCurveTo(28, -6, 32, 12);
+  ctx.quadraticCurveTo(46, 8, 50, -8);
+  ctx.quadraticCurveTo(54, -14, 50, -18);
+  ctx.quadraticCurveTo(46, -20, 42, -14);
+  ctx.quadraticCurveTo(34, -2, 30, 18);
+  ctx.lineTo(-30, 22);
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
 }
 
 function startCanvasTheme(themeId) {
   const canvas = $("#themeCanvas");
   const ctx = canvas.getContext("2d");
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; canvasEngine.w = canvas.width; canvasEngine.h = canvas.height; }
+  // documentElement.clientWidth/Height (not window.innerWidth/Height) stay stable when
+  // mobile browser chrome (address bar) shows/hides, which is what was causing the
+  // canvas — and therefore the whole theme — to fail to render correctly on phones.
+  function resize() {
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+    canvasEngine.w = canvas.width; canvasEngine.h = canvas.height;
+  }
   if (!canvasEngine.resizeBound) {
-    window.addEventListener("resize", () => { resize(); if (canvasEngine.themeId) canvasEngine.particles = spawnParticles(canvasEngine.themeId, canvasEngine.w, canvasEngine.h); });
+    const onResize = () => { resize(); if (canvasEngine.themeId) canvasEngine.particles = spawnParticles(canvasEngine.themeId, canvasEngine.w, canvasEngine.h); };
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+    if (window.visualViewport) window.visualViewport.addEventListener("resize", onResize);
     canvasEngine.resizeBound = true;
   }
   resize();
@@ -901,8 +1011,11 @@ function startCanvasTheme(themeId) {
   if (canvasEngine.raf) cancelAnimationFrame(canvasEngine.raf);
   function loop(t) {
     if (canvasEngine.themeId !== themeId) return;
-    ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
-    if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
+    if (themeId === "egypt") { drawEgyptScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else {
+      ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
+      if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
+    }
     canvasEngine.particles.forEach(p => drawParticle(ctx, themeId, p, canvasEngine.w, canvasEngine.h, t || 0));
     canvasEngine.raf = requestAnimationFrame(loop);
   }
@@ -945,7 +1058,6 @@ function switchView(viewId) {
   $all(".nav-item").forEach(n => n.classList.toggle("active", n.dataset.view === viewId));
   const meta = VIEW_META[viewId] || { title: "Rex Edit Hub", sub: "" };
   $("#pageTitle").textContent = meta.title; $("#pageSub").textContent = meta.sub;
-  $("#marketSearchWrap").classList.toggle("hidden", viewId !== "viewShop");
   $("#sidebar").classList.remove("open");
   if (viewId === "viewProfile") renderProfileView();
   if (viewId === "viewPlacedOrder") renderPlacedOrders();
@@ -980,7 +1092,6 @@ auth.onAuthStateChanged(async user => {
   attachAllListeners(user);
   switchView("viewShop");
 
-  // ticking countdown re-render for sign_pending / awaiting_editor_sign views + auto-sign checks
   State.countdownInterval = setInterval(() => {
     autoAdvanceExpiredSigns();
     if (State.currentView === "viewPlacedOrder") renderPlacedOrders();
@@ -1042,7 +1153,6 @@ function attachAllListeners(user) {
   }, err => console.error("editor orders error:", err));
   State.unsubscribes.push(unsubEditorOrders);
 
-  // Warnings addressed to me — works for every user, including admin
   const unsubWarnings = db.collection("warnings").where("targetUid", "==", user.uid).onSnapshot(snap => {
     State.myWarnings = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
     $("#warningDot").classList.toggle("hidden", State.myWarnings.length === 0);
@@ -1069,11 +1179,17 @@ function refreshEditorNavVisibility() {
   $("#navEditorManage").classList.toggle("hidden", !show);
 }
 
-/* ========================= 8. MARKETPLACE ========================= */
+/* ========================= 8. MARKETPLACE (with search + category filter) ========================= */
 function renderMarketplace() {
   const grid = $("#shopGrid");
-  const q = ($("#marketSearchInput").value || "").trim().toLowerCase();
-  const list = State.shops.filter(s => !q || (s.name || "").toLowerCase().includes(q) || (s.category || "").toLowerCase().includes(q));
+  const q = ($("#shopSearchInput").value || "").trim().toLowerCase();
+  const cat = $("#shopCategoryFilter").value;
+  populateCategoryFilter();
+  const list = State.shops.filter(s => {
+    const matchesQ = !q || (s.name || "").toLowerCase().includes(q) || (s.category || "").toLowerCase().includes(q);
+    const matchesCat = !cat || s.category === cat;
+    return matchesQ && matchesCat;
+  });
   $("#shopEmpty").classList.toggle("hidden", list.length > 0);
   grid.innerHTML = list.map(shop => `
     <div class="glass shop-card">
@@ -1092,7 +1208,15 @@ function renderMarketplace() {
     </div>`).join("");
   $all(".hire-btn", grid).forEach(btn => btn.addEventListener("click", () => openHireTerminal(btn.dataset.shopId)));
 }
-$("#marketSearchInput").addEventListener("input", renderMarketplace);
+function populateCategoryFilter() {
+  const sel = $("#shopCategoryFilter");
+  const current = sel.value;
+  const cats = [...new Set(State.shops.map(s => s.category).filter(Boolean))].sort();
+  const optsHtml = `<option value="">All categories</option>` + cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  if (sel.dataset.rendered !== optsHtml) { sel.innerHTML = optsHtml; sel.value = current; sel.dataset.rendered = optsHtml; }
+}
+$("#shopSearchInput").addEventListener("input", renderMarketplace);
+$("#shopCategoryFilter").addEventListener("change", renderMarketplace);
 
 /* ========================= 9. PROFILE VIEW (incl. Warnings) ========================= */
 function renderProfileView() {
@@ -1173,46 +1297,56 @@ async function replyToWarning(warningId) {
   } catch (e) { console.error(e); showToast("Failed to send reply.", "err"); }
 }
 
-/* ========================= 10. SEARCH NETWORK (fixed) ========================= */
+/* ========================= 10. SEARCH NETWORK (fuzzy, name-or-handle) ========================= */
 async function searchByHandle() {
-  let handle = $("#handleSearchInput").value.trim();
-  if (!handle) return;
-  if (!handle.startsWith("@")) handle = "@" + handle;
-  handle = handle.toLowerCase();
+  const raw = $("#handleSearchInput").value.trim();
+  if (!raw) return showToast("Type a name or @handle to search.", "err");
+  const q = raw.toLowerCase();
+  const isHandleSearch = raw.startsWith("@");
   const resultEl = $("#handleSearchResult");
   resultEl.innerHTML = `<div class="skel" style="height:90px;"></div>`;
   try {
-    // Fetch and match client-side too, so a trailing-space or case mismatch
-    // from older records doesn't silently return zero results.
     const snap = await db.collection("users").get();
-    const match = snap.docs.find(d => {
-      const uid = (d.data().userId || "").toLowerCase().trim();
-      return uid === handle;
-    });
-    if (!match) {
-      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3><p>Nobody uses the handle ${esc(handle)}.</p></div>`;
+    console.log(`[search] scanned ${snap.size} user doc(s) for "${raw}"`);
+    let matches;
+    if (isHandleSearch) {
+      matches = snap.docs.filter(d => (d.data().userId || "").toLowerCase().trim() === q);
+    } else {
+      matches = snap.docs.filter(d => {
+        const data = d.data();
+        return (data.displayName || "").toLowerCase().includes(q) || (data.userId || "").toLowerCase().includes(q);
+      });
+    }
+    if (matches.length === 0) {
+      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3><p>Nobody matches "${esc(raw)}" — try just their first name, or their exact @handle.</p></div>`;
       return;
     }
-    const u = match.data();
-    const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
-    const hasShop = !shopSnap.empty;
-    resultEl.innerHTML = `
-      <div class="glass card" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-        <img src="${u.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(u.displayName || 'U')}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
-        <div style="flex:1; min-width:160px;">
-          <div style="font-weight:800; font-size:16px;">${esc(u.displayName)}</div>
-          <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
-        </div>
-        ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
-        ${State.isAdmin && u.uid !== State.user.uid ? `<button class="btn btn-warn btn-sm" data-warn-user="${u.uid}" data-warn-name="${esc(u.displayName)}">Send Warning</button>` : ''}
-      </div>`;
+    const cards = await Promise.all(matches.slice(0, 8).map(async d => {
+      const u = d.data();
+      const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
+      const hasShop = !shopSnap.empty;
+      return `
+        <div class="glass card" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+          <img src="${u.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(u.displayName || 'U')}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">
+          <div style="flex:1; min-width:160px;">
+            <div style="font-weight:800; font-size:15px;">${esc(u.displayName)}</div>
+            <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
+          </div>
+          ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
+          ${State.isAdmin && u.uid !== State.user.uid ? `<button class="btn btn-warn btn-sm" data-warn-user="${u.uid}" data-warn-name="${esc(u.displayName)}">Send Warning</button>` : ''}
+        </div>`;
+    }));
+    resultEl.innerHTML = cards.join("");
     if (State.isAdmin) {
-      const btn = $("[data-warn-user]", resultEl);
-      if (btn) btn.addEventListener("click", () => openSendWarning(btn.dataset.warnUser, btn.dataset.warnName));
+      $all("[data-warn-user]", resultEl).forEach(btn => btn.addEventListener("click", () => openSendWarning(btn.dataset.warnUser, btn.dataset.warnName)));
     }
   } catch (e) {
-    console.error("Search failed:", e);
-    resultEl.innerHTML = `<div class="empty-state"><h3>Search failed</h3><p>${e.code === 'permission-denied' ? "Your Firestore security rules are blocking reads of the users collection." : "Please try again."}</p></div>`;
+    console.error("Search failed:", e.code, e.message);
+    resultEl.innerHTML = `<div class="empty-state"><h3>Search failed</h3><p>${
+      e.code === 'permission-denied'
+        ? "Your Firestore security rules are blocking reads of the users collection. In the Firebase console → Firestore → Rules, you need at least: allow read: if request.auth != null; on /users/{doc}."
+        : `Error: ${esc(e.message || 'unknown error')} — check the browser console for details.`
+    }</p></div>`;
   }
 }
 $("#handleSearchBtn").addEventListener("click", searchByHandle);
@@ -1348,7 +1482,6 @@ const STATUS_META = {
 function statusBadge(status) { const m = STATUS_META[status] || { label: status, badge: "badge-wait" }; return `<span class="badge ${m.badge}">${esc(m.label)}</span>`; }
 function tierName(t) { return t === 'low' ? 'Basic' : t === 'med' ? 'Standard' : 'Premium'; }
 
-/* ---- auto-advance expired sign windows, checked on load + every 30s while app is open ---- */
 function autoAdvanceExpiredSigns() {
   (State.allOrdersAsClient || []).forEach(o => {
     if (o.status === "sign_pending" && o.clientSignDeadline && o.clientSignDeadline <= Date.now()) performClientSign(o, true);
