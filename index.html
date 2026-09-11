@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo.png">
 <style>
 :root{
   --bg:#0a0b0f; --bg2:#12131c; --surface:rgba(255,255,255,0.045); --surface-hi:rgba(255,255,255,0.09);
@@ -28,7 +29,7 @@ html[data-theme="amber"]{--bg:#140f04;--bg2:#241c08;--primary:#ffb020;--primary2
 html[data-canvas="snow"],html[data-canvas="starfield"],html[data-canvas="cyberrain"],html[data-canvas="matrix"],
 html[data-canvas="embers"],html[data-canvas="plasma"],html[data-canvas="chroma"],html[data-canvas="prism"],
 html[data-canvas="auroraflow"],html[data-canvas="golddust"],html[data-canvas="storm"],html[data-canvas="petals"],
-html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"],html[data-canvas="egypt"]{--bg:#05060a;--bg2:#0a0b12;}
+html[data-canvas="warp"],html[data-canvas="flares"],html[data-canvas="bubbles"]{--bg:#05060a;--bg2:#0a0b12;}
 
 *{box-sizing:border-box; margin:0; padding:0;}
 ::selection{background:var(--primary); color:#fff;}
@@ -51,7 +52,8 @@ html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
   background:rgba(255,255,255,0.02); backdrop-filter:blur(20px); display:flex; flex-direction:column; gap:6px; z-index:20;
 }
 .brand{display:flex; align-items:center; gap:10px; padding:6px 10px 26px;}
-.brand-mark{width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,var(--primary),var(--primary2)); box-shadow:var(--glow); display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff;}
+.brand-mark{width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,var(--primary),var(--primary2)); box-shadow:var(--glow); display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; overflow:hidden;}
+.brand-mark img{width:100%; height:100%; object-fit:cover;}
 .brand-name{font-weight:800; font-size:17px; background:linear-gradient(90deg,var(--text),var(--text-dim)); -webkit-background-clip:text; background-clip:text; color:transparent;}
 .nav-item{
   display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:var(--radius-sm); color:var(--text-dim);
@@ -218,7 +220,8 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .upi-id{font-family:monospace; background:var(--surface); padding:10px 14px; border-radius:10px; display:inline-block; font-size:13px; margin-bottom:10px;}
 
 .center-screen{min-height:80vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:18px;}
-.hero-mark{width:88px; height:88px; border-radius:22px; background:linear-gradient(135deg,var(--primary),var(--primary2)); box-shadow:0 0 60px rgba(109,91,255,0.5); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:800; color:#fff;}
+.hero-mark{width:88px; height:88px; border-radius:22px; background:linear-gradient(135deg,var(--primary),var(--primary2)); box-shadow:0 0 60px rgba(109,91,255,0.5); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:800; color:#fff; overflow:hidden;}
+.hero-mark img{width:100%; height:100%; object-fit:cover;}
 .hero-title{font-size:30px; font-weight:800; letter-spacing:-0.03em;}
 .hero-sub{color:var(--text-dim); font-size:15px; max-width:420px;}
 
@@ -238,6 +241,47 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .warning-item .wmsg{font-size:13.5px; margin:6px 0 10px;}
 .warning-reply{padding:8px 12px; border-radius:9px; background:rgba(255,255,255,0.04); font-size:12.5px; margin-top:6px;}
 .warning-reply b{color:var(--primary2);}
+
+/* Custom themed dropdown — replaces native <select> popups (which can't be restyled by CSS) */
+.xselect{position:relative;}
+.xselect-trigger{
+  background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--text); border-radius:11px;
+  padding:11px 40px 11px 14px; font-size:14px; cursor:pointer; user-select:none; position:relative;
+  display:flex; align-items:center; min-height:20px;
+}
+.xselect-trigger:after{
+  content:""; position:absolute; right:15px; top:50%; width:8px; height:8px;
+  border-right:2px solid var(--text-dim); border-bottom:2px solid var(--text-dim);
+  transform:translateY(-70%) rotate(45deg); transition:transform .2s ease;
+}
+.xselect.open .xselect-trigger{border-color:var(--primary); box-shadow:0 0 0 3px rgba(109,91,255,0.15);}
+.xselect.open .xselect-trigger:after{transform:translateY(-30%) rotate(-135deg);}
+.xselect-panel{
+  position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:60; max-height:260px; overflow-y:auto;
+  background:#15161f; border:1px solid var(--border); border-radius:12px; padding:6px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.55); display:none;
+}
+.xselect.open .xselect-panel{display:block;}
+.xselect-opt{padding:10px 12px; border-radius:8px; font-size:13.5px; cursor:pointer; color:var(--text-dim);}
+.xselect-opt:hover{background:rgba(109,91,255,0.14); color:var(--text);}
+.xselect-opt.active{background:linear-gradient(90deg, rgba(109,91,255,0.22), rgba(180,91,255,0.08)); color:#fff; font-weight:700;}
+
+/* Reviews / ratings / badges */
+.star-row{display:flex; gap:3px; align-items:center;}
+.star{color:#3a3b46; font-size:16px;}
+.star.filled{color:#ffc94d;}
+.star-pick .star{cursor:pointer; font-size:26px; transition:transform .12s ease;}
+.star-pick .star:hover{transform:scale(1.15);}
+.rating-summary{display:flex; align-items:center; gap:8px; margin:6px 0 12px;}
+.rating-num{font-weight:800; font-size:15px;}
+.milestone-badge{display:inline-flex; align-items:center; font-size:11px; font-weight:800; padding:4px 9px; border-radius:20px; background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; box-shadow:0 0 10px rgba(109,91,255,0.4);}
+.admin-badge{display:inline-flex; align-items:center; font-size:11px; font-weight:800; padding:4px 9px; border-radius:20px; background:linear-gradient(135deg,#ffb020,#ff7a20); color:#fff;}
+.review-item{padding:14px; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid var(--border); margin-bottom:10px;}
+.review-item .rmeta{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;}
+.review-item .rname{font-weight:700; font-size:13.5px;}
+.review-photo{width:100%; max-width:220px; border-radius:10px; margin-top:8px; display:block;}
+.shop-detail-head{display:flex; gap:14px; align-items:center; margin-bottom:6px; flex-wrap:wrap;}
+.shop-detail-logo{width:56px; height:56px; border-radius:14px; object-fit:cover; border:1px solid var(--border);}
 
 .profile-grid{grid-template-columns:340px 1fr;}
 @media(max-width:860px){
@@ -259,7 +303,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 
 <!-- AUTH GATE -->
 <div id="authGate" class="center-screen">
-  <div class="hero-mark">R</div>
+  <div class="hero-mark"><img src="logo.png" alt="Rex Edit Hub" onerror="this.parentElement.textContent='R'"></div>
   <div class="hero-title">Rex Edit Hub</div>
   <div class="hero-sub">The escrow marketplace connecting creators with vetted video editors. Payments held safe, work delivered on trust.</div>
   <button class="g-btn" id="googleSignInBtn">
@@ -272,7 +316,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 <!-- MAIN APP -->
 <div class="app hidden" id="appRoot">
   <aside class="sidebar" id="sidebar">
-    <div class="brand"><div class="brand-mark">R</div><div class="brand-name">Rex Edit Hub</div></div>
+    <div class="brand"><div class="brand-mark"><img src="logo.png" alt="Rex Edit Hub" onerror="this.parentElement.textContent='R'"></div><div class="brand-name">Rex Edit Hub</div></div>
 
     <div class="nav-item active" data-view="viewShop">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18M8 13h8"/></svg>
@@ -296,7 +340,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
     </div>
     <div class="nav-item hidden" data-view="viewAdminReview" id="navAdmin">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6l8-4z"/></svg>
-      Review Shops
+      Admin Panel
     </div>
     <div class="nav-item" data-view="viewProfile">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
@@ -362,10 +406,11 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         </div>
         <div>
           <div class="glass card">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 26 Themes</div>
+            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 28 Themes</div>
             <div class="theme-tabs">
               <div class="theme-tab active" data-tpage="1">Standard</div>
               <div class="theme-tab" data-tpage="3">Animated</div>
+              <div class="theme-tab" data-tpage="4">Realistic</div>
             </div>
             <div class="theme-grid" id="themeGrid"></div>
           </div>
@@ -387,9 +432,9 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
     <section id="viewSearchUser" class="view hidden">
       <div class="glass card" style="max-width:480px;">
         <div class="field mb0">
-          <label>Look up by name or handle</label>
+          <label>Look up by handle</label>
           <div class="row">
-            <input id="handleSearchInput" placeholder="Name or @handle">
+            <input id="handleSearchInput" placeholder="@handle">
             <button class="btn btn-primary" id="handleSearchBtn" style="flex:0 0 auto;">Search</button>
           </div>
         </div>
@@ -420,11 +465,15 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
       <div class="tabs-2">
         <button class="btn btn-ghost active" data-atab="apps">Shop Applications</button>
         <button class="btn btn-ghost" data-atab="orders">Escrow Queue</button>
-        <button class="btn btn-ghost" data-atab="reports">Reports & Refunds</button>
+        <button class="btn btn-ghost" data-atab="reports">Order Reports &amp; Refunds</button>
+        <button class="btn btn-ghost" data-atab="shops">All Shops &amp; Badges</button>
+        <button class="btn btn-ghost" data-atab="userreports">User Reports</button>
       </div>
       <div id="adminAppsPane"></div>
       <div id="adminOrdersPane" class="hidden"></div>
       <div id="adminReportsPane" class="hidden"></div>
+      <div id="adminShopsPane" class="hidden"></div>
+      <div id="adminUserReportsPane" class="hidden"></div>
     </section>
 
     <!-- VIEW: REGISTER STEP 1 -->
@@ -619,6 +668,33 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   </div>
 </div>
 
+<!-- SHOP DETAIL: PORTFOLIO + REVIEWS -->
+<div class="overlay" id="shopDetailOverlay">
+  <div class="glass modal modal-wide">
+    <div class="modal-head"><div class="modal-title">Shop</div><div class="modal-close" data-close="shopDetailOverlay">✕</div></div>
+    <div id="shopDetailBody"></div>
+  </div>
+</div>
+
+<!-- USER REPORT (from Search Network) -->
+<div class="overlay" id="userReportOverlay">
+  <div class="glass modal">
+    <div class="modal-head"><div class="modal-title">Report User</div><div class="modal-close" data-close="userReportOverlay">✕</div></div>
+    <div id="userReportTarget" class="text-dim" style="font-size:13px;margin-bottom:14px;"></div>
+    <div class="field mb0"><label>Reason</label><textarea id="userReportReason" rows="4" placeholder="Why are you reporting this user?"></textarea></div>
+    <button class="btn btn-danger btn-block mt20" id="userReportSubmitBtn">Submit Report</button>
+  </div>
+</div>
+
+<!-- ADMIN: SET SHOP BADGE -->
+<div class="overlay" id="setBadgeOverlay">
+  <div class="glass modal">
+    <div class="modal-head"><div class="modal-title">Set Shop Badge</div><div class="modal-close" data-close="setBadgeOverlay">✕</div></div>
+    <div class="field mb0"><label>Badge text (leave blank to remove)</label><input id="setBadgeInput" placeholder="e.g. Top Rated, Verified Pro"></div>
+    <button class="btn btn-primary btn-block mt20" id="setBadgeSubmitBtn">Save Badge</button>
+  </div>
+</div>
+
 <!-- ORDER DETAIL / GENERIC INFO MODAL -->
 <div class="overlay" id="infoOverlay">
   <div class="glass modal">
@@ -636,7 +712,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-  'use strict';
+'use strict';
 
 /* ========================= 1. CONFIG ========================= */
 const FIREBASE_CONFIG = {
@@ -665,7 +741,7 @@ const State = {
   user: null, profile: null, isAdmin: false,
   shops: [], myShops: [],
   allOrdersAsClient: [], allOrdersAsEditor: [], allOrdersAdmin: [],
-  pendingApplications: [], myWarnings: [],
+  pendingApplications: [], myWarnings: [], userReports: [],
   unsubscribes: [],
   currentView: "viewShop",
   hireContext: null,
@@ -675,6 +751,7 @@ const State = {
   activeOrderForRefundSubmit: null, activeOrderForRefundProof: null,
   activeOrderForFinalDeliver: null,
   activeWarningTarget: null,
+  activeShopDetail: null, reviewDraft: null, activeUserReportTarget: null, activeBadgeShop: null,
   refundQrBase64: null, refundProofBase64: null,
   selectedTier: "low", selectedAR: "16:9",
   countdownInterval: null,
@@ -765,12 +842,14 @@ function notifyEmail(opts) {
   });
 }
 
-/* ========================= 4. THEME SYSTEM (26 THEMES) ========================= */
+/* ========================= 4. THEME SYSTEM (28 THEMES) ========================= */
 const STATIC_THEMES = ["indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber"];
-const CANVAS_THEMES = [
+const PARTICLE_THEMES = [
   "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
-  "auroraflow","golddust","storm","petals","warp","flares","bubbles","egypt"
+  "auroraflow","golddust","storm","petals","warp","flares","bubbles"
 ];
+const SCENE_THEMES = ["egypt","greece","china"];
+const CANVAS_THEMES = [...PARTICLE_THEMES, ...SCENE_THEMES];
 const THEME_COLORS = {
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
   midnight:["#3b5bff","#5b8cff"], sunset:["#ff5b7a","#ff9d5b"], ocean:["#00b8d4","#00e5c8"], forest:["#3ee68c","#6be63e"],
@@ -779,11 +858,11 @@ const THEME_COLORS = {
   embers:["#ff5b2e","#ffb85b"], plasma:["#ff2ed6","#5b2eff"], chroma:["#ff2e6a","#2effc8"], prism:["#ff9ded","#9de0ff"],
   auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
   warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"],
-  egypt:["#e8804a","#ffd27a"]
+  egypt:["#e8804a","#ffd27a"], greece:["#2e7ce8","#ffffff"], china:["#e83e3e","#ffd75b"]
 };
 const THEME_LABELS = {};
 [...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
-THEME_LABELS.egypt = "Ancient Egypt";
+THEME_LABELS.egypt = "Ancient Egypt"; THEME_LABELS.greece = "Modern Greece"; THEME_LABELS.china = "Ancient China";
 
 let currentTheme = localStorage.getItem("rex_theme") || "indigo";
 if (!THEME_LABELS[currentTheme]) currentTheme = "indigo"; // guard against a theme that was removed
@@ -818,6 +897,28 @@ function spawnParticles(themeId, w, h) {
     // a couple of high, slow-drifting haze wisps for atmosphere
     for (let i = 0; i < 4; i++) {
       arr.push({ type: "haze", x: rnd(0, w), y: rnd(h * 0.55, h * 0.72), w: rnd(200, 420), vx: rnd(0.05, 0.12), o: rnd(0.04, 0.09) });
+    }
+    return arr;
+  }
+  if (themeId === "greece") {
+    const arr = [];
+    for (let i = 0; i < 4; i++) {
+      arr.push({ type: "gull", x: rnd(0, w), y: rnd(h * 0.12, h * 0.4), speed: rnd(0.5, 0.9) * (w / 1000), flap: rnd(0, 6.28), scale: rnd(0.7, 1.1) });
+    }
+    arr.push({ type: "boat", x: -60, y: h * 0.72, speed: rnd(0.18, 0.28) * (w / 1000), bob: 0 });
+    for (let i = 0; i < 60; i++) {
+      arr.push({ type: "sparkle", x: rnd(0, w), y: rnd(h * 0.68, h * 0.95), tw: rnd(0, 6.28), o: rnd(0.2, 0.7) });
+    }
+    return arr;
+  }
+  if (themeId === "china") {
+    const arr = [];
+    arr.push({ type: "crane", x: -160, y: h * 0.28, speed: rnd(0.45, 0.65) * (w / 1000), flap: 0, scale: Math.max(0.7, Math.min(1.2, h / 700)) });
+    for (let i = 0; i < 10; i++) {
+      arr.push({ type: "lantern", x: rnd(0, w), y: rnd(h * 0.5, h + 40), vy: rnd(-0.5, -0.25), sway: rnd(0, 6.28), scale: rnd(0.6, 1.15) });
+    }
+    for (let i = 0; i < 3; i++) {
+      arr.push({ type: "mist", x: rnd(0, w), y: h * (0.5 + i * 0.1), w: rnd(260, 460), vx: rnd(0.05, 0.14) * (i % 2 === 0 ? 1 : -1), o: rnd(0.05, 0.12) });
     }
     return arr;
   }
@@ -922,6 +1023,44 @@ function drawParticle(ctx, themeId, p, w, h, t) {
       }
       break;
     }
+    case "greece": {
+      if (p.type === "gull") {
+        p.x += p.speed; p.flap += 0.18; if (p.x > w + 40) p.x = -40;
+        drawGull(ctx, p.x, p.y + Math.sin(p.flap * 0.3) * 6, p.scale, p.flap);
+        break;
+      }
+      if (p.type === "boat") {
+        p.x += p.speed; p.bob += 0.04; if (p.x > w + 60) p.x = -60;
+        drawBoat(ctx, p.x, p.y + Math.sin(p.bob) * 2);
+        break;
+      }
+      if (p.type === "sparkle") {
+        p.tw += 0.08;
+        ctx.globalAlpha = Math.max(0, Math.sin(p.tw)) * p.o; ctx.fillStyle = "#fff6d8";
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.4, 0, 6.283); ctx.fill(); break;
+      }
+      break;
+    }
+    case "china": {
+      if (p.type === "crane") {
+        p.x += p.speed; p.flap += 0.16; if (p.x > w + 160) p.x = -160;
+        drawCrane(ctx, p.x, p.y + Math.sin(p.flap * 0.25) * 10, p.scale, p.flap);
+        break;
+      }
+      if (p.type === "lantern") {
+        p.y += p.vy; p.sway += 0.03; p.x += Math.sin(p.sway) * 0.3;
+        if (p.y < -20) { p.y = h + 20; p.x = rnd(0, w); }
+        drawLantern(ctx, p.x, p.y, p.scale);
+        break;
+      }
+      if (p.type === "mist") {
+        p.x += p.vx; if (p.vx > 0 && p.x > w + p.w) p.x = -p.w; if (p.vx < 0 && p.x < -p.w) p.x = w + p.w;
+        const g = ctx.createLinearGradient(p.x, 0, p.x + p.w, 0);
+        g.addColorStop(0, "rgba(220,225,235,0)"); g.addColorStop(0.5, `rgba(220,225,235,${p.o})`); g.addColorStop(1, "rgba(220,225,235,0)");
+        ctx.fillStyle = g; ctx.fillRect(p.x, h * 0.5, p.w, h * 0.25); break;
+      }
+      break;
+    }
   }
   ctx.globalAlpha = 1;
 }
@@ -987,6 +1126,128 @@ function drawCamel(ctx, x, y, scale, step) {
   ctx.restore();
 }
 
+/* ---- Modern Greece: Santorini-style cliff village at sunset over the Aegean ---- */
+function drawGreeceScene(ctx, w, h) {
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, "#1b3a68"); sky.addColorStop(0.35, "#3f6fa8"); sky.addColorStop(0.6, "#e8935f");
+  sky.addColorStop(0.72, "#ffd08a"); sky.addColorStop(0.78, "#fff2d0");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h * 0.78);
+
+  const sunX = w * 0.5, sunY = h * 0.72, sunR = h * 0.075;
+  const glow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR * 5);
+  glow.addColorStop(0, "rgba(255,236,190,0.55)"); glow.addColorStop(1, "rgba(255,236,190,0)");
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(sunX, sunY, sunR * 5, 0, 6.283); ctx.fill();
+  ctx.fillStyle = "#fff1cf"; ctx.beginPath(); ctx.arc(sunX, sunY, sunR, 0, 6.283); ctx.fill();
+
+  // sea with a sun-glitter path
+  const sea = ctx.createLinearGradient(0, h * 0.72, 0, h);
+  sea.addColorStop(0, "#2e6fa8"); sea.addColorStop(1, "#123657");
+  ctx.fillStyle = sea; ctx.fillRect(0, h * 0.72, w, h * 0.28);
+  ctx.globalAlpha = 0.35; ctx.fillStyle = "#ffe8b8";
+  ctx.beginPath(); ctx.moveTo(sunX - 30, h * 0.72); ctx.lineTo(sunX + 30, h * 0.72); ctx.lineTo(sunX + 90, h); ctx.lineTo(sunX - 90, h); ctx.closePath(); ctx.fill();
+  ctx.globalAlpha = 1;
+
+  // cliff silhouette the village sits on
+  ctx.fillStyle = "#2a2530"; ctx.beginPath(); ctx.moveTo(0, h * 0.74);
+  ctx.lineTo(0, h * 0.6); ctx.lineTo(w * 0.15, h * 0.66); ctx.lineTo(w * 0.4, h * 0.58);
+  ctx.lineTo(w * 0.65, h * 0.68); ctx.lineTo(w, h * 0.6); ctx.lineTo(w, h * 0.74); ctx.closePath(); ctx.fill();
+
+  // whitewashed cycladic buildings with blue domes, cubic clusters along the ridge
+  const clusters = [
+    { x: w * 0.10, y: h * 0.60, s: 0.9 }, { x: w * 0.22, y: h * 0.62, s: 1.1 }, { x: w * 0.33, y: h * 0.57, s: 0.8 },
+    { x: w * 0.46, y: h * 0.56, s: 1.2 }, { x: w * 0.58, y: h * 0.61, s: 0.9 }, { x: w * 0.70, y: h * 0.58, s: 1.0 },
+    { x: w * 0.82, y: h * 0.62, s: 0.85 }, { x: w * 0.91, y: h * 0.58, s: 1.05 },
+  ];
+  clusters.forEach(c => {
+    const s = c.s * (h / 800);
+    ctx.fillStyle = "#f3ede2";
+    ctx.fillRect(c.x - 22 * s, c.y - 20 * s, 44 * s, 24 * s);
+    ctx.fillRect(c.x - 10 * s, c.y - 34 * s, 26 * s, 16 * s);
+    ctx.fillStyle = "#e3dccd"; ctx.fillRect(c.x - 22 * s, c.y - 2 * s, 44 * s, 4 * s);
+    // blue dome
+    ctx.fillStyle = "#2f6fbf";
+    ctx.beginPath(); ctx.arc(c.x + 14 * s, c.y - 34 * s, 9 * s, Math.PI, 0); ctx.fill();
+    // tiny windows
+    ctx.fillStyle = "#1c3a5c";
+    ctx.fillRect(c.x - 14 * s, c.y - 12 * s, 5 * s, 7 * s);
+    ctx.fillRect(c.x + 3 * s, c.y - 12 * s, 5 * s, 7 * s);
+  });
+}
+function drawGull(ctx, x, y, scale, flap) {
+  const wing = Math.sin(flap) * 8;
+  ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+  ctx.strokeStyle = "rgba(30,30,36,0.8)"; ctx.lineWidth = 2; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(-14, wing); ctx.quadraticCurveTo(-6, -6, 0, 0); ctx.quadraticCurveTo(6, -6, 14, wing); ctx.stroke();
+  ctx.restore();
+}
+function drawBoat(ctx, x, y) {
+  ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = "rgba(20,18,22,0.75)";
+  ctx.beginPath(); ctx.moveTo(-14, 0); ctx.lineTo(14, 0); ctx.lineTo(9, 6); ctx.lineTo(-9, 6); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = "rgba(20,18,22,0.75)"; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -14); ctx.lineTo(9, -3); ctx.closePath(); ctx.stroke();
+  ctx.restore();
+}
+
+/* ---- Ancient China: misty mountains, Great Wall ridge, drifting lanterns ---- */
+function drawChinaScene(ctx, w, h) {
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, "#0c1524"); sky.addColorStop(0.4, "#2a3a52"); sky.addColorStop(0.7, "#7a5f5a");
+  sky.addColorStop(0.85, "#c98f6a");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h * 0.9);
+
+  const moonX = w * 0.78, moonY = h * 0.18, moonR = h * 0.055;
+  const glow = ctx.createRadialGradient(moonX, moonY, 0, moonX, moonY, moonR * 4);
+  glow.addColorStop(0, "rgba(255,244,214,0.35)"); glow.addColorStop(1, "rgba(255,244,214,0)");
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(moonX, moonY, moonR * 4, 0, 6.283); ctx.fill();
+  ctx.fillStyle = "#fff4d6"; ctx.beginPath(); ctx.arc(moonX, moonY, moonR, 0, 6.283); ctx.fill();
+
+  // three layered mountain silhouettes (parallax depth), classic ink-wash peaks
+  const layers = [
+    { y: h * 0.55, amp: h * 0.10, color: "#39516b", period: 0.004 },
+    { y: h * 0.64, amp: h * 0.13, color: "#283a52", period: 0.0032 },
+    { y: h * 0.75, amp: h * 0.16, color: "#161f30", period: 0.0026 },
+  ];
+  layers.forEach(L => {
+    ctx.fillStyle = L.color; ctx.beginPath(); ctx.moveTo(0, h);
+    ctx.lineTo(0, L.y);
+    for (let x = 0; x <= w; x += 24) ctx.lineTo(x, L.y - Math.abs(Math.sin(x * L.period + L.y)) * L.amp);
+    ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
+  });
+
+  // Great Wall ridge line with watchtower silhouettes, riding the nearest peak
+  const wallY = h * 0.60;
+  ctx.strokeStyle = "#12181f"; ctx.lineWidth = Math.max(2, h * 0.006); ctx.beginPath();
+  for (let x = 0; x <= w; x += 20) ctx.lineTo(x, wallY - Math.sin(x * 0.006) * h * 0.05);
+  ctx.stroke();
+  for (let x = w * 0.1; x < w; x += w * 0.18) {
+    const ty = wallY - Math.sin(x * 0.006) * h * 0.05;
+    ctx.fillStyle = "#12181f"; ctx.fillRect(x - 5, ty - 14, 10, 14);
+  }
+
+  // pagoda silhouette, lower right
+  const px = w * 0.86, pb = h * 0.86;
+  ctx.fillStyle = "#181018";
+  [0, 1, 2].forEach(i => { const yw = pb - i * 22, ww = 60 - i * 12; ctx.beginPath(); ctx.moveTo(px - ww / 2, yw); ctx.lineTo(px, yw - 16); ctx.lineTo(px + ww / 2, yw); ctx.closePath(); ctx.fill(); });
+}
+function drawCrane(ctx, x, y, scale, flap) {
+  const wing = Math.sin(flap) * 16;
+  ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+  ctx.strokeStyle = "rgba(230,230,235,0.88)"; ctx.lineWidth = 2.4; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(-26, wing); ctx.quadraticCurveTo(-10, -4, 0, 2); ctx.quadraticCurveTo(10, -4, 26, wing); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 2); ctx.lineTo(10, 10); ctx.stroke(); // neck+head hint
+  ctx.restore();
+}
+function drawLantern(ctx, x, y, scale) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+  ctx.fillStyle = "#c9342f";
+  ctx.beginPath(); ctx.ellipse(0, 0, 8, 11, 0, 0, 6.283); ctx.fill();
+  ctx.fillStyle = "#7a1f1c"; ctx.fillRect(-2, -14, 4, 4); ctx.fillRect(-2, 10, 4, 4);
+  ctx.strokeStyle = "rgba(255,214,90,0.7)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-6, -3); ctx.lineTo(6, -3); ctx.moveTo(-7, 3); ctx.lineTo(7, 3); ctx.stroke();
+  ctx.restore();
+}
+
 function startCanvasTheme(themeId) {
   const canvas = $("#themeCanvas");
   const ctx = canvas.getContext("2d");
@@ -1012,6 +1273,8 @@ function startCanvasTheme(themeId) {
   function loop(t) {
     if (canvasEngine.themeId !== themeId) return;
     if (themeId === "egypt") { drawEgyptScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else if (themeId === "greece") { drawGreeceScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else if (themeId === "china") { drawChinaScene(ctx, canvasEngine.w, canvasEngine.h); }
     else {
       ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
       if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
@@ -1027,7 +1290,7 @@ function renderThemeGrid() {
   const grid = $("#themeGrid"); if (!grid) return;
   const activeTab = $(".theme-tab.active");
   const page = activeTab ? activeTab.dataset.tpage : "1";
-  const list = page === "1" ? STATIC_THEMES : CANVAS_THEMES;
+  const list = page === "1" ? STATIC_THEMES : page === "3" ? PARTICLE_THEMES : SCENE_THEMES;
   grid.innerHTML = list.map(t => {
     const [c1, c2] = THEME_COLORS[t];
     const active = t === currentTheme ? "active" : "";
@@ -1047,7 +1310,7 @@ const VIEW_META = {
   viewSearchUser: { title: "Search Network", sub: "Look up any creator by their handle" },
   viewPlacedOrder: { title: "My Orders", sub: "Track escrow status on commissions you've placed" },
   viewEditorManage: { title: "Incoming Requests", sub: "Manage commissions clients have sent you" },
-  viewAdminReview: { title: "Review Shops", sub: "Approve applications, escrow, and disputes" },
+  viewAdminReview: { title: "Admin Panel", sub: "Applications, escrow, shops, disputes & user reports" },
   viewRegisterStep1: { title: "Apply for Earn", sub: "Step 1 of 2 — Shop details" },
   viewRegisterStep2: { title: "Apply for Earn", sub: "Step 2 of 2 — Pricing tiers" },
 };
@@ -1058,6 +1321,7 @@ function switchView(viewId) {
   $all(".nav-item").forEach(n => n.classList.toggle("active", n.dataset.view === viewId));
   const meta = VIEW_META[viewId] || { title: "Rex Edit Hub", sub: "" };
   $("#pageTitle").textContent = meta.title; $("#pageSub").textContent = meta.sub;
+  // (marketplace search now lives inside the Marketplace view itself)
   $("#sidebar").classList.remove("open");
   if (viewId === "viewProfile") renderProfileView();
   if (viewId === "viewPlacedOrder") renderPlacedOrders();
@@ -1092,6 +1356,7 @@ auth.onAuthStateChanged(async user => {
   attachAllListeners(user);
   switchView("viewShop");
 
+  // ticking countdown re-render for sign_pending / awaiting_editor_sign views + auto-sign checks
   State.countdownInterval = setInterval(() => {
     autoAdvanceExpiredSigns();
     if (State.currentView === "viewPlacedOrder") renderPlacedOrders();
@@ -1153,6 +1418,7 @@ function attachAllListeners(user) {
   }, err => console.error("editor orders error:", err));
   State.unsubscribes.push(unsubEditorOrders);
 
+  // Warnings addressed to me — works for every user, including admin
   const unsubWarnings = db.collection("warnings").where("targetUid", "==", user.uid).onSnapshot(snap => {
     State.myWarnings = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
     $("#warningDot").classList.toggle("hidden", State.myWarnings.length === 0);
@@ -1172,6 +1438,12 @@ function attachAllListeners(user) {
       if (State.currentView === "viewAdminReview") renderAdminReview();
     }, err => console.error("admin orders listener error:", err));
     State.unsubscribes.push(unsubAllOrders);
+
+    const unsubUserReports = db.collection("user_reports").onSnapshot(snap => {
+      State.userReports = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+      if (State.currentView === "viewAdminReview") renderAdminReview();
+    }, err => console.error("user reports listener error:", err));
+    State.unsubscribes.push(unsubUserReports);
   }
 }
 function refreshEditorNavVisibility() {
@@ -1179,7 +1451,23 @@ function refreshEditorNavVisibility() {
   $("#navEditorManage").classList.toggle("hidden", !show);
 }
 
-/* ========================= 8. MARKETPLACE (with search + category filter) ========================= */
+/* ========================= 8. MARKETPLACE ========================= */
+function starsHtml(avg, count) {
+  let s = "";
+  for (let i = 1; i <= 5; i++) s += `<span class="star${avg >= i - 0.25 ? " filled" : ""}">★</span>`;
+  return `<div class="star-row">${s}<span class="text-dim" style="font-size:11.5px;">${count > 0 ? avg.toFixed(1) + ' (' + count + ')' : 'No reviews yet'}</span></div>`;
+}
+function milestoneBadge(count) {
+  if (count >= 100) return "+100";
+  if (count >= 50) return "+50";
+  if (count >= 10) return "+10";
+  return null;
+}
+function shopBadgesHtml(shop) {
+  const m = milestoneBadge(shop.completedOrders || 0);
+  return (m ? `<span class="milestone-badge">${m} orders</span>` : "") + (shop.adminBadge ? `<span class="admin-badge">${esc(shop.adminBadge)}</span>` : "");
+}
+
 function renderMarketplace() {
   const grid = $("#shopGrid");
   const q = ($("#shopSearchInput").value || "").trim().toLowerCase();
@@ -1191,32 +1479,200 @@ function renderMarketplace() {
     return matchesQ && matchesCat;
   });
   $("#shopEmpty").classList.toggle("hidden", list.length > 0);
-  grid.innerHTML = list.map(shop => `
+  grid.innerHTML = list.map(shop => {
+    const avg = shop.ratingCount ? shop.ratingSum / shop.ratingCount : 0;
+    return `
     <div class="glass shop-card">
       <div class="shop-banner"><img class="shop-logo" src="${shop.logoUrl || ''}" onerror="this.style.display='none'" alt=""></div>
       <div class="shop-body">
         <div class="shop-name">${esc(shop.name)}</div>
         <div class="shop-handle">${esc(shop.ownerHandle || '')}</div>
         <div class="shop-cat">${esc(shop.category || 'General')}</div>
+        <div class="rating-summary">${starsHtml(avg, shop.ratingCount || 0)}</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">${shopBadgesHtml(shop)}</div>
         <div class="shop-rates">
           <div class="rate-pill">Basic<b>${money(shop.rates && shop.rates.low)}</b></div>
           <div class="rate-pill">Std<b>${money(shop.rates && shop.rates.medium)}</b></div>
           <div class="rate-pill">Prem<b>${money(shop.rates && shop.rates.high)}</b></div>
         </div>
-        <button class="btn btn-primary btn-block hire-btn" data-shop-id="${shop.id}">Hire</button>
+        <div class="row">
+          <button class="btn btn-primary hire-btn" data-shop-id="${shop.id}">Hire</button>
+          <button class="btn btn-ghost reviews-btn" data-shop-id="${shop.id}">Reviews</button>
+        </div>
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
   $all(".hire-btn", grid).forEach(btn => btn.addEventListener("click", () => openHireTerminal(btn.dataset.shopId)));
+  $all(".reviews-btn", grid).forEach(btn => btn.addEventListener("click", () => openShopDetail(btn.dataset.shopId)));
 }
+
+/* ---- Shop Detail: portfolio + reviews (only clients with a completed order can post) ---- */
+async function openShopDetail(shopId) {
+  const shop = State.shops.find(s => s.id === shopId);
+  if (!shop) return showToast("Shop not found.", "err");
+  State.activeShopDetail = shop;
+  const body = $("#shopDetailBody");
+  body.innerHTML = `<div class="skel" style="height:160px;"></div>`;
+  openModal("shopDetailOverlay");
+
+  const avg = shop.ratingCount ? shop.ratingSum / shop.ratingCount : 0;
+  let reviewsHtml = `<div class="skel" style="height:60px;"></div>`;
+  let writeFormHtml = "";
+  let eligibleOrderId = null;
+
+  try {
+    const reviewSnap = await db.collection("reviews").where("shopId", "==", shopId).get();
+    const reviews = reviewSnap.docs.map(d => d.data()).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+    reviewsHtml = reviews.length === 0
+      ? `<p class="text-dim" style="font-size:13px;">No reviews yet.</p>`
+      : reviews.map(r => `
+        <div class="review-item">
+          <div class="rmeta"><span class="rname">${esc(r.clientName || 'Client')}</span>${starsHtml(r.rating || 0, 0).replace(/<span class="text-dim".*?<\/span>/, '')}</div>
+          <div style="font-size:13px;">${esc(r.comment || '')}</div>
+          ${r.videoLink ? `<div style="font-size:12px; margin-top:6px;"><a href="${esc(r.videoLink)}" target="_blank" rel="noopener" style="color:var(--primary2);">${esc(r.videoLink)}</a></div>` : ''}
+          ${r.photoUrl ? `<img class="review-photo" src="${r.photoUrl}">` : ''}
+        </div>`).join("");
+
+    if (State.user && shop.ownerUid !== State.user.uid) {
+      const orderSnap = await db.collection("orders").where("clientUid", "==", State.user.uid).where("shopId", "==", shopId).where("status", "==", "signed_completed").get();
+      const reviewedOrderIds = new Set(reviews.filter(r => r.clientUid === State.user.uid).map(r => r.orderId));
+      const unreviewed = orderSnap.docs.find(d => !reviewedOrderIds.has(d.data().orderId));
+      if (unreviewed) eligibleOrderId = unreviewed.data().orderId;
+    }
+  } catch (e) {
+    console.error("shop detail load failed:", e);
+    reviewsHtml = `<p class="text-dim" style="font-size:13px;">Could not load reviews.</p>`;
+  }
+
+  if (eligibleOrderId) {
+    writeFormHtml = `
+      <div class="glass card mt16" style="padding:16px;">
+        <div class="modal-title mb0" style="font-size:14px; margin-bottom:10px;">Write a Review</div>
+        <div class="star-pick" id="reviewStarPick">${[1,2,3,4,5].map(i => `<span class="star" data-star="${i}">★</span>`).join("")}</div>
+        <div class="field mt8"><textarea id="reviewComment" rows="3" placeholder="How was your experience?"></textarea></div>
+        <div class="field"><label>Video Link (optional)</label><input id="reviewVideoLink" placeholder="Show off the delivered work…"></div>
+        <div class="field mb0">
+          <label>Photo (optional)</label>
+          <div class="file-drop"><input type="file" id="reviewPhotoInput" accept="image/*"><div class="file-drop-text">Click or drag a photo</div></div>
+          <img id="reviewPhotoPreview" class="upload-preview mt8 hidden" src="">
+        </div>
+        <button class="btn btn-primary btn-block mt16" id="reviewSubmitBtn">Submit Review</button>
+      </div>`;
+  }
+
+  body.innerHTML = `
+    <div class="shop-detail-head">
+      <img class="shop-detail-logo" src="${shop.logoUrl || ''}">
+      <div>
+        <div style="font-weight:800; font-size:17px;">${esc(shop.name)}</div>
+        <div class="text-dim" style="font-size:12.5px;">${esc(shop.ownerHandle || '')} · ${esc(shop.category || '')}</div>
+      </div>
+    </div>
+    ${shop.portfolio ? `<div class="video-link-box" style="margin-top:10px;">🔗 Portfolio: <a href="${esc(shop.portfolio)}" target="_blank" rel="noopener">${esc(shop.portfolio)}</a></div>` : ''}
+    <div class="rating-summary mt16">${starsHtml(avg, shop.ratingCount || 0)}</div>
+    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">${shopBadgesHtml(shop)}</div>
+    ${writeFormHtml}
+    <div class="divider"></div>
+    <div class="modal-title mb0" style="font-size:14px; margin-bottom:10px;">Reviews</div>
+    ${reviewsHtml}
+  `;
+
+  if (eligibleOrderId) {
+    State.reviewDraft = { rating: 0, photoBase64: null };
+    $all("#reviewStarPick .star").forEach(star => star.addEventListener("click", () => {
+      State.reviewDraft.rating = Number(star.dataset.star);
+      $all("#reviewStarPick .star").forEach(s => s.classList.toggle("filled", Number(s.dataset.star) <= State.reviewDraft.rating));
+    }));
+    $("#reviewPhotoInput").addEventListener("change", async e => {
+      const file = e.target.files && e.target.files[0]; if (!file) return;
+      try { const b64 = await compressImageToBase64(file, 500); State.reviewDraft.photoBase64 = b64; $("#reviewPhotoPreview").src = b64; $("#reviewPhotoPreview").classList.remove("hidden"); }
+      catch (err) { showToast("Could not process photo.", "err"); }
+    });
+    $("#reviewSubmitBtn").addEventListener("click", () => submitReview(shop, eligibleOrderId));
+  }
+}
+
+async function submitReview(shop, orderId) {
+  const draft = State.reviewDraft || {};
+  const rating = draft.rating || 0;
+  const comment = $("#reviewComment").value.trim();
+  const videoLink = $("#reviewVideoLink").value.trim();
+  if (!rating) return showToast("Please pick a star rating.", "err");
+  if (!comment) return showToast("Please add a comment.", "err");
+  const btn = $("#reviewSubmitBtn"); btn.disabled = true; btn.textContent = "Submitting…";
+  try {
+    const review = {
+      shopId: shop.id, editorUid: shop.ownerUid, orderId,
+      clientUid: State.user.uid, clientName: (State.profile && State.profile.displayName) || State.user.displayName || "Client",
+      rating, comment, videoLink: videoLink || null, photoUrl: draft.photoBase64 || null,
+      createdAtMs: Date.now(), createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    await db.collection("reviews").add(review);
+    await db.collection("shops").doc(shop.id).update({
+      ratingSum: firebase.firestore.FieldValue.increment(rating),
+      ratingCount: firebase.firestore.FieldValue.increment(1),
+    });
+    showToast("Review submitted — thank you!", "ok");
+    openShopDetail(shop.id);
+  } catch (e) { console.error(e); showToast("Failed to submit review.", "err"); }
+  finally { btn.disabled = false; btn.textContent = "Submit Review"; }
+}
+
+/* ---- Custom themed dropdown (replaces native <select> popup styling) ---- */
+function enhanceSelect(selectEl) {
+  if (!selectEl) return;
+  if (selectEl.dataset.xenhanced) { refreshXSelect(selectEl); return; }
+  selectEl.dataset.xenhanced = "1";
+  selectEl.style.display = "none";
+  const wrap = document.createElement("div");
+  wrap.className = "xselect";
+  const trigger = document.createElement("div");
+  trigger.className = "xselect-trigger";
+  const panel = document.createElement("div");
+  panel.className = "xselect-panel";
+  wrap.appendChild(trigger); wrap.appendChild(panel);
+  selectEl.parentNode.insertBefore(wrap, selectEl);
+  wrap.appendChild(selectEl);
+  selectEl._xwrap = wrap; selectEl._xtrigger = trigger; selectEl._xpanel = panel;
+  trigger.addEventListener("click", e => {
+    e.stopPropagation();
+    $all(".xselect.open").forEach(w => { if (w !== wrap) w.classList.remove("open"); });
+    wrap.classList.toggle("open");
+  });
+  document.addEventListener("click", () => wrap.classList.remove("open"));
+  buildXOptions(selectEl);
+}
+function buildXOptions(selectEl) {
+  const panel = selectEl._xpanel, trigger = selectEl._xtrigger;
+  panel.innerHTML = "";
+  Array.from(selectEl.options).forEach(opt => {
+    const div = document.createElement("div");
+    div.className = "xselect-opt" + (opt.value === selectEl.value ? " active" : "");
+    div.textContent = opt.textContent;
+    div.addEventListener("click", e => {
+      e.stopPropagation();
+      selectEl.value = opt.value;
+      selectEl.dispatchEvent(new Event("change", { bubbles: true }));
+      buildXOptions(selectEl);
+      selectEl._xwrap.classList.remove("open");
+    });
+    panel.appendChild(div);
+  });
+  trigger.textContent = (selectEl.options[selectEl.selectedIndex] || {}).textContent || "";
+}
+function refreshXSelect(selectEl) { if (selectEl && selectEl.dataset.xenhanced) buildXOptions(selectEl); }
+
 function populateCategoryFilter() {
   const sel = $("#shopCategoryFilter");
   const current = sel.value;
   const cats = [...new Set(State.shops.map(s => s.category).filter(Boolean))].sort();
   const optsHtml = `<option value="">All categories</option>` + cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
-  if (sel.dataset.rendered !== optsHtml) { sel.innerHTML = optsHtml; sel.value = current; sel.dataset.rendered = optsHtml; }
+  if (sel.dataset.rendered !== optsHtml) { sel.innerHTML = optsHtml; sel.value = current; sel.dataset.rendered = optsHtml; refreshXSelect(sel); }
 }
 $("#shopSearchInput").addEventListener("input", renderMarketplace);
 $("#shopCategoryFilter").addEventListener("change", renderMarketplace);
+enhanceSelect($("#regCategory"));
+enhanceSelect($("#shopCategoryFilter"));
 
 /* ========================= 9. PROFILE VIEW (incl. Warnings) ========================= */
 function renderProfileView() {
@@ -1259,11 +1715,19 @@ $("#saveProfileBtn").addEventListener("click", async () => {
   const pendingPhoto = $("#profileAvatarPreview").dataset.pending;
   const update = { displayName: name, userId: handle };
   if (pendingPhoto) update.photoURL = pendingPhoto;
+  const btn = $("#saveProfileBtn"); btn.disabled = true; btn.textContent = "Saving…";
   try {
     await db.collection("users").doc(State.user.uid).update(update);
+    // Keep every shop this user owns in sync — this is what was going stale before.
+    if (State.myShops && State.myShops.length > 0) {
+      const batch = db.batch();
+      State.myShops.forEach(s => batch.update(db.collection("shops").doc(s.id), { ownerHandle: handle }));
+      await batch.commit();
+    }
     State.profile = { ...(State.profile || {}), ...update };
     updateTopAvatar(); showToast("Profile updated.", "ok");
   } catch (e) { console.error(e); showToast("Failed to save profile.", "err"); }
+  finally { btn.disabled = false; btn.textContent = "Save Changes"; }
 });
 
 function renderWarningsPanel() {
@@ -1297,49 +1761,38 @@ async function replyToWarning(warningId) {
   } catch (e) { console.error(e); showToast("Failed to send reply.", "err"); }
 }
 
-/* ========================= 10. SEARCH NETWORK (fuzzy, name-or-handle) ========================= */
+/* ========================= 10. SEARCH NETWORK (fixed) ========================= */
 async function searchByHandle() {
-  const raw = $("#handleSearchInput").value.trim();
-  if (!raw) return showToast("Type a name or @handle to search.", "err");
+  let raw = $("#handleSearchInput").value.trim();
+  if (!raw) return showToast("Type an @handle to search.", "err");
+  if (!raw.startsWith("@")) raw = "@" + raw;
   const q = raw.toLowerCase();
-  const isHandleSearch = raw.startsWith("@");
   const resultEl = $("#handleSearchResult");
   resultEl.innerHTML = `<div class="skel" style="height:90px;"></div>`;
   try {
     const snap = await db.collection("users").get();
     console.log(`[search] scanned ${snap.size} user doc(s) for "${raw}"`);
-    let matches;
-    if (isHandleSearch) {
-      matches = snap.docs.filter(d => (d.data().userId || "").toLowerCase().trim() === q);
-    } else {
-      matches = snap.docs.filter(d => {
-        const data = d.data();
-        return (data.displayName || "").toLowerCase().includes(q) || (data.userId || "").toLowerCase().includes(q);
-      });
-    }
-    if (matches.length === 0) {
-      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3><p>Nobody matches "${esc(raw)}" — try just their first name, or their exact @handle.</p></div>`;
+    const match = snap.docs.find(d => (d.data().userId || "").toLowerCase().trim() === q);
+    if (!match) {
+      resultEl.innerHTML = `<div class="empty-state"><h3>No user found</h3><p>Nobody uses the handle ${esc(raw)}.</p></div>`;
       return;
     }
-    const cards = await Promise.all(matches.slice(0, 8).map(async d => {
-      const u = d.data();
-      const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
-      const hasShop = !shopSnap.empty;
-      return `
-        <div class="glass card" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
-          <img src="${u.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(u.displayName || 'U')}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">
-          <div style="flex:1; min-width:160px;">
-            <div style="font-weight:800; font-size:15px;">${esc(u.displayName)}</div>
-            <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
-          </div>
-          ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
-          ${State.isAdmin && u.uid !== State.user.uid ? `<button class="btn btn-warn btn-sm" data-warn-user="${u.uid}" data-warn-name="${esc(u.displayName)}">Send Warning</button>` : ''}
-        </div>`;
-    }));
-    resultEl.innerHTML = cards.join("");
-    if (State.isAdmin) {
-      $all("[data-warn-user]", resultEl).forEach(btn => btn.addEventListener("click", () => openSendWarning(btn.dataset.warnUser, btn.dataset.warnName)));
-    }
+    const u = match.data();
+    const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
+    const hasShop = !shopSnap.empty;
+    resultEl.innerHTML = `
+      <div class="glass card" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+        <img src="${u.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(u.displayName || 'U')}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">
+        <div style="flex:1; min-width:160px;">
+          <div style="font-weight:800; font-size:15px;">${esc(u.displayName)}</div>
+          <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
+        </div>
+        ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
+        ${State.user && u.uid !== State.user.uid ? `<button class="btn btn-danger btn-sm" data-report-user="${u.uid}" data-report-name="${esc(u.displayName)}">Report</button>` : ''}
+        ${State.isAdmin && u.uid !== State.user.uid ? `<button class="btn btn-warn btn-sm" data-warn-user="${u.uid}" data-warn-name="${esc(u.displayName)}">Send Warning</button>` : ''}
+      </div>`;
+    $all("[data-warn-user]", resultEl).forEach(btn => btn.addEventListener("click", () => openSendWarning(btn.dataset.warnUser, btn.dataset.warnName)));
+    $all("[data-report-user]", resultEl).forEach(btn => btn.addEventListener("click", () => openUserReport(btn.dataset.reportUser, btn.dataset.reportName)));
   } catch (e) {
     console.error("Search failed:", e.code, e.message);
     resultEl.innerHTML = `<div class="empty-state"><h3>Search failed</h3><p>${
@@ -1349,6 +1802,28 @@ async function searchByHandle() {
     }</p></div>`;
   }
 }
+function openUserReport(uid, name) {
+  State.activeUserReportTarget = { uid, name };
+  $("#userReportTarget").textContent = "Reporting: " + name;
+  $("#userReportReason").value = "";
+  openModal("userReportOverlay");
+}
+$("#userReportSubmitBtn").addEventListener("click", async () => {
+  const target = State.activeUserReportTarget;
+  const reason = $("#userReportReason").value.trim();
+  if (!target || !reason) return showToast("Please add a reason.", "err");
+  const btn = $("#userReportSubmitBtn"); btn.disabled = true; btn.textContent = "Submitting…";
+  try {
+    await db.collection("user_reports").add({
+      targetUid: target.uid, targetName: target.name,
+      reporterUid: State.user.uid, reporterName: (State.profile && State.profile.displayName) || State.user.displayName || "",
+      reason, status: "open", createdAtMs: Date.now(), createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    showToast("Report submitted to admin.", "ok");
+    closeModal("userReportOverlay");
+  } catch (e) { console.error(e); showToast("Failed to submit report.", "err"); }
+  finally { btn.disabled = false; btn.textContent = "Submit Report"; }
+});
 $("#handleSearchBtn").addEventListener("click", searchByHandle);
 $("#handleSearchInput").addEventListener("keydown", e => { if (e.key === "Enter") searchByHandle(); });
 
@@ -1476,15 +1951,18 @@ const STATUS_META = {
   refund_resolved:      { label: "Refund Completed",                    badge: "badge-done" },
   sign_pending:         { label: "Sign Process Started",                badge: "badge-sign" },
   awaiting_editor_sign: { label: "Signed by Client — Awaiting Delivery", badge: "badge-sign" },
+  awaiting_client_final_sign: { label: "Delivered — Final Sign Pending", badge: "badge-sign" },
   signed_completed:     { label: "Signed & Completed",                  badge: "badge-done" },
   rejected:             { label: "Rejected",                            badge: "badge-reject" },
 };
 function statusBadge(status) { const m = STATUS_META[status] || { label: status, badge: "badge-wait" }; return `<span class="badge ${m.badge}">${esc(m.label)}</span>`; }
 function tierName(t) { return t === 'low' ? 'Basic' : t === 'med' ? 'Standard' : 'Premium'; }
 
+/* ---- auto-advance expired sign windows, checked on load + every 30s while app is open ---- */
 function autoAdvanceExpiredSigns() {
   (State.allOrdersAsClient || []).forEach(o => {
     if (o.status === "sign_pending" && o.clientSignDeadline && o.clientSignDeadline <= Date.now()) performClientSign(o, true);
+    if (o.status === "awaiting_client_final_sign" && o.clientFinalSignDeadline && o.clientFinalSignDeadline <= Date.now()) performClientFinalSign(o, true);
   });
   (State.allOrdersAsEditor || []).forEach(o => {
     if (o.status === "awaiting_editor_sign" && o.editorSignDeadline && o.editorSignDeadline <= Date.now()) performEditorSign(o, null, true);
@@ -1511,6 +1989,7 @@ function renderPlacedOrders() {
       ${o.status === 'refund_sent' && o.refundProofUrl ? `<div class="video-link-box"><img src="${o.refundProofUrl}" style="width:80px;height:80px;border-radius:8px;object-fit:cover;">&nbsp; Admin uploaded payment proof.</div>` : ''}
       ${o.status === 'sign_pending' && o.clientSignDeadline ? `<div class="countdown-box">⏳ Sign window: ${fmtDeadline(o.clientSignDeadline)}</div>` : ''}
       ${o.status === 'awaiting_editor_sign' ? `<div class="countdown-box">⏳ Waiting for editor delivery: ${fmtDeadline(o.editorSignDeadline)}</div>` : ''}
+      ${o.status === 'awaiting_client_final_sign' ? `<div class="video-link-box">🎬 Final file ready: <a href="${esc(o.finalVideoUrl)}" target="_blank" rel="noopener">${esc(o.finalVideoUrl)}</a></div><div class="countdown-box">⏳ Final sign window: ${fmtDeadline(o.clientFinalSignDeadline)}</div>` : ''}
       ${o.status === 'signed_completed' && o.finalVideoUrl ? `<div class="video-link-box">✅ Final file: <a href="${esc(o.finalVideoUrl)}" target="_blank" rel="noopener">${esc(o.finalVideoUrl)}</a></div>` : ''}
 
       <div class="order-actions">
@@ -1524,6 +2003,7 @@ function renderPlacedOrders() {
           <button class="btn btn-primary btn-sm" data-refund-ok="${o.id}">Money Received</button>
           <button class="btn btn-danger btn-sm" data-refund-bad="${o.id}">Report — Not Received</button>` : ''}
         ${o.status === 'sign_pending' ? `<button class="btn btn-primary btn-sm" data-sign-now="${o.id}">Sign Now</button>` : ''}
+        ${o.status === 'awaiting_client_final_sign' ? `<button class="btn btn-primary btn-sm" data-final-sign-now="${o.id}">Sign Now (Final)</button>` : ''}
         <button class="btn btn-ghost btn-sm" data-view-order="${o.id}">Details</button>
       </div>
     </div>`).join("");
@@ -1533,6 +2013,9 @@ function renderPlacedOrders() {
   $all("[data-refund-submit]", list).forEach(b => b.addEventListener("click", () => openRefundSubmit(b.dataset.refundSubmit)));
   $all("[data-refund-ok]", list).forEach(b => b.addEventListener("click", () => clientRefundOutcome(b.dataset.refundOk, true)));
   $all("[data-refund-bad]", list).forEach(b => b.addEventListener("click", () => clientRefundOutcome(b.dataset.refundBad, false)));
+  $all("[data-final-sign-now]", list).forEach(b => b.addEventListener("click", () => {
+    const o = State.allOrdersAsClient.find(x => x.id === b.dataset.finalSignNow); if (o) performClientFinalSign(o, false);
+  }));
   $all("[data-sign-now]", list).forEach(b => b.addEventListener("click", () => {
     const o = State.allOrdersAsClient.find(x => x.id === b.dataset.signNow); if (o) performClientSign(o, false);
   }));
@@ -1682,6 +2165,7 @@ function renderEditorOrders() {
       ${o.status === 'client_reported' ? `<div class="report-box">Client reported: "${esc(o.reportReason || '')}"</div>` : ''}
       ${o.status === 'sign_pending' ? `<div class="countdown-box">⏳ Waiting for client to sign: ${fmtDeadline(o.clientSignDeadline)}</div>` : ''}
       ${o.status === 'awaiting_editor_sign' ? `<div class="countdown-box">⏳ Your delivery window: ${fmtDeadline(o.editorSignDeadline)}</div>` : ''}
+      ${o.status === 'awaiting_client_final_sign' ? `<div class="countdown-box">⏳ Waiting for client's final sign: ${fmtDeadline(o.clientFinalSignDeadline)}</div>` : ''}
       ${o.status === 'signed_completed' ? `<div class="video-link-box">✅ Completed — escrow released to you.</div>` : ''}
 
       <div class="order-actions">
@@ -1806,20 +2290,52 @@ $("#finalDeliverSubmitBtn").addEventListener("click", async () => {
     closeModal("finalDeliverOverlay");
   } finally { btn.disabled = false; btn.textContent = "Sign Now — Release Escrow"; }
 });
+/* Editor delivers the final unwatermarked file and signs — this does NOT complete the
+   order yet. It hands off to the client's second/final sign (its own 3-day window). */
 async function performEditorSign(order, finalUrl, auto) {
   try {
     const finalVideoUrl = finalUrl || order.deliveryVideoUrl || "";
     await db.collection("orders").doc(order.id).update({
-      status: "signed_completed", finalVideoUrl, editorSigned: true, editorSignAt: Date.now(),
-      editorAutoSigned: !!auto, workProgress: 100,
+      status: "awaiting_client_final_sign", finalVideoUrl, editorSigned: true, editorSignAt: Date.now(),
+      editorAutoSigned: !!auto, workProgress: 100, clientFinalSignDeadline: Date.now() + SIGN_WINDOW_MS,
+    });
+    if (!auto) showToast("Final file delivered — waiting on the client's final sign.", "ok");
+    notifyEmail({ to: order.clientEmail || "", toName: order.clientName || "Client", orderId: order.orderId,
+      subject: `Final file ready — sign to release escrow for ${order.orderId}`,
+      headline: auto ? "Editor auto-signed (3-day window elapsed)" : "Your final file is ready",
+      message: `The unwatermarked final file is ready. Click "Sign Now" to release escrow and complete the order — or it auto-signs in 3 days.`,
+      amount: order.price, actionUrl: finalVideoUrl, actionLabel: "View Final File" });
+  } catch (e) { console.error("editor sign failed:", e); showToast("Failed to sign.", "err"); }
+}
+
+/* Client's SECOND and final sign — this is what actually completes the order,
+   releases escrow, bumps the shop's completed-order badge count, and sends the
+   full detailed email to client + editor + admin. */
+async function performClientFinalSign(order, auto) {
+  try {
+    await db.collection("orders").doc(order.id).update({
+      status: "signed_completed", clientFinalSignAt: Date.now(), clientFinalAutoSigned: !!auto,
     });
     if (!auto) showToast("Signed! Escrow released. 🎉", "ok");
-    const commonMsg = `Order ${order.orderId} is fully signed and completed. Escrow of ${money(order.price)} has been released to the editor. Final file: ${finalVideoUrl}`;
-    notifyEmail({ to: order.clientEmail || "", toName: order.clientName || "Client", orderId: order.orderId, subject: `Completed — ${order.orderId}`,
-      headline: "Order completed & signed", message: commonMsg, amount: order.price, actionUrl: finalVideoUrl, actionLabel: "View Final File" });
-    notifyEmail({ to: SUPER_ADMIN_EMAIL, toName: "Admin", orderId: order.orderId, subject: `Escrow released — ${order.orderId}`,
-      headline: auto ? "Order auto-completed (3-day window elapsed)" : "Order completed & signed", message: commonMsg, amount: order.price });
-  } catch (e) { console.error("editor sign failed:", e); showToast("Failed to sign.", "err"); }
+    if (order.shopId) {
+      db.collection("shops").doc(order.shopId).update({ completedOrders: firebase.firestore.FieldValue.increment(1) }).catch(() => {});
+    }
+    const signedAtStr = new Date().toLocaleString();
+    const detail = `Order ID: ${order.orderId}
+Client: ${order.clientName || order.clientUid}
+Shop: ${order.shopName}
+Amount: ${money(order.price)}
+Signed by: ${order.clientName || 'Client'} (${auto ? 'auto-signed after 3 days' : 'manually signed'})
+Signed at: ${signedAtStr}
+Final file: ${order.finalVideoUrl || '—'}
+Escrow has been fully released to the editor.`;
+    notifyEmail({ to: order.clientEmail || "", toName: order.clientName || "Client", orderId: order.orderId, subject: `Order completed — ${order.orderId}`,
+      headline: "Order fully signed and completed", message: detail, amount: order.price, actionUrl: order.finalVideoUrl || "", actionLabel: "View Final File" });
+    notifyEmail({ to: order.editorEmail || "", toName: order.editorHandle || "Editor", orderId: order.orderId, subject: `Escrow released — ${order.orderId}`,
+      headline: "Client gave final sign — escrow released", message: detail, amount: order.price });
+    notifyEmail({ to: SUPER_ADMIN_EMAIL, toName: "Admin", orderId: order.orderId, subject: `Order fully completed — ${order.orderId}`,
+      headline: "Order fully signed and completed", message: detail, amount: order.price });
+  } catch (e) { console.error("client final sign failed:", e); showToast("Failed to sign.", "err"); }
 }
 
 /* ========================= 13. ADMIN REVIEW ========================= */
@@ -1828,11 +2344,13 @@ $all("[data-atab]").forEach(tab => tab.addEventListener("click", () => {
   $("#adminAppsPane").classList.toggle("hidden", tab.dataset.atab !== "apps");
   $("#adminOrdersPane").classList.toggle("hidden", tab.dataset.atab !== "orders");
   $("#adminReportsPane").classList.toggle("hidden", tab.dataset.atab !== "reports");
+  $("#adminShopsPane").classList.toggle("hidden", tab.dataset.atab !== "shops");
+  $("#adminUserReportsPane").classList.toggle("hidden", tab.dataset.atab !== "userreports");
 }));
 
 function renderAdminReview() {
   if (!State.isAdmin) return;
-  renderAdminApps(); renderAdminEscrowQueue(); renderAdminReports();
+  renderAdminApps(); renderAdminEscrowQueue(); renderAdminReports(); renderAdminShops(); renderAdminUserReports();
 }
 
 function renderAdminApps() {
@@ -1941,6 +2459,66 @@ function renderAdminReports() {
   $all("[data-return-money]", pane).forEach(b => b.addEventListener("click", () => adminReturnMoney(b.dataset.returnMoney)));
   $all("[data-upload-refund-proof]", pane).forEach(b => b.addEventListener("click", () => openRefundProof(b.dataset.uploadRefundProof)));
   $all("[data-view-order-r]", pane).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderR, "admin")));
+}
+
+/* ---- Admin: All Shops & Badges ---- */
+function renderAdminShops() {
+  const pane = $("#adminShopsPane");
+  const shops = State.shops || [];
+  if (shops.length === 0) { pane.innerHTML = `<div class="empty-state"><h3>No shops yet</h3></div>`; return; }
+  pane.innerHTML = `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">` + shops.map(s => {
+    const avg = s.ratingCount ? s.ratingSum / s.ratingCount : 0;
+    return `
+    <div class="glass card">
+      <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+        <img src="${s.logoUrl || ''}" style="width:42px;height:42px;border-radius:10px;object-fit:cover;">
+        <div><div style="font-weight:800; font-size:14px;">${esc(s.name)}</div><div class="text-dim" style="font-size:11.5px;">${esc(s.ownerHandle || '')}</div></div>
+      </div>
+      <div class="rating-summary">${starsHtml(avg, s.ratingCount || 0)}</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">${shopBadgesHtml(s)}</div>
+      <div class="text-dim" style="font-size:11.5px; margin-bottom:12px;">${s.completedOrders || 0} completed orders</div>
+      <button class="btn btn-warn btn-sm btn-block" data-set-badge="${s.id}">Set Badge</button>
+    </div>`;
+  }).join("") + `</div>`;
+  $all("[data-set-badge]", pane).forEach(b => b.addEventListener("click", () => openSetBadge(b.dataset.setBadge)));
+}
+function openSetBadge(shopId) {
+  const shop = State.shops.find(s => s.id === shopId); if (!shop) return;
+  State.activeBadgeShop = shop;
+  $("#setBadgeInput").value = shop.adminBadge || "";
+  openModal("setBadgeOverlay");
+}
+$("#setBadgeSubmitBtn").addEventListener("click", async () => {
+  const shop = State.activeBadgeShop; if (!shop) return;
+  const badge = $("#setBadgeInput").value.trim();
+  const btn = $("#setBadgeSubmitBtn"); btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    await db.collection("shops").doc(shop.id).update({ adminBadge: badge || firebase.firestore.FieldValue.delete() });
+    showToast(badge ? "Badge saved." : "Badge removed.", "ok");
+    closeModal("setBadgeOverlay");
+  } catch (e) { console.error(e); showToast("Failed to save badge.", "err"); }
+  finally { btn.disabled = false; btn.textContent = "Save Badge"; }
+});
+
+/* ---- Admin: User Reports (from Search Network) ---- */
+function renderAdminUserReports() {
+  const pane = $("#adminUserReportsPane");
+  const reports = State.userReports || [];
+  if (reports.length === 0) { pane.innerHTML = `<div class="empty-state"><h3>No user reports</h3><p>Reports filed from Search Network appear here.</p></div>`; return; }
+  pane.innerHTML = reports.map(r => `
+    <div class="glass order-card">
+      <div class="order-top">
+        <div><div style="font-weight:800;">${esc(r.targetName || r.targetUid)}</div><div class="text-dim" style="font-size:12px;">Reported by ${esc(r.reporterName || 'someone')}</div></div>
+        <span class="badge ${r.status === 'open' ? 'badge-report' : 'badge-done'}">${r.status === 'open' ? 'Open' : 'Resolved'}</span>
+      </div>
+      <div class="report-box">"${esc(r.reason)}"</div>
+      ${r.status === 'open' ? `<div class="order-actions"><button class="btn btn-primary btn-sm" data-resolve-report="${r.id}">Mark Resolved</button></div>` : ''}
+    </div>`).join("");
+  $all("[data-resolve-report]", pane).forEach(b => b.addEventListener("click", () => resolveUserReport(b.dataset.resolveReport)));
+}
+async function resolveUserReport(reportId) {
+  try { await db.collection("user_reports").doc(reportId).update({ status: "resolved" }); showToast("Marked resolved.", "ok"); }
+  catch (e) { console.error(e); showToast("Failed to update.", "err"); }
 }
 
 async function adminOkFine(orderId) {
