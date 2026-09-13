@@ -26,6 +26,12 @@ html[data-theme="ocean"]{--bg:#04101a;--bg2:#08202f;--primary:#00b8d4;--primary2
 html[data-theme="forest"]{--bg:#0a140c;--bg2:#0f2113;--primary:#3ee68c;--primary2:#6be63e;--accent:#d4ff5b;}
 html[data-theme="rose"]{--bg:#160a12;--bg2:#241021;--primary:#ff5bb0;--primary2:#ff8fd6;--accent:#ffd35b;}
 html[data-theme="amber"]{--bg:#140f04;--bg2:#241c08;--primary:#ffb020;--primary2:#ff7a20;--accent:#ffe45b;}
+html[data-theme="vipgold"]{
+  --bg:#ffffff; --bg2:#faf3e0; --surface:rgba(0,0,0,0.035); --surface-hi:rgba(0,0,0,0.07);
+  --border:rgba(0,0,0,0.12); --text:#1a1408; --text-dim:#8a7a45; --text-dim2:#b5a570;
+  --primary:#c9a227; --primary2:#f0c75e; --accent:#b8860b;
+  --glow:0 0 24px rgba(201,162,39,0.45);
+}
 html[data-canvas="snow"],html[data-canvas="starfield"],html[data-canvas="cyberrain"],html[data-canvas="matrix"],
 html[data-canvas="embers"],html[data-canvas="plasma"],html[data-canvas="chroma"],html[data-canvas="prism"],
 html[data-canvas="auroraflow"],html[data-canvas="golddust"],html[data-canvas="storm"],html[data-canvas="petals"],
@@ -45,6 +51,7 @@ html[data-canvas="egypt"] #themeCanvas, html[data-canvas="greece"] #themeCanvas,
 html[data-canvas="tajmahal"] #themeCanvas, html[data-canvas="hawamahal"] #themeCanvas, html[data-canvas="switzerland"] #themeCanvas{
   opacity:0.5; filter:saturate(0.85);
 }
+html[data-canvas="vipgold"] #themeCanvas{ opacity:0.75; }
 ::-webkit-scrollbar{width:10px; height:10px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--primary2)); border-radius:10px; border:2px solid var(--bg);}
@@ -414,11 +421,12 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         </div>
         <div>
           <div class="glass card">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 31 Themes</div>
+            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 32 Themes</div>
             <div class="theme-tabs">
               <div class="theme-tab active" data-tpage="1">Standard</div>
               <div class="theme-tab" data-tpage="3">Animated</div>
               <div class="theme-tab" data-tpage="4">Realistic</div>
+              <div class="theme-tab hidden" data-tpage="5" id="vipThemeTab">VIP</div>
             </div>
             <div class="theme-grid" id="themeGrid"></div>
           </div>
@@ -896,14 +904,15 @@ function notifyEmail(opts) {
   });
 }
 
-/* ========================= 4. THEME SYSTEM (31 THEMES) ========================= */
+/* ========================= 4. THEME SYSTEM (32 THEMES, 1 admin-only) ========================= */
 const STATIC_THEMES = ["indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber"];
 const PARTICLE_THEMES = [
   "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
   "auroraflow","golddust","storm","petals","warp","flares","bubbles"
 ];
 const SCENE_THEMES = ["egypt","greece","china","tajmahal","hawamahal","switzerland"];
-const CANVAS_THEMES = [...PARTICLE_THEMES, ...SCENE_THEMES];
+const ADMIN_THEMES = ["vipgold"]; // only ever shown/selectable for the super admin
+const CANVAS_THEMES = [...PARTICLE_THEMES, ...SCENE_THEMES, ...ADMIN_THEMES];
 const THEME_COLORS = {
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
   midnight:["#3b5bff","#5b8cff"], sunset:["#ff5b7a","#ff9d5b"], ocean:["#00b8d4","#00e5c8"], forest:["#3ee68c","#6be63e"],
@@ -913,21 +922,33 @@ const THEME_COLORS = {
   auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
   warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"],
   egypt:["#e8804a","#ffd27a"], greece:["#2e7ce8","#ffffff"], china:["#e83e3e","#ffd75b"],
-  tajmahal:["#f0e6d2","#e89ea8"], hawamahal:["#e893a0","#f5c26b"], switzerland:["#3ea15e","#bfe6ff"]
+  tajmahal:["#f0e6d2","#e89ea8"], hawamahal:["#e893a0","#f5c26b"], switzerland:["#3ea15e","#bfe6ff"],
+  vipgold:["#c9a227","#f0c75e"]
 };
 const THEME_LABELS = {};
 [...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
 THEME_LABELS.egypt = "Ancient Egypt"; THEME_LABELS.greece = "Modern Greece"; THEME_LABELS.china = "Ancient China";
 THEME_LABELS.tajmahal = "Taj Mahal"; THEME_LABELS.hawamahal = "Hawa Mahal"; THEME_LABELS.switzerland = "Greenery Switzerland";
+THEME_LABELS.vipgold = "VIP Gold";
 
 let currentTheme = localStorage.getItem("rex_theme") || "indigo";
 if (!THEME_LABELS[currentTheme]) currentTheme = "indigo"; // guard against a theme that was removed
 
-function applyTheme(themeId) {
+function applyTheme(themeId, opts) {
+  opts = opts || {};
+  // Skip the admin gate during the pre-auth page load (State.isAdmin isn't known yet,
+  // and the auth gate is covering the screen anyway) — otherwise this would silently
+  // wipe a returning admin's saved VIP Gold preference before we even know who they are.
+  if (!opts.skipAdminGate && ADMIN_THEMES.includes(themeId) && !State.isAdmin) themeId = "indigo";
   currentTheme = themeId;
   localStorage.setItem("rex_theme", themeId);
   const html = document.documentElement;
-  if (CANVAS_THEMES.includes(themeId)) {
+  if (themeId === "vipgold") {
+    // needs BOTH: data-theme for the white+gold color palette (buttons etc.), and
+    // data-canvas for the animated gold-bar scene layered on top of it.
+    html.setAttribute("data-theme", "vipgold"); html.setAttribute("data-canvas", "vipgold");
+    startCanvasTheme(themeId);
+  } else if (CANVAS_THEMES.includes(themeId)) {
     html.removeAttribute("data-theme"); html.setAttribute("data-canvas", themeId);
     startCanvasTheme(themeId);
   } else {
@@ -995,6 +1016,12 @@ function spawnParticles(themeId, w, h) {
     arr.push({ type: "eagle", x: -140, y: h * 0.22, speed: rnd(0.4, 0.6) * (w / 1000), flap: 0, scale: Math.max(0.7, Math.min(1.2, h / 700)) });
     for (let i = 0; i < 4; i++) arr.push({ type: "cloud", x: rnd(0, w), y: rnd(h * 0.08, h * 0.28), w: rnd(140, 260), vx: rnd(0.06, 0.16), o: rnd(0.5, 0.85) });
     for (let i = 0; i < 40; i++) arr.push({ type: "pollen", x: rnd(0, w), y: rnd(h * 0.55, h), vy: rnd(-0.3, -0.1), vx: rnd(-0.2, 0.2), r: rnd(0.6, 1.6), o: rnd(0.3, 0.7) });
+    return arr;
+  }
+  if (themeId === "vipgold") {
+    const arr = [];
+    arr.push({ type: "shine", x: -w * 0.3, w: w * 0.35, speed: rnd(2.2, 3.2) });
+    for (let i = 0; i < 50; i++) arr.push({ type: "sparkle2", x: rnd(0, w), y: rnd(h * 0.2, h * 0.85), tw: rnd(0, 6.28), speed: rnd(0.06, 0.14), o: rnd(0.3, 0.85) });
     return arr;
   }
   const cfg = {
@@ -1167,6 +1194,22 @@ function drawParticle(ctx, themeId, p, w, h, t) {
       if (p.type === "pollen") {
         p.y += p.vy; p.x += p.vx; if (p.y < -10) { p.y = h + 10; p.x = rnd(0, w); }
         ctx.globalAlpha = p.o; ctx.fillStyle = "#eaffb8"; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); break;
+      }
+      break;
+    }
+    case "vipgold": {
+      if (p.type === "shine") {
+        p.x += p.speed; if (p.x > w + w * 0.35) p.x = -w * 0.35;
+        const g = ctx.createLinearGradient(p.x, 0, p.x + p.w, 0);
+        g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(0.5, "rgba(255,255,255,0.35)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.save(); ctx.globalCompositeOperation = "overlay"; ctx.fillStyle = g;
+        ctx.beginPath(); ctx.moveTo(p.x, 0); ctx.lineTo(p.x + p.w * 0.5, 0); ctx.lineTo(p.x + p.w * 0.2, h); ctx.lineTo(p.x - p.w * 0.3, h); ctx.closePath(); ctx.fill();
+        ctx.restore(); break;
+      }
+      if (p.type === "sparkle2") {
+        p.tw += p.speed;
+        ctx.globalAlpha = Math.max(0, Math.sin(p.tw)) * p.o; ctx.fillStyle = "#fff6d8";
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, 6.283); ctx.fill(); break;
       }
       break;
     }
@@ -1466,6 +1509,48 @@ function drawSwitzerlandScene(ctx, w, h) {
   });
 }
 
+/* ---- VIP Gold (admin-only): white background, gold bullion bars on a rail ---- */
+function drawVipGoldScene(ctx, w, h) {
+  const bg = ctx.createLinearGradient(0, 0, 0, h);
+  bg.addColorStop(0, "#ffffff"); bg.addColorStop(1, "#faf3e0");
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
+
+  function drawRail(y) {
+    // the metal rail/shelf itself
+    const railGrad = ctx.createLinearGradient(0, y, 0, y + 6);
+    railGrad.addColorStop(0, "#e8dcc0"); railGrad.addColorStop(1, "#c9b98a");
+    ctx.fillStyle = railGrad; ctx.fillRect(0, y, w, 6);
+    ctx.fillStyle = "rgba(0,0,0,0.06)"; ctx.fillRect(0, y + 6, w, 3);
+  }
+  function drawBar(cx, y, bw, bh) {
+    // top face (lighter gold) + front face (deeper gold) for a simple 3D bullion-bar look
+    const skew = bh * 0.35;
+    const top = ctx.createLinearGradient(cx - bw / 2, y - skew, cx + bw / 2, y);
+    top.addColorStop(0, "#fff3c4"); top.addColorStop(0.5, "#f0c75e"); top.addColorStop(1, "#e0ac2e");
+    ctx.fillStyle = top;
+    ctx.beginPath(); ctx.moveTo(cx - bw / 2 + 6, y - skew); ctx.lineTo(cx + bw / 2 - 6, y - skew);
+    ctx.lineTo(cx + bw / 2, y); ctx.lineTo(cx - bw / 2, y); ctx.closePath(); ctx.fill();
+
+    const front = ctx.createLinearGradient(0, y, 0, y + bh);
+    front.addColorStop(0, "#d4af37"); front.addColorStop(0.5, "#b8860b"); front.addColorStop(1, "#8f6a08");
+    ctx.fillStyle = front; ctx.fillRect(cx - bw / 2, y, bw, bh);
+    // subtle top-edge highlight line
+    ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - bw / 2, y); ctx.lineTo(cx + bw / 2, y); ctx.stroke();
+  }
+
+  const barW = Math.max(60, w * 0.09), barH = Math.max(28, h * 0.045), gap = barW * 0.35;
+  const rows = [h * 0.36, h * 0.62];
+  rows.forEach((rowY, ri) => {
+    drawRail(rowY - 4);
+    const perRow = Math.ceil(w / (barW + gap)) + 1;
+    for (let i = 0; i < perRow; i++) {
+      const cx = (i + 0.5) * (barW + gap) - (ri % 2) * (barW + gap) / 2;
+      drawBar(cx, rowY, barW, barH);
+    }
+  });
+}
+
 function startCanvasTheme(themeId) {
   const canvas = $("#themeCanvas");
   const ctx = canvas.getContext("2d");
@@ -1496,6 +1581,7 @@ function startCanvasTheme(themeId) {
     else if (themeId === "tajmahal") { drawTajMahalScene(ctx, canvasEngine.w, canvasEngine.h); }
     else if (themeId === "hawamahal") { drawHawaMahalScene(ctx, canvasEngine.w, canvasEngine.h); }
     else if (themeId === "switzerland") { drawSwitzerlandScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else if (themeId === "vipgold") { drawVipGoldScene(ctx, canvasEngine.w, canvasEngine.h); }
     else {
       ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
       if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
@@ -1509,9 +1595,16 @@ window.addEventListener("load", () => { if (CANVAS_THEMES.includes(currentTheme)
 
 function renderThemeGrid() {
   const grid = $("#themeGrid"); if (!grid) return;
-  const activeTab = $(".theme-tab.active");
+  $("#vipThemeTab").classList.toggle("hidden", !State.isAdmin);
+  let activeTab = $(".theme-tab.active");
+  if (activeTab && activeTab.dataset.tpage === "5" && !State.isAdmin) {
+    // was on the VIP tab but no longer qualifies (e.g. signed out) — fall back to Standard
+    activeTab.classList.remove("active");
+    $('.theme-tab[data-tpage="1"]').classList.add("active");
+    activeTab = $(".theme-tab.active");
+  }
   const page = activeTab ? activeTab.dataset.tpage : "1";
-  const list = page === "1" ? STATIC_THEMES : page === "3" ? PARTICLE_THEMES : SCENE_THEMES;
+  const list = page === "1" ? STATIC_THEMES : page === "3" ? PARTICLE_THEMES : page === "5" ? ADMIN_THEMES : SCENE_THEMES;
   grid.innerHTML = list.map(t => {
     const [c1, c2] = THEME_COLORS[t];
     const active = t === currentTheme ? "active" : "";
@@ -1522,7 +1615,7 @@ function renderThemeGrid() {
 $all(".theme-tab").forEach(tab => tab.addEventListener("click", () => {
   $all(".theme-tab").forEach(t => t.classList.remove("active")); tab.classList.add("active"); renderThemeGrid();
 }));
-applyTheme(currentTheme);
+applyTheme(currentTheme, { skipAdminGate: true });
 
 /* ========================= 5. NAVIGATION ========================= */
 const VIEW_META = {
@@ -1572,6 +1665,7 @@ auth.onAuthStateChanged(async user => {
   State.isAdmin = (user.email === SUPER_ADMIN_EMAIL);
   $("#authGate").classList.add("hidden"); $("#appRoot").classList.remove("hidden");
   $("#navAdmin").classList.toggle("hidden", !State.isAdmin);
+  applyTheme(currentTheme); // re-validate now that admin status is known (guards the VIP Gold theme)
 
   await ensureUserDoc(user);
   attachAllListeners(user);
