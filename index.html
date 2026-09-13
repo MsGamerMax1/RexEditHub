@@ -41,6 +41,10 @@ body{
 }
 #themeCanvas{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; display:none;}
 html[data-canvas]:not([data-canvas=""]) #themeCanvas{display:block;}
+html[data-canvas="egypt"] #themeCanvas, html[data-canvas="greece"] #themeCanvas, html[data-canvas="china"] #themeCanvas,
+html[data-canvas="tajmahal"] #themeCanvas, html[data-canvas="hawamahal"] #themeCanvas, html[data-canvas="switzerland"] #themeCanvas{
+  opacity:0.5; filter:saturate(0.85);
+}
 ::-webkit-scrollbar{width:10px; height:10px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--primary2)); border-radius:10px; border:2px solid var(--bg);}
@@ -400,13 +404,17 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
           </div>
           <div class="field">
             <label>Handle</label>
-            <input id="profileHandleInput" placeholder="@yourhandle">
+            <div class="row" style="gap:0; border:1px solid var(--border); border-radius:11px; overflow:hidden; background:rgba(255,255,255,0.03);">
+              <span style="flex:0 0 auto; padding:11px 0 11px 14px; color:var(--text-dim); font-weight:700;">@</span>
+              <input id="profileHandleInput" placeholder="yourhandle" style="border:none; background:transparent; padding-left:2px;">
+            </div>
+            <div class="text-dim" style="font-size:11px; margin-top:6px;">Letters, numbers, and underscores only — no spaces or symbols.</div>
           </div>
           <button class="btn btn-primary btn-block" id="saveProfileBtn">Save Changes</button>
         </div>
         <div>
           <div class="glass card">
-            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 28 Themes</div>
+            <div class="modal-title mb0" style="margin-bottom:14px;">Appearance — 31 Themes</div>
             <div class="theme-tabs">
               <div class="theme-tab active" data-tpage="1">Standard</div>
               <div class="theme-tab" data-tpage="3">Animated</div>
@@ -510,12 +518,47 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 
     <!-- VIEW: REGISTER STEP 2 -->
     <section id="viewRegisterStep2" class="view hidden">
-      <div class="glass card" style="max-width:560px;">
+      <div class="glass card" style="max-width:620px;">
         <div class="step-dots"><div class="step-dot active"></div><div class="step-dot active"></div></div>
-        <div class="modal-title mb0" style="margin-bottom:16px;">Custom Pricing Tiers (per delivery)</div>
-        <div class="field"><label>Basic Tier — ₹</label><input id="regRateLow" type="number" placeholder="e.g. 499"></div>
-        <div class="field"><label>Standard Tier — ₹</label><input id="regRateMed" type="number" placeholder="e.g. 999"></div>
-        <div class="field mb0"><label>Premium Tier — ₹</label><input id="regRateHigh" type="number" placeholder="e.g. 1999"></div>
+        <div class="modal-title mb0" style="margin-bottom:6px;">Pricing Modes</div>
+        <p class="text-dim" style="font-size:12.5px; margin-bottom:16px;">Turn on the service types you offer. Each has its own unit and price cap — you can offer just one, or all three.</p>
+
+        <div class="glass card mt16" style="padding:16px;">
+          <label class="row" style="align-items:center; cursor:pointer; margin-bottom:0;" id="modeShortToggleRow">
+            <input type="checkbox" id="modeShortOn" style="width:18px; height:18px; flex:0 0 auto;">
+            <span style="flex:1; font-weight:700; font-size:14px; color:var(--text);">Short-Form (Reels/Shorts) — priced per 10 seconds, max ₹30</span>
+          </label>
+          <div class="row mt16" id="modeShortFields" style="display:none;">
+            <div class="field mb0"><label>Basic — ₹/10s</label><input id="modeShortLow" type="number" max="30" placeholder="e.g. 10"></div>
+            <div class="field mb0"><label>Standard — ₹/10s</label><input id="modeShortMed" type="number" max="30" placeholder="e.g. 18"></div>
+            <div class="field mb0"><label>Premium — ₹/10s</label><input id="modeShortHigh" type="number" max="30" placeholder="e.g. 30"></div>
+          </div>
+        </div>
+
+        <div class="glass card mt16" style="padding:16px;">
+          <label class="row" style="align-items:center; cursor:pointer; margin-bottom:0;" id="modeVideoToggleRow">
+            <input type="checkbox" id="modeVideoOn" style="width:18px; height:18px; flex:0 0 auto;">
+            <span style="flex:1; font-weight:700; font-size:14px; color:var(--text);">Video Editing (long-form etc.) — priced per minute, max ₹70</span>
+          </label>
+          <div class="row mt16" id="modeVideoFields" style="display:none;">
+            <div class="field mb0"><label>Basic — ₹/min</label><input id="modeVideoLow" type="number" max="70" placeholder="e.g. 20"></div>
+            <div class="field mb0"><label>Standard — ₹/min</label><input id="modeVideoMed" type="number" max="70" placeholder="e.g. 40"></div>
+            <div class="field mb0"><label>Premium — ₹/min</label><input id="modeVideoHigh" type="number" max="70" placeholder="e.g. 70"></div>
+          </div>
+        </div>
+
+        <div class="glass card mt16" style="padding:16px;">
+          <label class="row" style="align-items:center; cursor:pointer; margin-bottom:0;" id="modeProjectToggleRow">
+            <input type="checkbox" id="modeProjectOn" style="width:18px; height:18px; flex:0 0 auto;">
+            <span style="flex:1; font-weight:700; font-size:14px; color:var(--text);">Thumbnail Design / Other — priced per project, max ₹100</span>
+          </label>
+          <div class="row mt16" id="modeProjectFields" style="display:none;">
+            <div class="field mb0"><label>Basic — ₹/project</label><input id="modeProjectLow" type="number" max="100" placeholder="e.g. 30"></div>
+            <div class="field mb0"><label>Standard — ₹/project</label><input id="modeProjectMed" type="number" max="100" placeholder="e.g. 60"></div>
+            <div class="field mb0"><label>Premium — ₹/project</label><input id="modeProjectHigh" type="number" max="100" placeholder="e.g. 100"></div>
+          </div>
+        </div>
+
         <div class="row mt20">
           <button class="btn btn-ghost" id="regStep2Back">Back</button>
           <button class="btn btn-primary" id="regStep2Submit">Submit Application</button>
@@ -537,15 +580,17 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
       <button class="btn btn-ghost btn-sm aspect-btn" data-ar="1:1">1:1</button>
       <button class="btn btn-ghost btn-sm aspect-btn" data-ar="4:5">4:5</button>
     </div>
+    <div class="modal-title mb0" style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">Service Type</div>
+    <div class="aspect-btns" id="hireModeBtns"></div>
     <div class="modal-title mb0" style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">Select Tier</div>
     <div class="tier-grid">
       <div class="tier-opt active" data-tier="low"><b>Basic</b><span id="tierLowPrice">₹0</span></div>
       <div class="tier-opt" data-tier="med"><b>Standard</b><span id="tierMedPrice">₹0</span></div>
       <div class="tier-opt" data-tier="high"><b>Premium</b><span id="tierHighPrice">₹0</span></div>
     </div>
-    <div class="row">
-      <div class="field"><label>Duration (min)</label><input id="hireDuration" type="number" value="1" min="1"></div>
-      <div class="field"><label>Quantity</label><input id="hireQty" type="number" value="1" min="1"></div>
+    <div class="row" id="hireDurationRow">
+      <div class="field"><label id="hireDurationLabel">Duration (min)</label><input id="hireDuration" type="number" value="1" min="1"></div>
+      <div class="field"><label id="hireQtyLabel">Quantity</label><input id="hireQty" type="number" value="1" min="1"></div>
     </div>
     <div class="field"><label>Footage / Asset Link</label><input id="hireAssetUrl" placeholder="Google Drive / Frame.io link"></div>
     <div class="field"><label>Instructions</label><textarea id="hireInstructions" rows="3" placeholder="Style references, pacing notes, deadline…"></textarea></div>
@@ -686,6 +731,15 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   </div>
 </div>
 
+<!-- ADMIN: REJECT ORDER (pending_admin / payment_review) -->
+<div class="overlay" id="adminRejectOrderOverlay">
+  <div class="glass modal">
+    <div class="modal-head"><div class="modal-title">Reject Order</div><div class="modal-close" data-close="adminRejectOrderOverlay">✕</div></div>
+    <div class="field mb0"><label>Reason</label><textarea id="adminRejectOrderReason" rows="4" placeholder="Why is this order being rejected?"></textarea></div>
+    <button class="btn btn-danger btn-block mt20" id="adminRejectOrderSubmitBtn">Reject Order</button>
+  </div>
+</div>
+
 <!-- ADMIN: SET SHOP BADGE -->
 <div class="overlay" id="setBadgeOverlay">
   <div class="glass modal">
@@ -747,13 +801,13 @@ const State = {
   hireContext: null,
   activeOrderForPayment: null, activeOrderForProgress: null,
   activeOrderForDeliver: null, activeOrderForReport: null,
-  activeOrderForEditorReject: null, activeOrderForAdminReportEditor: null,
+  activeOrderForEditorReject: null, activeOrderForAdminReportEditor: null, activeOrderForAdminReject: null,
   activeOrderForRefundSubmit: null, activeOrderForRefundProof: null,
   activeOrderForFinalDeliver: null,
   activeWarningTarget: null,
   activeShopDetail: null, reviewDraft: null, activeUserReportTarget: null, activeBadgeShop: null,
   refundQrBase64: null, refundProofBase64: null,
-  selectedTier: "low", selectedAR: "16:9",
+  selectedTier: "low", selectedAR: "16:9", selectedMode: "video",
   countdownInterval: null,
 };
 
@@ -842,13 +896,13 @@ function notifyEmail(opts) {
   });
 }
 
-/* ========================= 4. THEME SYSTEM (28 THEMES) ========================= */
+/* ========================= 4. THEME SYSTEM (31 THEMES) ========================= */
 const STATIC_THEMES = ["indigo","dark","coral","neon","midnight","sunset","ocean","forest","rose","amber"];
 const PARTICLE_THEMES = [
   "snow","starfield","cyberrain","matrix","embers","plasma","chroma","prism",
   "auroraflow","golddust","storm","petals","warp","flares","bubbles"
 ];
-const SCENE_THEMES = ["egypt","greece","china"];
+const SCENE_THEMES = ["egypt","greece","china","tajmahal","hawamahal","switzerland"];
 const CANVAS_THEMES = [...PARTICLE_THEMES, ...SCENE_THEMES];
 const THEME_COLORS = {
   indigo:["#6d5bff","#9b7bff"], dark:["#9aa0ac","#e7e9ee"], coral:["#ff6b6b","#ff9d6b"], neon:["#00ffc8","#00c8ff"],
@@ -858,11 +912,13 @@ const THEME_COLORS = {
   embers:["#ff5b2e","#ffb85b"], plasma:["#ff2ed6","#5b2eff"], chroma:["#ff2e6a","#2effc8"], prism:["#ff9ded","#9de0ff"],
   auroraflow:["#2effc8","#7a5bff"], golddust:["#ffd75b","#ff9d2e"], storm:["#6b7a99","#c8d4ff"], petals:["#ffb0d6","#ff7ab0"],
   warp:["#5be0ff","#ffffff"], flares:["#ff7a2e","#ff2e6a"], bubbles:["#7adfff","#ffffff"],
-  egypt:["#e8804a","#ffd27a"], greece:["#2e7ce8","#ffffff"], china:["#e83e3e","#ffd75b"]
+  egypt:["#e8804a","#ffd27a"], greece:["#2e7ce8","#ffffff"], china:["#e83e3e","#ffd75b"],
+  tajmahal:["#f0e6d2","#e89ea8"], hawamahal:["#e893a0","#f5c26b"], switzerland:["#3ea15e","#bfe6ff"]
 };
 const THEME_LABELS = {};
 [...STATIC_THEMES, ...CANVAS_THEMES].forEach(t => THEME_LABELS[t] = t.charAt(0).toUpperCase() + t.slice(1));
 THEME_LABELS.egypt = "Ancient Egypt"; THEME_LABELS.greece = "Modern Greece"; THEME_LABELS.china = "Ancient China";
+THEME_LABELS.tajmahal = "Taj Mahal"; THEME_LABELS.hawamahal = "Hawa Mahal"; THEME_LABELS.switzerland = "Greenery Switzerland";
 
 let currentTheme = localStorage.getItem("rex_theme") || "indigo";
 if (!THEME_LABELS[currentTheme]) currentTheme = "indigo"; // guard against a theme that was removed
@@ -914,12 +970,31 @@ function spawnParticles(themeId, w, h) {
   if (themeId === "china") {
     const arr = [];
     arr.push({ type: "crane", x: -160, y: h * 0.28, speed: rnd(0.45, 0.65) * (w / 1000), flap: 0, scale: Math.max(0.7, Math.min(1.2, h / 700)) });
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {
       arr.push({ type: "lantern", x: rnd(0, w), y: rnd(h * 0.5, h + 40), vy: rnd(-0.5, -0.25), sway: rnd(0, 6.28), scale: rnd(0.6, 1.15) });
     }
     for (let i = 0; i < 3; i++) {
       arr.push({ type: "mist", x: rnd(0, w), y: h * (0.5 + i * 0.1), w: rnd(260, 460), vx: rnd(0.05, 0.14) * (i % 2 === 0 ? 1 : -1), o: rnd(0.05, 0.12) });
     }
+    return arr;
+  }
+  if (themeId === "tajmahal") {
+    const arr = [];
+    for (let i = 0; i < 2; i++) arr.push({ type: "pigeon", x: rnd(0, w), y: rnd(h * 0.2, h * 0.4), speed: rnd(0.4, 0.7) * (w / 1000), flap: rnd(0, 6.28), scale: rnd(0.7, 1) });
+    for (let i = 0; i < 40; i++) arr.push({ type: "petal2", x: rnd(0, w), y: rnd(-20, h), vy: rnd(0.3, 0.9), vx: rnd(-0.3, 0.3), rot: rnd(0, 6.28), vr: rnd(-0.02, 0.02), scale: rnd(0.6, 1.1), o: rnd(0.5, 0.9) });
+    return arr;
+  }
+  if (themeId === "hawamahal") {
+    const arr = [];
+    for (let i = 0; i < 5; i++) arr.push({ type: "pigeon", x: rnd(0, w), y: rnd(h * 0.25, h * 0.55), speed: rnd(0.5, 0.85) * (w / 1000), flap: rnd(0, 6.28), scale: rnd(0.6, 0.95) });
+    for (let i = 0; i < 50; i++) arr.push({ type: "dust", x: rnd(0, w), y: rnd(h * 0.55, h), r: rnd(0.5, 1.8), vx: rnd(0.1, 0.4), vy: rnd(-0.05, 0.05), o: rnd(0.1, 0.35) });
+    return arr;
+  }
+  if (themeId === "switzerland") {
+    const arr = [];
+    arr.push({ type: "eagle", x: -140, y: h * 0.22, speed: rnd(0.4, 0.6) * (w / 1000), flap: 0, scale: Math.max(0.7, Math.min(1.2, h / 700)) });
+    for (let i = 0; i < 4; i++) arr.push({ type: "cloud", x: rnd(0, w), y: rnd(h * 0.08, h * 0.28), w: rnd(140, 260), vx: rnd(0.06, 0.16), o: rnd(0.5, 0.85) });
+    for (let i = 0; i < 40; i++) arr.push({ type: "pollen", x: rnd(0, w), y: rnd(h * 0.55, h), vy: rnd(-0.3, -0.1), vx: rnd(-0.2, 0.2), r: rnd(0.6, 1.6), o: rnd(0.3, 0.7) });
     return arr;
   }
   const cfg = {
@@ -1061,8 +1136,56 @@ function drawParticle(ctx, themeId, p, w, h, t) {
       }
       break;
     }
+    case "tajmahal": {
+      if (p.type === "pigeon") { p.x += p.speed; p.flap += 0.17; if (p.x > w + 40) p.x = -40; drawPigeon(ctx, p.x, p.y + Math.sin(p.flap * 0.3) * 5, p.scale, p.flap); break; }
+      if (p.type === "petal2") {
+        p.rot += p.vr; p.y += p.vy; p.x += p.vx + Math.sin(p.rot) * 0.4;
+        if (p.y > h + 10) { p.y = -10; p.x = rnd(0, w); }
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(p.scale, p.scale);
+        ctx.globalAlpha = p.o; ctx.fillStyle = "#e89ea8";
+        ctx.beginPath(); ctx.ellipse(0, 0, 4, 2.2, 0, 0, 6.283); ctx.fill(); ctx.restore(); break;
+      }
+      break;
+    }
+    case "hawamahal": {
+      if (p.type === "pigeon") { p.x += p.speed; p.flap += 0.2; if (p.x > w + 40) p.x = -40; drawPigeon(ctx, p.x, p.y + Math.sin(p.flap * 0.3) * 6, p.scale, p.flap); break; }
+      if (p.type === "dust") {
+        p.x += p.vx; p.y += p.vy; if (p.x > w + 5) p.x = -5;
+        ctx.globalAlpha = p.o; ctx.fillStyle = "#f5c26b"; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); break;
+      }
+      break;
+    }
+    case "switzerland": {
+      if (p.type === "eagle") { p.x += p.speed; p.flap += 0.1; if (p.x > w + 140) p.x = -140; drawEagle(ctx, p.x, p.y + Math.sin(p.flap * 0.2) * 8, p.scale); break; }
+      if (p.type === "cloud") {
+        p.x += p.vx; if (p.x > w + p.w) p.x = -p.w;
+        ctx.globalAlpha = p.o; ctx.fillStyle = "#ffffff";
+        ctx.beginPath(); ctx.ellipse(p.x, 0, p.w * 0.5, p.w * 0.18, 0, 0, 6.283); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(p.x + p.w * 0.22, -p.w * 0.07, p.w * 0.32, p.w * 0.14, 0, 0, 6.283); ctx.fill();
+        break;
+      }
+      if (p.type === "pollen") {
+        p.y += p.vy; p.x += p.vx; if (p.y < -10) { p.y = h + 10; p.x = rnd(0, w); }
+        ctx.globalAlpha = p.o; ctx.fillStyle = "#eaffb8"; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); break;
+      }
+      break;
+    }
   }
   ctx.globalAlpha = 1;
+}
+
+function drawPigeon(ctx, x, y, scale, flap) {
+  const wing = Math.sin(flap) * 6;
+  ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+  ctx.strokeStyle = "rgba(235,235,238,0.85)"; ctx.lineWidth = 2; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(-9, wing); ctx.quadraticCurveTo(-3, -3, 0, 0); ctx.quadraticCurveTo(3, -3, 9, wing); ctx.stroke();
+  ctx.restore();
+}
+function drawEagle(ctx, x, y, scale) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+  ctx.strokeStyle = "rgba(30,26,22,0.85)"; ctx.lineWidth = 2.5; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(-30, -4); ctx.quadraticCurveTo(-12, 6, 0, 0); ctx.quadraticCurveTo(12, 6, 30, -4); ctx.stroke();
+  ctx.restore();
 }
 
 /* ---- Ancient Egypt: static-per-frame scene (sky, sun, pyramids, dunes) ---- */
@@ -1248,6 +1371,101 @@ function drawLantern(ctx, x, y, scale) {
   ctx.restore();
 }
 
+/* ---- Taj Mahal: white marble mausoleum, dome + minarets, reflecting pool ---- */
+function drawTajMahalScene(ctx, w, h) {
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, "#2a2540"); sky.addColorStop(0.4, "#7a5a72"); sky.addColorStop(0.68, "#e8b0a0"); sky.addColorStop(0.8, "#fbe4cf");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h * 0.82);
+
+  const cx = w * 0.5, base = h * 0.72, domeR = h * 0.11;
+  // platform
+  ctx.fillStyle = "#d8cfc4"; ctx.fillRect(cx - w * 0.16, base, w * 0.32, h * 0.05);
+  // main building block
+  ctx.fillStyle = "#efe6da"; ctx.fillRect(cx - w * 0.11, base - h * 0.16, w * 0.22, h * 0.16);
+  ctx.fillStyle = "#e3d6c8"; ctx.fillRect(cx - w * 0.11, base - h * 0.02, w * 0.22, h * 0.02);
+  // central onion dome
+  ctx.fillStyle = "#f4ede0";
+  ctx.beginPath(); ctx.moveTo(cx - domeR, base - h * 0.16);
+  ctx.quadraticCurveTo(cx - domeR * 1.15, base - h * 0.16 - domeR * 1.3, cx, base - h * 0.16 - domeR * 1.7);
+  ctx.quadraticCurveTo(cx + domeR * 1.15, base - h * 0.16 - domeR * 1.3, cx + domeR, base - h * 0.16);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = "#d8cba8"; ctx.fillRect(cx - 2, base - h * 0.16 - domeR * 1.75, 4, 14);
+  // 4 minarets
+  [-1, 1].forEach(side => {
+    [1, 1.9].forEach(mult => {
+      const mx = cx + side * w * 0.16 * mult;
+      ctx.fillStyle = "#efe6da"; ctx.fillRect(mx - 5, base - h * 0.24, 10, h * 0.24);
+      ctx.fillStyle = "#f4ede0"; ctx.beginPath(); ctx.arc(mx, base - h * 0.24, 6, Math.PI, 0); ctx.fill();
+    });
+  });
+  // reflecting pool
+  const pool = ctx.createLinearGradient(0, base + h * 0.05, 0, h);
+  pool.addColorStop(0, "#8fa7bd"); pool.addColorStop(1, "#3c5064");
+  ctx.fillStyle = pool; ctx.fillRect(0, base + h * 0.05, w, h * 0.23);
+  ctx.globalAlpha = 0.25; ctx.fillStyle = "#f4ede0";
+  ctx.beginPath(); ctx.moveTo(cx - domeR * 0.8, base + h * 0.05); ctx.lineTo(cx + domeR * 0.8, base + h * 0.05); ctx.lineTo(cx + domeR * 1.6, h); ctx.lineTo(cx - domeR * 1.6, h); ctx.closePath(); ctx.fill();
+  ctx.globalAlpha = 1;
+}
+
+/* ---- Hawa Mahal: pink honeycomb palace facade, Jaipur sky ---- */
+function drawHawaMahalScene(ctx, w, h) {
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, "#7fb8e0"); sky.addColorStop(0.55, "#f0c48a"); sky.addColorStop(0.75, "#f7dcb0");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h * 0.8);
+
+  const left = w * 0.18, right = w * 0.82, top = h * 0.18, base = h * 0.78;
+  ctx.fillStyle = "#d97a86"; ctx.fillRect(left, top, right - left, base - top);
+  ctx.fillStyle = "#c96578"; ctx.fillRect(left, top, right - left, h * 0.03);
+  // rows of small jharokha windows (the honeycomb facade signature)
+  const cols = 10, rows = 6, cellW = (right - left) / cols, cellH = (base - top - 20) / rows;
+  ctx.fillStyle = "#f2c9c2";
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const wx = left + c * cellW + cellW * 0.15, wy = top + 20 + r * cellH + cellH * 0.15;
+      const ww = cellW * 0.7, wh_ = cellH * 0.7;
+      ctx.beginPath(); ctx.moveTo(wx, wy + wh_); ctx.lineTo(wx, wy + wh_ * 0.35); ctx.quadraticCurveTo(wx, wy, wx + ww / 2, wy);
+      ctx.quadraticCurveTo(wx + ww, wy, wx + ww, wy + wh_ * 0.35); ctx.lineTo(wx + ww, wy + wh_); ctx.closePath(); ctx.fill();
+    }
+  }
+  // domed rooftop chhatris
+  for (let i = 0; i < 5; i++) {
+    const dx = left + (right - left) * (i / 4);
+    ctx.fillStyle = "#c96578"; ctx.beginPath(); ctx.arc(dx, top, 12, Math.PI, 0); ctx.fill();
+    ctx.fillRect(dx - 3, top - 4, 6, 10);
+  }
+}
+
+/* ---- Greenery Switzerland: alpine meadow, snow peaks, drifting clouds ---- */
+function drawSwitzerlandScene(ctx, w, h) {
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, "#7fc4f0"); sky.addColorStop(0.55, "#bfe6ff"); sky.addColorStop(0.68, "#e8f7ff");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h * 0.6);
+
+  // snow-capped mountain range
+  ctx.fillStyle = "#7c8ca3"; ctx.beginPath(); ctx.moveTo(0, h * 0.55);
+  ctx.lineTo(w * 0.12, h * 0.32); ctx.lineTo(w * 0.24, h * 0.5); ctx.lineTo(w * 0.4, h * 0.24);
+  ctx.lineTo(w * 0.55, h * 0.48); ctx.lineTo(w * 0.72, h * 0.28); ctx.lineTo(w * 0.88, h * 0.5);
+  ctx.lineTo(w, h * 0.38); ctx.lineTo(w, h * 0.6); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = "#ffffff";
+  [[0.12,0.32],[0.4,0.24],[0.72,0.28]].forEach(([fx, fy]) => {
+    ctx.beginPath(); ctx.moveTo(w * fx - 22, h * fy + 20); ctx.lineTo(w * fx, h * fy); ctx.lineTo(w * fx + 22, h * fy + 20); ctx.lineTo(w * fx + 10, h * fy + 16); ctx.lineTo(w * fx, h * fy + 26); ctx.lineTo(w * fx - 10, h * fy + 16); ctx.closePath(); ctx.fill();
+  });
+
+  // green rolling meadow
+  const meadow = ctx.createLinearGradient(0, h * 0.55, 0, h);
+  meadow.addColorStop(0, "#5fae5a"); meadow.addColorStop(1, "#2c6b3a");
+  ctx.fillStyle = meadow; ctx.beginPath(); ctx.moveTo(0, h * 0.6);
+  for (let x = 0; x <= w; x += 40) ctx.lineTo(x, h * 0.58 + Math.sin(x * 0.006) * h * 0.02);
+  ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fill();
+
+  // a few pine trees for foreground depth
+  ctx.fillStyle = "#1f4a2a";
+  [0.08, 0.2, 0.86, 0.94].forEach(fx => {
+    const tx = w * fx, ty = h * (0.72 + (fx > 0.5 ? 0.05 : 0));
+    for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.moveTo(tx - 14 + i * 3, ty - i * 12); ctx.lineTo(tx, ty - 22 - i * 12); ctx.lineTo(tx + 14 - i * 3, ty - i * 12); ctx.closePath(); ctx.fill(); }
+  });
+}
+
 function startCanvasTheme(themeId) {
   const canvas = $("#themeCanvas");
   const ctx = canvas.getContext("2d");
@@ -1275,6 +1493,9 @@ function startCanvasTheme(themeId) {
     if (themeId === "egypt") { drawEgyptScene(ctx, canvasEngine.w, canvasEngine.h); }
     else if (themeId === "greece") { drawGreeceScene(ctx, canvasEngine.w, canvasEngine.h); }
     else if (themeId === "china") { drawChinaScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else if (themeId === "tajmahal") { drawTajMahalScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else if (themeId === "hawamahal") { drawHawaMahalScene(ctx, canvasEngine.w, canvasEngine.h); }
+    else if (themeId === "switzerland") { drawSwitzerlandScene(ctx, canvasEngine.w, canvasEngine.h); }
     else {
       ctx.clearRect(0, 0, canvasEngine.w, canvasEngine.h);
       if (themeId === "matrix") { ctx.fillStyle = "rgba(5,6,10,0.12)"; ctx.fillRect(0, 0, canvasEngine.w, canvasEngine.h); }
@@ -1490,11 +1711,7 @@ function renderMarketplace() {
         <div class="shop-cat">${esc(shop.category || 'General')}</div>
         <div class="rating-summary">${starsHtml(avg, shop.ratingCount || 0)}</div>
         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">${shopBadgesHtml(shop)}</div>
-        <div class="shop-rates">
-          <div class="rate-pill">Basic<b>${money(shop.rates && shop.rates.low)}</b></div>
-          <div class="rate-pill">Std<b>${money(shop.rates && shop.rates.medium)}</b></div>
-          <div class="rate-pill">Prem<b>${money(shop.rates && shop.rates.high)}</b></div>
-        </div>
+        <div class="text-dim" style="font-size:11.5px; line-height:1.6; margin-bottom:14px;">${modePricingSummary(shop.modes)}</div>
         <div class="row">
           <button class="btn btn-primary hire-btn" data-shop-id="${shop.id}">Hire</button>
           <button class="btn btn-ghost reviews-btn" data-shop-id="${shop.id}">Reviews</button>
@@ -1677,7 +1894,7 @@ enhanceSelect($("#shopCategoryFilter"));
 /* ========================= 9. PROFILE VIEW (incl. Warnings) ========================= */
 function renderProfileView() {
   $("#profileNameInput").value = (State.profile && State.profile.displayName) || "";
-  $("#profileHandleInput").value = (State.profile && State.profile.userId) || "";
+  $("#profileHandleInput").value = ((State.profile && State.profile.userId) || "").replace(/^@/, "");
   $("#profileAvatarPreview").src = (State.profile && State.profile.photoURL) || "https://api.dicebear.com/7.x/initials/svg?seed=" + encodeURIComponent((State.profile && State.profile.displayName) || "U");
   renderThemeGrid();
   renderMyShops();
@@ -1708,26 +1925,58 @@ $("#profileAvatarInput").addEventListener("change", async e => {
 $("#saveProfileBtn").addEventListener("click", async () => {
   if (!State.user) return;
   const name = $("#profileNameInput").value.trim();
-  let handle = $("#profileHandleInput").value.trim();
+  const rawHandle = $("#profileHandleInput").value.trim();
   if (!name) return showToast("Display name can't be empty.", "err");
-  if (!handle.startsWith("@")) handle = "@" + handle;
-  handle = handle.toLowerCase().replace(/\s+/g, "");
+  if (!rawHandle) return showToast("Handle can't be empty.", "err");
+  // strip anything that isn't a letter, number, or underscore — no symbols allowed
+  const cleaned = rawHandle.toLowerCase().replace(/[^a-z0-9_]/g, "");
+  if (!cleaned) return showToast("Handle needs at least one letter or number.", "err");
+  if (cleaned !== rawHandle.toLowerCase().replace(/^@+/, "")) {
+    return showToast("Handles can only contain letters, numbers, and underscores — no spaces or symbols.", "err");
+  }
+  const handle = "@" + cleaned;
   const pendingPhoto = $("#profileAvatarPreview").dataset.pending;
   const update = { displayName: name, userId: handle };
   if (pendingPhoto) update.photoURL = pendingPhoto;
   const btn = $("#saveProfileBtn"); btn.disabled = true; btn.textContent = "Saving…";
   try {
+    // uniqueness check — this handle must not already belong to someone else
+    const dupSnap = await db.collection("users").where("userId", "==", handle).get();
+    const takenByOther = dupSnap.docs.some(d => d.id !== State.user.uid);
+    if (takenByOther) {
+      showToast(`The handle ${handle} is already taken — please choose another.`, "err");
+      return;
+    }
+  } catch (e) {
+    console.error("handle uniqueness check failed:", e);
+    showToast("Could not verify handle availability — please try again.", "err");
+    btn.disabled = false; btn.textContent = "Save Changes";
+    return;
+  }
+  try {
     await db.collection("users").doc(State.user.uid).update(update);
-    // Keep every shop this user owns in sync — this is what was going stale before.
-    if (State.myShops && State.myShops.length > 0) {
+  } catch (e) {
+    console.error("profile update failed:", e);
+    showToast("Failed to save profile.", "err");
+    btn.disabled = false; btn.textContent = "Save Changes";
+    return;
+  }
+  State.profile = { ...(State.profile || {}), ...update };
+  updateTopAvatar(); showToast("Profile updated.", "ok");
+  // Keep every shop this user owns in sync — this is what was going stale before.
+  // Reported separately from the profile save above so a shop-sync failure never
+  // looks like the whole save failed.
+  if (State.myShops && State.myShops.length > 0) {
+    try {
       const batch = db.batch();
       State.myShops.forEach(s => batch.update(db.collection("shops").doc(s.id), { ownerHandle: handle }));
       await batch.commit();
+    } catch (e) {
+      console.error("shop handle sync failed:", e);
+      showToast("Profile saved, but your shop listing(s) may still show the old handle — check Firestore rules allow updating your own shops.", "err");
     }
-    State.profile = { ...(State.profile || {}), ...update };
-    updateTopAvatar(); showToast("Profile updated.", "ok");
-  } catch (e) { console.error(e); showToast("Failed to save profile.", "err"); }
-  finally { btn.disabled = false; btn.textContent = "Save Changes"; }
+  }
+  btn.disabled = false; btn.textContent = "Save Changes";
 });
 
 function renderWarningsPanel() {
@@ -1854,16 +2103,47 @@ $("#sendWarningSubmitBtn").addEventListener("click", async () => {
 function openHireTerminal(shopId) {
   const shop = State.shops.find(s => s.id === shopId);
   if (!shop) return showToast("Shop not found.", "err");
-  State.hireContext = { shop };
+  if (!shop.modes) return showToast("This shop hasn't set up pricing yet.", "err");
+  const availableModes = ["short", "video", "project"].filter(k => shop.modes[k] && shop.modes[k].on);
+  if (availableModes.length === 0) return showToast("This shop has no active pricing modes.", "err");
+  State.hireContext = { shop, availableModes };
+  State.selectedMode = availableModes[0];
   State.selectedTier = "low"; State.selectedAR = "16:9";
-  $("#tierLowPrice").textContent = money(shop.rates && shop.rates.low);
-  $("#tierMedPrice").textContent = money(shop.rates && shop.rates.medium);
-  $("#tierHighPrice").textContent = money(shop.rates && shop.rates.high);
   $all(".tier-opt").forEach(o => o.classList.toggle("active", o.dataset.tier === "low"));
   $all(".aspect-btn").forEach(o => o.classList.toggle("active", o.dataset.ar === "16:9"));
   $("#hireDuration").value = 1; $("#hireQty").value = 1;
   $("#hireAssetUrl").value = ""; $("#hireInstructions").value = "";
-  recalcHirePrice(); drawAspectPreview("16:9"); openModal("hireOverlay");
+  renderHireModeButtons();
+  applyHireMode();
+  drawAspectPreview("16:9"); openModal("hireOverlay");
+}
+function renderHireModeButtons() {
+  const { availableModes } = State.hireContext;
+  $("#hireModeBtns").innerHTML = availableModes.map(m => `<button class="btn btn-ghost btn-sm hire-mode-btn${m === State.selectedMode ? ' active' : ''}" data-mode="${m}">${PRICING_MODES[m].label}</button>`).join("");
+  $all(".hire-mode-btn").forEach(btn => btn.addEventListener("click", () => {
+    State.selectedMode = btn.dataset.mode;
+    $all(".hire-mode-btn").forEach(b => b.classList.toggle("active", b === btn));
+    applyHireMode();
+  }));
+}
+function applyHireMode() {
+  const shop = State.hireContext.shop;
+  const modeData = shop.modes[State.selectedMode] || { low: 0, medium: 0, high: 0 };
+  $("#tierLowPrice").textContent = money(modeData.low);
+  $("#tierMedPrice").textContent = money(modeData.medium);
+  $("#tierHighPrice").textContent = money(modeData.high);
+  if (State.selectedMode === "short") {
+    $("#hireDurationRow").style.display = "flex";
+    $("#hireDurationLabel").textContent = "Length (seconds)";
+    $("#hireDuration").value = 10; $("#hireDuration").step = 1;
+  } else if (State.selectedMode === "video") {
+    $("#hireDurationRow").style.display = "flex";
+    $("#hireDurationLabel").textContent = "Length (minutes)";
+    $("#hireDuration").value = 1; $("#hireDuration").step = 1;
+  } else {
+    $("#hireDurationRow").style.display = "none"; // per-project: no duration, just quantity
+  }
+  recalcHirePrice();
 }
 $all(".tier-opt").forEach(opt => opt.addEventListener("click", () => {
   $all(".tier-opt").forEach(o => o.classList.remove("active")); opt.classList.add("active");
@@ -1875,13 +2155,27 @@ $all(".aspect-btn").forEach(btn => btn.addEventListener("click", () => {
 }));
 $("#hireDuration").addEventListener("input", recalcHirePrice);
 $("#hireQty").addEventListener("input", recalcHirePrice);
-function recalcHirePrice() {
-  const shop = State.hireContext && State.hireContext.shop; if (!shop) return;
+
+/* Short-Form bills in 10-second blocks (rounded up); Video bills per minute; Project is flat per unit. */
+function computeHirePrice() {
+  const shop = State.hireContext && State.hireContext.shop; if (!shop) return 0;
   const tierKey = { low: "low", med: "medium", high: "high" }[State.selectedTier];
-  const base = Number((shop.rates || {})[tierKey]) || 0;
-  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
+  const rate = Number((shop.modes[State.selectedMode] || {})[tierKey]) || 0;
   const qty = Math.max(1, Number($("#hireQty").value) || 1);
-  $("#hireTotalPrice").textContent = money(base * dur * qty);
+  if (State.selectedMode === "short") {
+    const seconds = Math.max(1, Number($("#hireDuration").value) || 1);
+    const blocks = Math.ceil(seconds / 10);
+    return rate * blocks * qty;
+  }
+  if (State.selectedMode === "video") {
+    const minutes = Math.max(1, Number($("#hireDuration").value) || 1);
+    return rate * minutes * qty;
+  }
+  return rate * qty; // project
+}
+function recalcHirePrice() {
+  if (!State.hireContext) return;
+  $("#hireTotalPrice").textContent = money(computeHirePrice());
 }
 function drawAspectPreview(ar) {
   const canvas = $("#aspectCanvas"); const wrap = canvas.parentElement;
@@ -1907,11 +2201,7 @@ $("#hireSubmitBtn").addEventListener("click", async () => {
   if (!State.user || !State.hireContext) return;
   const shop = State.hireContext.shop;
   if (shop.ownerUid === State.user.uid) return showToast("You can't hire your own shop.", "err");
-  const tierKey = { low: "low", med: "medium", high: "high" }[State.selectedTier];
-  const base = Number((shop.rates || {})[tierKey]) || 0;
-  const dur = Math.max(1, Number($("#hireDuration").value) || 1);
-  const qty = Math.max(1, Number($("#hireQty").value) || 1);
-  const price = base * dur * qty;
+  const price = computeHirePrice();
   const assetUrl = $("#hireAssetUrl").value.trim();
   const instructions = $("#hireInstructions").value.trim();
   if (!assetUrl) return showToast("Please add a footage/asset link.", "err");
@@ -1919,12 +2209,16 @@ $("#hireSubmitBtn").addEventListener("click", async () => {
   const btn = $("#hireSubmitBtn"); btn.disabled = true; btn.textContent = "Sending…";
   try {
     const orderId = genOrderId();
+    const durationVal = State.selectedMode === "project" ? null : Math.max(1, Number($("#hireDuration").value) || 1);
+    const qty = Math.max(1, Number($("#hireQty").value) || 1);
     await db.collection("orders").add({
       orderId, shopId: shop.id, shopName: shop.name || "",
       clientUid: State.user.uid, clientName: (State.profile && State.profile.displayName) || State.user.displayName || "",
       clientEmail: State.user.email || "",
-      editorUid: shop.ownerUid, editorHandle: shop.ownerHandle || "",
-      tier: State.selectedTier, aspectRatio: State.selectedAR, duration: dur, quantity: qty, price,
+      editorUid: shop.ownerUid, editorHandle: shop.ownerHandle || "", editorEmail: shop.ownerEmail || "",
+      mode: State.selectedMode, tier: State.selectedTier, aspectRatio: State.selectedAR,
+      duration: durationVal, durationUnit: State.selectedMode === "short" ? "seconds" : State.selectedMode === "video" ? "minutes" : null,
+      quantity: qty, price,
       footageLink: assetUrl, instructions, workProgress: 0, status: "wait_editor",
       createdAtMs: Date.now(), createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
@@ -1957,6 +2251,15 @@ const STATUS_META = {
 };
 function statusBadge(status) { const m = STATUS_META[status] || { label: status, badge: "badge-wait" }; return `<span class="badge ${m.badge}">${esc(m.label)}</span>`; }
 function tierName(t) { return t === 'low' ? 'Basic' : t === 'med' ? 'Standard' : 'Premium'; }
+function orderMetaLine(o) {
+  const modeLabel = o.mode ? (PRICING_MODES[o.mode] ? PRICING_MODES[o.mode].label : o.mode) : '';
+  const parts = [esc(tierName(o.tier)) + ' tier'];
+  if (modeLabel) parts.push(esc(modeLabel));
+  if (o.aspectRatio) parts.push(esc(o.aspectRatio));
+  if (o.mode === 'project') parts.push(`× ${esc(o.quantity || 1)}`);
+  else if (o.duration) parts.push(`${esc(o.duration)} ${esc(o.durationUnit || 'min')} × ${esc(o.quantity || 1)}`);
+  return parts.join(' · ');
+}
 
 /* ---- auto-advance expired sign windows, checked on load + every 30s while app is open ---- */
 function autoAdvanceExpiredSigns() {
@@ -1980,7 +2283,7 @@ function renderPlacedOrders() {
         <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800; font-size:15px; margin-top:4px;">${esc(o.shopName)}</div></div>
         <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
       </div>
-      <div class="order-meta">${esc(tierName(o.tier))} tier · ${esc(o.aspectRatio || '')} · ${esc(o.duration || 1)} min × ${esc(o.quantity || 1)}</div>
+      <div class="order-meta">${orderMetaLine(o)}</div>
 
       ${o.status === 'payment_verified' ? `<div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div><div class="text-dim" style="font-size:11.5px;">${o.workProgress || 0}% complete</div>` : ''}
 
@@ -2158,7 +2461,7 @@ function renderEditorOrders() {
         <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800; font-size:15px; margin-top:4px;">${esc(o.clientName || 'Client')}</div></div>
         <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
       </div>
-      <div class="order-meta">${esc(tierName(o.tier))} tier · ${esc(o.aspectRatio || '')} · ${esc(o.duration || 1)} min × ${esc(o.quantity || 1)}</div>
+      <div class="order-meta">${orderMetaLine(o)}</div>
 
       ${o.status === 'payment_verified' ? `<div class="progress-track"><div class="progress-fill" style="width:${o.workProgress || 0}%"></div></div><div class="text-dim" style="font-size:11.5px;">${o.workProgress || 0}% complete</div>` : ''}
       ${o.status === 'delivery_processing' ? `<div class="video-link-box">🎬 Client is reviewing your watermarked preview.</div>` : ''}
@@ -2353,6 +2656,14 @@ function renderAdminReview() {
   renderAdminApps(); renderAdminEscrowQueue(); renderAdminReports(); renderAdminShops(); renderAdminUserReports();
 }
 
+function modePricingSummary(modesObj) {
+  if (!modesObj) return `<span class="text-dim">No pricing set</span>`;
+  const lines = [];
+  if (modesObj.short && modesObj.short.on) lines.push(`Short-Form: ${money(modesObj.short.low)}–${money(modesObj.short.high)} /10s`);
+  if (modesObj.video && modesObj.video.on) lines.push(`Video Editing: ${money(modesObj.video.low)}–${money(modesObj.video.high)} /min`);
+  if (modesObj.project && modesObj.project.on) lines.push(`Thumbnail/Project: ${money(modesObj.project.low)}–${money(modesObj.project.high)} /project`);
+  return lines.length ? lines.join("<br>") : `<span class="text-dim">No pricing set</span>`;
+}
 function renderAdminApps() {
   const appsPane = $("#adminAppsPane");
   const apps = State.pendingApplications || [];
@@ -2365,7 +2676,7 @@ function renderAdminApps() {
       </div>
       <div class="text-dim" style="font-size:12.5px; margin-bottom:6px;">By ${esc(a.applicantHandle || a.applicantUid)}</div>
       <div class="text-dim" style="font-size:12.5px; margin-bottom:6px; word-break:break-all;">${esc(a.portfolio || '')}</div>
-      <div class="text-dim" style="font-size:12.5px; margin-bottom:14px;">Basic ${money(a.rates && a.rates.low)} · Std ${money(a.rates && a.rates.medium)} · Prem ${money(a.rates && a.rates.high)}</div>
+      <div class="text-dim" style="font-size:12.5px; margin-bottom:14px; line-height:1.6;">${modePricingSummary(a.modes)}</div>
       <div class="row"><button class="btn btn-primary btn-sm" data-approve="${a.id}">Approve</button><button class="btn btn-danger btn-sm" data-decline="${a.id}">Reject</button></div>
     </div>`).join("") + `</div>`;
   $all("[data-approve]", appsPane).forEach(b => b.addEventListener("click", () => approveApplication(b.dataset.approve)));
@@ -2375,7 +2686,7 @@ async function approveApplication(appId) {
   const app = State.pendingApplications.find(a => a.id === appId); if (!app) return;
   try {
     await db.collection("shops").add({
-      name: app.name, category: app.category, rates: app.rates, logoUrl: app.logoUrl || "",
+      name: app.name, category: app.category, modes: app.modes || null, logoUrl: app.logoUrl || "",
       ownerUid: app.applicantUid, ownerHandle: app.applicantHandle || "", ownerEmail: app.applicantEmail || "",
       portfolio: app.portfolio || "", createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
@@ -2399,14 +2710,21 @@ function renderAdminEscrowQueue() {
         <div><div class="order-id">${esc(o.orderId)}</div><div style="font-weight:800;margin-top:4px;">${esc(o.shopName)}</div></div>
         <div style="text-align:right;"><div class="order-price">${money(o.price)}</div>${statusBadge(o.status)}</div>
       </div>
+      ${o.paymentProof ? `<div class="video-link-box">💳 Proof: ${esc(o.paymentProof)}</div>` : ''}
       <div class="order-actions">
-        ${o.status === 'pending_admin' ? `<button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button>` : ''}
-        ${o.status === 'payment_review' ? `<button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button>` : ''}
+        ${o.status === 'pending_admin' ? `
+          <button class="btn btn-primary btn-sm" data-admin-approve-order="${o.id}">Approve & Send QR</button>
+          <button class="btn btn-danger btn-sm" data-admin-reject-order="${o.id}">Reject with Reason</button>` : ''}
+        ${o.status === 'payment_review' ? `
+          <button class="btn btn-primary btn-sm" data-admin-verify="${o.id}">Verify Payment</button>
+          <button class="btn btn-danger btn-sm" data-admin-reject-payment="${o.id}">Reject with Reason</button>` : ''}
         <button class="btn btn-ghost btn-sm" data-view-order-a="${o.id}">Details</button>
       </div>
     </div>`).join("");
   $all("[data-admin-approve-order]", ordersPane).forEach(b => b.addEventListener("click", () => adminApproveOrder(b.dataset.adminApproveOrder)));
   $all("[data-admin-verify]", ordersPane).forEach(b => b.addEventListener("click", () => adminVerifyPayment(b.dataset.adminVerify)));
+  $all("[data-admin-reject-order]", ordersPane).forEach(b => b.addEventListener("click", () => openAdminRejectOrder(b.dataset.adminRejectOrder, "pending_admin")));
+  $all("[data-admin-reject-payment]", ordersPane).forEach(b => b.addEventListener("click", () => openAdminRejectOrder(b.dataset.adminRejectPayment, "payment_review")));
   $all("[data-view-order-a]", ordersPane).forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.viewOrderA, "admin")));
 }
 async function adminApproveOrder(orderId) {
@@ -2429,6 +2747,39 @@ async function adminVerifyPayment(orderId) {
       message: `Escrow for ${order.orderId} is confirmed. You can start work.`, amount: order.price });
   } catch (e) { console.error(e); showToast("Failed to verify payment.", "err"); }
 }
+
+/* ---- Admin: reject at pending_admin (no payment yet) or payment_review (proof looked bad) ---- */
+function openAdminRejectOrder(orderId, stage) {
+  const order = State.allOrdersAdmin.find(o => o.id === orderId); if (!order) return;
+  State.activeOrderForAdminReject = { order, stage };
+  $("#adminRejectOrderReason").value = "";
+  openModal("adminRejectOrderOverlay");
+}
+$("#adminRejectOrderSubmitBtn").addEventListener("click", async () => {
+  const ctx = State.activeOrderForAdminReject; if (!ctx) return;
+  const reason = $("#adminRejectOrderReason").value.trim();
+  if (!reason) return showToast("Please add a reason.", "err");
+  const { order, stage } = ctx;
+  const btn = $("#adminRejectOrderSubmitBtn"); btn.disabled = true; btn.textContent = "Rejecting…";
+  try {
+    if (stage === "pending_admin") {
+      // no money has moved yet — this simply cancels the order
+      await db.collection("orders").doc(order.id).update({ status: "rejected", adminRejectReason: reason });
+      notifyEmail({ to: order.clientEmail || "", toName: order.clientName || "Client", orderId: order.orderId, subject: `Order rejected — ${order.orderId}`,
+        headline: "Admin rejected this order before payment", message: reason, amount: order.price });
+      notifyEmail({ to: order.editorEmail || "", toName: order.editorHandle || "Editor", orderId: order.orderId, subject: `Order rejected — ${order.orderId}`,
+        headline: "Admin rejected this order before payment", message: reason, amount: order.price });
+    } else {
+      // payment proof was submitted but looked invalid — route into the same refund pipeline
+      await db.collection("orders").doc(order.id).update({ status: "editor_rejected", adminRejectReason: reason });
+      notifyEmail({ to: order.clientEmail || "", toName: order.clientName || "Client", orderId: order.orderId, subject: `Payment proof rejected — ${order.orderId}`,
+        headline: "Your payment proof was rejected", message: reason, amount: order.price });
+    }
+    showToast("Order rejected.", "ok");
+    closeModal("adminRejectOrderOverlay");
+  } catch (e) { console.error(e); showToast("Failed to reject order.", "err"); }
+  finally { btn.disabled = false; btn.textContent = "Reject Order"; }
+});
 
 /* ---- Admin: Reports & Refunds tab ---- */
 function renderAdminReports() {
@@ -2587,6 +2938,11 @@ $("#refundProofSubmitBtn").addEventListener("click", async () => {
 
 /* ========================= 14. APPLY FOR EARN (2-step) ========================= */
 const RegState = { logoBase64: null };
+const PRICING_MODES = {
+  short:   { label: "Short-Form", unit: "per 10s", max: 30 },
+  video:   { label: "Video Editing", unit: "per minute", max: 70 },
+  project: { label: "Thumbnail/Project", unit: "per project", max: 100 },
+};
 $("#regLogoInput").addEventListener("change", async e => {
   const file = e.target.files && e.target.files[0]; if (!file) return;
   try { const base64 = await compressImageToBase64(file, 400); RegState.logoBase64 = base64; $("#regLogoPreview").src = base64; $("#regLogoPreview").classList.remove("hidden"); }
@@ -2600,22 +2956,51 @@ $("#regStep1Next").addEventListener("click", () => {
   switchView("viewRegisterStep2");
 });
 $("#regStep2Back").addEventListener("click", () => switchView("viewRegisterStep1"));
+
+/* toggle each mode's fields open/closed */
+["Short", "Video", "Project"].forEach(key => {
+  $(`#mode${key}On`).addEventListener("change", e => {
+    $(`#mode${key}Fields`).style.display = e.target.checked ? "flex" : "none";
+  });
+});
+
+function readMode(key, capKey) {
+  const on = $(`#mode${key}On`).checked;
+  if (!on) return { on: false, low: 0, medium: 0, high: 0 };
+  const low = Number($(`#mode${key}Low`).value), medium = Number($(`#mode${key}Med`).value), high = Number($(`#mode${key}High`).value);
+  return { on: true, low, medium, high, _cap: PRICING_MODES[capKey].max };
+}
+
 $("#regStep2Submit").addEventListener("click", async () => {
   if (!State.user) return;
-  const low = Number($("#regRateLow").value), med = Number($("#regRateMed").value), high = Number($("#regRateHigh").value);
-  if (!low || !med || !high) return showToast("All three pricing tiers are required.", "err");
+  const short = readMode("Short", "short"), video = readMode("Video", "video"), project = readMode("Project", "project");
+  if (!short.on && !video.on && !project.on) return showToast("Turn on at least one pricing mode.", "err");
+  for (const [key, m] of [["short", short], ["video", video], ["project", project]]) {
+    if (!m.on) continue;
+    if (!m.low || !m.medium || !m.high) return showToast(`Fill in all three ${PRICING_MODES[key].label} tiers, or turn that mode off.`, "err");
+    if (m.low > m._cap || m.medium > m._cap || m.high > m._cap) return showToast(`${PRICING_MODES[key].label} rates can't exceed ₹${m._cap} ${PRICING_MODES[key].unit}.`, "err");
+  }
   const btn = $("#regStep2Submit"); btn.disabled = true; btn.textContent = "Submitting…";
   try {
     await db.collection("shop_applications").add({
       name: $("#regShopName").value.trim(), category: $("#regCategory").value, portfolio: $("#regPortfolio").value.trim(),
-      logoUrl: RegState.logoBase64, rates: { low, medium: med, high },
+      logoUrl: RegState.logoBase64,
+      modes: {
+        short: { on: short.on, low: short.low, medium: short.medium, high: short.high },
+        video: { on: video.on, low: video.low, medium: video.medium, high: video.high },
+        project: { on: project.on, low: project.low, medium: project.medium, high: project.high },
+      },
       applicantUid: State.user.uid, applicantHandle: (State.profile && State.profile.userId) || "",
       applicantEmail: State.user.email || "",
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     showToast("Application submitted for review!", "ok");
-    $("#regShopName").value = ""; $("#regPortfolio").value = ""; $("#regRateLow").value = "";
-    $("#regRateMed").value = ""; $("#regRateHigh").value = ""; RegState.logoBase64 = null;
+    $("#regShopName").value = ""; $("#regPortfolio").value = "";
+    ["Short", "Video", "Project"].forEach(key => {
+      $(`#mode${key}On`).checked = false; $(`#mode${key}Fields`).style.display = "none";
+      $(`#mode${key}Low`).value = ""; $(`#mode${key}Med`).value = ""; $(`#mode${key}High`).value = "";
+    });
+    RegState.logoBase64 = null;
     $("#regLogoPreview").classList.add("hidden");
     switchView("viewShop");
   } catch (e) { console.error(e); showToast("Failed to submit application.", "err"); }
