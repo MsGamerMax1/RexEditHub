@@ -1694,6 +1694,12 @@ async function ensureUserDoc(user) {
       State.profile = data;
     } else {
       State.profile = snap.data();
+      // backfill: some older accounts (like the one that just broke search) never got
+      // a `uid` field written into their data, only the doc ID. Patch it silently.
+      if (!State.profile.uid) {
+        State.profile.uid = user.uid;
+        ref.update({ uid: user.uid }).catch(e => console.warn("uid backfill failed (non-fatal):", e));
+      }
     }
   } catch (e) {
     console.error("ensureUserDoc error:", e);
@@ -2121,7 +2127,8 @@ async function searchByHandle() {
       return;
     }
     const u = match.data();
-    const shopSnap = await db.collection("shops").where("ownerUid", "==", u.uid).limit(1).get();
+    const uid = match.id; // use the doc ID, not u.uid — some older records never got a `uid` field written into their data
+    const shopSnap = await db.collection("shops").where("ownerUid", "==", uid).limit(1).get();
     const hasShop = !shopSnap.empty;
     resultEl.innerHTML = `
       <div class="glass card" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
@@ -2131,8 +2138,8 @@ async function searchByHandle() {
           <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
         </div>
         ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
-        ${State.user && u.uid !== State.user.uid ? `<button class="btn btn-danger btn-sm" data-report-user="${u.uid}" data-report-name="${esc(u.displayName)}">Report</button>` : ''}
-        ${State.isAdmin && u.uid !== State.user.uid ? `<button class="btn btn-warn btn-sm" data-warn-user="${u.uid}" data-warn-name="${esc(u.displayName)}">Send Warning</button>` : ''}
+        ${State.user && uid !== State.user.uid ? `<button class="btn btn-danger btn-sm" data-report-user="${uid}" data-report-name="${esc(u.displayName)}">Report</button>` : ''}
+        ${State.isAdmin && uid !== State.user.uid ? `<button class="btn btn-warn btn-sm" data-warn-user="${uid}" data-warn-name="${esc(u.displayName)}">Send Warning</button>` : ''}
       </div>`;
     $all("[data-warn-user]", resultEl).forEach(btn => btn.addEventListener("click", () => openSendWarning(btn.dataset.warnUser, btn.dataset.warnName)));
     $all("[data-report-user]", resultEl).forEach(btn => btn.addEventListener("click", () => openUserReport(btn.dataset.reportUser, btn.dataset.reportName)));
