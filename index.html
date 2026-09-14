@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Rex Edit Hub — Escrow Marketplace</title>
+<title>Rex Edit Hub — Escrow Marketplace for Editors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
@@ -451,6 +451,11 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
             <div id="warningsList"></div>
             <div id="warningsEmpty" class="text-dim" style="font-size:13px;">No warnings on your account.</div>
           </div>
+          <div class="glass card mt16">
+            <div class="modal-title mb0" style="margin-bottom:14px;">Reports You've Filed</div>
+            <div id="myReportsList"></div>
+            <div id="myReportsEmpty" class="text-dim" style="font-size:13px;">You haven't reported anyone.</div>
+          </div>
         </div>
       </div>
     </section>
@@ -524,7 +529,11 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
           <label>Portfolio Link</label>
           <input id="regPortfolio" placeholder="https://…">
         </div>
-        <div class="field mb0">
+        <div class="field">
+          <label>Shop Description / Bio</label>
+          <textarea id="regDescription" rows="3" placeholder="Tell clients what makes your work stand out…"></textarea>
+        </div>
+        <div class="field">
           <label>Shop Logo</label>
           <div class="file-drop">
             <input type="file" id="regLogoInput" accept="image/*">
@@ -532,6 +541,15 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
             <div class="file-drop-text">Click or drag logo to upload</div>
           </div>
           <img id="regLogoPreview" class="upload-preview mt8 hidden" src="">
+        </div>
+        <div class="field mb0">
+          <label>Shop Banner (optional)</label>
+          <div class="file-drop">
+            <input type="file" id="regBannerInput" accept="image/*">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4l-4 4M12 4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+            <div class="file-drop-text">Click or drag a wide banner image</div>
+          </div>
+          <img id="regBannerPreview" class="upload-preview mt8 hidden" style="width:100%; height:70px; object-fit:cover;" src="">
         </div>
         <button class="btn btn-primary btn-block mt20" id="regStep1Next">Continue</button>
       </div>
@@ -594,7 +612,7 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
         <div class="glass card">
           <div class="modal-title" style="margin-bottom:10px;">💳 1. Payments &amp; Pricing</div>
           <ul style="padding-left:18px; font-size:13.5px; line-height:1.9; color:var(--text);">
-            <li>Always pay through our official system (<b>Rex Bank</b>).</li>
+            <li>Always pay through our official system (<span class="escrow-highlight" data-open-escrow-info="1">Rex Bank</span>).</li>
             <li>Do not pay outside the platform to avoid the 10% deduction fee. If you pay privately and get scammed, we cannot help or refund you.</li>
             <li>The price shown on the website is final. Editors cannot ask for extra hidden charges.</li>
           </ul>
@@ -834,6 +852,73 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
   </div>
 </div>
 
+<!-- EDIT SHOP (owner) -->
+<div class="overlay" id="editShopOverlay">
+  <div class="glass modal modal-wide">
+    <div class="modal-head"><div class="modal-title">Edit Shop</div><div class="modal-close" data-close="editShopOverlay">✕</div></div>
+    <div class="field"><label>Shop Name</label><input id="editShopName" placeholder="Shop name"></div>
+    <div class="field">
+      <label>Category</label>
+      <select id="editShopCategory">
+        <option>Short-Form / Reels</option><option>YouTube Long-Form</option><option>Motion Graphics</option>
+        <option>Color Grading</option><option>VFX &amp; Compositing</option><option>Podcast Editing</option><option>Documentary</option>
+      </select>
+    </div>
+    <div class="field"><label>Portfolio Link</label><input id="editShopPortfolio" placeholder="https://…"></div>
+    <div class="field"><label>Description / Bio</label><textarea id="editShopDescription" rows="3" placeholder="Tell clients what makes your work stand out…"></textarea></div>
+    <div class="row">
+      <div class="field">
+        <label>Logo</label>
+        <div class="file-drop"><input type="file" id="editShopLogoInput" accept="image/*"><div class="file-drop-text">Click to replace</div></div>
+        <img id="editShopLogoPreview" class="upload-preview mt8" src="">
+      </div>
+      <div class="field">
+        <label>Banner</label>
+        <div class="file-drop"><input type="file" id="editShopBannerInput" accept="image/*"><div class="file-drop-text">Click to replace</div></div>
+        <img id="editShopBannerPreview" class="upload-preview mt8 hidden" style="width:100%; height:60px; object-fit:cover;" src="">
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="modal-title mb0" style="font-size:14px; margin-bottom:10px;">Pricing Modes</div>
+
+    <div class="glass card" style="padding:14px;">
+      <label class="row" style="align-items:center; cursor:pointer; margin-bottom:0;">
+        <input type="checkbox" id="editModeShortOn" style="width:18px; height:18px; flex:0 0 auto;">
+        <span style="flex:1; font-weight:700; font-size:13.5px;">Short-Form — per 10s, max ₹30</span>
+      </label>
+      <div class="row mt16" id="editModeShortFields" style="display:none;">
+        <div class="field mb0"><label>Basic</label><input id="editModeShortLow" type="number" max="30"></div>
+        <div class="field mb0"><label>Standard</label><input id="editModeShortMed" type="number" max="30"></div>
+        <div class="field mb0"><label>Premium</label><input id="editModeShortHigh" type="number" max="30"></div>
+      </div>
+    </div>
+    <div class="glass card mt16" style="padding:14px;">
+      <label class="row" style="align-items:center; cursor:pointer; margin-bottom:0;">
+        <input type="checkbox" id="editModeVideoOn" style="width:18px; height:18px; flex:0 0 auto;">
+        <span style="flex:1; font-weight:700; font-size:13.5px;">Video Editing — per minute, max ₹70</span>
+      </label>
+      <div class="row mt16" id="editModeVideoFields" style="display:none;">
+        <div class="field mb0"><label>Basic</label><input id="editModeVideoLow" type="number" max="70"></div>
+        <div class="field mb0"><label>Standard</label><input id="editModeVideoMed" type="number" max="70"></div>
+        <div class="field mb0"><label>Premium</label><input id="editModeVideoHigh" type="number" max="70"></div>
+      </div>
+    </div>
+    <div class="glass card mt16" style="padding:14px;">
+      <label class="row" style="align-items:center; cursor:pointer; margin-bottom:0;">
+        <input type="checkbox" id="editModeProjectOn" style="width:18px; height:18px; flex:0 0 auto;">
+        <span style="flex:1; font-weight:700; font-size:13.5px;">Thumbnail/Project — per project, max ₹100</span>
+      </label>
+      <div class="row mt16" id="editModeProjectFields" style="display:none;">
+        <div class="field mb0"><label>Basic</label><input id="editModeProjectLow" type="number" max="100"></div>
+        <div class="field mb0"><label>Standard</label><input id="editModeProjectMed" type="number" max="100"></div>
+        <div class="field mb0"><label>Premium</label><input id="editModeProjectHigh" type="number" max="100"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block mt20" id="editShopSaveBtn">Save Changes</button>
+  </div>
+</div>
+
 <!-- ADMIN: SET SHOP BADGE -->
 <div class="overlay" id="setBadgeOverlay">
   <div class="glass modal">
@@ -910,7 +995,7 @@ const State = {
   user: null, profile: null, isAdmin: false,
   shops: [], myShops: [],
   allOrdersAsClient: [], allOrdersAsEditor: [], allOrdersAdmin: [],
-  pendingApplications: [], myWarnings: [], userReports: [],
+  pendingApplications: [], myWarnings: [], userReports: [], myFiledReports: [],
   unsubscribes: [],
   currentView: "viewShop",
   hireContext: null,
@@ -1801,6 +1886,7 @@ $("#googleSignInBtn").addEventListener("click", () => {
 });
 $("#topAvatarBtn").addEventListener("click", () => switchView("viewProfile"));
 $("#escrowInfoLink").addEventListener("click", () => openModal("escrowInfoOverlay"));
+$all("[data-open-escrow-info]").forEach(el => el.addEventListener("click", () => openModal("escrowInfoOverlay")));
 $("#signOutBtn").addEventListener("click", () => {
   if (!confirm("Sign out of Rex Edit Hub?")) return;
   auth.signOut().catch(e => { console.error("sign out failed:", e); showToast("Failed to sign out.", "err"); });
@@ -1908,6 +1994,13 @@ function attachAllListeners(user) {
   }, err => console.error("theme access listener error:", err));
   State.unsubscribes.push(unsubThemeAccess);
 
+  // reports THIS user filed against someone else — so they can see the outcome
+  const unsubMyReports = db.collection("user_reports").where("reporterUid", "==", user.uid).onSnapshot(snap => {
+    State.myFiledReports = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+    if (State.currentView === "viewProfile") renderMyReportsPanel();
+  }, err => console.error("my reports listener error:", err));
+  State.unsubscribes.push(unsubMyReports);
+
   if (State.isAdmin) {
     const unsubApps = db.collection("shop_applications").onSnapshot(snap => {
       State.pendingApplications = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -1971,7 +2064,7 @@ function renderMarketplace() {
     const avg = shop.ratingCount ? shop.ratingSum / shop.ratingCount : 0;
     return `
     <div class="glass shop-card">
-      <div class="shop-banner"><img class="shop-logo" src="${shop.logoUrl || ''}" onerror="this.style.display='none'" alt=""></div>
+      <div class="shop-banner" style="${shop.bannerUrl ? `background-image:url('${shop.bannerUrl}'); background-size:cover; background-position:center;` : ''}"><img class="shop-logo" src="${shop.logoUrl || ''}" onerror="this.style.display='none'" alt=""></div>
       <div class="shop-body">
         <div class="shop-name">${esc(shop.name)}</div>
         <div class="shop-handle">${esc(shop.ownerHandle || '')}</div>
@@ -2045,6 +2138,7 @@ async function openShopDetail(shopId) {
   }
 
   body.innerHTML = `
+    ${shop.bannerUrl ? `<img src="${shop.bannerUrl}" style="width:100%; height:120px; object-fit:cover; border-radius:14px; margin-bottom:14px;">` : ''}
     <div class="shop-detail-head">
       <img class="shop-detail-logo" src="${shop.logoUrl || ''}">
       <div>
@@ -2052,6 +2146,7 @@ async function openShopDetail(shopId) {
         <div class="text-dim" style="font-size:12.5px;">${esc(shop.ownerHandle || '')} · ${esc(shop.category || '')}</div>
       </div>
     </div>
+    ${shop.description ? `<p style="font-size:13.5px; line-height:1.6; margin-top:12px; color:var(--text);">${esc(shop.description)}</p>` : ''}
     ${shop.portfolio ? `<div class="video-link-box" style="margin-top:10px;">🔗 Portfolio: <a href="${esc(shop.portfolio)}" target="_blank" rel="noopener">${esc(shop.portfolio)}</a></div>` : ''}
     <div class="rating-summary mt16">${starsHtml(avg, shop.ratingCount || 0)}</div>
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">${shopBadgesHtml(shop)}</div>
@@ -2157,6 +2252,7 @@ $("#shopSearchInput").addEventListener("input", renderMarketplace);
 $("#shopCategoryFilter").addEventListener("change", renderMarketplace);
 enhanceSelect($("#regCategory"));
 enhanceSelect($("#shopCategoryFilter"));
+enhanceSelect($("#editShopCategory"));
 
 /* ========================= 9. PROFILE VIEW (incl. Warnings) ========================= */
 function renderProfileView() {
@@ -2166,6 +2262,7 @@ function renderProfileView() {
   renderThemeGrid();
   renderMyShops();
   renderWarningsPanel();
+  renderMyReportsPanel();
 }
 function renderMyShops() {
   const list = $("#myShopsList"), empty = $("#myShopsEmpty");
@@ -2175,15 +2272,92 @@ function renderMyShops() {
     <div class="row" style="align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
       <img src="${s.logoUrl || ''}" style="width:40px;height:40px;border-radius:10px;object-fit:cover;flex:0 0 auto;">
       <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">${esc(s.name)}</div><div class="text-dim" style="font-size:11.5px;">${esc(s.category || '')}</div></div>
+      <button class="btn btn-ghost btn-sm" data-edit-shop="${s.id}">Edit</button>
       <button class="btn btn-danger btn-sm" data-del-shop="${s.id}">Delete</button>
     </div>`).join("");
   $all("[data-del-shop]", list).forEach(btn => btn.addEventListener("click", () => deleteShop(btn.dataset.delShop)));
+  $all("[data-edit-shop]", list).forEach(btn => btn.addEventListener("click", () => openEditShop(btn.dataset.editShop)));
 }
 async function deleteShop(shopId) {
   if (!confirm("Delete this shop listing? This cannot be undone.")) return;
   try { await db.collection("shops").doc(shopId).delete(); showToast("Shop deleted.", "ok"); }
   catch (e) { console.error(e); showToast("Failed to delete shop.", "err"); }
 }
+
+/* ---- Edit Shop (owner) ---- */
+const EditShopState = { shop: null, logoBase64: null, bannerBase64: null };
+function openEditShop(shopId) {
+  const shop = State.myShops.find(s => s.id === shopId); if (!shop) return;
+  EditShopState.shop = shop; EditShopState.logoBase64 = null; EditShopState.bannerBase64 = null;
+  $("#editShopName").value = shop.name || "";
+  $("#editShopCategory").value = shop.category || "Short-Form / Reels";
+  $("#editShopPortfolio").value = shop.portfolio || "";
+  $("#editShopDescription").value = shop.description || "";
+  $("#editShopLogoPreview").src = shop.logoUrl || "";
+  if (shop.bannerUrl) { $("#editShopBannerPreview").src = shop.bannerUrl; $("#editShopBannerPreview").classList.remove("hidden"); }
+  else { $("#editShopBannerPreview").classList.add("hidden"); }
+  refreshXSelect($("#editShopCategory"));
+  const modes = shop.modes || {};
+  ["short", "video", "project"].forEach(key => {
+    const cap = key.charAt(0).toUpperCase() + key.slice(1);
+    const m = modes[key] || {};
+    $(`#editMode${cap}On`).checked = !!m.on;
+    $(`#editMode${cap}Fields`).style.display = m.on ? "flex" : "none";
+    $(`#editMode${cap}Low`).value = m.low || ""; $(`#editMode${cap}Med`).value = m.medium || ""; $(`#editMode${cap}High`).value = m.high || "";
+  });
+  openModal("editShopOverlay");
+}
+["Short", "Video", "Project"].forEach(key => {
+  $(`#editMode${key}On`).addEventListener("change", e => { $(`#editMode${key}Fields`).style.display = e.target.checked ? "flex" : "none"; });
+});
+$("#editShopLogoInput").addEventListener("change", async e => {
+  const file = e.target.files && e.target.files[0]; if (!file) return;
+  try { const b64 = await compressImageToBase64(file, 400); EditShopState.logoBase64 = b64; $("#editShopLogoPreview").src = b64; }
+  catch (err) { showToast("Could not process logo.", "err"); }
+});
+$("#editShopBannerInput").addEventListener("change", async e => {
+  const file = e.target.files && e.target.files[0]; if (!file) return;
+  try { const b64 = await compressImageToBase64(file, 700); EditShopState.bannerBase64 = b64; $("#editShopBannerPreview").src = b64; $("#editShopBannerPreview").classList.remove("hidden"); }
+  catch (err) { showToast("Could not process banner.", "err"); }
+});
+function readEditMode(key, capKey) {
+  const cap = key.charAt(0).toUpperCase() + key.slice(1);
+  const on = $(`#editMode${cap}On`).checked;
+  if (!on) return { on: false, low: 0, medium: 0, high: 0 };
+  const low = Number($(`#editMode${cap}Low`).value), medium = Number($(`#editMode${cap}Med`).value), high = Number($(`#editMode${cap}High`).value);
+  return { on: true, low, medium, high, _cap: PRICING_MODES[capKey].max };
+}
+$("#editShopSaveBtn").addEventListener("click", async () => {
+  const shop = EditShopState.shop; if (!shop) return;
+  const name = $("#editShopName").value.trim();
+  if (!name) return showToast("Shop name can't be empty.", "err");
+  const short = readEditMode("short", "short"), video = readEditMode("video", "video"), project = readEditMode("project", "project");
+  if (!short.on && !video.on && !project.on) return showToast("Turn on at least one pricing mode.", "err");
+  for (const [key, m] of [["short", short], ["video", video], ["project", project]]) {
+    if (!m.on) continue;
+    if (!m.low || !m.medium || !m.high) return showToast(`Fill in all three ${PRICING_MODES[key].label} tiers, or turn that mode off.`, "err");
+    if (m.low > m._cap || m.medium > m._cap || m.high > m._cap) return showToast(`${PRICING_MODES[key].label} rates can't exceed ₹${m._cap} ${PRICING_MODES[key].unit}.`, "err");
+  }
+  const btn = $("#editShopSaveBtn"); btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    const update = {
+      name, category: $("#editShopCategory").value, portfolio: $("#editShopPortfolio").value.trim(),
+      description: $("#editShopDescription").value.trim(),
+      modes: {
+        short: { on: short.on, low: short.low, medium: short.medium, high: short.high },
+        video: { on: video.on, low: video.low, medium: video.medium, high: video.high },
+        project: { on: project.on, low: project.low, medium: project.medium, high: project.high },
+      },
+    };
+    if (EditShopState.logoBase64) update.logoUrl = EditShopState.logoBase64;
+    if (EditShopState.bannerBase64) update.bannerUrl = EditShopState.bannerBase64;
+    await db.collection("shops").doc(shop.id).update(update);
+    showToast("Shop updated.", "ok");
+    closeModal("editShopOverlay");
+  } catch (e) { console.error(e); showToast("Failed to update shop.", "err"); }
+  finally { btn.disabled = false; btn.textContent = "Save Changes"; }
+});
+
 $("#profileAvatarInput").addEventListener("change", async e => {
   const file = e.target.files && e.target.files[0]; if (!file) return;
   try { const base64 = await compressImageToBase64(file, 400); $("#profileAvatarPreview").src = base64; $("#profileAvatarPreview").dataset.pending = base64; }
@@ -2277,6 +2451,21 @@ async function replyToWarning(warningId) {
   } catch (e) { console.error(e); showToast("Failed to send reply.", "err"); }
 }
 
+function renderMyReportsPanel() {
+  const list = $("#myReportsList"), empty = $("#myReportsEmpty");
+  if (!State.myFiledReports || State.myFiledReports.length === 0) { list.innerHTML = ""; empty.classList.remove("hidden"); return; }
+  empty.classList.add("hidden");
+  list.innerHTML = State.myFiledReports.map(r => `
+    <div class="warning-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:700; font-size:13px;">Reported: ${esc(r.targetName || 'User')}</span>
+        <span class="badge ${r.status === 'open' ? 'badge-report' : 'badge-done'}">${r.status === 'open' ? 'Open' : 'Resolved'}</span>
+      </div>
+      <div class="wmsg">${esc(r.reason)}</div>
+      <div class="text-dim" style="font-size:11px;">${r.createdAtMs ? new Date(r.createdAtMs).toLocaleDateString() : ''}</div>
+    </div>`).join("");
+}
+
 /* ========================= 10. SEARCH NETWORK (fixed) ========================= */
 async function searchByHandle() {
   let raw = $("#handleSearchInput").value.trim();
@@ -2303,6 +2492,7 @@ async function searchByHandle() {
         <div style="flex:1; min-width:160px;">
           <div style="font-weight:800; font-size:15px;">${esc(u.displayName)}</div>
           <div class="text-dim" style="font-size:13px;">${esc(u.userId)}</div>
+          <div class="text-dim" style="font-size:12px;">${esc(u.email || '—')}</div>
         </div>
         ${hasShop ? '<span class="badge badge-verified">Approved Creator</span>' : '<span class="badge badge-wait">No shop</span>'}
         ${State.user && uid !== State.user.uid ? `<button class="btn btn-danger btn-sm" data-report-user="${uid}" data-report-name="${esc(u.displayName)}">Report</button>` : ''}
@@ -2958,6 +3148,7 @@ async function approveApplication(appId) {
   try {
     await db.collection("shops").add({
       name: app.name, category: app.category, modes: app.modes || null, logoUrl: app.logoUrl || "",
+      bannerUrl: app.bannerUrl || null, description: app.description || "",
       ownerUid: app.applicantUid, ownerHandle: app.applicantHandle || "", ownerEmail: app.applicantEmail || "",
       portfolio: app.portfolio || "", createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
@@ -3290,7 +3481,7 @@ $("#refundProofSubmitBtn").addEventListener("click", async () => {
 });
 
 /* ========================= 14. APPLY FOR EARN (2-step) ========================= */
-const RegState = { logoBase64: null };
+const RegState = { logoBase64: null, bannerBase64: null };
 const PRICING_MODES = {
   short:   { label: "Short-Form", unit: "per 10s", max: 30 },
   video:   { label: "Video Editing", unit: "per minute", max: 70 },
@@ -3300,6 +3491,11 @@ $("#regLogoInput").addEventListener("change", async e => {
   const file = e.target.files && e.target.files[0]; if (!file) return;
   try { const base64 = await compressImageToBase64(file, 400); RegState.logoBase64 = base64; $("#regLogoPreview").src = base64; $("#regLogoPreview").classList.remove("hidden"); }
   catch (err) { showToast("Could not process logo.", "err"); }
+});
+$("#regBannerInput").addEventListener("change", async e => {
+  const file = e.target.files && e.target.files[0]; if (!file) return;
+  try { const base64 = await compressImageToBase64(file, 700); RegState.bannerBase64 = base64; $("#regBannerPreview").src = base64; $("#regBannerPreview").classList.remove("hidden"); }
+  catch (err) { showToast("Could not process banner.", "err"); }
 });
 $("#regStep1Next").addEventListener("click", () => {
   const name = $("#regShopName").value.trim(), portfolio = $("#regPortfolio").value.trim();
@@ -3337,7 +3533,7 @@ $("#regStep2Submit").addEventListener("click", async () => {
   try {
     await db.collection("shop_applications").add({
       name: $("#regShopName").value.trim(), category: $("#regCategory").value, portfolio: $("#regPortfolio").value.trim(),
-      logoUrl: RegState.logoBase64,
+      description: $("#regDescription").value.trim(), logoUrl: RegState.logoBase64, bannerUrl: RegState.bannerBase64 || null,
       modes: {
         short: { on: short.on, low: short.low, medium: short.medium, high: short.high },
         video: { on: video.on, low: video.low, medium: video.medium, high: video.high },
@@ -3348,13 +3544,13 @@ $("#regStep2Submit").addEventListener("click", async () => {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     showToast("Application submitted for review!", "ok");
-    $("#regShopName").value = ""; $("#regPortfolio").value = "";
+    $("#regShopName").value = ""; $("#regPortfolio").value = ""; $("#regDescription").value = "";
     ["Short", "Video", "Project"].forEach(key => {
       $(`#mode${key}On`).checked = false; $(`#mode${key}Fields`).style.display = "none";
       $(`#mode${key}Low`).value = ""; $(`#mode${key}Med`).value = ""; $(`#mode${key}High`).value = "";
     });
-    RegState.logoBase64 = null;
-    $("#regLogoPreview").classList.add("hidden");
+    RegState.logoBase64 = null; RegState.bannerBase64 = null;
+    $("#regLogoPreview").classList.add("hidden"); $("#regBannerPreview").classList.add("hidden");
     switchView("viewShop");
   } catch (e) { console.error(e); showToast("Failed to submit application.", "err"); }
   finally { btn.disabled = false; btn.textContent = "Submit Application"; }
