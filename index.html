@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Rex Edit Hub — Escrow Marketplace for Editors</title>
+<title>Rex Edit Hub — Escrow Marketplace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
@@ -204,6 +204,8 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
 .theme-swatch-lock{position:absolute; top:3px; right:3px; font-size:9px; font-weight:800; padding:2px 6px; border-radius:8px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.6);}
 .theme-swatch-lock.locked{background:rgba(0,0,0,0.55);}
 .theme-swatch-lock.trial{background:rgba(62,230,140,0.75);}
+.escrow-highlight{color:var(--primary2); font-weight:800; text-decoration:underline; text-decoration-style:dotted; cursor:pointer;}
+.escrow-highlight:hover{color:var(--primary);}
 .theme-tabs{display:flex; gap:8px; margin-bottom:6px;}
 .theme-tab{padding:7px 14px; border-radius:9px; font-size:12px; font-weight:700; cursor:pointer; background:var(--surface); border:1px solid var(--border); color:var(--text-dim);}
 .theme-tab.active{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; border-color:transparent;}
@@ -360,6 +362,10 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
       Profile Settings
       <span class="nav-dot hidden" id="warningDot"></span>
+    </div>
+    <div class="nav-item" data-view="viewLawPolicy">
+      <span style="width:18px; text-align:center; flex-shrink:0;">📜</span>
+      Law &amp; Policy
     </div>
 
     <div class="nav-spacer"></div>
@@ -581,6 +587,55 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
       </div>
     </section>
 
+    <!-- VIEW: LAW & POLICY -->
+    <section id="viewLawPolicy" class="view hidden">
+      <div class="grid" style="grid-template-columns:1fr; max-width:760px; gap:16px;">
+
+        <div class="glass card">
+          <div class="modal-title" style="margin-bottom:10px;">💳 1. Payments &amp; Pricing</div>
+          <ul style="padding-left:18px; font-size:13.5px; line-height:1.9; color:var(--text);">
+            <li>Always pay through our official system (<b>Rex Bank</b>).</li>
+            <li>Do not pay outside the platform to avoid the 10% deduction fee. If you pay privately and get scammed, we cannot help or refund you.</li>
+            <li>The price shown on the website is final. Editors cannot ask for extra hidden charges.</li>
+          </ul>
+        </div>
+
+        <div class="glass card">
+          <div class="modal-title" style="margin-bottom:10px;">⏳ 2. Reviews &amp; Closing Tickets</div>
+          <ul style="padding-left:18px; font-size:13.5px; line-height:1.9; color:var(--text);">
+            <li>You have 3 days to check your delivery and report any issues.</li>
+            <li>If the work is good, close the order by signing ✅. If there is a problem, Reject and tell us why.</li>
+            <li><b>Warning:</b> Once you close a ticket, the payment is released. We cannot accept complaints or give refunds after an order is signed final.</li>
+          </ul>
+        </div>
+
+        <div class="glass card">
+          <div class="modal-title" style="margin-bottom:10px;">💸 3. Refunds &amp; Compensation</div>
+          <ul style="padding-left:18px; font-size:13.5px; line-height:1.9; color:var(--text);">
+            <li><b>100% Refund:</b> If the delivery is terrible and the editor refuses to fix it.</li>
+            <li><b>10% Compensation:</b> If there are minor mistakes but the overall work is acceptable.</li>
+          </ul>
+        </div>
+
+        <div class="glass card">
+          <div class="modal-title" style="margin-bottom:10px;">🚫 4. Zero Tolerance for Fake Proof</div>
+          <ul style="padding-left:18px; font-size:13.5px; line-height:1.9; color:var(--text);">
+            <li>Never create fake screenshots or false complaints to get a refund.</li>
+            <li>If you submit fake evidence, your account will be permanently banned immediately, even if you are a trusted user.</li>
+          </ul>
+        </div>
+
+        <div class="glass card">
+          <div class="modal-title" style="margin-bottom:10px;">5. 10% Deduction Policy</div>
+          <p style="font-size:13.5px; line-height:1.9; color:var(--text);">
+            This deduction is taken from the editor per successful order. It exists to fund secure
+            <span class="escrow-highlight" id="escrowInfoLink">escrow</span> payments and build trust between clients and editors.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 </div>
 
@@ -785,6 +840,26 @@ select{appearance:none; -webkit-appearance:none; background-image:linear-gradien
     <div class="modal-head"><div class="modal-title">Set Shop Badge</div><div class="modal-close" data-close="setBadgeOverlay">✕</div></div>
     <div class="field mb0"><label>Badge text (leave blank to remove)</label><input id="setBadgeInput" placeholder="e.g. Top Rated, Verified Pro"></div>
     <button class="btn btn-primary btn-block mt20" id="setBadgeSubmitBtn">Save Badge</button>
+  </div>
+</div>
+
+<!-- WHAT IS ESCROW? -->
+<div class="overlay" id="escrowInfoOverlay">
+  <div class="glass modal">
+    <div class="modal-head"><div class="modal-title">What is Escrow?</div><div class="modal-close" data-close="escrowInfoOverlay">✕</div></div>
+    <p style="font-size:13.5px; line-height:1.8; color:var(--text); margin-bottom:12px;">
+      It works the same way as <b>Rex Bank</b>: escrow is a secure hold on your payment. When you hire an editor,
+      your money doesn't go to them right away — it's held safely by Rex Edit Hub first.
+    </p>
+    <p style="font-size:13.5px; line-height:1.8; color:var(--text); margin-bottom:12px;">
+      Once you review the delivery and <b>sign off</b>, the held funds are released to the editor. If something goes
+      wrong instead — the editor doesn't deliver, or the work is rejected — your money is returned quickly rather
+      than being stuck with someone you can't trust yet.
+    </p>
+    <p style="font-size:13.5px; line-height:1.8; color:var(--text-dim); margin-bottom:0;">
+      In short: escrow protects both sides — the editor knows the client has actually paid, and the client knows
+      their money is safe until the work is approved.
+    </p>
   </div>
 </div>
 
@@ -1628,7 +1703,13 @@ window.addEventListener("load", () => { if (CANVAS_THEMES.includes(currentTheme)
 
 /* ---- Theme Vault: paid themes with a free trial, then a one-time unlock purchase ---- */
 const TRIAL_DAYS = 3;
-const PAYWALLED_THEMES = { egypt: 20, greece: 20, china: 20, tajmahal: 20, hawamahal: 20, switzerland: 20, auroraflow: 10 };
+// Animated themes are locked for everyone except admin, EXCEPT prism/storm/starfield which stay free.
+// Realistic scene themes stay ₹20; every other locked animated theme is ₹10.
+const PAYWALLED_THEMES = {
+  egypt: 20, greece: 20, china: 20, tajmahal: 20, hawamahal: 20, switzerland: 20,
+  snow: 10, cyberrain: 10, matrix: 10, embers: 10, plasma: 10, chroma: 10,
+  auroraflow: 10, golddust: 10, petals: 10, warp: 10, flares: 10, bubbles: 10,
+};
 function themeStatus(themeId) {
   if (State.isAdmin) return { state: "unlocked" };
   const price = PAYWALLED_THEMES[themeId];
@@ -1693,6 +1774,7 @@ const VIEW_META = {
   viewAdminReview: { title: "Admin Panel", sub: "Applications, escrow, shops, disputes & user reports" },
   viewRegisterStep1: { title: "Apply for Earn", sub: "Step 1 of 2 — Shop details" },
   viewRegisterStep2: { title: "Apply for Earn", sub: "Step 2 of 2 — Pricing tiers" },
+  viewLawPolicy: { title: "Law & Policy", sub: "Payments, refunds, and how escrow keeps everyone safe" },
 };
 function switchView(viewId) {
   State.currentView = viewId;
@@ -1718,6 +1800,7 @@ $("#googleSignInBtn").addEventListener("click", () => {
   auth.signInWithPopup(provider).catch(err => { $("#authLoading").classList.add("hidden"); showToast(err.message || "Sign-in failed", "err"); });
 });
 $("#topAvatarBtn").addEventListener("click", () => switchView("viewProfile"));
+$("#escrowInfoLink").addEventListener("click", () => openModal("escrowInfoOverlay"));
 $("#signOutBtn").addEventListener("click", () => {
   if (!confirm("Sign out of Rex Edit Hub?")) return;
   auth.signOut().catch(e => { console.error("sign out failed:", e); showToast("Failed to sign out.", "err"); });
